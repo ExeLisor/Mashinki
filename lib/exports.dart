@@ -1,5 +1,6 @@
 export './models/models.dart';
 export './utils/utils.dart';
+export './controllers/controllers.dart';
 
 export 'dart:convert';
 export 'dart:async';
