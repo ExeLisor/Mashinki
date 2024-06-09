@@ -15,5 +15,10 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   @override
-  Widget build(BuildContext context) => MaterialApp(home: Container());
+  Widget build(BuildContext context) => GetMaterialApp(
+      theme: ThemeData(
+          textTheme: GoogleFonts.interTextTheme(
+        Theme.of(context).textTheme,
+      )),
+      home: Container());
 }
