@@ -16,9 +16,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) => GetMaterialApp(
-      theme: ThemeData(
-          textTheme: GoogleFonts.interTextTheme(
-        Theme.of(context).textTheme,
-      )),
-      home: Container());
+      theme: themeData(context),
+      debugShowCheckedModeBanner: false,
+      home: const AuthScreen());
 }
