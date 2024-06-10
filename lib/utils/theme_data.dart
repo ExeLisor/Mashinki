@@ -6,6 +6,7 @@ ThemeData themeData(BuildContext context) => ThemeData(
       ),
       inputDecorationTheme: const InputDecorationTheme(
         labelStyle: TextStyle(color: Color(0xFF4038FF)),
+        prefixIconColor: Color(0xFF4038FF),
         iconColor: Color(0xFF4038FF),
         hintStyle: TextStyle(color: Color(0xff7974FF)),
         border: OutlineInputBorder(

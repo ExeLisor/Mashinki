@@ -37,28 +37,24 @@ class CustomTextField extends StatelessWidget {
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
-                // borderSide: BorderSide(
-                //     color: Theme.of(context)
-                //         .inputDecorationTheme
-                //         .border!
-                //         .borderSide
-                //         .color),
+                borderSide: BorderSide(
+                    color: Theme.of(context)
+                        .inputDecorationTheme
+                        .border!
+                        .borderSide
+                        .color),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
-                // borderSide: BorderSide(
-                //     color: Theme.of(context)
-                //         .inputDecorationTheme
-                //         .border!
-                //         .borderSide
-                //         .color),
+                borderSide: BorderSide(
+                    color: Theme.of(context)
+                        .inputDecorationTheme
+                        .border!
+                        .borderSide
+                        .color),
               ),
               hintText: hint,
-              prefixIcon: Image.asset(
-                icon,
-                height: 5,
-                width: 5,
-              ),
+              prefixIcon: Image.asset(icon),
               suffixIcon: isPassword
                   ? IconButton(
                       icon: Icon(

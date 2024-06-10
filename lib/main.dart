@@ -16,9 +16,12 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   @override
-  Widget build(BuildContext context) => GetMaterialApp(
-      theme: themeData(context),
-      debugShowCheckedModeBanner: false,
-      
-      home:  LoginScreen());
+  Widget build(BuildContext context) {
+    ScreenSize.init(context);
+
+    return GetMaterialApp(
+        theme: themeData(context),
+        debugShowCheckedModeBanner: false,
+        home: LoginScreen());
+  }
 }

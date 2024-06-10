@@ -29,3 +29,4 @@ flutter:
     - assets/images/welcome.png
     - assets/images/man.png
     - assets/icons/man_icon.png 
+    - assets/icons/lock_icon.png
