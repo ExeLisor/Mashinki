@@ -19,3 +19,4 @@ export 'package:get/get.dart'
     hide Transition, FormData, Response, MultipartFile, HeaderValue;
 export 'package:google_mobile_ads/google_mobile_ads.dart';
 export 'package:google_fonts/google_fonts.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
