@@ -1,4 +1,5 @@
 import 'package:mashinki/exports.dart';
+import 'package:mashinki/screens/log_in_screen/log_in_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,5 +19,6 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) => GetMaterialApp(
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
-      home: const AuthScreen());
+      
+      home:  LoginScreen());
 }
