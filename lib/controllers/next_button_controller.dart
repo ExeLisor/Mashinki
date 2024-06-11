@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:mashinki/exports.dart';
 
 class ButtonController extends GetxController {
   RxBool isEnabled = true.obs;
