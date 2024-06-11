@@ -17,6 +17,7 @@ dependencies:
   google_mobile_ads: ^5.1.0
   google_fonts: ^6.2.1
   smooth_page_indicator: ^1.1.0
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -32,3 +33,5 @@ flutter:
     - assets/icons/man_icon.png 
     - assets/icons/account_icon.svg 
     - assets/icons/lock_icon.png
+    - assets/icons/email_icon.svg
+    - assets/icons/lock_icon.svg

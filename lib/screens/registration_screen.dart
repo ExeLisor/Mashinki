@@ -5,19 +5,17 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: const Icon(
-            Icons.arrow_back,
-            color: Color(0xff4038FF),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: const Icon(
+          Icons.arrow_back,
+          color: Color(0xff4038FF),
         ),
-        body: GetBuilder<RegistrationController>(
-          init: RegistrationController(),
-          builder: (_) => Stack(
-            children: [_pages(), _dots()],
-          ),
+      ),
+      body: GetBuilder<RegistrationController>(
+        init: RegistrationController(),
+        builder: (_) => Stack(
+          children: [_pages(), _dots()],
         ),
       ),
     );
@@ -52,7 +50,7 @@ class RegistrationScreen extends StatelessWidget {
   Widget _createUsernameWidget() => Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _accountIcon(),
+          _pageIcon(accountAsset),
           SizedBox(
             height: 40.h,
           ),
@@ -64,57 +62,169 @@ class RegistrationScreen extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          CustomTextField(
-            hint: "Имя пользователя",
-            controller: TextEditingController(),
-            isPassword: false,
-            icon: manIconAsset,
-          ),
+          _inputUsernameField(),
           SizedBox(
             height: 20.h,
           ),
-          _nextButton()
+          _nextButton("Далее")
         ],
       );
 
-  Widget _accountIcon() => Icon(
-        Icons.account_circle_outlined,
-        size: 100.h,
+  Widget _pageIcon(String assetPath) => SvgPicture.asset(
+        assetPath,
+        height: 100.h,
+        width: 100.h,
         color: const Color(0xff4038FF),
       );
 
-  Widget _createNicknameText() => Column(
-        children: [
-          Text(
-            "Создание имени",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 23.fs,
-                color: const Color(0xff4038FF)),
-          ),
-          Text(
-            "пользователя",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 23.fs,
-                color: const Color(0xff4038FF)),
-          ),
-        ],
+  Widget _bigText(String text) => Text(
+        text,
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 23.fs,
+            color: const Color(0xff4038FF)),
       );
 
-  Widget _createNickNameDescritpion() => SizedBox(
-        height: 36.h,
-        width: 326.w,
+  Widget _smallText(
+    String text, {
+    double height = 36,
+    double width = 326,
+  }) =>
+      SizedBox(
+        height: height.h,
+        width: width.w,
         child: Text(
-          "Выберите имя пользователя для своего нового аккаунта. Вы всегда можете изменить его.",
+          text,
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 13.fs, color: const Color(0xff4038FF)),
         ),
       );
-  Widget _inputEmailWidget() => Container();
-  Widget _createPasswordWidget() => Container();
+  Widget _createNicknameText() => Column(
+        children: [
+          _bigText("Создание имени"),
+          _bigText("пользователя"),
+        ],
+      );
 
-  Widget _nextButton() => GetBuilder<RegistrationController>(
+  Widget _createNickNameDescritpion() => _smallText(
+        "Выберите имя пользователя для своего нового аккаунта. Вы всегда можете изменить его.",
+      );
+
+  Widget _inputUsernameField() => CustomTextField(
+        hint: "Имя пользователя",
+        controller: TextEditingController(),
+        isPassword: false,
+        icon: accountAsset,
+      );
+
+  Widget _inputEmailField() => CustomTextField(
+        hint: "Email",
+        controller: TextEditingController(),
+        isPassword: false,
+        icon: emailAsset,
+      );
+
+  Widget _inputPasswordField() => CustomTextField(
+        hint: "Пароль",
+        controller: TextEditingController(),
+        isPassword: false,
+        icon: lockAsset,
+      );
+
+  Widget _confirmPasswordField() => CustomTextField(
+        hint: "Повторите пароль",
+        controller: TextEditingController(),
+        isPassword: false,
+        icon: lockAsset,
+      );
+
+  Widget _inputEmailDescription() => _smallText(
+      "Ваша почта будет использоваться для входа в аккаунт. Мы отправим вам код подстверждения электронного адреса",
+      height: 72,
+      width: 236);
+
+  Widget _createPasswordDescription() => _smallText(
+        "Мы можем запомнить пароль, чтобы вам больше не нужно было вводить его на ваших устройствах",
+      );
+
+  Widget _inputEmailWidget() => Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _pageIcon(emailAsset),
+          SizedBox(
+            height: 40.h,
+          ),
+          _bigText("Введите почту"),
+          SizedBox(
+            height: 15.h,
+          ),
+          _inputEmailDescription(),
+          SizedBox(
+            height: 20.h,
+          ),
+          _inputEmailField(),
+          SizedBox(
+            height: 20.h,
+          ),
+          _nextButton("Отправить код")
+        ],
+      );
+
+  Widget _createPasswordWidget() => Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _pageIcon(lockAsset),
+          SizedBox(
+            height: 40.h,
+          ),
+          _bigText("Придумайте пароль"),
+          SizedBox(
+            height: 15.h,
+          ),
+          _createPasswordDescription(),
+          SizedBox(
+            height: 20.h,
+          ),
+          _inputPasswordField(),
+          SizedBox(
+            height: 20.h,
+          ),
+          _confirmPasswordField(),
+          SizedBox(
+            height: 10.h,
+          ),
+          _savePasswordCheckBox(),
+          SizedBox(
+            height: 10.h,
+          ),
+          _nextButton("Далее")
+        ],
+      );
+
+  Widget _savePasswordCheckBox() => Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 20.w,
+          ),
+          Checkbox(
+            value: true,
+            onChanged: (value) {},
+            activeColor: const Color(0xFF4038FF),
+            side: const BorderSide(color: Color(0xFF4038FF)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          ),
+          Text(
+            "Сохранить пароль",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 13.fs, color: const Color(0xff4038FF)),
+          ),
+        ],
+      );
+
+  Widget _nextButton(String buttonText) => GetBuilder<RegistrationController>(
         builder: (controller) => GestureDetector(
           child: Container(
             height: 55.h,
@@ -125,7 +235,7 @@ class RegistrationScreen extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                "Далее",
+                buttonText,
                 style: TextStyle(
                     fontSize: 15.fs,
                     color: Colors.white,

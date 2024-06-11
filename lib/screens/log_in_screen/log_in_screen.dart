@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                 hint: "Имя пользователя",
                 controller: _usernameController,
                 isPassword: false,
-                icon: manIconAsset,
+                icon: accountAsset,
               ),
               const SizedBox(
                 height: 20,
@@ -66,17 +66,17 @@ class LoginScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 30),
                     child: GestureDetector(
                       onTap: () {},
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             "У вас нету аккаунта? ",
                             style: TextStyle(color: Color(0xff4038FF)),
                           ),
-                          const Text(
+                          Text(
                             "Зарегистрироваться",
                             style: TextStyle(
-                              color: const Color(0xff4038FF),
+                              color: Color(0xff4038FF),
                               fontWeight: FontWeight.bold,
                             ),
                           ),

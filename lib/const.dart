@@ -5,3 +5,6 @@ const welcomeImageAsset = 'assets/images/welcome.png';
 const manImageAsset = 'assets/images/man.png';
 const manIconAsset = 'assets/icons/man_icon.png';
 const lockIconAsset = 'assets/icons/lock_icon.png';
+const accountAsset = 'assets/icons/account_icon.svg';
+const emailAsset = 'assets/icons/email_icon.svg';
+const lockAsset = 'assets/icons/lock_icon.svg';

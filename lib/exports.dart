@@ -20,3 +20,4 @@ export 'package:get/get.dart'
 export 'package:google_mobile_ads/google_mobile_ads.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:smooth_page_indicator/smooth_page_indicator.dart';
+export 'package:flutter_svg/flutter_svg.dart';
