@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mashinki/exports.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -22,8 +23,8 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 342,
-      height: 55,
+      width: 342.w,
+      height: 55.h,
       child: Obx(() => TextFormField(
             controller: controller,
             style: TextStyle(
@@ -32,11 +33,11 @@ class CustomTextField extends StatelessWidget {
             obscureText: _textFieldController.obscureText.value,
             decoration: InputDecoration(
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(20.h),
                 borderSide: BorderSide.none,
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(20.h),
                 borderSide: BorderSide(
                     color: Theme.of(context)
                         .inputDecorationTheme
@@ -45,7 +46,7 @@ class CustomTextField extends StatelessWidget {
                         .color),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(20.h),
                 borderSide: BorderSide(
                     color: Theme.of(context)
                         .inputDecorationTheme
@@ -54,7 +55,13 @@ class CustomTextField extends StatelessWidget {
                         .color),
               ),
               hintText: hint,
-              prefixIcon: Image.asset(icon),
+              prefixIcon: SvgPicture.asset(
+                
+                icon,
+                width: 16.w,
+                height: 20.h,
+                fit: BoxFit.scaleDown,
+              ),
               suffixIcon: isPassword
                   ? IconButton(
                       icon: Icon(

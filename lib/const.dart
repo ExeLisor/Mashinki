@@ -3,5 +3,5 @@ const adUnitIdIOS = 'ca-app-pub-3940256099942544/2934735716';
 
 const welcomeImageAsset = 'assets/images/welcome.png';
 const manImageAsset = 'assets/images/man.png';
-const manIconAsset = 'assets/icons/man_icon.png';
-const lockIconAsset = 'assets/icons/lock_icon.png';
+const manIconAsset = 'assets/icons/man_icon.svg';
+const lockIconAsset = 'assets/icons/lock_icon.svg';

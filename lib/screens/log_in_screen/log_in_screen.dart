@@ -1,13 +1,10 @@
 import 'package:mashinki/exports.dart';
 
-import 'package:flutter/material.dart';
-import 'package:mashinki/exports.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController =
-      TextEditingController(); // Добавлен для управления полем пароля
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +20,11 @@ class LoginScreen extends StatelessWidget {
               children: [
                 Image.asset(
                   manImageAsset,
-                  height: 119,
-                  width: 119,
+                  height: 119.h,
+                  width: 119.w,
                 ),
-                const SizedBox(
-                  height: 45,
+                SizedBox(
+                  height: 45.h,
                 ),
                 CustomTextField(
                   hint: "Имя пользователя",
@@ -35,51 +32,50 @@ class LoginScreen extends StatelessWidget {
                   isPassword: false,
                   icon: manIconAsset,
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: 20.h,
                 ),
                 CustomTextField(
                   hint: "Пароль",
-                  controller:
-                      _passwordController, // Использовать отдельный контроллер для пароля
+                  controller: _passwordController,
                   isPassword: true,
-                  icon: manIconAsset,
+                  icon: lockIconAsset,
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: 10.h,
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 220),
-                    child: Text(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 220.w),
+                    child: const Text(
                       "Забыли пароль?",
                       style: TextStyle(color: Color(0xff4038FF)),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: 20.h,
                 ),
                 NextButton(onTap: () {}),
                 Expanded(
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 30),
+                      padding: EdgeInsets.only(bottom: 30.h),
                       child: GestureDetector(
                         onTap: () {},
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
+                            Text(
                               "У вас нету аккаунта? ",
                               style: TextStyle(color: Color(0xff4038FF)),
                             ),
-                            const Text(
+                            Text(
                               "Зарегистрироваться",
                               style: TextStyle(
-                                color: const Color(0xff4038FF),
+                                color: Color(0xff4038FF),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

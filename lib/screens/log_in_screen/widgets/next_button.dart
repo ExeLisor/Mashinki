@@ -13,14 +13,14 @@ class NextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
-          height: 55,
-          width: 342,
+          height: 55.h,
+          width: 342.w,
           decoration: BoxDecoration(
               color: controller.isEnabled.value == true
-                  ? Color(0xFF4038FF)
-                  : Color(0xff7974FF),
+                  ? const Color(0xFF4038FF)
+                  : const Color(0xff7974FF),
               borderRadius: BorderRadius.circular(20)),
-          child: Center(
+          child: const Center(
               child: Text("Далее",
                   style: TextStyle(color: Colors.white, fontSize: 14))),
         ));

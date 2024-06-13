@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.6
+  flutter_svg: ^2.0.10+1
   intl: ^0.19.0
   logger: ^2.3.0
   shared_preferences: ^2.2.3
@@ -28,5 +29,5 @@ flutter:
   assets:
     - assets/images/welcome.png
     - assets/images/man.png
-    - assets/icons/man_icon.png 
-    - assets/icons/lock_icon.png
+    - assets/icons/man_icon.svg 
+    - assets/icons/lock_icon.svg
