@@ -12,6 +12,10 @@ const errorCrossAsset = 'assets/icons/error_cross.svg';
 const correctAnimation = "assets/animations/correct_animation.json";
 const deniedAnimation = "assets/animations/denied_animation.json";
 
-RegExp nicknameRegExp = RegExp(
+final RegExp nicknameRegExp = RegExp(
   r'^[a-zA-Z0-9_]+$',
+);
+
+final RegExp emailRegExp = RegExp(
+  r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
 );

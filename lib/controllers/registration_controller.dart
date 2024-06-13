@@ -7,6 +7,14 @@ class RegistrationController extends GetxController
   late final AnimationController animationController;
 
   final Duration tranistionDuration = const Duration(milliseconds: 500);
+
+  final Duration completeDuration = const Duration(
+    milliseconds: 1800,
+  );
+  final Duration errorDuration = const Duration(
+    milliseconds: 450,
+  );
+
   final Curve animationCurve = Curves.easeInOut;
 
   String errorValidationMessage = "";
@@ -26,7 +34,8 @@ class RegistrationController extends GetxController
 
   void goToPreviousPage() {
     final int currentPage = (pageController.page ?? 0).toInt();
-    currentPage == 0
+    bool toPreviousPage = specificActionForPage(currentPage);
+    currentPage == 0 || !toPreviousPage
         ? Get.back()
         : pageController.animateToPage(currentPage - 1,
             duration: tranistionDuration, curve: animationCurve);
@@ -38,6 +47,21 @@ class RegistrationController extends GetxController
         ? null
         : pageController.animateToPage(currentPage + 1,
             duration: tranistionDuration, curve: animationCurve);
+  }
+
+  bool specificActionForPage(int currentPage) {
+    EmailController emailController = Get.find<EmailController>();
+    switch (currentPage) {
+      case 1:
+        if (emailController.isWaitingForCode) {
+          Get.find<EmailController>().backToInputEmail();
+          return false;
+        }
+        return true;
+
+      default:
+        return true;
+    }
   }
 
   void clearErrorValidationMessage() => errorValidationMessage = "";
@@ -53,20 +77,8 @@ class RegistrationController extends GetxController
     animationController.forward();
   }
 
-  void disableAllAnimations() {
-    disableCompleteAnimation();
-    disableErrorAnimation();
-    animationController.dispose();
-  }
-
   Future<void> submitUserName() async {
     String userName = userNameFieldController.value.text;
-    Duration completeDuration = const Duration(
-      milliseconds: 1800,
-    );
-    Duration errorDuration = const Duration(
-      milliseconds: 450,
-    );
 
     String validationMessage = validateNickname(userName) ?? "";
     playAnimation();
@@ -88,4 +100,81 @@ class RegistrationController extends GetxController
       update();
     }
   }
+}
+
+class EmailController extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  final TextEditingController emailFieldController = TextEditingController();
+  late final AnimationController emailAnimationController;
+
+  String errorValidationMessage = "";
+
+  bool isValidationComplete = false;
+  bool isValidationError = false;
+  bool isWaitingForCode = false;
+
+  final Duration completeDuration = const Duration(
+    milliseconds: 1800,
+  );
+  final Duration submitDuration = const Duration(
+    milliseconds: 1800,
+  );
+  final Duration errorDuration = const Duration(
+    milliseconds: 450,
+  );
+
+  @override
+  void onInit() {
+    super.onInit();
+    initAnimationController();
+  }
+
+  void initAnimationController() =>
+      emailAnimationController = AnimationController(
+        vsync: this,
+        duration: const Duration(seconds: 1),
+      );
+
+  void playAnimation() {
+    emailAnimationController.reset();
+    emailAnimationController.forward();
+  }
+
+  void clearErrorValidationMessage() => errorValidationMessage = "";
+
+  void showCompleteAnimation() => isValidationComplete = true;
+  void disableCompleteAnimation() => isValidationComplete = false;
+
+  void showErrorAnimation() => isValidationError = true;
+  void disableErrorAnimation() => isValidationError = false;
+
+  Future<void> submitEmail() async {
+    String email = emailFieldController.value.text;
+
+    String validationMessage = validateEmail(email) ?? "";
+
+    log(validationMessage);
+
+    playAnimation();
+
+    if (validationMessage.isEmpty) {
+      clearErrorValidationMessage();
+      showCompleteAnimation();
+      update();
+      await Future.delayed(submitDuration);
+      sendCode();
+      update();
+    } else {
+      disableCompleteAnimation();
+      showErrorAnimation();
+      update();
+      await Future.delayed(completeDuration);
+      errorValidationMessage = validationMessage;
+      update();
+    }
+  }
+
+  void sendCode() => isWaitingForCode = true;
+
+  void backToInputEmail() => {isWaitingForCode = false, update()};
 }

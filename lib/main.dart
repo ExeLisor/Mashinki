@@ -5,6 +5,7 @@ void main() {
   MobileAds.instance.initialize();
 
   Get.put(RegistrationController());
+  Get.put(EmailController());
 
   runApp(const MainApp());
 }

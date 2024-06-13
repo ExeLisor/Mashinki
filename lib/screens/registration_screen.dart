@@ -73,41 +73,52 @@ class RegistrationScreen extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            _errorText(),
+            _errorUsernameText(),
             _nextButton("Далее", controller.submitUserName),
           ],
         ),
       );
 
-  Widget _errorText() => GetBuilder<RegistrationController>(
+  Widget _errorText(String text) {
+    return Row(
+      children: [
+        Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 35.w),
+              child: SizedBox(
+                width: 342.w,
+                child: Text(
+                  text,
+                  maxLines: 3,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 12.fs, color: const Color(0xffff4141)),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _errorUsernameText() => GetBuilder<RegistrationController>(
         builder: (controller) {
           return controller.errorValidationMessage == ""
               ? Container()
-              : Row(
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 35.w),
-                          child: SizedBox(
-                            width: 342.w,
-                            child: Text(
-                              controller.errorValidationMessage,
-                              maxLines: 3,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 12.fs,
-                                  color: const Color(0xffff4141)),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                      ],
-                    ),
-                  ],
-                );
+              : _errorText(controller.errorValidationMessage);
+        },
+      );
+
+  Widget _errorEmailText() => GetBuilder<EmailController>(
+        builder: (controller) {
+          return controller.errorValidationMessage == ""
+              ? Container()
+              : _errorText(controller.errorValidationMessage);
         },
       );
 
@@ -118,12 +129,16 @@ class RegistrationScreen extends StatelessWidget {
         color: const Color(0xff4038FF),
       );
 
-  Widget _bigText(String text) => Text(
-        text,
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 23.fs,
-            color: const Color(0xff4038FF)),
+  Widget _bigText(String text, {double? height, double? width}) => SizedBox(
+        height: height,
+        width: width,
+        child: Text(
+          text,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 23.fs,
+              color: const Color(0xff4038FF)),
+        ),
       );
 
   Widget _smallText(
@@ -157,20 +172,22 @@ class RegistrationScreen extends StatelessWidget {
           controller: controller.userNameFieldController,
           onFieldSubmitted: (String text) => controller.submitUserName(),
           isPassword: false,
-          suffixIcon: _inputFieldAnimation(),
+          suffixIcon: _inputUsernameFieldAnimation(),
           icon: accountAsset,
         ),
       );
 
-  Widget _inputFieldAnimation() => GetBuilder<RegistrationController>(
+  Widget _inputUsernameFieldAnimation() => GetBuilder<RegistrationController>(
         builder: (controller) {
           if (controller.isValidationComplete) {
-            return const LottieAnimationWidget(
+            return LottieAnimationWidget(
               animationAsset: correctAnimation,
+              animationController: controller.animationController,
             );
           } else if (controller.isValidationError) {
-            return const LottieAnimationWidget(
+            return LottieAnimationWidget(
               animationAsset: deniedAnimation,
+              animationController: controller.animationController,
             );
           }
 
@@ -178,11 +195,33 @@ class RegistrationScreen extends StatelessWidget {
         },
       );
 
-  Widget _inputEmailField() => CustomTextField(
-        hint: "Email",
-        controller: TextEditingController(),
-        isPassword: false,
-        icon: emailAsset,
+  Widget _inputEmailFieldAnimation() => GetBuilder<EmailController>(
+        builder: (controller) {
+          if (controller.isValidationComplete) {
+            return LottieAnimationWidget(
+              animationAsset: correctAnimation,
+              animationController: controller.emailAnimationController,
+            );
+          } else if (controller.isValidationError) {
+            return LottieAnimationWidget(
+              animationAsset: deniedAnimation,
+              animationController: controller.emailAnimationController,
+            );
+          }
+
+          return Container();
+        },
+      );
+
+  Widget _inputEmailField() => GetBuilder<EmailController>(
+        builder: (controller) => CustomTextField(
+          hint: "Email",
+          controller: controller.emailFieldController,
+          onFieldSubmitted: (String text) => controller.submitEmail(),
+          isPassword: false,
+          suffixIcon: _inputEmailFieldAnimation(),
+          icon: emailAsset,
+        ),
       );
 
   Widget _inputPasswordField() => CustomTextField(
@@ -199,16 +238,32 @@ class RegistrationScreen extends StatelessWidget {
         icon: lockAsset,
       );
 
+  Widget _emailPageDescription() => GetBuilder<EmailController>(
+      builder: (controller) => controller.isWaitingForCode
+          ? _inputCodeDescription()
+          : _inputEmailDescription());
+
+  Widget _emailPageTitle() => GetBuilder<EmailController>(
+        builder: (controller) => controller.isWaitingForCode
+            ? _bigText("Подтвердите адрес электронной почты",
+                height: 65.h, width: 236.w)
+            : _bigText("Введите почту"),
+      );
+
   Widget _inputEmailDescription() => _smallText(
       "Ваша почта будет использоваться для входа в аккаунт. Мы отправим вам код подстверждения электронного адреса",
       height: 72,
       width: 236);
 
+  Widget _inputCodeDescription() => _smallText(
+        "Введите код, который мы отправили вам на почту",
+      );
+
   Widget _createPasswordDescription() => _smallText(
         "Мы можем запомнить пароль, чтобы вам больше не нужно было вводить его на ваших устройствах",
       );
 
-  Widget _inputEmailWidget() => GetBuilder<RegistrationController>(
+  Widget _inputEmailWidget() => GetBuilder<EmailController>(
         builder: (controller) => Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -216,11 +271,11 @@ class RegistrationScreen extends StatelessWidget {
             SizedBox(
               height: 40.h,
             ),
-            _bigText("Введите почту"),
+            _emailPageTitle(),
             SizedBox(
               height: 15.h,
             ),
-            _inputEmailDescription(),
+            _emailPageDescription(),
             SizedBox(
               height: 20.h,
             ),
@@ -228,7 +283,8 @@ class RegistrationScreen extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            _nextButton("Отправить код", () {})
+            _errorEmailText(),
+            _nextButton("Отправить код", controller.submitEmail)
           ],
         ),
       );
@@ -310,25 +366,27 @@ class RegistrationScreen extends StatelessWidget {
 }
 
 class LottieAnimationWidget extends StatelessWidget {
-  const LottieAnimationWidget({super.key, required this.animationAsset});
+  const LottieAnimationWidget(
+      {super.key,
+      required this.animationAsset,
+      required this.animationController});
 
   final String animationAsset;
+  final AnimationController animationController;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(12.h),
-      child: GetBuilder<RegistrationController>(
-        builder: (controller) => Lottie.asset(
-          animationAsset,
-          fit: BoxFit.cover,
-          controller: controller.animationController,
-          onLoaded: (composition) {
-            Get.find<RegistrationController>().animationController
-              ..duration = composition.duration
-              ..forward();
-          },
-        ),
+      child: Lottie.asset(
+        animationAsset,
+        fit: BoxFit.cover,
+        controller: animationController,
+        onLoaded: (composition) {
+          Get.find<RegistrationController>().animationController
+            ..duration = composition.duration
+            ..forward();
+        },
       ),
     );
   }
