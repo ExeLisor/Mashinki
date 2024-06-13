@@ -1,5 +1,5 @@
 import 'package:mashinki/exports.dart';
-import 'package:mashinki/screens/registration_screen.dart';
+import 'package:mashinki/screens/registration_screen/registration_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

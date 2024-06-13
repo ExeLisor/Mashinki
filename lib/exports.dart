@@ -1,6 +1,7 @@
 export './screens/screens.dart';
 export './models/models.dart';
 export './utils/utils.dart';
+export './widgets/widgets.dart';
 export './controllers/controllers.dart';
 export 'const.dart';
 
