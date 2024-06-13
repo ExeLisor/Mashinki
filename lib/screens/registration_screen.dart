@@ -1,4 +1,3 @@
-import 'package:mashinki/controllers/controllers.dart';
 import 'package:mashinki/exports.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -75,41 +74,42 @@ class RegistrationScreen extends StatelessWidget {
               height: 20.h,
             ),
             _errorText(),
-            _nextButton("Далее", controller.submitUserName)
+            _nextButton("Далее", controller.submitUserName),
           ],
         ),
       );
 
-  Widget _errorText() =>
-      GetBuilder<RegistrationController>(builder: (controller) {
-        return controller.errorValidationMessage == ""
-            ? Container()
-            : Row(
-                children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 35.w),
-                        child: SizedBox(
-                          width: 342.w,
-                          child: Text(
-                            controller.errorValidationMessage,
-                            maxLines: 3,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 12.fs,
-                                color: const Color(0xffff4141)),
+  Widget _errorText() => GetBuilder<RegistrationController>(
+        builder: (controller) {
+          return controller.errorValidationMessage == ""
+              ? Container()
+              : Row(
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 35.w),
+                          child: SizedBox(
+                            width: 342.w,
+                            child: Text(
+                              controller.errorValidationMessage,
+                              maxLines: 3,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 12.fs,
+                                  color: const Color(0xffff4141)),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                    ],
-                  ),
-                ],
-              );
-      });
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+        },
+      );
 
   Widget _pageIcon(String assetPath) => SvgPicture.asset(
         assetPath,
@@ -157,8 +157,25 @@ class RegistrationScreen extends StatelessWidget {
           controller: controller.userNameFieldController,
           onFieldSubmitted: (String text) => controller.submitUserName(),
           isPassword: false,
+          suffixIcon: _inputFieldAnimation(),
           icon: accountAsset,
         ),
+      );
+
+  Widget _inputFieldAnimation() => GetBuilder<RegistrationController>(
+        builder: (controller) {
+          if (controller.isValidationComplete) {
+            return const LottieAnimationWidget(
+              animationAsset: correctAnimation,
+            );
+          } else if (controller.isValidationError) {
+            return const LottieAnimationWidget(
+              animationAsset: deniedAnimation,
+            );
+          }
+
+          return Container();
+        },
       );
 
   Widget _inputEmailField() => CustomTextField(
@@ -290,4 +307,29 @@ class RegistrationScreen extends StatelessWidget {
           ),
         ),
       );
+}
+
+class LottieAnimationWidget extends StatelessWidget {
+  const LottieAnimationWidget({super.key, required this.animationAsset});
+
+  final String animationAsset;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(12.h),
+      child: GetBuilder<RegistrationController>(
+        builder: (controller) => Lottie.asset(
+          animationAsset,
+          fit: BoxFit.cover,
+          controller: controller.animationController,
+          onLoaded: (composition) {
+            Get.find<RegistrationController>().animationController
+              ..duration = composition.duration
+              ..forward();
+          },
+        ),
+      ),
+    );
+  }
 }
