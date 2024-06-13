@@ -35,3 +35,4 @@ flutter:
     - assets/icons/lock_icon.png
     - assets/icons/email_icon.svg
     - assets/icons/lock_icon.svg
+    - assets/icons/error_cross.svg

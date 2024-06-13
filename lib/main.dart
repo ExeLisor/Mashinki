@@ -3,6 +3,9 @@ import 'package:mashinki/exports.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+
+  Get.put(RegistrationController());
+
   runApp(const MainApp());
 }
 

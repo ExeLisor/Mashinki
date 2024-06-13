@@ -1,3 +1,4 @@
+import 'package:mashinki/controllers/controllers.dart';
 import 'package:mashinki/exports.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -6,12 +7,8 @@ class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back,
-          color: Color(0xff4038FF),
-        ),
-      ),
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(leading: _iconBack()),
       body: GetBuilder<RegistrationController>(
         init: RegistrationController(),
         builder: (_) => Stack(
@@ -21,9 +18,19 @@ class RegistrationScreen extends StatelessWidget {
     );
   }
 
+  Widget _iconBack() => GetBuilder<RegistrationController>(
+        builder: (controller) => GestureDetector(
+          onTap: () => controller.goToPreviousPage(),
+          child: const Icon(
+            Icons.arrow_back,
+            color: Color(0xff4038FF),
+          ),
+        ),
+      );
+
   Widget _pages() => GetBuilder<RegistrationController>(
         builder: (controller) => PageView(
-          // physics: const NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           controller: controller.pageController,
           children: [
             _createUsernameWidget(),
@@ -47,28 +54,62 @@ class RegistrationScreen extends StatelessWidget {
         ),
       );
 
-  Widget _createUsernameWidget() => Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          _pageIcon(accountAsset),
-          SizedBox(
-            height: 40.h,
-          ),
-          _createNicknameText(),
-          SizedBox(
-            height: 15.h,
-          ),
-          _createNickNameDescritpion(),
-          SizedBox(
-            height: 20.h,
-          ),
-          _inputUsernameField(),
-          SizedBox(
-            height: 20.h,
-          ),
-          _nextButton("Далее")
-        ],
+  Widget _createUsernameWidget() => GetBuilder<RegistrationController>(
+        builder: (controller) => Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _pageIcon(accountAsset),
+            SizedBox(
+              height: 40.h,
+            ),
+            _createNicknameText(),
+            SizedBox(
+              height: 15.h,
+            ),
+            _createNickNameDescritpion(),
+            SizedBox(
+              height: 20.h,
+            ),
+            _inputUsernameField(),
+            SizedBox(
+              height: 20.h,
+            ),
+            _errorText(),
+            _nextButton("Далее", controller.submitUserName)
+          ],
+        ),
       );
+
+  Widget _errorText() =>
+      GetBuilder<RegistrationController>(builder: (controller) {
+        return controller.errorValidationMessage == ""
+            ? Container()
+            : Row(
+                children: [
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 35.w),
+                        child: SizedBox(
+                          width: 342.w,
+                          child: Text(
+                            controller.errorValidationMessage,
+                            maxLines: 3,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 12.fs,
+                                color: const Color(0xffff4141)),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                    ],
+                  ),
+                ],
+              );
+      });
 
   Widget _pageIcon(String assetPath) => SvgPicture.asset(
         assetPath,
@@ -110,11 +151,14 @@ class RegistrationScreen extends StatelessWidget {
         "Выберите имя пользователя для своего нового аккаунта. Вы всегда можете изменить его.",
       );
 
-  Widget _inputUsernameField() => CustomTextField(
-        hint: "Имя пользователя",
-        controller: TextEditingController(),
-        isPassword: false,
-        icon: accountAsset,
+  Widget _inputUsernameField() => GetBuilder<RegistrationController>(
+        builder: (controller) => CustomTextField(
+          hint: "Имя пользователя",
+          controller: controller.userNameFieldController,
+          onFieldSubmitted: (String text) => controller.submitUserName(),
+          isPassword: false,
+          icon: accountAsset,
+        ),
       );
 
   Widget _inputEmailField() => CustomTextField(
@@ -147,27 +191,29 @@ class RegistrationScreen extends StatelessWidget {
         "Мы можем запомнить пароль, чтобы вам больше не нужно было вводить его на ваших устройствах",
       );
 
-  Widget _inputEmailWidget() => Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          _pageIcon(emailAsset),
-          SizedBox(
-            height: 40.h,
-          ),
-          _bigText("Введите почту"),
-          SizedBox(
-            height: 15.h,
-          ),
-          _inputEmailDescription(),
-          SizedBox(
-            height: 20.h,
-          ),
-          _inputEmailField(),
-          SizedBox(
-            height: 20.h,
-          ),
-          _nextButton("Отправить код")
-        ],
+  Widget _inputEmailWidget() => GetBuilder<RegistrationController>(
+        builder: (controller) => Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _pageIcon(emailAsset),
+            SizedBox(
+              height: 40.h,
+            ),
+            _bigText("Введите почту"),
+            SizedBox(
+              height: 15.h,
+            ),
+            _inputEmailDescription(),
+            SizedBox(
+              height: 20.h,
+            ),
+            _inputEmailField(),
+            SizedBox(
+              height: 20.h,
+            ),
+            _nextButton("Отправить код", () {})
+          ],
+        ),
       );
 
   Widget _createPasswordWidget() => Column(
@@ -197,7 +243,7 @@ class RegistrationScreen extends StatelessWidget {
           SizedBox(
             height: 10.h,
           ),
-          _nextButton("Далее")
+          _nextButton("Далее", () {})
         ],
       );
 
@@ -224,23 +270,22 @@ class RegistrationScreen extends StatelessWidget {
         ],
       );
 
-  Widget _nextButton(String buttonText) => GetBuilder<RegistrationController>(
-        builder: (controller) => GestureDetector(
-          child: Container(
-            height: 55.h,
-            width: 342.w,
-            decoration: BoxDecoration(
-              color: const Color(0xff4038FF),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Center(
-              child: Text(
-                buttonText,
-                style: TextStyle(
-                    fontSize: 15.fs,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
+  Widget _nextButton(String buttonText, VoidCallback onTap) => GestureDetector(
+        onTap: () => onTap(),
+        child: Container(
+          height: 55.h,
+          width: 342.w,
+          decoration: BoxDecoration(
+            color: const Color(0xff4038FF),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Center(
+            child: Text(
+              buttonText,
+              style: TextStyle(
+                  fontSize: 15.fs,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ),

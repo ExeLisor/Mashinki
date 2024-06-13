@@ -24,14 +24,14 @@ class WelcomeScreen extends StatelessWidget {
             children: [
               _welcomeScreenButton(
                 "Создать новый аккаунт",
-                () => Get.offAll(const RegistrationScreen()),
+                () => Get.to(() => const RegistrationScreen()),
               ),
               const SizedBox(
                 height: 15,
               ),
               _welcomeScreenButton(
                 "Войти в существующий аккаунт",
-                () => Get.offAll(const AuthScreen()),
+                () => Get.to(() => const AuthScreen()),
               ),
               const SizedBox(
                 height: 40,

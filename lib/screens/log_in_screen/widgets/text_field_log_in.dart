@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final bool isPassword;
   final String icon;
+  final Function(String text)? onFieldSubmitted;
 
   CustomTextField({
     super.key,
@@ -14,6 +15,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.isPassword = false,
     this.icon = '',
+    this.onFieldSubmitted,
   });
 
   final TextFieldController _textFieldController =
@@ -27,6 +29,10 @@ class CustomTextField extends StatelessWidget {
       child: Obx(
         () => TextFormField(
           controller: controller,
+          onTapOutside: (_) => FocusScope.of(context).unfocus(),
+          autovalidateMode: AutovalidateMode.always,
+          onFieldSubmitted: (_) =>
+              onFieldSubmitted == null ? (_) : onFieldSubmitted!(_),
           style: TextStyle(
               color: Theme.of(context).inputDecorationTheme.hintStyle!.color),
           keyboardType: keyboardType,
