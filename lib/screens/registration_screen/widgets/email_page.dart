@@ -21,7 +21,7 @@ class RegistrationEmailPage extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          _inputEmailField(),
+          controller.isWaitingForCode ? _codeField() : _inputEmailField(),
           SizedBox(
             height: 20.h,
           ),
@@ -94,4 +94,8 @@ class RegistrationEmailPage extends StatelessWidget {
                   text: controller.errorValidationMessage);
         },
       );
+
+  Widget _codeField() {
+    return Container();
+  }
 }

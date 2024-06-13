@@ -17,16 +17,6 @@ class RegistrationScreen extends StatelessWidget {
     );
   }
 
-  Widget _iconBack() => GetBuilder<RegistrationController>(
-        builder: (controller) => GestureDetector(
-          onTap: () => controller.goToPreviousPage(),
-          child: const Icon(
-            Icons.arrow_back,
-            color: Color(0xff4038FF),
-          ),
-        ),
-      );
-
   Widget _pages() => GetBuilder<RegistrationController>(
         builder: (controller) => PageView(
           physics: const NeverScrollableScrollPhysics(),
@@ -49,6 +39,16 @@ class RegistrationScreen extends StatelessWidget {
               count: 3,
               effect: WormEffect(dotHeight: 12.h, dotWidth: 12.h),
             ),
+          ),
+        ),
+      );
+
+  Widget _iconBack() => GetBuilder<RegistrationController>(
+        builder: (controller) => GestureDetector(
+          onTap: () => controller.goToPreviousPage(),
+          child: const Icon(
+            Icons.arrow_back,
+            color: Color(0xff4038FF),
           ),
         ),
       );
