@@ -26,8 +26,16 @@ class RegistrationEmailPage extends StatelessWidget {
             height: 20.h,
           ),
           _errorEmailText(),
-          RegistrationNextPageButton(
-              buttonText: "Отправить код", onTap: controller.submitEmail)
+          controller.isWaitingForCode
+              ? controller.startTime == 0
+                  ? RegistrationNextPageButton(
+                      buttonText: "Отправить код",
+                      onTap: controller.submitEmail)
+                  : WhiteNextButton(
+                      buttonText: "Отправить ещё раз (${controller.startTime})",
+                      onTap: () {})
+              : RegistrationNextPageButton(
+                  buttonText: "Отправить код", onTap: controller.submitEmail),
         ],
       ),
     );
@@ -96,6 +104,27 @@ class RegistrationEmailPage extends StatelessWidget {
       );
 
   Widget _codeField() {
-    return Container();
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 35.w),
+      child: PinCodeTextField(
+        length: 6,
+        appContext: Get.context!,
+        textStyle: TextStyle(
+            color: const Color(0xff4038FF),
+            fontSize: 27.h,
+            fontWeight: FontWeight.normal),
+        pinTheme: PinTheme(
+            shape: PinCodeFieldShape.box,
+            borderRadius: BorderRadius.circular(15),
+            fieldHeight: 55.h,
+            fieldWidth: 55.h,
+            borderWidth: 1.h,
+            activeFillColor: Colors.white,
+            activeColor: const Color(0xff4038FF),
+            selectedColor: const Color(0xff4038FF),
+            inactiveColor: const Color(0xff4038FF)),
+        animationDuration: const Duration(milliseconds: 300),
+      ),
+    );
   }
 }

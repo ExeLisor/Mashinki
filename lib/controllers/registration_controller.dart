@@ -113,6 +113,10 @@ class EmailController extends GetxController
   bool isValidationError = false;
   bool isWaitingForCode = false;
 
+  int startTime = 60;
+
+  Timer? _timer;
+
   final Duration completeDuration = const Duration(
     milliseconds: 1800,
   );
@@ -153,7 +157,7 @@ class EmailController extends GetxController
 
     String validationMessage = validateEmail(email) ?? "";
 
-    log(validationMessage);
+    startTime = 60;
 
     playAnimation();
 
@@ -174,7 +178,32 @@ class EmailController extends GetxController
     }
   }
 
-  void sendCode() => isWaitingForCode = true;
+  void submitCode() {}
+
+  void sendCode() {
+    startTimer();
+    isWaitingForCode = true;
+    update();
+  }
 
   void backToInputEmail() => {isWaitingForCode = false, update()};
+
+  void startTimer() {
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        if (startTime == 0) {
+          _timer!.cancel();
+          update();
+        } else {
+          startTime--;
+          update();
+        }
+      },
+    );
+  }
 }
