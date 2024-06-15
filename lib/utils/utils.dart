@@ -21,7 +21,7 @@ String? validateNickname(String nickname) {
 String? validateEmail(String email) {
   if (email.isEmpty) {
     return 'Email не может быть пустым';
-  } else if (emailRegExp.hasMatch(email)) {
+  } else if (!emailRegExp.hasMatch(email)) {
     return 'Введите корректный email';
   }
   return null;

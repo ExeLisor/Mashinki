@@ -58,7 +58,9 @@ class RegistrationController extends GetxController
           return false;
         }
         return true;
-
+      case 2:
+        Get.find<EmailController>().backToInputEmail();
+        return true;
       default:
         return true;
     }
@@ -105,6 +107,7 @@ class RegistrationController extends GetxController
 class EmailController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final TextEditingController emailFieldController = TextEditingController();
+
   late final AnimationController emailAnimationController;
 
   String errorValidationMessage = "";
@@ -178,7 +181,13 @@ class EmailController extends GetxController
     }
   }
 
-  void submitCode() {}
+  void submitCode(String? code) {
+    if (code == "888888") {
+      Get.find<RegistrationController>().goToNextPage();
+    } else {
+      errorValidationMessage = "Вы ввели неправильный код";
+    }
+  }
 
   void sendCode() {
     startTimer();
@@ -186,7 +195,11 @@ class EmailController extends GetxController
     update();
   }
 
-  void backToInputEmail() => {isWaitingForCode = false, update()};
+  void backToInputEmail() {
+    isWaitingForCode = false;
+    startTime = 60;
+    update();
+  }
 
   void startTimer() {
     if (_timer != null) {

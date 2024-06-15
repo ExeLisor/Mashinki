@@ -21,25 +21,47 @@ class RegistrationEmailPage extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          controller.isWaitingForCode ? _codeField() : _inputEmailField(),
-          SizedBox(
-            height: 20.h,
-          ),
-          _errorEmailText(),
           controller.isWaitingForCode
-              ? controller.startTime == 0
-                  ? RegistrationNextPageButton(
-                      buttonText: "Отправить код",
-                      onTap: controller.submitEmail)
-                  : WhiteNextButton(
-                      buttonText: "Отправить ещё раз (${controller.startTime})",
-                      onTap: () {})
-              : RegistrationNextPageButton(
-                  buttonText: "Отправить код", onTap: controller.submitEmail),
+              ? _inputEmailStepWidgets()
+              : _inputCodeStepWidgets()
         ],
       ),
     );
   }
+
+  Widget _inputEmailStepWidgets() => GetBuilder<EmailController>(
+        builder: (controller) => Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _codeField(),
+            SizedBox(
+              height: 20.h,
+            ),
+            _errorEmailText(),
+            controller.startTime == 0
+                ? RegistrationNextPageButton(
+                    buttonText: "Отправить код", onTap: controller.submitEmail)
+                : WhiteNextButton(
+                    buttonText: "Отправить ещё раз (${controller.startTime})",
+                    onTap: () {})
+          ],
+        ),
+      );
+
+  Widget _inputCodeStepWidgets() => GetBuilder<EmailController>(
+        builder: (controller) => Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _inputEmailField(),
+            SizedBox(
+              height: 20.h,
+            ),
+            _errorEmailText(),
+            RegistrationNextPageButton(
+                buttonText: "Отправить код", onTap: controller.submitEmail)
+          ],
+        ),
+      );
 
   Widget _emailPageTitle() => GetBuilder<EmailController>(
         builder: (controller) => controller.isWaitingForCode
@@ -103,28 +125,32 @@ class RegistrationEmailPage extends StatelessWidget {
         },
       );
 
-  Widget _codeField() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 35.w),
-      child: PinCodeTextField(
-        length: 6,
-        appContext: Get.context!,
-        textStyle: TextStyle(
-            color: const Color(0xff4038FF),
-            fontSize: 27.h,
-            fontWeight: FontWeight.normal),
-        pinTheme: PinTheme(
-            shape: PinCodeFieldShape.box,
-            borderRadius: BorderRadius.circular(15),
-            fieldHeight: 55.h,
-            fieldWidth: 55.h,
-            borderWidth: 1.h,
-            activeFillColor: Colors.white,
-            activeColor: const Color(0xff4038FF),
-            selectedColor: const Color(0xff4038FF),
-            inactiveColor: const Color(0xff4038FF)),
-        animationDuration: const Duration(milliseconds: 300),
-      ),
-    );
-  }
+  Widget _codeField() => GetBuilder<EmailController>(
+        builder: (controller) => Padding(
+          padding: EdgeInsets.symmetric(horizontal: 35.w),
+          child: PinCodeTextField(
+            length: 6,
+            onCompleted: controller.submitCode,
+            appContext: Get.context!,
+            keyboardType: TextInputType.number,
+            autoFocus: true,
+            showCursor: false,
+            textStyle: TextStyle(
+                color: const Color(0xff4038FF),
+                fontSize: 27.h,
+                fontWeight: FontWeight.normal),
+            pinTheme: PinTheme(
+                shape: PinCodeFieldShape.box,
+                borderRadius: BorderRadius.circular(15),
+                fieldHeight: 55.h,
+                fieldWidth: 55.h,
+                borderWidth: 1.h,
+                activeFillColor: Colors.white,
+                activeColor: const Color(0xff4038FF),
+                selectedColor: const Color(0xff4038FF),
+                inactiveColor: const Color(0xff4038FF)),
+            animationDuration: const Duration(milliseconds: 300),
+          ),
+        ),
+      );
 }
