@@ -23,6 +23,10 @@ class HomeScreen extends StatelessWidget {
             height: 25.h,
           ),
           const CarsSearchBar(),
+          SizedBox(
+            height: 20.h,
+          ),
+          const WeeklySelectionWidget()
         ],
       );
 }

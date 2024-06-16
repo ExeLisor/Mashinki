@@ -25,7 +25,7 @@ class CarsSearchBar extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Colors.grey.withOpacity(0.4),
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(0, 5.h), // changes position of shadow
@@ -52,7 +52,7 @@ class CarsSearchTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(41),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withOpacity(0.4),
             spreadRadius: 1,
             blurRadius: 5,
             offset: Offset(0, 5.h), // changes position of shadow
