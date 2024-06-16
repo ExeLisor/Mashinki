@@ -42,18 +42,45 @@ class RegistrationPasswordsPage extends StatelessWidget {
             "Мы можем запомнить пароль, чтобы вам больше не нужно было вводить его на ваших устройствах",
       );
 
-  Widget _inputPasswordField() => CustomTextField(
-        hint: "Пароль",
-        controller: TextEditingController(),
-        isPassword: false,
-        icon: lockAsset,
+  Widget _inputPasswordField() => GetBuilder<RegistrationPasswordsContoller>(
+        builder: (controller) => CustomTextField(
+          hint: "Пароль",
+          controller: controller.passwordFieldController,
+          isPassword: true,
+          showPassword: controller.isShowPassword,
+          icon: lockAsset,
+          suffixIcon: _showPasswordIcon(),
+        ),
       );
 
-  Widget _confirmPasswordField() => CustomTextField(
-        hint: "Повторите пароль",
-        controller: TextEditingController(),
-        isPassword: false,
-        icon: lockAsset,
+  Widget _showPasswordIcon() => GetBuilder<RegistrationPasswordsContoller>(
+        builder: (controller) => GestureDetector(
+          onTap: controller.showPassword,
+          child: const SvgIcon(
+            assetPath: lineEye,
+          ),
+        ),
+      );
+
+  Widget _confirmPasswordField() => GetBuilder<RegistrationPasswordsContoller>(
+        builder: (controller) => CustomTextField(
+          hint: "Повторите пароль",
+          controller: controller.confirmPasswordFieldController,
+          isPassword: true,
+          showPassword: controller.isShowConfirmPassword,
+          icon: lockAsset,
+          suffixIcon: _showConfirmPasswordIcon(),
+        ),
+      );
+
+  Widget _showConfirmPasswordIcon() =>
+      GetBuilder<RegistrationPasswordsContoller>(
+        builder: (controller) => GestureDetector(
+          onTap: controller.showConfirmPassword,
+          child: const SvgIcon(
+            assetPath: lineEye,
+          ),
+        ),
       );
 
   Widget _savePasswordCheckBox() => Row(

@@ -8,14 +8,7 @@ const lockIconAsset = 'assets/icons/lock_icon.png';
 const accountAsset = 'assets/icons/account_icon.svg';
 const emailAsset = 'assets/icons/email_icon.svg';
 const lockAsset = 'assets/icons/lock_icon.svg';
+const lineEye = "assets/icons/line_eye.svg";
 const errorCrossAsset = 'assets/icons/error_cross.svg';
 const correctAnimation = "assets/animations/correct_animation.json";
 const deniedAnimation = "assets/animations/denied_animation.json";
-
-final RegExp nicknameRegExp = RegExp(
-  r'^[a-zA-Z0-9_]+$',
-);
-
-final RegExp emailRegExp = RegExp(
-  r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-);

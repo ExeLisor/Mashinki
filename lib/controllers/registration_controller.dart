@@ -1,8 +1,98 @@
 import 'package:mashinki/exports.dart';
 
+class RegistrationPasswordsContoller extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  final TextEditingController passwordFieldController = TextEditingController();
+  final TextEditingController confirmPasswordFieldController =
+      TextEditingController();
+
+  late final AnimationController passwordAnimationController;
+  late final AnimationController confirmPasswordAnimationController;
+
+  final Duration tranistionDuration = const Duration(milliseconds: 500);
+  final Duration completeDuration = const Duration(
+    milliseconds: 1800,
+  );
+  final Duration errorDuration = const Duration(
+    milliseconds: 450,
+  );
+
+  final Curve animationCurve = Curves.easeInOut;
+
+  String errorValidationMessage = "";
+  bool isValidationComplete = false;
+  bool isValidationError = false;
+
+  bool isShowPassword = false;
+  bool isShowConfirmPassword = false;
+
+  @override
+  void onInit() {
+    super.onInit();
+    initPasswordAnimationController();
+    initConfirmPasswordAnimationController();
+  }
+
+  void initPasswordAnimationController() =>
+      passwordAnimationController = AnimationController(
+        vsync: this,
+        duration: const Duration(seconds: 2),
+      );
+
+  void initConfirmPasswordAnimationController() =>
+      confirmPasswordAnimationController = AnimationController(
+        vsync: this,
+        duration: const Duration(seconds: 2),
+      );
+
+  void playPasswordAnimation() {
+    passwordAnimationController.reset();
+    passwordAnimationController.forward();
+  }
+
+  void playConfirmPasswordAnimation() {
+    confirmPasswordAnimationController.reset();
+    confirmPasswordAnimationController.forward();
+  }
+
+  void showPassword() {
+    isShowPassword = !isShowPassword;
+    update();
+  }
+
+  void showConfirmPassword() {
+    isShowConfirmPassword = !isShowConfirmPassword;
+    update();
+  }
+
+  bool matchPasswords(String password, String confirmPassword) =>
+      password.trim() == confirmPassword.trim();
+
+  void submitPasswords() {
+    String password = passwordFieldController.value.text;
+    String confirmPassword = confirmPasswordFieldController.text;
+
+    String validationMessage = validatePassword(password) ?? "";
+    bool isPaswordsMatch = matchPasswords(password, confirmPassword);
+
+    validationMessage.isEmpty && isPaswordsMatch
+        ? validationComplete()
+        : validationError(validationMessage);
+  }
+
+  void validationComplete() {
+    log("VALIDATION COMPLETE");
+  }
+
+  void validationError(String validationMessage) {
+    errorValidationMessage = validationMessage;
+    update();
+  }
+}
+
 class RegistrationController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(initialPage: 2);
   final TextEditingController userNameFieldController = TextEditingController();
   late final AnimationController animationController;
 

@@ -6,6 +6,7 @@ void main() {
 
   Get.put(RegistrationController());
   Get.put(EmailController());
+  Get.put(RegistrationPasswordsContoller());
 
   runApp(const MainApp());
 }
