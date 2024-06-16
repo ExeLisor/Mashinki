@@ -1,7 +1,7 @@
 import 'package:mashinki/exports.dart';
 
 class RegistrationPasswordsContoller extends GetxController
-    with GetSingleTickerProviderStateMixin {
+    with GetTickerProviderStateMixin {
   final TextEditingController passwordFieldController = TextEditingController();
   final TextEditingController confirmPasswordFieldController =
       TextEditingController();
@@ -194,8 +194,7 @@ class RegistrationController extends GetxController
   }
 }
 
-class EmailController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class EmailController extends GetxController with GetTickerProviderStateMixin {
   final TextEditingController emailFieldController = TextEditingController();
 
   late final AnimationController emailAnimationController;
