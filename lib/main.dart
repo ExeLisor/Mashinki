@@ -26,6 +26,6 @@ class _MainAppState extends State<MainApp> {
     return GetMaterialApp(
         theme: themeData(context),
         debugShowCheckedModeBanner: false,
-        home: const RegistrationScreen());
+        home: const HomeScreen());
   }
 }
