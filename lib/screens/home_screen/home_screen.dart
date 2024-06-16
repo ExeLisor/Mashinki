@@ -16,7 +16,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _body() => const Column(
-        children: [TopBar(title: "Каталог")],
+  Widget _body() => Column(
+        children: [
+          const TopBar(title: "Каталог"),
+          SizedBox(
+            height: 25.h,
+          ),
+          const CarsSearchBar(),
+        ],
       );
 }

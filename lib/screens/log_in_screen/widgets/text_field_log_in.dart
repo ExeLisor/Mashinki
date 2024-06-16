@@ -33,8 +33,6 @@ class CustomTextField extends StatelessWidget {
         autovalidateMode: AutovalidateMode.always,
         onFieldSubmitted: (_) =>
             onFieldSubmitted == null ? (_) : onFieldSubmitted!(_),
-        style: TextStyle(
-            color: Theme.of(context).inputDecorationTheme.hintStyle!.color),
         keyboardType: keyboardType,
         obscureText: isPassword && !showPassword ? true : false,
         decoration: InputDecoration(

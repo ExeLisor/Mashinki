@@ -14,5 +14,7 @@ const lineEye = "assets/icons/line_eye.svg";
 const errorCrossAsset = 'assets/icons/error_cross.svg';
 const correctAnimation = "assets/animations/correct_animation.json";
 const deniedAnimation = "assets/animations/denied_animation.json";
+const filtersIconAsset = "assets/icons/filters_icon.svg";
+const lensIcon = "assets/icons/lens_icon.svg";
 
 const primaryColor = Color(0xFF4038FF);

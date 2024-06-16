@@ -39,6 +39,8 @@ flutter:
     - assets/icons/lock_icon.svg
     - assets/icons/error_cross.svg
     - assets/icons/line_eye.svg
+    - assets/icons/filters_icon.svg
+    - assets/icons/lens_icon.svg
     - assets/animations/correct_animation.json
     - assets/animations/denied_animation.json
     
