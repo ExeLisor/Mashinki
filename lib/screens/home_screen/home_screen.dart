@@ -5,10 +5,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _body());
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0.h,
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 25.w),
+        child: _body(),
+      ),
+    );
   }
 
-  Widget _body() => Column(
-        children: [],
+  Widget _body() => const Column(
+        children: [TopBar(title: "Каталог")],
       );
 }

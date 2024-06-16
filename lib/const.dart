@@ -1,3 +1,5 @@
+import 'package:mashinki/exports.dart';
+
 const adUnitIdAndroid = 'ca-app-pub-3940256099942544/6300978111';
 const adUnitIdIOS = 'ca-app-pub-3940256099942544/2934735716';
 
@@ -12,3 +14,5 @@ const lineEye = "assets/icons/line_eye.svg";
 const errorCrossAsset = 'assets/icons/error_cross.svg';
 const correctAnimation = "assets/animations/correct_animation.json";
 const deniedAnimation = "assets/animations/denied_animation.json";
+
+const primaryColor = Color(0xFF4038FF);
