@@ -30,7 +30,11 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          const HomeScreenAdsWidget()
+          const HomeScreenAdsWidget(),
+          SizedBox(
+            height: 20.h,
+          ),
+          const BrandsWidget()
         ],
       );
 }
