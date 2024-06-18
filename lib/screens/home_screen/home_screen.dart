@@ -1,40 +1,61 @@
 import 'package:mashinki/exports.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final BarController _barController = Get.put(BarController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0.h,
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        child: _body(),
-      ),
+      appBar: _appBar(),
+      bottomNavigationBar: _bottomBar(),
+      body: _body(),
     );
   }
 
-  Widget _body() => Column(
-        children: [
-          const TopBar(title: "Каталог"),
-          SizedBox(
-            height: 25.h,
-          ),
-          const CarsSearchBar(),
-          SizedBox(
-            height: 20.h,
-          ),
-          const WeeklySelectionWidget(),
-          SizedBox(
-            height: 20.h,
-          ),
-          const HomeScreenAdsWidget(),
-          SizedBox(
-            height: 20.h,
-          ),
-          const BrandsWidget()
-        ],
+  AppBar _appBar() => AppBar(
+        toolbarHeight: 0.h,
       );
+
+  Widget _bottomBar() => HomeScreenBottomBarWidget();
+
+  Widget _homeScreen() => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 25.w),
+        child: Column(
+          children: [
+            const TopBar(title: "Каталог"),
+            SizedBox(
+              height: 25.h,
+            ),
+            const CarsSearchBar(),
+            SizedBox(
+              height: 20.h,
+            ),
+            const WeeklySelectionWidget(),
+            SizedBox(
+              height: 20.h,
+            ),
+            const HomeScreenAdsWidget(),
+            SizedBox(
+              height: 20.h,
+            ),
+            const BrandsWidget(),
+            SizedBox(
+              height: 20.h,
+            ),
+            const CarsCatalogListWidget(),
+          ],
+        ),
+      );
+
+  Widget _body() => Obx(
+      () => _bodyWidgets().elementAt(_barController.currentPageIndex.value));
+
+  List<Widget> _bodyWidgets() => <Widget>[
+        _homeScreen(),
+        Container(),
+        Container(),
+        Container(),
+      ];
 }

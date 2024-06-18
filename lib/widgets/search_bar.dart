@@ -10,7 +10,7 @@ class CarsSearchBar extends StatelessWidget {
       children: [
         const CarsSearchTextField(),
         SizedBox(
-          width: 20.w,
+          width: 17.w,
         ),
         _filtersIcon()
       ],

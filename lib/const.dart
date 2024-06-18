@@ -16,5 +16,10 @@ const correctAnimation = "assets/animations/correct_animation.json";
 const deniedAnimation = "assets/animations/denied_animation.json";
 const filtersIconAsset = "assets/icons/filters_icon.svg";
 const lensIcon = "assets/icons/lens_icon.svg";
+const accountCircleIcon = "assets/icons/account_circle_icon.svg";
+const listIcon = "assets/icons/list_icon.svg";
+const comprIcon = "assets/icons/compr_icon.svg";
+const homeIcon = "assets/icons/home_icon.svg";
 
 const primaryColor = Color(0xFF4038FF);
+const unactiveColor = Color(0xffA7A7A7);

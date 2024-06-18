@@ -14,6 +14,7 @@ export 'package:flutter/services.dart';
 
 export 'package:dio/dio.dart' hide ProgressCallback;
 export 'package:shared_preferences/shared_preferences.dart';
+export 'package:cached_network_image/cached_network_image.dart';
 export 'package:logger/logger.dart';
 export 'package:intl/intl.dart' hide TextDirection;
 export 'package:get/get.dart'

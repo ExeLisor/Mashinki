@@ -20,6 +20,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   lottie: ^3.1.2
   pin_code_fields: ^8.0.1
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +42,10 @@ flutter:
     - assets/icons/line_eye.svg
     - assets/icons/filters_icon.svg
     - assets/icons/lens_icon.svg
+    - assets/icons/home_icon.svg
+    - assets/icons/list_icon.svg
+    - assets/icons/compr_icon.svg
+    - assets/icons/account_circle_icon.svg
     - assets/animations/correct_animation.json
     - assets/animations/denied_animation.json
     

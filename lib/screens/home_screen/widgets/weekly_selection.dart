@@ -99,13 +99,14 @@ class WeeklyCarTile extends StatelessWidget {
       );
 
   Widget _carImage() => SizedBox(
-      width: 362.w,
-      height: 136.h,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: Image.network(
-          carImageUrl,
-          fit: BoxFit.fitWidth,
+        width: 362.w,
+        height: 136.h,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: CachedNetworkImage(
+            imageUrl: carImageUrl,
+            fit: BoxFit.fitWidth,
+          ),
         ),
-      ));
+      );
 }
