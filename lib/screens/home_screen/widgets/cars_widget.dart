@@ -1,7 +1,7 @@
 import 'package:mashinki/exports.dart';
 
 class CarsCatalogListWidget extends StatelessWidget {
-  const CarsCatalogListWidget({super.key});
+  CarsCatalogListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +29,13 @@ class CarsCatalogListWidget extends StatelessWidget {
             fontSize: 18.fs, color: primaryColor, fontWeight: FontWeight.w600),
       );
   final SliverGridDelegate _gridDelegate =
-      const SliverGridDelegateWithFixedCrossAxisCount(
+      SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 2, // number of items in each row
-    mainAxisSpacing: 8.0, // spacing between rows
+    mainAxisSpacing: 18.0.w, // spacing between rows
     crossAxisSpacing: 8.0, // spacing between columns
   );
   Widget _carsGrid() => GridView.builder(
+        padding: EdgeInsets.only(bottom: 16.h),
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: _gridDelegate,

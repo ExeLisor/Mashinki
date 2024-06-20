@@ -29,7 +29,9 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 25.h,
               ),
-              const CarsSearchBar(),
+              const CarsSearchBar(
+                isActive: false,
+              ),
               SizedBox(
                 height: 20.h,
               ),
@@ -45,7 +47,7 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              const CarsCatalogListWidget(),
+              CarsCatalogListWidget(),
             ],
           ),
         ),
