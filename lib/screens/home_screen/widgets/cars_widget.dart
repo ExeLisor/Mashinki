@@ -7,15 +7,17 @@ class CarsCatalogListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _carsCatalogWidgetTitle(),
-            SizedBox(
-              height: 15.h,
-            ),
-            const CatalogTile()
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _carsCatalogWidgetTitle(),
+              SizedBox(
+                height: 15.h,
+              ),
+              _carsGrid(),
+            ],
+          ),
         ),
       ],
     );
@@ -25,6 +27,19 @@ class CarsCatalogListWidget extends StatelessWidget {
         "Автомобили",
         style: TextStyle(
             fontSize: 18.fs, color: primaryColor, fontWeight: FontWeight.w600),
+      );
+  final SliverGridDelegate _gridDelegate =
+      const SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2, // number of items in each row
+    mainAxisSpacing: 8.0, // spacing between rows
+    crossAxisSpacing: 8.0, // spacing between columns
+  );
+  Widget _carsGrid() => GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: _gridDelegate,
+        itemCount: 4,
+        itemBuilder: (_, index) => const CatalogTile(),
       );
 }
 

@@ -24,8 +24,9 @@ class _MainAppState extends State<MainApp> {
     ScreenSize.init(context);
 
     return GetMaterialApp(
-        theme: themeData(context),
-        debugShowCheckedModeBanner: false,
-        home: HomeScreen());
+      theme: themeData(context),
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
+    );
   }
 }

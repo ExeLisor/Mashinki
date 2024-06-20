@@ -20,32 +20,34 @@ class HomeScreen extends StatelessWidget {
 
   Widget _bottomBar() => HomeScreenBottomBarWidget();
 
-  Widget _homeScreen() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        child: Column(
-          children: [
-            const TopBar(title: "Каталог"),
-            SizedBox(
-              height: 25.h,
-            ),
-            const CarsSearchBar(),
-            SizedBox(
-              height: 20.h,
-            ),
-            const WeeklySelectionWidget(),
-            SizedBox(
-              height: 20.h,
-            ),
-            const HomeScreenAdsWidget(),
-            SizedBox(
-              height: 20.h,
-            ),
-            const BrandsWidget(),
-            SizedBox(
-              height: 20.h,
-            ),
-            const CarsCatalogListWidget(),
-          ],
+  Widget _homeScreen() => SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          child: Column(
+            children: [
+              const TopBar(title: "Каталог"),
+              SizedBox(
+                height: 25.h,
+              ),
+              const CarsSearchBar(),
+              SizedBox(
+                height: 20.h,
+              ),
+              const WeeklySelectionWidget(),
+              SizedBox(
+                height: 20.h,
+              ),
+              const HomeScreenAdsWidget(),
+              SizedBox(
+                height: 20.h,
+              ),
+              const BrandsWidget(),
+              SizedBox(
+                height: 20.h,
+              ),
+              const CarsCatalogListWidget(),
+            ],
+          ),
         ),
       );
 

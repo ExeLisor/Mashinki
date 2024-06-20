@@ -16,44 +16,25 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
     );
   }
 
+  final List<String> _icons = [
+    homeIcon,
+    listIcon,
+    comprIcon,
+    accountCircleIcon
+  ];
+
   List<BottomNavigationBarItem> _items() {
-    return [
-      BottomNavigationBarItem(
+    return List.generate(
+      4,
+      (index) => BottomNavigationBarItem(
+        label: "",
         icon: SvgPicture.asset(
-          homeIcon,
-          color: _barController.currentPageIndex.value == 0
+          _icons[index],
+          color: _barController.currentPageIndex.value == index
               ? primaryColor
               : unactiveColor,
         ),
-        label: 'Home',
       ),
-      BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          listIcon,
-          color: _barController.currentPageIndex.value == 1
-              ? primaryColor
-              : unactiveColor,
-        ),
-        label: 'Business',
-      ),
-      BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          comprIcon,
-          color: _barController.currentPageIndex.value == 2
-              ? primaryColor
-              : unactiveColor,
-        ),
-        label: 'School',
-      ),
-      BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          accountCircleIcon,
-          color: _barController.currentPageIndex.value == 3
-              ? primaryColor
-              : unactiveColor,
-        ),
-        label: 'School',
-      ),
-    ];
+    );
   }
 }
