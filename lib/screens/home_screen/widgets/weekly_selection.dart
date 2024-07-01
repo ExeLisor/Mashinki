@@ -1,4 +1,5 @@
 import 'package:mashinki/exports.dart';
+import 'package:mashinki/screens/home_screen/widgets/home_shimmer.dart';
 
 class WeeklySelectionWidget extends StatelessWidget {
   const WeeklySelectionWidget({super.key});
@@ -27,7 +28,10 @@ class WeeklySelectionWidget extends StatelessWidget {
             color: primaryColor, fontSize: 18.fs, fontWeight: FontWeight.w700),
       );
 
-  Widget _weeklyCarousel() => SizedBox(
+  Widget _weeklyCarousel() => HomeShimmerWidget(
+      shimmer: _weeklyWidgetLoadingShimmer(), child: _weeklyPageView());
+
+  Widget _weeklyPageView() => SizedBox(
         width: 362.w,
         height: 136.h,
         child: PageView(
@@ -43,14 +47,24 @@ class WeeklySelectionWidget extends StatelessWidget {
           ],
         ),
       );
+
+  Widget _weeklyWidgetLoadingShimmer() => ShimmerWidget(
+        child: Container(
+          width: 362.w,
+          height: 136.h,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+      );
 }
 
 class WeeklyCarTile extends StatelessWidget {
-  const WeeklyCarTile(
-      {super.key, required this.carName, required this.carImageUrl});
+  const WeeklyCarTile({super.key, this.carName, this.carImageUrl});
 
-  final String carName;
-  final String carImageUrl;
+  final String? carName;
+  final String? carImageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +90,7 @@ class WeeklyCarTile extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(left: 18.0.w, bottom: 11.h),
           child: Text(
-            carName,
+            carName ?? "",
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.fs,
@@ -103,10 +117,12 @@ class WeeklyCarTile extends StatelessWidget {
         height: 136.h,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
-          child: CachedNetworkImage(
-            imageUrl: carImageUrl,
-            fit: BoxFit.fitWidth,
-          ),
+          child: carImageUrl == null
+              ? Container()
+              : CachedNetworkImage(
+                  imageUrl: carImageUrl ?? "",
+                  fit: BoxFit.fitWidth,
+                ),
         ),
       );
 }

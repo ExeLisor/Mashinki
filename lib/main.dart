@@ -7,6 +7,7 @@ void main() {
   Get.put(RegistrationController());
   Get.put(EmailController());
   Get.put(RegistrationPasswordsContoller());
+  Get.put(HomeScreenController());
 
   runApp(const MainApp());
 }
@@ -26,7 +27,7 @@ class _MainAppState extends State<MainApp> {
     return GetMaterialApp(
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
-      home: BrandScreen(),
+      home: HomeScreen(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/rendering.dart';
 import 'package:mashinki/exports.dart';
+import 'package:mashinki/screens/home_screen/widgets/home_shimmer.dart';
 
 class BrandsWidget extends StatelessWidget {
   const BrandsWidget({super.key});
@@ -13,10 +14,13 @@ class BrandsWidget extends StatelessWidget {
         SizedBox(
           height: 15.h,
         ),
-        _brandsList(),
+        _brandsView()
       ],
     );
   }
+
+  Widget _brandsView() =>
+      HomeShimmerWidget(shimmer: _brandsLoadingWidget(), child: _brandsList());
 
   Widget _brandsWidgetTitle() => Row(
         children: [
@@ -37,7 +41,7 @@ class BrandsWidget extends StatelessWidget {
         ],
       );
 
-  Widget _brandsList() => Container(
+  Widget _brandsList() => SizedBox(
         height: 58.h,
         child: ListView(
           shrinkWrap: true,
@@ -71,6 +75,27 @@ class BrandsWidget extends StatelessWidget {
             _brandTile(
                 "https://pngimg.com/uploads/lamborghini/lamborghini_PNG10709.png"),
           ],
+        ),
+      );
+
+  Widget _brandsLoadingWidget() => ShimmerWidget(
+        child: SizedBox(
+          height: 58.h,
+          width: Get.width,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.15),
+                  spreadRadius: 1,
+                  blurRadius: 5,
+                  offset: Offset(0, 5.h), // changes position of shadow
+                ),
+              ],
+            ),
+          ),
         ),
       );
 

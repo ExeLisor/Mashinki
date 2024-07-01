@@ -1,4 +1,5 @@
 import 'package:mashinki/exports.dart';
+import 'package:mashinki/screens/home_screen/widgets/home_shimmer.dart';
 
 class CarsCatalogListWidget extends StatelessWidget {
   CarsCatalogListWidget({super.key});
@@ -15,13 +16,47 @@ class CarsCatalogListWidget extends StatelessWidget {
               SizedBox(
                 height: 15.h,
               ),
-              _carsGrid(),
+              _carsView(),
             ],
           ),
         ),
       ],
     );
   }
+
+  Widget _carsView() => HomeShimmerWidget(
+        shimmer: _carsGridLoading(),
+        child: _carsGrid(),
+      );
+
+  Widget _carsGridLoading() => ShimmerWidget(
+        child: Row(
+          children: [
+            _catalogTileContainer(),
+            SizedBox(
+              width: 18.w,
+            ),
+            _catalogTileContainer(),
+          ],
+        ),
+      );
+
+  Widget _catalogTileContainer() => Container(
+        height: 169.h,
+        width: 172.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.15),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 5.h), // changes position of shadow
+            ),
+          ],
+        ),
+      );
 
   Widget _carsCatalogWidgetTitle() => Text(
         "Автомобили",

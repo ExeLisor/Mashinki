@@ -15,9 +15,6 @@ class CarsSearchBar extends StatelessWidget {
           isActive: isActive,
           isActiveButton: isActiveButton,
         ),
-        SizedBox(
-          width: 20.w,
-        ),
         _filtersIcon()
       ],
     );
