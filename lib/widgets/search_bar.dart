@@ -1,42 +1,49 @@
 import 'package:mashinki/exports.dart';
 
 class CarsSearchBar extends StatelessWidget {
-  const CarsSearchBar({super.key, required this.isActive});
+  const CarsSearchBar(
+      {super.key, required this.isActive, required this.isActiveButton});
 
   final bool isActive;
+  final bool isActiveButton;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         CarsSearchTextField(
           isActive: isActive,
+          isActiveButton: isActiveButton,
+        ),
+        SizedBox(
+          width: 20.w,
         ),
         _filtersIcon()
       ],
     );
   }
 
-  Widget _filtersIcon() => isActive
+  Widget _filtersIcon() => isActiveButton
       ? Container(
           height: 48.h,
           width: 48.h,
-          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           decoration: BoxDecoration(
             color: primaryColor,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.4),
+                color: Colors.black.withOpacity(0.2),
                 spreadRadius: 1,
-                blurRadius: 5,
-                offset: Offset(0, 5.h), // changes position of shadow
+                blurRadius: 3,
+                offset: Offset(0, 2.h),
               ),
             ],
           ),
           child: SvgPicture.asset(
             filtersIconAsset,
+            height: 22.h,
+            width: 22.w,
             fit: BoxFit.scaleDown,
           ),
         )
@@ -44,24 +51,26 @@ class CarsSearchBar extends StatelessWidget {
 }
 
 class CarsSearchTextField extends StatelessWidget {
-  const CarsSearchTextField({super.key, required this.isActive});
+  const CarsSearchTextField(
+      {super.key, required this.isActive, required this.isActiveButton});
 
   final bool isActive;
+  final bool isActiveButton;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: isActive ? 296.w : 362.w,
+      width: isActiveButton ? 296.w : 362.w,
       height: 48.h,
       decoration: BoxDecoration(
         color: const Color(0xfffef7ff),
         borderRadius: BorderRadius.circular(41),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.4),
+            color: Colors.black.withOpacity(0.1),
             spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 5.h), // changes position of shadow
+            blurRadius: 3,
+            offset: Offset(0, 2.h),
           ),
         ],
       ),
@@ -72,30 +81,25 @@ class CarsSearchTextField extends StatelessWidget {
         onTapOutside: (_) => FocusScope.of(context).unfocus(),
         decoration: InputDecoration(
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(41),
+            borderRadius: BorderRadius.circular(40),
             borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(41),
-            borderSide: BorderSide(
-                color: Theme.of(context)
-                    .inputDecorationTheme
-                    .border!
-                    .borderSide
-                    .color),
+            borderRadius: BorderRadius.circular(40),
+            borderSide: BorderSide(color: Colors.transparent),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(41),
-            borderSide: BorderSide(
-                color: Theme.of(context)
-                    .inputDecorationTheme
-                    .border!
-                    .borderSide
-                    .color),
+            borderRadius: BorderRadius.circular(40),
+            borderSide: BorderSide(color: Colors.transparent),
           ),
           hintText: "Поиск",
           hintStyle: TextStyle(fontSize: 18.fs, color: Colors.grey),
-          prefixIcon: const SvgIcon(assetPath: lensIcon),
+          prefixIcon: SvgPicture.asset(
+            lensIcon,
+            height: 22.h,
+            width: 20.w,
+            fit: BoxFit.scaleDown,
+          ),
         ),
       ),
     );

@@ -26,7 +26,7 @@ class _MainAppState extends State<MainApp> {
     return GetMaterialApp(
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: BrandScreen(),
     );
   }
 }

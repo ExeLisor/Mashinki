@@ -1,7 +1,7 @@
 export './auth_screen.dart';
 export './log_in_screen/widgets/text_field_log_in.dart';
 export './log_in_screen/widgets/next_button.dart';
-export './welcome_screen.dart';
+export 'welcome_screeen/welcome_screen.dart';
 
 export 'home_screen/home_screen.dart';
 export 'home_screen/widgets/weekly_selection.dart';
@@ -18,3 +18,9 @@ export 'registration_screen/widgets/title_widget.dart';
 export 'registration_screen/widgets/description_widget.dart';
 export 'registration_screen/widgets/next_button.dart';
 export 'registration_screen/widgets/error_widget.dart';
+
+export 'search_screen/search_screen.dart';
+
+export 'brand_screen/brand_screen.dart';
+export '../models/brand.dart';
+export 'brand_screen/widgets/brand_grid.dart';

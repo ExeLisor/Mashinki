@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
               CustomTextField(
                 hint: "Пароль",
                 controller:
-                    _passwordController, // Использовать отдельный контроллер для пароля
+                    _passwordController,
                 isPassword: true,
                 icon: manIconAsset,
               ),

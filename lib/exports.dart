@@ -25,3 +25,4 @@ export 'package:smooth_page_indicator/smooth_page_indicator.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:lottie/lottie.dart';
 export 'package:pin_code_fields/pin_code_fields.dart';
+export 'package:alphabet_list_view/alphabet_list_view.dart';
