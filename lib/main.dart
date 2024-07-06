@@ -1,9 +1,14 @@
 import 'package:mashinki/exports.dart';
-import 'package:mashinki/screens/log_in_screen/log_in_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+
+  Get.put(RegistrationController());
+  Get.put(EmailController());
+  Get.put(RegistrationPasswordsContoller());
+  Get.put(HomeScreenController());
+
   runApp(const MainApp());
 }
 
@@ -20,8 +25,9 @@ class _MainAppState extends State<MainApp> {
     ScreenSize.init(context);
 
     return GetMaterialApp(
-        theme: themeData(context),
-        debugShowCheckedModeBanner: false,
-        home: LoginScreen());
+      theme: themeData(context),
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
+    );
   }
 }
