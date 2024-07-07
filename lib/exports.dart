@@ -29,4 +29,5 @@ export 'package:alphabet_list_view/alphabet_list_view.dart';
 export 'package:shimmer/shimmer.dart';
 export 'package:firebase_analytics/firebase_analytics.dart';
 export 'package:firebase_core/firebase_core.dart';
+export 'package:firebase_remote_config/firebase_remote_config.dart';
 export 'firebase_options.dart';

@@ -7,6 +7,7 @@ void main() async {
   );
   MobileAds.instance.initialize();
   await _initFirebase();
+  await _initFirebaseConfig();
   await _sendAnalyticsEvent();
 
   Get.put(RegistrationController());
@@ -23,6 +24,24 @@ Future<void> _initFirebase() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+  } catch (e) {
+    log("Failed to initialize Firebase: $e");
+  }
+}
+
+Future<void> _initFirebaseConfig() async {
+  try {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.setConfigSettings(
+      RemoteConfigSettings(
+        fetchTimeout: const Duration(minutes: 1),
+        minimumFetchInterval: const Duration(hours: 1),
+      ),
+    );
+
+    await remoteConfig.fetchAndActivate();
+
+    log(remoteConfig.getInt("example_param_1"));
   } catch (e) {
     log("Failed to initialize Firebase: $e");
   }
