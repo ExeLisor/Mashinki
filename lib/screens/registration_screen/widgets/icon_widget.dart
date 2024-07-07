@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 class RegistrationPageIconWidget extends StatelessWidget {
   const RegistrationPageIconWidget({super.key, required this.assetPath});

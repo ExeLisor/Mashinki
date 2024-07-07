@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 //Делает проверку на стейт главной страницы
 

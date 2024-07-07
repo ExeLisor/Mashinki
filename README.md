@@ -1,3 +1,3 @@
-# mashinki
+# autoverse
 
 A new Flutter project.

@@ -1,6 +1,6 @@
 import 'package:flutter/rendering.dart';
-import 'package:mashinki/exports.dart';
-import 'package:mashinki/screens/home_screen/widgets/home_shimmer.dart';
+import 'package:autoverse/exports.dart';
+import 'package:autoverse/screens/home_screen/widgets/home_shimmer.dart';
 
 class BrandsWidget extends StatelessWidget {
   const BrandsWidget({super.key});

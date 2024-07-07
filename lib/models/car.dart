@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 List<Car> carFromJson(String str) =>
     List<Car>.from(json.decode(str).map((x) => Car.fromJson(x)));

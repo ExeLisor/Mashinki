@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
