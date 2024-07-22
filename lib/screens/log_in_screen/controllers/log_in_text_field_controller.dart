@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 class TextFieldController extends GetxController {
   var obscureText = false.obs;

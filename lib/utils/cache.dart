@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 Future<bool> saveToCache(String key, String value) async {
   // log("$key saved to cache");

@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 ThemeData themeData(BuildContext context) => ThemeData(
       textTheme: GoogleFonts.interTextTheme(

@@ -1,9 +1,11 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   MobileAds.instance.initialize();
 
+  Get.put(FirebaseController());
   Get.put(RegistrationController());
   Get.put(EmailController());
   Get.put(RegistrationPasswordsContoller());

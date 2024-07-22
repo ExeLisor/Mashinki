@@ -1,5 +1,5 @@
-import 'package:mashinki/exports.dart';
-import 'package:mashinki/screens/home_screen/widgets/home_shimmer.dart';
+import 'package:autoverse/exports.dart';
+import 'package:autoverse/screens/home_screen/widgets/home_shimmer.dart';
 
 class WeeklySelectionWidget extends StatelessWidget {
   const WeeklySelectionWidget({super.key});

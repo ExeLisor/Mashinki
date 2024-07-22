@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 const int uiHeight = 892;
 const int uiWidth = 412;

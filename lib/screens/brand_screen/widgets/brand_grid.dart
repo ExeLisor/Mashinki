@@ -1,5 +1,5 @@
-import 'package:mashinki/exports.dart';
-import 'package:mashinki/screens/brand_screen/widgets/bran_tile.dart';
+import 'package:autoverse/exports.dart';
+import 'package:autoverse/screens/brand_screen/widgets/bran_tile.dart';
 
 class BrandGrid extends StatelessWidget {
   final List<Brand> brands;

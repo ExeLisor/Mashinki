@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 class RegistrationErrorWidget extends StatelessWidget {
   const RegistrationErrorWidget({super.key, required this.text});

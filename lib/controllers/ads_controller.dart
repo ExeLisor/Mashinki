@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 class AdsController extends GetxController {
   Future<BannerAd?> loadAd() async {

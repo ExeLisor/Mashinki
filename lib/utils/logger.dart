@@ -1,4 +1,4 @@
-import 'package:mashinki/exports.dart';
+import 'package:autoverse/exports.dart';
 
 void log(dynamic info, {Level level = Level.info}) {
   Logger().log(level, info);
