@@ -1,6 +1,6 @@
 import 'package:autoverse/exports.dart';
 
-Widget brandCard(String name, String imageUrl) => Column(
+Widget brandCard(String name, {String? imageUrl}) => Column(
       children: [
         Container(
           height: 75.h,
@@ -17,14 +17,14 @@ Widget brandCard(String name, String imageUrl) => Column(
               ),
             ],
           ),
-          child: Container(
-            padding: EdgeInsets.all(15.w),
-            child: CachedNetworkImage(
-              filterQuality: FilterQuality.medium,
-              imageUrl: imageUrl,
-              fit: BoxFit.scaleDown,
-            ),
-          ),
+          // child: Container(
+          //   padding: EdgeInsets.all(15.w),
+          //   child: CachedNetworkImage(
+          //     filterQuality: FilterQuality.medium,
+          //     imageUrl: imageUrl,
+          //     fit: BoxFit.scaleDown,
+          //   ),
+          // ),
         ),
         SizedBox(
           height: 10.h,

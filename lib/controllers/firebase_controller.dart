@@ -5,7 +5,7 @@ class FirebaseController extends GetxController {
   Future<void> onInit() async {
     await _initFirebase();
     await _initFirebaseConfig();
-    await _sendAnalyticsEvent();
+    // await _sendAnalyticsEvent();
     super.onInit();
   }
 
@@ -31,8 +31,6 @@ class FirebaseController extends GetxController {
       );
 
       await remoteConfig.fetchAndActivate();
-
-      log(remoteConfig.getInt("example_param_1"));
     } catch (e) {
       log("Failed to initialize Firebase: $e");
     }

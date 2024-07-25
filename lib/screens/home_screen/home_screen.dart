@@ -8,6 +8,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async => await MarksController.to.getAllMarks(),
+      ),
       appBar: _appBar(),
       bottomNavigationBar: _bottomBar(),
       body: _body(),
@@ -29,26 +32,26 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 25.h,
               ),
-              const CarsSearchBar(
-                isActive: false,
-                isActiveButton: false,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              const WeeklySelectionWidget(),
-              SizedBox(
-                height: 20.h,
-              ),
-              const HomeScreenAdsWidget(),
-              SizedBox(
-                height: 20.h,
-              ),
-              const BrandsWidget(),
-              SizedBox(
-                height: 20.h,
-              ),
-              CarsCatalogListWidget(),
+              // const CarsSearchBar(
+              //   isActive: false,
+              //   isActiveButton: false,
+              // ),
+              // SizedBox(
+              //   height: 20.h,
+              // ),
+              // const WeeklySelectionWidget(),
+              // SizedBox(
+              //   height: 20.h,
+              // ),
+              // const HomeScreenAdsWidget(),
+              // SizedBox(
+              //   height: 20.h,
+              // ),
+              const MarksWidget(),
+              // SizedBox(
+              //   height: 20.h,
+              // ),
+              // CarsCatalogListWidget(),
             ],
           ),
         ),

@@ -8,14 +8,12 @@ class BrandScreen extends StatefulWidget {
 }
 
 class _BrandScreenState extends State<BrandScreen> {
-  List<Brand> brandList = [];
-  List<Brand> popularBrands = [];
+  // List<Brand> brandList = [];
+  // List<Brand> popularBrands = [];
 
   @override
   void initState() {
     super.initState();
-    brandList = getBrandList();
-    popularBrands = getPopularBrands();
   }
 
   @override
@@ -123,16 +121,17 @@ class _BrandScreenState extends State<BrandScreen> {
           Padding(
             padding: EdgeInsets.only(top: 20.h),
             child: BrandGrid(
-              brands: popularBrands,
-            ),
+                //popularbrands
+
+                ),
           )
         ],
       ),
     );
 
-    Map<String, List<Brand>> groupedBrands = {};
-    for (var brand in brandList) {
-      String key = brand.name[0].toUpperCase();
+    Map<String, List<Mark>> groupedBrands = {};
+    for (var brand in MarksController.to.marks) {
+      String key = brand.name![0].toUpperCase();
       if (!groupedBrands.containsKey(key)) {
         groupedBrands[key] = [];
       }
@@ -144,108 +143,12 @@ class _BrandScreenState extends State<BrandScreen> {
         AlphabetListViewItemGroup(
           tag: key,
           children: [
-            BrandGrid(
-              brands: brands,
-            ),
+            BrandGrid(),
           ],
         ),
       );
     });
 
     return itemGroups;
-  }
-
-  List<Brand> getBrandList() {
-    return [
-      Brand(
-          name: 'Audi',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'BMW',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Chevrolet',
-          brandLogo:
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3jLdiRIffyVvYjJSgZqFzc73YJSfqcRbR6Q&s'),
-      Brand(
-          name: 'Dodge',
-          brandLogo:
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3jLdiRIffyVvYjJSgZqFzc73YJSfqcRbR6Q&s'),
-      Brand(
-          name: 'Ford',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tesla_T_symbol.svg/640px-Tesla_T_symbol.svg.png'),
-      Brand(
-          name: 'Honda',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Jaguar',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Kia',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Lexus',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Mazda',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Nissan',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Opel',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Peugeot',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Renault',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Skoda',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Toyota',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Volkswagen',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Volvo',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-    ];
-  }
-
-  List<Brand> getPopularBrands() {
-    return [
-      Brand(
-          name: 'Tesla',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Toyota',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-      Brand(
-          name: 'Honda',
-          brandLogo:
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/2048px-Mercedes-Logo.svg.png'),
-    ];
   }
 }

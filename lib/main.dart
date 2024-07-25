@@ -10,6 +10,7 @@ void main() async {
   Get.put(EmailController());
   Get.put(RegistrationPasswordsContoller());
   Get.put(HomeScreenController());
+  Get.put(MarksController());
 
   runApp(const MainApp());
 }
