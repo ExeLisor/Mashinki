@@ -6,9 +6,9 @@ void main() async {
   MobileAds.instance.initialize();
 
   Get.put(FirebaseController());
-  Get.put(RegistrationController());
-  Get.put(EmailController());
-  Get.put(RegistrationPasswordsContoller());
+  // Get.put(RegistrationController());
+  // Get.put(EmailController());
+  // Get.put(RegistrationPasswordsContoller());
   Get.put(HomeScreenController());
   Get.put(MarksController());
 

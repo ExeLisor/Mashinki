@@ -26,12 +26,13 @@ class HomeScreen extends StatelessWidget {
   Widget _homeScreen() => SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w),
-          child: Column(
+          child: const Column(
             children: [
-              const TopBar(title: "Каталог"),
-              SizedBox(
-                height: 25.h,
+              TopBar(
+                title: "Каталог",
+                isHomeScreen: true,
               ),
+
               // const CarsSearchBar(
               //   isActive: false,
               //   isActiveButton: false,
@@ -47,7 +48,7 @@ class HomeScreen extends StatelessWidget {
               // SizedBox(
               //   height: 20.h,
               // ),
-              const MarksWidget(),
+              MarksWidget(),
               // SizedBox(
               //   height: 20.h,
               // ),

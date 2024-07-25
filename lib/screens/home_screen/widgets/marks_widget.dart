@@ -3,6 +3,9 @@ import 'package:autoverse/exports.dart';
 class MarksWidget extends StatelessWidget {
   const MarksWidget({super.key});
 
+  void _navigateToBrandScreen() =>
+      Get.to(() => const BrandScreen(), transition: Transition.cupertino);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,38 +20,56 @@ class MarksWidget extends StatelessWidget {
     );
   }
 
-  Widget _marksView() =>
-      HomeShimmerWidget(shimmer: _marksLoadingWidget(), child: _marksList());
+  Widget _marksView() => HomeShimmerWidget(
+      shimmer: _marksLoadingWidget(), child: _popularMarksList());
 
-  Widget _marksWidgetTitle() => Row(
-        children: [
-          GetBuilder<MarksController>(
-            builder: (controller) => Text(
-              "Бренды (${controller.marks.length})",
-              style: TextStyle(
-                  fontSize: 18.fs,
-                  color: primaryColor,
-                  fontWeight: FontWeight.w600),
+  Widget _marksWidgetTitle() => GestureDetector(
+        onTap: _navigateToBrandScreen,
+        child: Row(
+          children: [
+            GetBuilder<MarksController>(
+              builder: (controller) => Text(
+                "Бренды",
+                style: TextStyle(
+                    fontSize: 18.fs,
+                    color: primaryColor,
+                    fontWeight: FontWeight.w600),
+              ),
             ),
-          ),
-          SizedBox(
-            width: 13.w,
-          ),
-          const Icon(
-            Icons.arrow_forward_ios_rounded,
-            color: primaryColor,
-          ),
-        ],
+            SizedBox(
+              width: 13.w,
+            ),
+            const Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: primaryColor,
+            ),
+          ],
+        ),
       );
 
-  Widget _marksList() => SizedBox(
+  Widget _popularMarksList() => SizedBox(
         height: 75.h,
         child: GetBuilder<MarksController>(
           builder: (controller) => ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: controller.marks.length,
-            itemBuilder: (context, index) => Container(),
+            itemCount: controller.popularMarks.length + 1,
+            itemBuilder: (context, index) =>
+                index == controller.popularMarks.length
+                    ? GestureDetector(
+                        onTap: _navigateToBrandScreen,
+                        child: Container(
+                          width: 75.h,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.white),
+                          child: Center(
+                            child: Text(
+                                "ещё ${controller.marks.length - controller.popularMarks.length} брендов!"),
+                          ),
+                        ),
+                      )
+                    : _markTile(controller.popularMarks[index]),
           ),
         ),
       );
@@ -73,25 +94,28 @@ class MarksWidget extends StatelessWidget {
         ),
       );
 
-  Widget _markTile(String imageUrl) => Container(
+  Widget _markTile(Mark mark) => Container(
         width: 75.h,
+        margin: EdgeInsets.only(right: 12.h),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.15),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 5.h), // changes position of shadow
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.grey.withOpacity(0.15),
+          //     spreadRadius: 1,
+          //     blurRadius: 5,
+          //     offset: Offset(0, 5.h), // changes position of shadow
+          //   ),
+          // ],
         ),
-        child: Container(
-          padding: EdgeInsets.all(8.h),
-          child: Image.network(
-            imageUrl,
-            fit: BoxFit.contain,
+        child: Center(
+          child: Container(
+            padding: EdgeInsets.all(8.h),
+            child: CachedNetworkImage(
+              imageUrl: "$baseUrl/marks/${mark.id}/logo",
+              fit: BoxFit.contain,
+            ),
           ),
         ),
       );

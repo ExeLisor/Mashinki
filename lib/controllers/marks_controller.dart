@@ -6,11 +6,26 @@ class MarksController extends GetxController {
   final Dio dio = Dio(BaseOptions());
 
   List<Mark> marks = [];
+  List<Mark> popularMarks = [];
 
   @override
   Future<void> onInit() async {
+    await getOnlyPopularMarks();
     await getAllMarks();
     super.onInit();
+  }
+
+  Future<List<Mark>?> getOnlyPopularMarks() async {
+    try {
+      Response response = await dio.get("$baseUrl/marks/popular");
+
+      popularMarks = marksFromJson(response.data);
+      update();
+      return marks;
+    } catch (e) {
+      logW(e);
+      return null;
+    }
   }
 
   Future<List<Mark>?> getAllMarks() async {

@@ -1,6 +1,6 @@
 import 'package:autoverse/exports.dart';
 
-Widget brandCard(String name, {String? imageUrl}) => Column(
+Widget brandCard(Mark mark) => Column(
       children: [
         Container(
           height: 75.h,
@@ -17,24 +17,24 @@ Widget brandCard(String name, {String? imageUrl}) => Column(
               ),
             ],
           ),
-          // child: Container(
-          //   padding: EdgeInsets.all(15.w),
-          //   child: CachedNetworkImage(
-          //     filterQuality: FilterQuality.medium,
-          //     imageUrl: imageUrl,
-          //     fit: BoxFit.scaleDown,
-          //   ),
-          // ),
+          child: Container(
+            padding: EdgeInsets.all(15.w),
+            child: CachedNetworkImage(
+              filterQuality: FilterQuality.medium,
+              imageUrl: "$baseUrl/marks/${mark.id}/logo",
+              fit: BoxFit.scaleDown,
+            ),
+          ),
         ),
         SizedBox(
           height: 10.h,
         ),
-        Text(
-          name,
-          style: TextStyle(
-              color: Colors.black,
-              fontSize: 14.fs,
-              fontWeight: FontWeight.w600),
-        )
+        // Text(
+        //   mark.name ?? "",
+        //   style: TextStyle(
+        //       color: Colors.black,
+        //       fontSize: 14.fs,
+        //       fontWeight: FontWeight.w600),
+        // )
       ],
     );
