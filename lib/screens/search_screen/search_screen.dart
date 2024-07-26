@@ -14,22 +14,20 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Column(
         children: [
           Container(
-              height: 119.h,
-              decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  spreadRadius: 1,
-                  blurRadius: 2,
-                  offset: Offset(0, 2),
-                ),
-              ]),
-              child: Padding(
-                padding: EdgeInsets.only(left: 25.w, top: 30.h),
-                child: CarsSearchBar(
-                  isActive: true,
-                  isActiveButton: true,
-                ),
-              )),
+            height: 119.h,
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                spreadRadius: 1,
+                blurRadius: 2,
+                offset: Offset(0, 2),
+              ),
+            ]),
+            child: Padding(
+              padding: EdgeInsets.only(left: 25.w, top: 30.h),
+              child: const CarsSearchBar(),
+            ),
+          ),
         ],
       ),
     );

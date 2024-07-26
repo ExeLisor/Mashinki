@@ -2,7 +2,7 @@ import 'package:autoverse/exports.dart';
 
 class CarsSearchBar extends StatelessWidget {
   const CarsSearchBar(
-      {super.key, required this.isActive, required this.isActiveButton});
+      {super.key, this.isActive = true, this.isActiveButton = true});
 
   final bool isActive;
   final bool isActiveButton;

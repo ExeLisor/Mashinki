@@ -1,8 +1,24 @@
 import 'package:autoverse/exports.dart';
 
-Widget brandCard(Mark mark) => Column(
-      children: [
-        Container(
+class MarkGridTile extends StatelessWidget {
+  const MarkGridTile({super.key, required this.mark});
+
+  final Mark mark;
+
+  @override
+  Widget build(BuildContext context) => Column(
+        children: [
+          _markLogo(),
+          SizedBox(
+            height: 5.h,
+          ),
+          _markName(),
+        ],
+      );
+
+  Widget _markLogo() => GestureDetector(
+        onTap: () {},
+        child: Container(
           height: 75.h,
           width: 75.h,
           decoration: BoxDecoration(
@@ -26,15 +42,14 @@ Widget brandCard(Mark mark) => Column(
             ),
           ),
         ),
-        SizedBox(
-          height: 10.h,
-        ),
-        // Text(
-        //   mark.name ?? "",
-        //   style: TextStyle(
-        //       color: Colors.black,
-        //       fontSize: 14.fs,
-        //       fontWeight: FontWeight.w600),
-        // )
-      ],
-    );
+      );
+
+  Widget _markName() => Text(
+        mark.name ?? "",
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: Colors.black, fontSize: 12.fs, fontWeight: FontWeight.w600),
+      );
+}
