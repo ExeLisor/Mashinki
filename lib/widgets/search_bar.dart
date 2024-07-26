@@ -2,10 +2,14 @@ import 'package:autoverse/exports.dart';
 
 class CarsSearchBar extends StatelessWidget {
   const CarsSearchBar(
-      {super.key, this.isActive = true, this.isActiveButton = true});
+      {super.key,
+      this.isActive = true,
+      this.isActiveButton = true,
+      this.controller});
 
   final bool isActive;
   final bool isActiveButton;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -49,53 +53,63 @@ class CarsSearchBar extends StatelessWidget {
 
 class CarsSearchTextField extends StatelessWidget {
   const CarsSearchTextField(
-      {super.key, required this.isActive, required this.isActiveButton});
+      {super.key,
+      required this.isActive,
+      required this.isActiveButton,
+      this.controller});
 
   final bool isActive;
   final bool isActiveButton;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: isActiveButton ? 296.w : 362.w,
-      height: 48.h,
-      decoration: BoxDecoration(
-        color: const Color(0xfffef7ff),
-        borderRadius: BorderRadius.circular(41),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: Offset(0, 2.h),
-          ),
-        ],
-      ),
-      child: TextFormField(
-        enabled: isActive,
-        textAlignVertical: TextAlignVertical.bottom,
-        autovalidateMode: AutovalidateMode.always,
-        onTapOutside: (_) => FocusScope.of(context).unfocus(),
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(40),
-            borderSide: BorderSide.none,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(40),
-            borderSide: BorderSide(color: Colors.transparent),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(40),
-            borderSide: BorderSide(color: Colors.transparent),
-          ),
-          hintText: "Поиск",
-          hintStyle: TextStyle(fontSize: 18.fs, color: Colors.grey),
-          prefixIcon: SvgPicture.asset(
-            lensIcon,
-            height: 22.h,
-            width: 20.w,
-            fit: BoxFit.scaleDown,
+    return GestureDetector(
+      child: Container(
+        width: isActiveButton ? 296.w : 362.w,
+        height: 48.h,
+        decoration: BoxDecoration(
+          color: const Color(0xfffef7ff),
+          borderRadius: BorderRadius.circular(41),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: Offset(0, 2.h),
+            ),
+          ],
+        ),
+        child: GetBuilder<MarksSearchController>(
+          dispose: (_) => MarksSearchController.to.clearSearch(),
+          builder: (controller) => TextFormField(
+            enabled: isActive,
+            textAlignVertical: TextAlignVertical.bottom,
+            autovalidateMode: AutovalidateMode.always,
+            onChanged: controller.startSearch,
+            onTapOutside: (_) => FocusScope.of(context).unfocus(),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(40),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(40),
+                borderSide: const BorderSide(color: Colors.transparent),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(40),
+                borderSide: const BorderSide(color: Colors.transparent),
+              ),
+              hintText: "Поиск",
+              hintStyle: TextStyle(fontSize: 18.fs, color: Colors.grey),
+              prefixIcon: SvgPicture.asset(
+                lensIcon,
+                height: 22.h,
+                width: 20.w,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
           ),
         ),
       ),

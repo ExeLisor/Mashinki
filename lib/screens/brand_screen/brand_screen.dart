@@ -8,6 +8,7 @@ class MarksScreen extends StatelessWidget {
     return Scaffold(
       //alpabet gets smaller if resize set to true
       resizeToAvoidBottomInset: false,
+
       appBar: _appBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -21,12 +22,22 @@ class MarksScreen extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            _aplhabet(),
+            _marksScreenBody()
           ],
         ),
       ),
     );
   }
+
+  Widget _marksScreenBody() => GetBuilder<MarksSearchController>(
+        builder: (controller) => controller.query.isNotEmpty
+            ? Expanded(
+                child: ListView(
+                  children: [BrandGrid(brands: controller.results)],
+                ),
+              )
+            : _aplhabet(),
+      );
 
   AppBar _appBar() => AppBar(
         toolbarHeight: 0.h,

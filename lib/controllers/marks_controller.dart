@@ -14,6 +14,7 @@ class MarksController extends GetxController {
     await getOnlyPopularMarks();
     await getAllMarks();
     initAlphabetList();
+    Get.put(MarksSearchController());
     super.onInit();
   }
 
@@ -90,4 +91,108 @@ class MarksController extends GetxController {
       return null;
     }
   }
+}
+
+class MarksSearchController extends GetxController {
+  static MarksSearchController get to => Get.find();
+
+  List<Mark> results = <Mark>[];
+
+  String query = "";
+
+  void clearSearch() {
+    query = "";
+    results = <Mark>[];
+  }
+
+  void startSearch(String text) {
+    query = text;
+
+    if (query.isEmpty) {
+      results = MarksController.to.marks;
+    } else {
+      results = MarksController.to.marks.where(
+        (Mark mark) {
+          final String name = mark.name!.toLowerCase();
+          final String cirillicName = mark.cyrillicName!.toLowerCase();
+          final String input = query.toLowerCase();
+
+          return name.contains(input) || cirillicName.contains(input);
+        },
+      ).toList();
+    }
+
+    update();
+  }
+}
+
+class MarksSearchDelegate extends SearchDelegate {
+  MarksSearchDelegate();
+
+  List<Mark> results = <Mark>[];
+
+  @override
+  List<Widget>? buildActions(BuildContext context) => [
+        IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () => query.isEmpty ? close(context, null) : query = '',
+        ),
+      ];
+
+  @override
+  Widget? buildLeading(BuildContext context) => null;
+
+  @override
+  Widget? buildFlexibleSpace(BuildContext context) => Container();
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return ThemeData(
+      textTheme: TextTheme(
+          // Use this to change the query's text style
+
+          ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: InputBorder.none,
+
+        // Use this change the placeholder's text style
+        hintStyle: TextStyle(fontSize: 24.0),
+      ),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) => results.isEmpty
+      ? const Center(
+          child: Text('No Results', style: TextStyle(fontSize: 24)),
+        )
+      : _results();
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    results = MarksController.to.marks.where((Mark mark) {
+      final String name = mark.name!.toLowerCase();
+      final String cirillicName = mark.cyrillicName!.toLowerCase();
+      final String input = query.toLowerCase();
+
+      return name.contains(input) || cirillicName.contains(input);
+    }).toList();
+
+    return results.isEmpty
+        ? const Center(
+            child: Text('No Results', style: TextStyle(fontSize: 24)),
+          )
+        : _results();
+  }
+
+  Widget _results() => ListView(
+        children: [
+          SizedBox(
+            height: 20.h,
+          ),
+          SingleChildScrollView(
+            child: BrandGrid(brands: results),
+          )
+        ],
+      );
 }
