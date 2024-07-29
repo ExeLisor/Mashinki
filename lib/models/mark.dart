@@ -1,20 +1,21 @@
 import 'package:autoverse/exports.dart';
 
-List<Car> carFromJson(String str) =>
-    List<Car>.from(json.decode(str).map((x) => Car.fromJson(x)));
+List<Mark> marksFromJson(List<dynamic> jsonList) {
+  return List<Mark>.from(jsonList.map((item) => Mark.fromJson(item)));
+}
 
-String carToJson(List<Car> data) =>
+String marksToJson(List<Mark> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Car {
+class Mark {
   final String? id;
   final String? name;
   final String? cyrillicName;
-  final bool? popular;
+  final int? popular;
   final String? country;
   final List<Model>? models;
 
-  Car({
+  Mark({
     this.id,
     this.name,
     this.cyrillicName,
@@ -23,7 +24,7 @@ class Car {
     this.models,
   });
 
-  factory Car.fromJson(Map<String, dynamic> json) => Car(
+  factory Mark.fromJson(Map<String, dynamic> json) => Mark(
         id: json["id"],
         name: json["name"],
         cyrillicName: json["cyrillic-name"],

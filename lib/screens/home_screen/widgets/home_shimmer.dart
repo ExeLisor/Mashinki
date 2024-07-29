@@ -7,17 +7,19 @@ class HomeShimmerWidget extends StatelessWidget {
     super.key,
     required this.shimmer,
     required this.child,
+    this.successCondition = false,
   });
 
   final Widget child;
   final Widget shimmer;
+  final bool successCondition;
 
   @override
-  Widget build(BuildContext context) => GetBuilder<HomeScreenController>(
-        builder: (home) {
-          if (home.state == HomeState.done) return child;
-
-          return shimmer;
+  Widget build(BuildContext context) => AnimatedSwitcher(
+        duration: const Duration(milliseconds: 800),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return FadeTransition(opacity: animation, child: child);
         },
+        child: successCondition ? child : shimmer,
       );
 }

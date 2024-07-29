@@ -7,7 +7,8 @@ export 'home_screen/home_screen.dart';
 export 'home_screen/widgets/weekly_selection.dart';
 export 'home_screen/widgets/cars_widget.dart';
 export 'home_screen/widgets/home_ads.dart';
-export 'home_screen/widgets/brands_widget.dart';
+export 'home_screen/widgets/marks_widget.dart';
+export 'home_screen/widgets/home_shimmer.dart';
 
 export 'registration_screen/registration_screen.dart';
 export 'registration_screen/widgets/username_page.dart';
@@ -22,5 +23,5 @@ export 'registration_screen/widgets/error_widget.dart';
 export 'search_screen/search_screen.dart';
 
 export 'brand_screen/brand_screen.dart';
-export '../models/brand.dart';
 export 'brand_screen/widgets/brand_grid.dart';
+export 'brand_screen/widgets/alphabet_widget.dart';

@@ -18,7 +18,7 @@ export 'package:cached_network_image/cached_network_image.dart';
 export 'package:logger/logger.dart';
 export 'package:intl/intl.dart' hide TextDirection;
 export 'package:get/get.dart'
-    hide Transition, FormData, Response, MultipartFile, HeaderValue;
+    hide FormData, Response, MultipartFile, HeaderValue;
 export 'package:google_mobile_ads/google_mobile_ads.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:smooth_page_indicator/smooth_page_indicator.dart';

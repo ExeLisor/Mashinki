@@ -2,30 +2,29 @@ import 'package:autoverse/exports.dart';
 import 'package:autoverse/screens/brand_screen/widgets/bran_tile.dart';
 
 class BrandGrid extends StatelessWidget {
-  final List<Brand> brands;
-
   const BrandGrid({super.key, required this.brands});
+
+  final List<Mark> brands;
+
+  static const SliverGridDelegate _delegate =
+      SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 3,
+    mainAxisSpacing: 15.0,
+    crossAxisSpacing: 10.0,
+  );
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 10.0,
-        crossAxisSpacing: 10.0,
+    return GetBuilder<MarksController>(
+      builder: (controller) => GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: _delegate,
+        itemCount: brands.length,
+        itemBuilder: (context, index) {
+          return MarkGridTile(mark: brands[index]);
+        },
       ),
-      itemCount: brands.length,
-      itemBuilder: (context, index) {
-        return getGridItem(brands[index]);
-      },
     );
-  }
-
-  Widget getGridItem(Brand brand) {
-    return GestureDetector(
-        onTap: () {}, child: brandCard(brand.name, brand.brandLogo));
   }
 }

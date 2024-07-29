@@ -45,7 +45,9 @@ flutter:
     - assets/icons/lock_icon.svg
     - assets/icons/error_cross.svg
     - assets/icons/line_eye.svg
+    - assets/icons/recent.svg
     - assets/icons/filters_icon.svg
+    - assets/icons/cross.svg
     - assets/icons/lens_icon.svg
     - assets/icons/home_icon.svg
     - assets/icons/list_icon.svg
