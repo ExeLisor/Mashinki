@@ -19,6 +19,8 @@ class MarksController extends GetxController {
     super.onInit();
   }
 
+  void goToModels(String markId) => Get.toNamed("/$markId/models");
+
   Future<bool> _initializeMarksController() async {
     try {
       popularMarks = await getOnlyPopularMarks();

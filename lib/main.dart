@@ -32,6 +32,11 @@ class _MainAppState extends State<MainApp> {
       page: () => const MarksScreen(),
       transition: Transition.cupertino,
     ),
+    GetPage(
+      name: '/:mark/models',
+      page: () => const ModelsScreen(),
+      transition: Transition.cupertino,
+    ),
   ];
 
   @override

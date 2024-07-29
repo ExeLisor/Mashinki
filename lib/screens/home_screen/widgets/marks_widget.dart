@@ -100,12 +100,15 @@ class MarksWidget extends StatelessWidget {
       );
 
   Widget _markTile(Mark mark) => _markContainer(
-        child: Center(
-          child: Container(
-            padding: EdgeInsets.all(8.h),
-            child: CachedNetworkImage(
-              imageUrl: "$baseUrl/marks/${mark.id}/logo",
-              fit: BoxFit.contain,
+        child: GestureDetector(
+          onTap: () => MarksController.to.goToModels(mark.id ?? ""),
+          child: Center(
+            child: Container(
+              padding: EdgeInsets.all(8.h),
+              child: CachedNetworkImage(
+                imageUrl: "$baseUrl/marks/${mark.id}/logo",
+                fit: BoxFit.contain,
+              ),
             ),
           ),
         ),

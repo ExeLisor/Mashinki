@@ -8,7 +8,7 @@ class MarksScreen extends StatelessWidget {
     return Scaffold(
       //alpabet gets smaller if resize set to true
       resizeToAvoidBottomInset: false,
-      appBar: _appBar(),
+      appBar: appBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -21,10 +21,6 @@ class MarksScreen extends StatelessWidget {
       ),
     );
   }
-
-  AppBar _appBar() => AppBar(
-        toolbarHeight: 0.h,
-      );
 
   Widget _marksScreenBody() => GetBuilder<MarksSearchController>(
         builder: (controller) => controller.query.isNotEmpty
