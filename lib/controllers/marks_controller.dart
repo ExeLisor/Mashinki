@@ -1,9 +1,13 @@
 import 'package:autoverse/exports.dart';
 
+enum MarksState { success, loading, error }
+
 class MarksController extends GetxController {
   static MarksController get to => Get.find();
 
   final Dio dio = Dio(BaseOptions());
+
+  Rx<MarksState> state = MarksState.loading.obs;
 
   List<Mark> marks = [];
   List<Mark> popularMarks = [];
@@ -12,13 +16,24 @@ class MarksController extends GetxController {
   @override
   Future<void> onInit() async {
     await getOnlyPopularMarks();
-    await getAllMarks();
-    initAlphabetList();
-    Get.put(MarksSearchController());
+    await _initAllMarksPage();
+
     super.onInit();
   }
 
-  void initAlphabetList() {
+  Future<void> _initAllMarksPage() async {
+    {
+      await getAllMarks();
+      _initAlphabetList();
+      Get.put(MarksSearchController());
+      state.value = MarksState.success;
+      log(state.value == MarksState.success);
+    }
+  }
+
+  bool isMarksLoaded() => state.value == MarksState.success ? true : false;
+
+  void _initAlphabetList() {
     _addPopularMarksToAlphabet();
     Map<String, List<Mark>> taggedElements = _createTagsForAlphabet();
     _createGridsForEveryTag(taggedElements);
@@ -124,75 +139,4 @@ class MarksSearchController extends GetxController {
 
     update();
   }
-}
-
-class MarksSearchDelegate extends SearchDelegate {
-  MarksSearchDelegate();
-
-  List<Mark> results = <Mark>[];
-
-  @override
-  List<Widget>? buildActions(BuildContext context) => [
-        IconButton(
-          icon: const Icon(Icons.clear),
-          onPressed: () => query.isEmpty ? close(context, null) : query = '',
-        ),
-      ];
-
-  @override
-  Widget? buildLeading(BuildContext context) => null;
-
-  @override
-  Widget? buildFlexibleSpace(BuildContext context) => Container();
-
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    return ThemeData(
-      textTheme: TextTheme(
-          // Use this to change the query's text style
-
-          ),
-      inputDecorationTheme: InputDecorationTheme(
-        border: InputBorder.none,
-
-        // Use this change the placeholder's text style
-        hintStyle: TextStyle(fontSize: 24.0),
-      ),
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) => results.isEmpty
-      ? const Center(
-          child: Text('No Results', style: TextStyle(fontSize: 24)),
-        )
-      : _results();
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    results = MarksController.to.marks.where((Mark mark) {
-      final String name = mark.name!.toLowerCase();
-      final String cirillicName = mark.cyrillicName!.toLowerCase();
-      final String input = query.toLowerCase();
-
-      return name.contains(input) || cirillicName.contains(input);
-    }).toList();
-
-    return results.isEmpty
-        ? const Center(
-            child: Text('No Results', style: TextStyle(fontSize: 24)),
-          )
-        : _results();
-  }
-
-  Widget _results() => ListView(
-        children: [
-          SizedBox(
-            height: 20.h,
-          ),
-          SingleChildScrollView(
-            child: BrandGrid(brands: results),
-          )
-        ],
-      );
 }

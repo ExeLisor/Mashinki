@@ -8,9 +8,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async => await MarksController.to.getAllMarks(),
-      ),
       appBar: _appBar(),
       bottomNavigationBar: _bottomBar(),
       body: _body(),
@@ -26,9 +23,9 @@ class HomeScreen extends StatelessWidget {
   Widget _homeScreen() => SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w),
-          child: const Column(
+          child: Column(
             children: [
-              TopBar(
+              const TopBar(
                 title: "Каталог",
                 isHomeScreen: true,
               ),

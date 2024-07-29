@@ -23,5 +23,5 @@ export 'registration_screen/widgets/error_widget.dart';
 export 'search_screen/search_screen.dart';
 
 export 'brand_screen/brand_screen.dart';
-export '../models/brand.dart';
 export 'brand_screen/widgets/brand_grid.dart';
+export 'brand_screen/widgets/alphabet_widget.dart';

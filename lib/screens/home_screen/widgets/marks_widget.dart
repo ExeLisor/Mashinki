@@ -1,10 +1,12 @@
 import 'package:autoverse/exports.dart';
 
 class MarksWidget extends StatelessWidget {
-  const MarksWidget({super.key});
+  MarksWidget({super.key});
 
   void _navigateToBrandScreen() =>
       Get.to(() => const MarksScreen(), transition: Transition.cupertino);
+
+  final double _containerSize = 75.h;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,14 @@ class MarksWidget extends StatelessWidget {
     );
   }
 
-  Widget _marksView() => HomeShimmerWidget(
-      shimmer: _marksLoadingWidget(), child: _popularMarksList());
+  Widget _marksView() => Obx(
+        () => HomeShimmerWidget(
+          shimmer: _marksLoadingWidget(),
+          successCondition:
+              MarksController.to.state.value == MarksState.success,
+          child: _popularMarksList(),
+        ),
+      );
 
   Widget _marksWidgetTitle() => GestureDetector(
         onTap: _navigateToBrandScreen,
@@ -48,26 +56,23 @@ class MarksWidget extends StatelessWidget {
       );
 
   Widget _popularMarksList() => SizedBox(
-        height: 75.h,
+        height: _containerSize,
         child: GetBuilder<MarksController>(
-          builder: (controller) => controller.popularMarks.isNotEmpty
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: controller.popularMarks.length + 1,
-                  itemBuilder: (context, index) =>
-                      index == controller.popularMarks.length
-                          ? _moreMarks()
-                          : _markTile(controller.popularMarks[index]),
-                )
-              : Container(),
+          builder: (controller) => ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: controller.popularMarks.length + 1,
+            itemBuilder: (context, index) =>
+                index == controller.popularMarks.length
+                    ? _moreMarks()
+                    : _markTile(controller.popularMarks[index]),
+          ),
         ),
       );
 
   Widget _moreMarks() => GestureDetector(
         onTap: _navigateToBrandScreen,
         child: Container(
-            width: 75.h,
+            width: _containerSize,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15), color: Colors.white),
             child: Center(
@@ -79,29 +84,35 @@ class MarksWidget extends StatelessWidget {
             )),
       );
 
-  Widget _marksLoadingWidget() => ShimmerWidget(
-        child: SizedBox(
-          width: Get.width,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.15),
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: Offset(0, 5.h), // changes position of shadow
+  Widget _marksLoadingWidget() => SizedBox(
+        height: _containerSize,
+        child: ListView(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          physics: const NeverScrollableScrollPhysics(),
+          children: List.generate(
+            //screen width is divided by the tile width and his margin then plus one for making it more similar to the marks widget
+            ((Get.width / (_containerSize + 12.h) + 1)).floor(),
+            (int index) => ShimmerWidget(
+              child: Container(
+                margin: EdgeInsets.only(right: 12.h),
+                width: _containerSize,
+                height: _containerSize,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
                 ),
-              ],
+              ),
             ),
           ),
         ),
       );
 
   Widget _markTile(Mark mark) => Container(
-        width: 75.h,
-        margin: EdgeInsets.only(right: 12.h),
+        width: _containerSize,
+        margin: EdgeInsets.only(
+          right: 12.h,
+        ),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),

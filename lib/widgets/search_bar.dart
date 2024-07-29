@@ -13,14 +13,17 @@ class CarsSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CarsSearchTextField(
-          isActive: isActive,
-          isActiveButton: isActiveButton,
-        ),
-        _filtersIcon()
-      ],
+    return Padding(
+      padding: EdgeInsets.only(bottom: 20.h),
+      child: Row(
+        children: [
+          CarsSearchTextField(
+            isActive: isActive,
+            isActiveButton: isActiveButton,
+          ),
+          _filtersIcon()
+        ],
+      ),
     );
   }
 

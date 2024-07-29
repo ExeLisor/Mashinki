@@ -9,8 +9,9 @@ void main() async {
   // Get.put(RegistrationController());
   // Get.put(EmailController());
   // Get.put(RegistrationPasswordsContoller());
-  Get.put(HomeScreenController());
+
   Get.put(MarksController());
+  // Get.put(HomeScreenController());
 
   runApp(const MainApp());
 }
