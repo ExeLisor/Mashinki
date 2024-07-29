@@ -3,8 +3,7 @@ import 'package:autoverse/exports.dart';
 class MarksWidget extends StatelessWidget {
   MarksWidget({super.key});
 
-  void _navigateToBrandScreen() =>
-      Get.to(() => const MarksScreen(), transition: Transition.cupertino);
+  void _navigateToMarksScreen() => Get.toNamed("/marks");
 
   final double _containerSize = 75.h;
 
@@ -17,7 +16,7 @@ class MarksWidget extends StatelessWidget {
         SizedBox(
           height: 15.h,
         ),
-        _marksView()
+        _marksView(),
       ],
     );
   }
@@ -32,7 +31,7 @@ class MarksWidget extends StatelessWidget {
       );
 
   Widget _marksWidgetTitle() => GestureDetector(
-        onTap: _navigateToBrandScreen,
+        onTap: _navigateToMarksScreen,
         child: Padding(
           padding: EdgeInsets.only(left: 25.0.w),
           child: Row(
@@ -113,7 +112,7 @@ class MarksWidget extends StatelessWidget {
       );
 
   Widget _moreMarks() => GestureDetector(
-        onTap: _navigateToBrandScreen,
+        onTap: _navigateToMarksScreen,
         child: _markContainer(
           child: Center(
             child: Icon(
@@ -130,6 +129,7 @@ class MarksWidget extends StatelessWidget {
         child: ListView(
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.only(left: 25.h),
           children: List.generate(
             ((Get.width / (_containerSize + 12.h) + 1)).floor(),
             (int index) => ShimmerWidget(

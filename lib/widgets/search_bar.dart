@@ -87,6 +87,7 @@ class CarsSearchTextField extends StatelessWidget {
           dispose: (_) => MarksSearchController.to.clearSearch(),
           builder: (controller) => TextFormField(
             enabled: isActive,
+            controller: MarksSearchController.to.controller,
             textAlignVertical: TextAlignVertical.bottom,
             autovalidateMode: AutovalidateMode.always,
             onChanged: controller.startSearch,

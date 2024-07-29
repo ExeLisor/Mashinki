@@ -11,38 +11,52 @@ class MarksController extends GetxController {
 
   List<Mark> marks = [];
   List<Mark> popularMarks = [];
-  List<AlphabetListViewItemGroup> aplphabetList = [];
+  List<AlphabetListViewItemGroup> alphabetList = [];
 
   @override
   Future<void> onInit() async {
-    await getOnlyPopularMarks();
-    await _initAllMarksPage();
-
+    _initializeMarksController();
     super.onInit();
   }
 
-  Future<void> _initAllMarksPage() async {
-    {
-      await getAllMarks();
-      _initAlphabetList();
+  Future<bool> _initializeMarksController() async {
+    try {
+      popularMarks = await getOnlyPopularMarks();
+      marks = await getAllMarks();
+      alphabetList = _initAlphabetList();
+
       Get.put(MarksSearchController());
       state.value = MarksState.success;
-      log(state.value == MarksState.success);
+      update();
+      return true;
+    } catch (error) {
+      state.value = MarksState.error;
+      return false;
     }
   }
 
   bool isMarksLoaded() => state.value == MarksState.success ? true : false;
 
-  void _initAlphabetList() {
-    _addPopularMarksToAlphabet();
-    Map<String, List<Mark>> taggedElements = _createTagsForAlphabet();
-    _createGridsForEveryTag(taggedElements);
+  List<AlphabetListViewItemGroup> _initAlphabetList() {
+    try {
+      alphabetList = _addPopularMarksToAlphabet();
+      Map<String, List<Mark>> taggedElements = _createTagsForAlphabet();
+      alphabetList = _createGridsForEveryTag(taggedElements);
 
+      return alphabetList;
+    } catch (error) {
+      _clearAlphabetList();
+      rethrow;
+    }
+  }
+
+  void _clearAlphabetList() {
+    alphabetList.clear();
     update();
   }
 
-  void _addPopularMarksToAlphabet() {
-    aplphabetList.add(
+  List<AlphabetListViewItemGroup> _addPopularMarksToAlphabet() {
+    alphabetList.add(
       AlphabetListViewItemGroup(
         tag: '☆',
         children: [
@@ -50,6 +64,7 @@ class MarksController extends GetxController {
         ],
       ),
     );
+    return alphabetList;
   }
 
   Map<String, List<Mark>> _createTagsForAlphabet() {
@@ -65,10 +80,11 @@ class MarksController extends GetxController {
     return groupedBrands;
   }
 
-  void _createGridsForEveryTag(Map<String, List<Mark>> tags) {
+  List<AlphabetListViewItemGroup> _createGridsForEveryTag(
+      Map<String, List<Mark>> tags) {
     tags.forEach(
       (key, brands) {
-        aplphabetList.add(
+        alphabetList.add(
           AlphabetListViewItemGroup(
             tag: key,
             children: [
@@ -78,32 +94,35 @@ class MarksController extends GetxController {
         );
       },
     );
-    return;
+    return alphabetList;
   }
 
-  Future<List<Mark>?> getOnlyPopularMarks() async {
+  Future<List<Mark>> getOnlyPopularMarks() async {
     try {
       Response response = await dio.get("$baseUrl/marks/popular");
+      List<Mark> popularMarksFromResponse = marksFromJson(response.data);
 
-      popularMarks = marksFromJson(response.data);
-      update();
-      return marks;
+      return popularMarksFromResponse;
     } catch (e) {
       logW(e);
-      return null;
+      await Future.delayed(const Duration(seconds: 2));
+      await getOnlyPopularMarks();
+      rethrow;
     }
   }
 
-  Future<List<Mark>?> getAllMarks() async {
+  Future<List<Mark>> getAllMarks() async {
     try {
       Response response = await dio.get("$baseUrl/marks");
 
-      marks = marksFromJson(response.data);
-      update();
-      return marks;
+      List<Mark> marksFromResponse = marksFromJson(response.data);
+
+      return marksFromResponse;
     } catch (e) {
       logW(e);
-      return null;
+      await Future.delayed(const Duration(seconds: 2));
+      await getAllMarks();
+      rethrow;
     }
   }
 }
@@ -111,12 +130,15 @@ class MarksController extends GetxController {
 class MarksSearchController extends GetxController {
   static MarksSearchController get to => Get.find();
 
+  TextEditingController controller = TextEditingController();
   List<Mark> results = <Mark>[];
-
   String query = "";
+
+  List<String> recentSearch = [];
 
   void clearSearch() {
     query = "";
+    controller.text = "";
     results = <Mark>[];
   }
 
@@ -124,7 +146,7 @@ class MarksSearchController extends GetxController {
     query = text;
 
     if (query.isEmpty) {
-      results = MarksController.to.marks;
+      results = [];
     } else {
       results = MarksController.to.marks.where(
         (Mark mark) {
@@ -138,5 +160,10 @@ class MarksSearchController extends GetxController {
     }
 
     update();
+  }
+
+  void startSearchFromRecent(String recentText) {
+    MarksSearchController.to.controller.text = recentText;
+    startSearch(recentText);
   }
 }

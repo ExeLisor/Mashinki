@@ -3,8 +3,8 @@ import 'package:autoverse/exports.dart';
 const adUnitIdAndroid = 'ca-app-pub-3940256099942544/6300978111';
 const adUnitIdIOS = 'ca-app-pub-3940256099942544/2934735716';
 
-const baseUrl = 'http://192.168.1.118:5000';
-
+// const baseUrl = 'http://192.168.1.118:5000';
+const baseUrl = 'http://192.168.100.5:5000';
 const welcomeImageAsset = 'assets/images/welcome.png';
 const manImageAsset = 'assets/images/man.png';
 const manIconAsset = 'assets/icons/man_icon.png';
@@ -22,6 +22,8 @@ const accountCircleIcon = "assets/icons/account_circle_icon.svg";
 const listIcon = "assets/icons/list_icon.svg";
 const comprIcon = "assets/icons/compr_icon.svg";
 const homeIcon = "assets/icons/home_icon.svg";
+const recentIcon = "assets/icons/recent.svg";
+const crossIcon = "assets/icons/cross.svg";
 
 const primaryColor = Color(0xFF4038FF);
 const unactiveColor = Color(0xffA7A7A7);
