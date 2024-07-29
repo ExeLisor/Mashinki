@@ -14,7 +14,7 @@ class CarsSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 20.h),
+      padding: EdgeInsets.only(bottom: 20.h, left: 25.h),
       child: Row(
         children: [
           CarsSearchTextField(

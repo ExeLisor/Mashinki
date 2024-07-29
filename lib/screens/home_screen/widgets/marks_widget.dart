@@ -33,86 +33,58 @@ class MarksWidget extends StatelessWidget {
 
   Widget _marksWidgetTitle() => GestureDetector(
         onTap: _navigateToBrandScreen,
-        child: Row(
-          children: [
-            GetBuilder<MarksController>(
-              builder: (controller) => Text(
-                "Бренды",
-                style: TextStyle(
-                    fontSize: 18.fs,
-                    color: primaryColor,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
-            SizedBox(
-              width: 13.w,
-            ),
-            const Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: primaryColor,
-            ),
-          ],
-        ),
-      );
-
-  Widget _popularMarksList() => SizedBox(
-        height: _containerSize,
-        child: GetBuilder<MarksController>(
-          builder: (controller) => ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: controller.popularMarks.length + 1,
-            itemBuilder: (context, index) =>
-                index == controller.popularMarks.length
-                    ? _moreMarks()
-                    : _markTile(controller.popularMarks[index]),
-          ),
-        ),
-      );
-
-  Widget _moreMarks() => GestureDetector(
-        onTap: _navigateToBrandScreen,
-        child: Container(
-            width: _containerSize,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15), color: Colors.white),
-            child: Center(
-              child: Icon(
-                Icons.arrow_forward,
-                size: 40.h,
-                color: primaryColor,
-              ),
-            )),
-      );
-
-  Widget _marksLoadingWidget() => SizedBox(
-        height: _containerSize,
-        child: ListView(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          physics: const NeverScrollableScrollPhysics(),
-          children: List.generate(
-            //screen width is divided by the tile width and his margin then plus one for making it more similar to the marks widget
-            ((Get.width / (_containerSize + 12.h) + 1)).floor(),
-            (int index) => ShimmerWidget(
-              child: Container(
-                margin: EdgeInsets.only(right: 12.h),
-                width: _containerSize,
-                height: _containerSize,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
+        child: Padding(
+          padding: EdgeInsets.only(left: 25.0.w),
+          child: Row(
+            children: [
+              GetBuilder<MarksController>(
+                builder: (controller) => Text(
+                  "Бренды",
+                  style: TextStyle(
+                      fontSize: 18.fs,
+                      color: primaryColor,
+                      fontWeight: FontWeight.w600),
                 ),
               ),
+              SizedBox(
+                width: 13.w,
+              ),
+              const Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: primaryColor,
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Widget _popularMarksList() => GetBuilder<MarksController>(
+        builder: (controller) => SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: GetBuilder<MarksController>(
+            builder: (controller) => Row(
+              children: [
+                //для того, чтобы при скролле виджет красиво выходил за границы экрана
+                Container(
+                  width: 25.w,
+                ),
+                ...List.generate(
+                  controller.popularMarks.length,
+                  (index) => _markTile(
+                    controller.popularMarks[index],
+                  ),
+                ),
+                _moreMarks()
+              ],
             ),
           ),
         ),
       );
 
-  Widget _markTile(Mark mark) => Container(
+  Widget _markContainer({Widget? child}) => Container(
         width: _containerSize,
-        margin: EdgeInsets.only(
-          right: 12.h,
-        ),
+        height: _containerSize,
+        margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
@@ -125,12 +97,51 @@ class MarksWidget extends StatelessWidget {
             ),
           ],
         ),
+        child: child,
+      );
+
+  Widget _markTile(Mark mark) => _markContainer(
         child: Center(
           child: Container(
             padding: EdgeInsets.all(8.h),
             child: CachedNetworkImage(
               imageUrl: "$baseUrl/marks/${mark.id}/logo",
               fit: BoxFit.contain,
+            ),
+          ),
+        ),
+      );
+
+  Widget _moreMarks() => GestureDetector(
+        onTap: _navigateToBrandScreen,
+        child: _markContainer(
+          child: Center(
+            child: Icon(
+              Icons.arrow_forward,
+              size: 40.h,
+              color: primaryColor,
+            ),
+          ),
+        ),
+      );
+
+  Widget _marksLoadingWidget() => SizedBox(
+        height: _containerSize,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          physics: const NeverScrollableScrollPhysics(),
+          children: List.generate(
+            ((Get.width / (_containerSize + 12.h) + 1)).floor(),
+            (int index) => ShimmerWidget(
+              child: Container(
+                margin: EdgeInsets.only(right: 12.h),
+                width: _containerSize,
+                height: _containerSize,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
             ),
           ),
         ),

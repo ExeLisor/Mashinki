@@ -9,18 +9,15 @@ class MarksScreen extends StatelessWidget {
       //alpabet gets smaller if resize set to true
       resizeToAvoidBottomInset: false,
       appBar: _appBar(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const TopBar(title: 'Бренды'),
-            const CarsSearchBar(
-              isActiveButton: false,
-            ),
-            _marksScreenBody()
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const TopBar(title: 'Бренды'),
+          const CarsSearchBar(
+            isActiveButton: false,
+          ),
+          _marksScreenBody()
+        ],
       ),
     );
   }
@@ -36,8 +33,11 @@ class MarksScreen extends StatelessWidget {
       );
 
   Widget _searchingResults(List<Mark> result) => Expanded(
-        child: ListView(
-          children: [BrandGrid(brands: result)],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          child: SingleChildScrollView(
+            child: BrandGrid(brands: result),
+          ),
         ),
       );
 }

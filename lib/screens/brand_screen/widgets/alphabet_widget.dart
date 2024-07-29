@@ -10,7 +10,7 @@ class AlphabetWidget extends StatelessWidget {
             options: AlphabetListViewOptions(
               listOptions: ListOptions(
                 stickySectionHeader: false,
-                padding: EdgeInsets.zero,
+                padding: EdgeInsets.symmetric(horizontal: 25.w),
                 topOffset: 0,
                 listHeaderBuilder: (context, symbol) => Padding(
                   padding: EdgeInsets.only(bottom: 12.0.h),
