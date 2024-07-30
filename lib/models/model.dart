@@ -1,5 +1,12 @@
 import 'package:autoverse/exports.dart';
 
+List<Model> modelsFromJson(List<dynamic> jsonList) {
+  return List<Model>.from(jsonList.map((item) => Model.fromJson(item)));
+}
+
+String modelsToJson(List<Model> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class Model {
   final String? id;
   final String? name;
