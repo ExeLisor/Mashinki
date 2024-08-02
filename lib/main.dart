@@ -33,6 +33,11 @@ class _MainAppState extends State<MainApp> {
       transition: Transition.cupertino,
     ),
     GetPage(
+        name: '/models/:car',
+        page: () => const CarScreen(),
+        transition: Transition.cupertino,
+        binding: CarBinding()),
+    GetPage(
       name: '/:mark/models',
       page: () => ModelsScreen(),
       transition: Transition.cupertino,
