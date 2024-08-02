@@ -5,7 +5,7 @@ class Generation {
   final String? name;
   final int? yearStart;
   final int? yearStop;
-  final bool? isRestyle;
+  final int? isRestyle;
   final List<Configuration>? configurations;
 
   Generation({

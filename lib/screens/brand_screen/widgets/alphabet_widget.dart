@@ -26,12 +26,15 @@ class AlphabetWidget extends StatelessWidget {
                                   thickness: 1,
                                 ),
                               ),
-                            Text(
-                              symbol == '☆' ? 'Популярные бренды' : symbol,
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: symbol == '☆' ? 16.fs : 25.fs),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 12.0.h),
+                              child: Text(
+                                symbol == '☆' ? 'Популярные бренды' : symbol,
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: symbol == '☆' ? 16.fs : 25.fs),
+                              ),
                             ),
                             if (symbol != '☆')
                               Expanded(

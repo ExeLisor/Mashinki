@@ -3,7 +3,8 @@ import 'package:autoverse/exports.dart';
 class Configuration {
   final String? id;
   final int? doorsCount;
-  final BodyType? bodyType;
+  final String? bodyType;
+  final String? configurationName;
   final Notice? notice;
   final List<Modification>? modifications;
 
@@ -12,24 +13,28 @@ class Configuration {
     this.doorsCount,
     this.bodyType,
     this.notice,
+    this.configurationName,
     this.modifications,
   });
 
   factory Configuration.fromJson(Map<String, dynamic> json) => Configuration(
         id: json["id"],
         doorsCount: json["doors-count"],
-        bodyType: bodyTypeValues.map[json["body-type"]]!,
-        notice: noticeValues.map[json["notice"]]!,
+        bodyType: json["body-type"],
+        configurationName: json["configuration-name"],
+        notice:
+            json["notice"] == null ? null : noticeValues.map[json["notice"]],
         modifications: json["modifications"] == null
             ? []
             : List<Modification>.from(
-                json["modifications"]!.map((x) => Modification.fromJson(x))),
+                json["modifications"].map((x) => Modification.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "doors-count": doorsCount,
-        "body-type": bodyTypeValues.reverse[bodyType],
+        "body-type": bodyType,
+        "configuration-name": configurationName,
         "notice": noticeValues.reverse[notice],
         "modifications": modifications == null
             ? []

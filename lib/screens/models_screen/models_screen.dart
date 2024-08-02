@@ -3,7 +3,7 @@ import 'package:autoverse/exports.dart';
 class ModelsScreen extends StatelessWidget {
   ModelsScreen({super.key});
 
-  final containerHeight = 125.h;
+  final containerHeight = 250.h;
   final containerWidth = 362.w;
 
   @override
@@ -15,11 +15,56 @@ class ModelsScreen extends StatelessWidget {
         children: [
           const TopBar(title: 'Модельный ряд'),
           _brandsTitle(),
-          _modelsView(),
+          _models()
+          // _modelsView()
         ],
       ),
     );
   }
+
+  Widget _models() {
+    return Expanded(
+      child: Obx(
+        () => ListView.builder(
+          itemCount: ModelsController.to.models.length,
+          itemBuilder: (context, index) => Column(
+            children: [
+              Text(
+                ModelsController.to.models[index].name ?? "",
+                style: TextStyle(fontSize: 24.fs, fontWeight: FontWeight.bold),
+              ),
+              _generations(ModelsController.to.models[index]),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _generations(Model model) => Column(
+      children: List.generate(model.generations?.length ?? 0,
+          (index) => _configuration(model.generations![index])));
+
+  Widget _configuration(Generation generation) => Column(
+        children: [
+          Text(
+            generation.name ?? "",
+            style: TextStyle(fontSize: 20.fs, fontWeight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: 250.h,
+            child: ListView(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              children: List.generate(
+                generation.configurations?.length ?? 0,
+                (index) => _configurationTile(generation.configurations![index],
+                    isSingle: generation.configurations?.length == 1),
+              ),
+            ),
+          )
+        ],
+      );
 
   Widget _brandsTitle() => Container(
         margin: EdgeInsets.only(bottom: 10.h),
@@ -66,34 +111,81 @@ class ModelsScreen extends StatelessWidget {
   //   ),
   // );
 
-  Widget _modelTile(Model model) => Container(
-        height: containerHeight,
-        width: containerWidth,
-        margin: EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
-        decoration: BoxDecoration(
-          border: Border.all(color: primaryColor),
-          borderRadius: BorderRadius.circular(20),
+  Widget _modelTile(Model model) => GestureDetector(
+        // onTap: () => ModelsController.to.getGenerationsDetails(model),
+        child: Container(
+          height: containerHeight,
+          width: containerWidth,
+          margin: EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
+          child: Stack(
+            children: [
+              _modelImage(ModelsController.to.getGenerationImage(model)),
+              _modelDetails(model)
+            ],
+          ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _modelImage(""),
-            _modelName(model.name ?? ""),
-          ],
+      );
+
+  Widget _configurationTile(Configuration configuration,
+          {bool isSingle = true}) =>
+      GestureDetector(
+        onTap: () => ModelsController.to.getGenerationsDetails(configuration),
+        child: Container(
+          height: containerHeight,
+          width: isSingle ? containerWidth : containerWidth - 30.w,
+          margin: EdgeInsets.fromLTRB(25.w, 15.h, 10.w, 15.h),
+          child: Stack(
+            children: [
+              _modelImage(configuration.id ?? ""),
+              Text(
+                configuration.configurationName ?? "",
+                style: TextStyle(
+                    fontSize: 20.fs,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              )
+            ],
+          ),
+        ),
+      );
+
+  Widget _singleConfigurationTile(Configuration configuration) =>
+      GestureDetector(
+        onTap: () {},
+        child: Container(
+          height: containerHeight,
+          width: containerWidth,
+          margin: EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
+          child: Stack(
+            children: [
+              _modelImage(configuration.id ?? ""),
+              Text(
+                configuration.bodyType ?? "",
+                style: TextStyle(
+                    fontSize: 20.fs,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              )
+            ],
+          ),
         ),
       );
 
   Widget _modelImage(String url) => SizedBox(
         height: containerHeight,
-        width: containerWidth / 2,
+        width: containerWidth,
         child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            bottomLeft: Radius.circular(20),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
           ),
           child: CachedNetworkImage(
-            imageUrl:
-                "https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mikebirdy-170811.jpg&fm=jpg",
+            imageUrl: "$baseUrl/image/$url",
             placeholder: (context, url) =>
                 const Center(child: CircularProgressIndicator()),
             errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -102,49 +194,61 @@ class ModelsScreen extends StatelessWidget {
         ),
       );
 
-  Widget _modelName(String name) => Expanded(
-        flex: 1,
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(25.h),
-            child: Text(
-              name,
-              style: TextStyle(
-                fontSize: 18.fs,
-                fontWeight: FontWeight.w500,
-              ),
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-            ),
+  Widget _modelDetails(Model model) => Align(
+        alignment: Alignment.bottomLeft,
+        child: Container(
+          margin: EdgeInsets.all(14.h),
+          width: 298.w,
+          height: 52.h,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(26),
           ),
+          child: _modelName(model),
         ),
       );
 
-  Widget _modelsView() => Expanded(
-        child: Obx(
-          () => HomeShimmerWidget(
-            shimmer: _modelsLoadingWidget(),
-            successCondition: ModelsController.to.models.isNotEmpty,
-            child: _modelsList(),
-          ),
-        ),
+  String _formatModelNameWithBrand(Model model) {
+    final name = model.name ?? "";
+    final brand = ModelsController.to.markId.value;
+
+    if (RegExp(r'\d').hasMatch(name)) {
+      return "$brand $name";
+    } else {
+      return name;
+    }
+  }
+
+  Widget _modelName(Model model) => Text(
+        _formatModelNameWithBrand(model),
+        style: TextStyle(
+            fontSize: 20.fs, fontWeight: FontWeight.w500, color: Colors.black),
+        maxLines: 2,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+      );
+
+  Widget _modelsView() => Obx(
+        () => ModelsController.to.state.value == ModelState.success
+            ? _modelsList()
+            : _modelsLoadingWidget(),
       );
 
   Widget _modelsLoadingWidget() => Expanded(
         child: ListView.builder(
-          itemCount: ((Get.height / (containerHeight + 12.h))).floor(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) => ShimmerWidget(
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
-              width: containerWidth,
-              height: containerHeight,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
+            itemCount: ((Get.height / (containerHeight + 12.h))).floor(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) => _loadingModel()),
+      );
+
+  Widget _loadingModel() => ShimmerWidget(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
+          width: containerWidth,
+          height: containerHeight,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
           ),
         ),
       );
