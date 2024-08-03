@@ -29,3 +29,4 @@ export 'brand_screen/widgets/alphabet_widget.dart';
 export 'models_screen/models_screen.dart';
 
 export 'car_screen/car_screen.dart';
+export 'car_screen/widgets/specs_widget.dart';

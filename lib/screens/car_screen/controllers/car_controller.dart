@@ -5,11 +5,22 @@ class CarController extends GetxController {
 
   Dio dio = Dio();
   Rx<Status> state = Status.loading.obs;
-  Rxn<Configuration> configuration = Rxn<Configuration>();
+
+  final Rxn<Model> _model = Rxn<Model>();
+  final Rxn<Generation> _generation = Rxn<Generation>();
+  final Rxn<Configuration> _configuration = Rxn<Configuration>();
+
+  Model get model => _model.value!;
+  Generation get generation => _generation.value!;
+  Configuration get configuration => _configuration.value!;
 
   @override
   Future<void> onInit() async {
     _emitLoadingState();
+    _model.value = Get.arguments["model"];
+    _generation.value = Get.arguments["generation"];
+    _configuration.value = Get.arguments["configuration"];
+
     await _getModifications();
     super.onInit();
   }
@@ -22,12 +33,8 @@ class CarController extends GetxController {
 
   Future<List<Modification>> _getModifications() async {
     try {
-      String markId = Get.arguments["markId"] ?? "";
-
-      log(markId);
-      configuration.value = Get.arguments["configuration"];
-      log(configuration.toJson());
-      // Response response = await dio.get("$baseUrl/$markId/models");
+      log(model.cyrillicName);
+      log(generation.name);
 
       List<Modification> modelsFromResponse = [];
       return modelsFromResponse;
@@ -46,6 +53,10 @@ class CarController extends GetxController {
 
       return [];
     }
+  }
+
+  debug() {
+    _getModifications();
   }
 
   void _emitSussessState() => state.value = Status.success;

@@ -101,7 +101,7 @@ class MarksWidget extends StatelessWidget {
 
   Widget _markTile(Mark mark) => _markContainer(
         child: GestureDetector(
-          onTap: () => MarksController.to.goToModels(mark.id ?? ""),
+          onTap: () => MarksController.to.goToModels(mark),
           child: Center(
             child: Container(
               padding: EdgeInsets.all(8.h),

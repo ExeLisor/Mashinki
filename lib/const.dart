@@ -24,6 +24,9 @@ const comprIcon = "assets/icons/compr_icon.svg";
 const homeIcon = "assets/icons/home_icon.svg";
 const recentIcon = "assets/icons/recent.svg";
 const crossIcon = "assets/icons/cross.svg";
+const carImage = "assets/images/car.png";
+const shortArrow = "assets/images/short_arrow.svg";
+const longArrow = "assets/images/long_arrow.svg";
 
 const primaryColor = Color(0xFF4038FF);
 const unactiveColor = Color(0xffA7A7A7);

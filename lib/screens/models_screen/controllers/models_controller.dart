@@ -6,9 +6,11 @@ class ModelsController extends GetxController {
   static ModelsController get to => Get.find();
 
   Dio dio = Dio();
-  RxString markId = "".obs;
+  final Rxn<Mark> _mark = Rxn<Mark>();
   RxList<Model> models = <Model>[].obs;
   Rx<Status> state = Status.loading.obs;
+
+  Mark get mark => _mark.value!;
 
   @override
   Future<void> onInit() async {
@@ -16,7 +18,7 @@ class ModelsController extends GetxController {
 
     _emitLoadingState();
     dio = Dio();
-    _setMarkId();
+    _setMark();
     models.value = await _getModels();
     _emitSussessState();
   }
@@ -32,15 +34,15 @@ class ModelsController extends GetxController {
   void _emitErrorState() => state.value = Status.error;
   void _setState(Status newState) => state.value = newState;
 
-  void _setMarkId() => markId.value = Get.parameters["mark"] ?? "";
+  void _setMark() => _mark.value = Get.arguments["mark"];
 
   String getGenerationImage(Model model) =>
       model.generations?.first.configurations?.first.id ?? "";
 
   Future<List<Model>> _getModels() async {
     try {
-      log("$baseUrl/$markId/models");
-      Response response = await dio.get("$baseUrl/$markId/models");
+      log("$baseUrl/${mark.id}/models");
+      Response response = await dio.get("$baseUrl/${mark.id}/models");
 
       List<Model> modelsFromResponse = modelsFromJson(response.data);
       return modelsFromResponse;

@@ -19,7 +19,8 @@ class MarksController extends GetxController {
     super.onInit();
   }
 
-  void goToModels(String markId) => Get.toNamed("/$markId/models");
+  void goToModels(Mark mark) =>
+      Get.toNamed("/${mark.id}/models", arguments: {"mark": mark});
 
   Future<bool> _initializeMarksController() async {
     try {

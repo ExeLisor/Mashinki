@@ -43,9 +43,9 @@ class ModelsScreen extends StatelessWidget {
 
   Widget _generations(Model model) => Column(
       children: List.generate(model.generations?.length ?? 0,
-          (index) => _configuration(model.generations![index])));
+          (index) => _configuration(model, model.generations![index])));
 
-  Widget _configuration(Generation generation) => Column(
+  Widget _configuration(Model model, Generation generation) => Column(
         children: [
           Text(
             generation.name ?? "",
@@ -58,8 +58,13 @@ class ModelsScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: List.generate(
                 generation.configurations?.length ?? 0,
-                (index) => _configurationTile(generation.configurations![index],
-                    isSingle: generation.configurations?.length == 1),
+                (index) {
+                  Configuration configuration =
+                      generation.configurations![index];
+                  bool isSingle = generation.configurations?.length == 1;
+                  return _configurationTile(model, generation, configuration,
+                      isSingle: isSingle);
+                },
               ),
             ),
           )
@@ -71,7 +76,7 @@ class ModelsScreen extends StatelessWidget {
         child: Center(
           child: Obx(
             () => Text(
-              ModelsController.to.markId.value,
+              ModelsController.to.mark.name ?? "",
               style: TextStyle(
                   fontSize: 20.fs,
                   color: primaryColor,
@@ -126,13 +131,16 @@ class ModelsScreen extends StatelessWidget {
         ),
       );
 
-  Widget _configurationTile(Configuration configuration,
+  Widget _configurationTile(
+          Model model, Generation generation, Configuration configuration,
           {bool isSingle = true}) =>
       GestureDetector(
         onTap: () => Get.toNamed(
           "/models/${configuration.id}",
           arguments: {
-            "mark_id": ModelsController.to.markId.value,
+            "mark": ModelsController.to.mark,
+            "model": model,
+            "generation": generation,
             "configuration": configuration,
           },
         ),
@@ -191,7 +199,7 @@ class ModelsScreen extends StatelessWidget {
 
   String _formatModelNameWithBrand(Model model) {
     final name = model.name ?? "";
-    final brand = ModelsController.to.markId.value;
+    final brand = ModelsController.to.mark;
 
     if (RegExp(r'\d').hasMatch(name)) {
       return "$brand $name";

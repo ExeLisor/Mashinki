@@ -9,6 +9,12 @@ class CarScreen extends StatelessWidget {
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return Scaffold(
       extendBodyBehindAppBar: true,
+      backgroundColor: const Color(0xffEEEEEE),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          CarController.to.debug();
+        },
+      ),
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 0,
@@ -16,38 +22,146 @@ class CarScreen extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: _carImage(), // Replace with your image
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_appBarRow()],
-          ),
+          _carImage(), // Replace with your image
+          _appBarRow(),
+          _carDetailsBody(),
         ],
       ),
     );
   }
 
-  Widget _carImage() => SizedBox(
-        height: 412.h,
-        width: Get.width,
-        child: ClipRRect(
-          child: CachedNetworkImage(
-            imageUrl:
-                "$baseUrl/image/${CarController.to.configuration.value?.id}",
-            placeholder: (context, url) =>
-                const Center(child: CircularProgressIndicator()),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-            fit: BoxFit.cover,
+  Widget _carDetailsBody() => ListView(
+        children: [
+          SizedBox(
+            height: 376.h, //расстояние до окончания картинки
+          ),
+          _carTitleWidget(),
+          SizedBox(
+            height: 10.h,
+          ),
+          _carDetails(),
+        ],
+      );
+
+  Widget _carDetails() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [_selectorWidget(), const CharacteristicsWidget()],
+      );
+
+  Widget _selectorWidget() => Row(
+        children: [
+          _selectorTile("Характеристики"),
+          _selectorTile("Опции", isSelected: false)
+        ],
+      );
+
+  Widget _selectorTile(String text, {bool isSelected = true}) => Container(
+        height: 46.h,
+        width: Get.width / 2,
+        decoration: BoxDecoration(
+            color: isSelected ? Colors.white : const Color(0xffE8E8E8),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24.h))),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+                fontSize: 18.fs,
+                fontWeight: FontWeight.bold,
+                color: isSelected ? primaryColor : const Color(0xff7974FF)),
+          ),
+        ),
+      );
+
+  Widget _carTitleWidget() => Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(24.h))),
+        child: Container(
+          margin: EdgeInsets.only(top: 22.h, bottom: 44.h),
+          padding: EdgeInsets.only(left: 25.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _carTitle(),
+              SizedBox(
+                height: 14.h,
+              ),
+              _tagsWidget()
+            ],
+          ),
+        ),
+      );
+
+  Widget _tagsWidget() => Column(
+        children: [
+          Row(
+            children: [
+              _tag("IX (XV80) China Market"),
+              _tag("Седан"),
+              _tag("2023 — н.в."),
+            ],
+          ),
+          SizedBox(
+            height: 6.h,
+          ),
+          Row(
+            children: [
+              _tag("Комплектация Deluxe"),
+              _tag("2.0 CVT"),
+              _tag("вариатор"),
+            ],
+          ),
+        ],
+      );
+
+  Widget _tag(String text) => Container(
+        height: 32.h,
+        margin: EdgeInsets.only(right: 10.w),
+        decoration: BoxDecoration(
+          color: const Color(0xffF3F3F3),
+          borderRadius: BorderRadius.circular(20.h),
+        ),
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 11.w),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                  fontSize: 13.fs,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black),
+            ),
+          ),
+        ),
+      );
+
+  Widget _carTitle() => Text(
+        "Toyota Camri 2023",
+        style: TextStyle(
+            fontSize: 25.fs, fontWeight: FontWeight.bold, color: primaryColor),
+      );
+
+  Widget _carImage() => Positioned(
+        top: 0,
+        left: 0,
+        right: 0,
+        child: SizedBox(
+          height: 412.h,
+          width: Get.width,
+          child: ClipRRect(
+            child: CachedNetworkImage(
+              imageUrl: "$baseUrl/image/${CarController.to.configuration.id}",
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              fit: BoxFit.fill,
+            ),
           ),
         ),
       );
 
   Widget _appBarRow() => Container(
-        margin: EdgeInsets.fromLTRB(25.w, 45.h, 25.w, 0.h),
+        margin: EdgeInsets.fromLTRB(15.w, 45.h, 25.w, 0.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -77,7 +191,7 @@ class CarScreen extends StatelessWidget {
         onTap: function,
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2), shape: BoxShape.circle),
+              color: Colors.white.withOpacity(0.3), shape: BoxShape.circle),
           height: 45.h,
           width: 45.h,
           child: Center(

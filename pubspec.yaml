@@ -38,6 +38,10 @@ flutter:
   assets:
     - assets/images/welcome.png
     - assets/images/man.png
+    - assets/images/car.png
+    - assets/images/car.svg
+    - assets/images/long_arrow.svg
+    - assets/images/short_arrow.svg
     - assets/icons/man_icon.png
     - assets/icons/account_icon.svg
     - assets/icons/lock_icon.png
