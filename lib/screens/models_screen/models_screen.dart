@@ -197,9 +197,9 @@ class ModelsScreen extends StatelessWidget {
         ),
       );
 
-  String _formatModelNameWithBrand(Model model) {
+  String _formatModelNameWithBrand(Mark mark, Model model) {
     final name = model.name ?? "";
-    final brand = ModelsController.to.mark;
+    final brand = mark.name;
 
     if (RegExp(r'\d').hasMatch(name)) {
       return "$brand $name";
@@ -209,7 +209,7 @@ class ModelsScreen extends StatelessWidget {
   }
 
   Widget _modelName(Model model) => Text(
-        _formatModelNameWithBrand(model),
+        _formatModelNameWithBrand(ModelsController.to.mark, model),
         style: TextStyle(
             fontSize: 20.fs, fontWeight: FontWeight.w500, color: Colors.black),
         maxLines: 2,

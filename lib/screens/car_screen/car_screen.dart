@@ -135,11 +135,27 @@ class CarScreen extends StatelessWidget {
         ),
       );
 
-  Widget _carTitle() => Text(
-        "Toyota Camri 2023",
-        style: TextStyle(
-            fontSize: 25.fs, fontWeight: FontWeight.bold, color: primaryColor),
-      );
+  String _formatModelNameWithBrand(Mark mark, Model model) {
+    final name = model.name ?? "";
+    final brand = mark.name;
+
+    if (RegExp(r'\d').hasMatch(name)) {
+      return "$brand $name";
+    } else {
+      return name;
+    }
+  }
+
+  Widget _carTitle() {
+    String brandName = CarController.to.mark.name ?? "";
+    String modelName = CarController.to.model.name ?? "";
+    String generationName = CarController.to.generation.name ?? "";
+    return Text(
+      "$brandName $modelName $generationName",
+      style: TextStyle(
+          fontSize: 25.fs, fontWeight: FontWeight.bold, color: primaryColor),
+    );
+  }
 
   Widget _carImage() => Positioned(
         top: 0,
