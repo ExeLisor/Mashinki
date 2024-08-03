@@ -129,7 +129,13 @@ class ModelsScreen extends StatelessWidget {
   Widget _configurationTile(Configuration configuration,
           {bool isSingle = true}) =>
       GestureDetector(
-        onTap: () => ModelsController.to.getGenerationsDetails(configuration),
+        onTap: () => Get.toNamed(
+          "/models/${configuration.id}",
+          arguments: {
+            "mark_id": ModelsController.to.markId.value,
+            "configuration": configuration,
+          },
+        ),
         child: Container(
           height: containerHeight,
           width: isSingle ? containerWidth : containerWidth - 30.w,
@@ -139,31 +145,6 @@ class ModelsScreen extends StatelessWidget {
               _modelImage(configuration.id ?? ""),
               Text(
                 configuration.configurationName ?? "",
-                style: TextStyle(
-                    fontSize: 20.fs,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              )
-            ],
-          ),
-        ),
-      );
-
-  Widget _singleConfigurationTile(Configuration configuration) =>
-      GestureDetector(
-        onTap: () {},
-        child: Container(
-          height: containerHeight,
-          width: containerWidth,
-          margin: EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
-          child: Stack(
-            children: [
-              _modelImage(configuration.id ?? ""),
-              Text(
-                configuration.bodyType ?? "",
                 style: TextStyle(
                     fontSize: 20.fs,
                     fontWeight: FontWeight.w500,
@@ -229,7 +210,7 @@ class ModelsScreen extends StatelessWidget {
       );
 
   Widget _modelsView() => Obx(
-        () => ModelsController.to.state.value == ModelState.success
+        () => ModelsController.to.state.value == Status.success
             ? _modelsList()
             : _modelsLoadingWidget(),
       );

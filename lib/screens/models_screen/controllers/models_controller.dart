@@ -1,6 +1,6 @@
 import 'package:autoverse/exports.dart';
 
-enum ModelState { success, loading, error }
+enum Status { success, loading, error }
 
 class ModelsController extends GetxController {
   static ModelsController get to => Get.find();
@@ -8,7 +8,7 @@ class ModelsController extends GetxController {
   Dio dio = Dio();
   RxString markId = "".obs;
   RxList<Model> models = <Model>[].obs;
-  Rx<ModelState> state = ModelState.loading.obs;
+  Rx<Status> state = Status.loading.obs;
 
   @override
   Future<void> onInit() async {
@@ -27,10 +27,10 @@ class ModelsController extends GetxController {
     super.onClose();
   }
 
-  void _emitSussessState() => state.value = ModelState.success;
-  void _emitLoadingState() => state.value = ModelState.loading;
-  void _emitErrorState() => state.value = ModelState.error;
-  void _setState(ModelState newState) => state.value = newState;
+  void _emitSussessState() => state.value = Status.success;
+  void _emitLoadingState() => state.value = Status.loading;
+  void _emitErrorState() => state.value = Status.error;
+  void _setState(Status newState) => state.value = newState;
 
   void _setMarkId() => markId.value = Get.parameters["mark"] ?? "";
 
