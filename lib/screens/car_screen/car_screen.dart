@@ -20,32 +20,30 @@ class CarScreen extends StatelessWidget {
         toolbarHeight: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Stack(
-        children: [
-          _carImage(), // Replace with your image
-          _appBarRow(),
-          _carDetailsBody(),
-        ],
+      body: Obx(
+        () => CarController.to.state.value == Status.success
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _carImage(),
+                    _carTitleWidget(),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    _carDetails(),
+                  ],
+                ),
+              )
+            : const Center(
+                child: CircularProgressIndicator(),
+              ),
       ),
     );
   }
 
-  Widget _carDetailsBody() => ListView(
-        children: [
-          SizedBox(
-            height: 376.h, //расстояние до окончания картинки
-          ),
-          _carTitleWidget(),
-          SizedBox(
-            height: 10.h,
-          ),
-          _carDetails(),
-        ],
-      );
-
   Widget _carDetails() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [_selectorWidget(), const CharacteristicsWidget()],
+        children: [_selectorWidget(), CharacteristicsWidget()],
       );
 
   Widget _selectorWidget() => Row(
@@ -157,23 +155,23 @@ class CarScreen extends StatelessWidget {
     );
   }
 
-  Widget _carImage() => Positioned(
-        top: 0,
-        left: 0,
-        right: 0,
-        child: SizedBox(
-          height: 412.h,
-          width: Get.width,
-          child: ClipRRect(
-            child: CachedNetworkImage(
-              imageUrl: "$baseUrl/image/${CarController.to.configuration.id}",
-              placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              fit: BoxFit.fill,
+  Widget _carImage() => Stack(
+        children: [
+          SizedBox(
+            height: 412.h,
+            width: Get.width,
+            child: ClipRRect(
+              child: CachedNetworkImage(
+                imageUrl: "$baseUrl/image/${CarController.to.configuration.id}",
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                fit: BoxFit.fill,
+              ),
             ),
           ),
-        ),
+          _appBarRow(),
+        ],
       );
 
   Widget _appBarRow() => Container(

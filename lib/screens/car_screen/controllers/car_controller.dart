@@ -33,6 +33,8 @@ class CarController extends GetxController {
 
     await _getSpecs(configuration.modifications?.first.complectationId ?? "");
 
+    _emitSussessState();
+
     super.onInit();
   }
 
@@ -58,7 +60,7 @@ class CarController extends GetxController {
     try {
       log("$baseUrl/specs/${configuration.id}");
       Response response = await dio.get("$baseUrl/specs/$complecationId");
-
+      log(response.data["specifications"]);
       _options.value = _getOptions(response.data["options"]);
       _specifications.value =
           _getSpecifications(response.data["specifications"]);
