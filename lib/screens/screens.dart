@@ -32,3 +32,4 @@ export 'car_screen/car_screen.dart';
 export 'car_screen/widgets/specs_widget.dart';
 export 'car_screen/widgets/resources_widget.dart';
 export 'car_screen/widgets/options_widget.dart';
+export 'car_screen/widgets/block.dart';

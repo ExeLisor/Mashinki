@@ -5,86 +5,6 @@ class CharacteristicsWidget extends StatelessWidget {
 
   final CarSpecifications specs = CarController.to.specifications;
 
-  String getValue(String value) {
-    if (value.isEmpty) return "-";
-    if (RegExp(r'\d').hasMatch(value)) {
-      try {
-        String newValue = "${double.parse(value)}";
-        return newValue;
-      } catch (e) {
-        return value;
-      }
-    }
-    return value;
-  }
-
-  List _mainSpecs() => [
-        {"Максимальная скорость (км/ч)": getValue(specs.maxSpeed)},
-        {"Время разгона до 100 км/ч (с)": getValue(specs.timeTo100)},
-        {"Вес автомобиля (кг)": getValue(specs.weight)},
-      ];
-
-  List _engineSpecs() => [
-        {"Тип двигателя": getValue(specs.engineType)},
-        {"Объем двигателя (см³)": getValue(specs.volume)},
-        {"Мощность (л.с./кВт)": getValue(specs.horsePower)},
-        {"Максимальные обороты мощности (об/мин)": getValue(specs.rpmPower)},
-        {"Момент (Нм)": getValue(specs.moment)},
-        {"Тип топлива": getValue(specs.petrolType)},
-        {"Порядок цилиндров": getValue(specs.cylindersOrder)},
-        {"Число цилиндров": getValue(specs.cylindersValue)},
-        {"Диаметр цилиндра (мм)": getValue(specs.diametr)},
-        {"Ход поршня (мм)": getValue(specs.pistonStroke)},
-        {"Степень сжатия": getValue(specs.compression)},
-        {"Тип питания двигателя": getValue(specs.engineFeeding)},
-        {"Расположение двигателя": getValue(specs.engineOrder)},
-      ];
-
-  List _transmissionSpecs() => [
-        {"Тип передней подвески": getValue(specs.frontSuspension)},
-        {"Тип задней подвески": getValue(specs.backSuspension)},
-        {"Передние тормоза": getValue(specs.frontBrake)},
-        {"Задние тормоза": getValue(specs.backBrake)},
-      ];
-
-  List _sizesSpecs() => [
-        {"Длина (мм)": getValue(specs.length)},
-        {"Ширина (мм)": getValue(specs.weight)},
-        {"Высота (мм)": getValue(specs.height)},
-        {"Количество мест": getValue(specs.seats)},
-        {"Колесная база (мм)": getValue(specs.wheelBase)},
-        {"Передняя колея (мм)": getValue(specs.frontWheelBase)},
-        {"Задняя колея (мм)": getValue(specs.backWheelBase)},
-        {"Размеры колес": getValue(specs.wheelSize)},
-        {"Клиренс (мм)": getValue(specs.clearance)},
-        {"Вместимость багажника (мин.) (л)": getValue(specs.trunksMinCapacity)},
-        {
-          "Вместимость багажника (макс.) (л)": getValue(specs.trunksMaxCapacity)
-        },
-      ];
-
-  List _fuelSpecs() => [
-        {"Объем топливного бака (л)": getValue(specs.volume)},
-        {"Средний расход топлива (л/100 км)": getValue(specs.consumptionMixed)},
-        {
-          "Расход топлива на трассе (л/100 км)": getValue(specs.consumptionCity)
-        },
-        {
-          "Расход топлива в городе (л/100 км)": getValue(specs.consumptionHiway)
-        },
-        {"Запас хода (км)": getValue(specs.rangeDistance)},
-      ];
-
-  List _secutitySpecs() => [
-        {"Рейтинг безопасности": getValue(specs.safetyRating)},
-        {"Класс безопасности": getValue(specs.safetyGrade)},
-      ];
-
-  List _ecologySpecs() => [
-        {"Евро-класс": getValue(specs.emissionEuroClass)},
-        {"Выбросы СО2 (г/км)": getValue(specs.fuelEmission)},
-      ];
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -119,14 +39,18 @@ class CharacteristicsWidget extends StatelessWidget {
           SizedBox(
             height: 30.h,
           ),
-          _specsListByGroup("Основные характеристики", _mainSpecs()),
-          _specsListByGroup("Характеристики двигателя", _engineSpecs()),
-          _specsListByGroup("Подвеска и тормоза", _transmissionSpecs()),
-          _specsListByGroup("Трансмиссия", _transmissionSpecs()),
-          _specsListByGroup("Размеры и объёмы", _sizesSpecs()),
-          _specsListByGroup("Топливная система и расход", _fuelSpecs()),
-          _specsListByGroup("Безопасность", _secutitySpecs()),
-          _specsListByGroup("Экология", _ecologySpecs()),
+          SpecsBlockWidget(
+              title: "Основные характеристики", specs: _mainSpecs()),
+          SpecsBlockWidget(
+              title: "Характеристики двигателя", specs: _engineSpecs()),
+          SpecsBlockWidget(
+              title: "Подвеска и тормоза", specs: _transmissionSpecs()),
+          SpecsBlockWidget(title: "Трансмиссия", specs: _transmissionSpecs()),
+          SpecsBlockWidget(title: "Размеры и объёмы", specs: _sizesSpecs()),
+          SpecsBlockWidget(
+              title: "Топливная система и расход", specs: _fuelSpecs()),
+          SpecsBlockWidget(title: "Безопасность", specs: _secutitySpecs()),
+          SpecsBlockWidget(title: "Экология", specs: _ecologySpecs()),
           SizedBox(
             height: 20.h,
           ),
@@ -139,29 +63,6 @@ class CharacteristicsWidget extends StatelessWidget {
       ),
     );
   }
-
-  Widget _specsListByGroup(String title, List specs) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _divider(),
-          SizedBox(
-            height: 20.h,
-          ),
-          _specsTitle(title),
-          SizedBox(
-            height: 20.h,
-          ),
-          ...specs.map(
-            (spec) => _specsWidget(
-              spec.keys.first,
-              spec[spec.keys.first],
-            ),
-          ),
-          SizedBox(
-            height: 30.h,
-          ),
-        ],
-      );
 
   Widget _detailsColumnFirst() => Column(
         children: [
@@ -331,51 +232,6 @@ class CharacteristicsWidget extends StatelessWidget {
         color: primaryColor,
       );
 
-  Widget _specsTitle(String title) => Text(
-        title,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 18.fs,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w600,
-        ),
-      );
-
-  Widget _specsWidget(String specs, String value) => Padding(
-        padding: EdgeInsets.only(right: 25.w, bottom: 15.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 200.w,
-              child: Text(
-                '$specs:',
-                maxLines: 2,
-                style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14.fs,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 140.w,
-              child: Text(
-                value,
-                textAlign: TextAlign.right,
-                softWrap: true, // разрешаем переносить текст
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.fs,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            )
-          ],
-        ),
-      );
   String transmissionAbbriviature(String transmission) {
     switch (transmission) {
       case "вариатор":
@@ -385,4 +241,84 @@ class CharacteristicsWidget extends StatelessWidget {
         return "";
     }
   }
+
+  String getValue(String value) {
+    if (value.isEmpty) return "-";
+    if (RegExp(r'\d').hasMatch(value)) {
+      try {
+        String newValue = "${double.parse(value)}";
+        return newValue;
+      } catch (e) {
+        return value;
+      }
+    }
+    return value;
+  }
+
+  List _mainSpecs() => [
+        {"Максимальная скорость (км/ч)": getValue(specs.maxSpeed)},
+        {"Время разгона до 100 км/ч (с)": getValue(specs.timeTo100)},
+        {"Вес автомобиля (кг)": getValue(specs.weight)},
+      ];
+
+  List _engineSpecs() => [
+        {"Тип двигателя": getValue(specs.engineType)},
+        {"Объем двигателя (см³)": getValue(specs.volume)},
+        {"Мощность (л.с./кВт)": getValue(specs.horsePower)},
+        {"Максимальные обороты мощности (об/мин)": getValue(specs.rpmPower)},
+        {"Момент (Нм)": getValue(specs.moment)},
+        {"Тип топлива": getValue(specs.petrolType)},
+        {"Порядок цилиндров": getValue(specs.cylindersOrder)},
+        {"Число цилиндров": getValue(specs.cylindersValue)},
+        {"Диаметр цилиндра (мм)": getValue(specs.diametr)},
+        {"Ход поршня (мм)": getValue(specs.pistonStroke)},
+        {"Степень сжатия": getValue(specs.compression)},
+        {"Тип питания двигателя": getValue(specs.engineFeeding)},
+        {"Расположение двигателя": getValue(specs.engineOrder)},
+      ];
+
+  List _transmissionSpecs() => [
+        {"Тип передней подвески": getValue(specs.frontSuspension)},
+        {"Тип задней подвески": getValue(specs.backSuspension)},
+        {"Передние тормоза": getValue(specs.frontBrake)},
+        {"Задние тормоза": getValue(specs.backBrake)},
+      ];
+
+  List _sizesSpecs() => [
+        {"Длина (мм)": getValue(specs.length)},
+        {"Ширина (мм)": getValue(specs.weight)},
+        {"Высота (мм)": getValue(specs.height)},
+        {"Количество мест": getValue(specs.seats)},
+        {"Колесная база (мм)": getValue(specs.wheelBase)},
+        {"Передняя колея (мм)": getValue(specs.frontWheelBase)},
+        {"Задняя колея (мм)": getValue(specs.backWheelBase)},
+        {"Размеры колес": getValue(specs.wheelSize)},
+        {"Клиренс (мм)": getValue(specs.clearance)},
+        {"Вместимость багажника (мин.) (л)": getValue(specs.trunksMinCapacity)},
+        {
+          "Вместимость багажника (макс.) (л)": getValue(specs.trunksMaxCapacity)
+        },
+      ];
+
+  List _fuelSpecs() => [
+        {"Объем топливного бака (л)": getValue(specs.volume)},
+        {"Средний расход топлива (л/100 км)": getValue(specs.consumptionMixed)},
+        {
+          "Расход топлива на трассе (л/100 км)": getValue(specs.consumptionCity)
+        },
+        {
+          "Расход топлива в городе (л/100 км)": getValue(specs.consumptionHiway)
+        },
+        {"Запас хода (км)": getValue(specs.rangeDistance)},
+      ];
+
+  List _secutitySpecs() => [
+        {"Рейтинг безопасности": getValue(specs.safetyRating)},
+        {"Класс безопасности": getValue(specs.safetyGrade)},
+      ];
+
+  List _ecologySpecs() => [
+        {"Евро-класс": getValue(specs.emissionEuroClass)},
+        {"Выбросы СО2 (г/км)": getValue(specs.fuelEmission)},
+      ];
 }

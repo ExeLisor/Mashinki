@@ -22,7 +22,7 @@ class CarController extends GetxController {
   Configuration get configuration => _configuration.value!;
   List<Modification> get modifications => _modifications.value!;
   CarSpecifications get specifications => _specifications.value!;
-  CarOptions? get options => _options.value;
+  CarOptions get options => _options.value ?? CarOptions();
 
   @override
   Future<void> onInit() async {
