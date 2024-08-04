@@ -15,6 +15,7 @@ class CarController extends GetxController {
   final Rxn<List<Modification>> _modifications = Rxn<List<Modification>>();
   final Rxn<CarOptions> _options = Rxn<CarOptions>();
   final Rxn<CarSpecifications> _specifications = Rxn<CarSpecifications>();
+  final RxDouble _currentOffset = 0.0.obs;
 
   Mark get mark => _mark.value!;
   Model get model => _model.value!;
@@ -23,6 +24,13 @@ class CarController extends GetxController {
   List<Modification> get modifications => _modifications.value!;
   CarSpecifications get specifications => _specifications.value!;
   CarOptions get options => _options.value ?? CarOptions();
+  double get currentOffset => _currentOffset.value;
+
+  void startListen(ScrollController controller) {
+    log(controller.hasClients);
+    if (controller.hasClients) return;
+    controller.addListener(() => _currentOffset.value = controller.offset);
+  }
 
   @override
   Future<void> onInit() async {

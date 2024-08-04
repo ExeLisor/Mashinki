@@ -3,38 +3,54 @@ import 'package:autoverse/exports.dart';
 class CarScreen extends StatelessWidget {
   const CarScreen({super.key});
 
+  static ScrollController controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: const Color(0xffEEEEEE),
-      appBar: AppBar(
-        elevation: 0,
-        toolbarHeight: 0,
-        backgroundColor: Colors.transparent,
-      ),
-      body: Obx(
-        () => CarController.to.state.value == Status.success
-            ? SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _carImage(),
-                    _carTitleWidget(),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    _carDetails(),
-                  ],
-                ),
-              )
-            : const Center(
-                child: CircularProgressIndicator(),
-              ),
+
+    return GetBuilder<CarController>(
+      initState: (state) => CarController.to.startListen(controller),
+      builder: (carController) => Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: const Color(0xffEEEEEE),
+        appBar: _appBar(),
+        body: Obx(() => CarController.to.state.value == Status.success
+            ? _carBody()
+            : _loadingWidget()),
       ),
     );
   }
+
+  Widget _carBody() => Stack(
+        children: [
+          SingleChildScrollView(
+            controller: controller,
+            child: Column(
+              children: [
+                _carImage(),
+                _carTitleWidget(),
+                SizedBox(
+                  height: 10.h,
+                ),
+                _carDetails(),
+              ],
+            ),
+          ),
+          const CarsFloatBar(),
+        ],
+      );
+
+  AppBar _appBar() => AppBar(
+        elevation: 0,
+        toolbarHeight: 0,
+        backgroundColor: Colors.transparent,
+      );
+
+  Widget _loadingWidget() => const Center(
+        child: CircularProgressIndicator(),
+      );
 
   Widget _carDetails() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
