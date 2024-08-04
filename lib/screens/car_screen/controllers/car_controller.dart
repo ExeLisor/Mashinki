@@ -1,5 +1,7 @@
 import 'package:autoverse/exports.dart';
 
+enum ResourceType { youtube, google, pinterest, tiktok }
+
 class CarController extends GetxController {
   static CarController get to => Get.find();
 
@@ -83,9 +85,47 @@ class CarController extends GetxController {
     }
   }
 
-  debug() {
-    _getSpecs(configuration.modifications?.first.complectationId ?? "");
+  Future<void> openResource(ResourceType type) async {
+    final String brandName = CarController.to.mark.name ?? "";
+    final String modelName = CarController.to.model.name ?? "";
+    final String generationName = CarController.to.generation.name ?? "";
+
+    final String searchText = "$brandName $modelName $generationName";
+
+    String url = "";
+
+    switch (type) {
+      case ResourceType.google:
+        url = _launchGoogle(searchText);
+        break;
+      case ResourceType.pinterest:
+        url = _launchPinterest(searchText);
+        break;
+      case ResourceType.youtube:
+        url = _launchYoutube(searchText);
+        break;
+      case ResourceType.tiktok:
+        url = _launchTiktok(searchText);
+        break;
+      default:
+    }
+
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
   }
+
+  String _launchYoutube(String searchText) =>
+      "https://www.youtube.com/results?search_query=$searchText";
+
+  String _launchPinterest(String searchText) =>
+      "https://www.pinterest.com/search/pins/?q=$searchText&rs=typed";
+
+  String _launchGoogle(String searchText) =>
+      "https://www.google.com/search?q=$searchText";
+
+  String _launchTiktok(String searchText) =>
+      "https://www.tiktok.com/search?q=$searchText";
 
   void _emitSussessState() => state.value = Status.success;
   void _emitLoadingState() => state.value = Status.loading;

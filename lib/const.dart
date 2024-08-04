@@ -27,6 +27,10 @@ const crossIcon = "assets/icons/cross.svg";
 const carImage = "assets/images/car.png";
 const shortArrow = "assets/images/short_arrow.svg";
 const longArrow = "assets/images/long_arrow.svg";
+const googleImage = "assets/images/google.svg";
+const tiktokImage = "assets/images/tik_tok.svg";
+const pinterestImage = "assets/images/pinterest.svg";
+const youtubeImage = "assets/images/youtube.svg";
 
 const primaryColor = Color(0xFF4038FF);
 const unactiveColor = Color(0xffA7A7A7);

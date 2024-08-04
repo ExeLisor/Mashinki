@@ -10,11 +10,6 @@ class CarScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xffEEEEEE),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          CarController.to.debug();
-        },
-      ),
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 0,
@@ -157,17 +152,12 @@ class CarScreen extends StatelessWidget {
 
   Widget _carImage() => Stack(
         children: [
-          SizedBox(
-            height: 412.h,
-            width: Get.width,
-            child: ClipRRect(
-              child: CachedNetworkImage(
-                imageUrl: "$baseUrl/image/${CarController.to.configuration.id}",
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                fit: BoxFit.fill,
-              ),
+          ClipRRect(
+            child: CachedNetworkImage(
+              imageUrl: "$baseUrl/image/${CarController.to.configuration.id}",
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
           _appBarRow(),
@@ -205,14 +195,11 @@ class CarScreen extends StatelessWidget {
         onTap: function,
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.3), shape: BoxShape.circle),
+              color: Colors.black.withOpacity(0.3), shape: BoxShape.circle),
           height: 45.h,
           width: 45.h,
           child: Center(
-            child: Icon(
-              icon,
-              color: Colors.white,
-            ),
+            child: Icon(icon, color: Colors.white),
           ),
         ),
       );

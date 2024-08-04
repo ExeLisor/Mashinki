@@ -26,6 +26,7 @@ dependencies:
   firebase_analytics: ^11.1.0
   firebase_core: ^3.1.1
   firebase_remote_config: ^5.0.2
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -59,3 +60,7 @@ flutter:
     - assets/icons/account_circle_icon.svg
     - assets/animations/correct_animation.json
     - assets/animations/denied_animation.json
+    - assets/images/tik_tok.svg
+    - assets/images/youtube.svg
+    - assets/images/google.svg
+    - assets/images/pinterest.svg
