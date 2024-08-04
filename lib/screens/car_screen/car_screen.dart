@@ -38,29 +38,44 @@ class CarScreen extends StatelessWidget {
 
   Widget _carDetails() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [_selectorWidget(), CharacteristicsWidget()],
-      );
-
-  Widget _selectorWidget() => Row(
         children: [
-          _selectorTile("Характеристики"),
-          _selectorTile("Опции", isSelected: false)
+          _selectorWidget(),
+          SpecsSelectorController.to.showOptions
+              ? OptionsWidget()
+              : CharacteristicsWidget()
         ],
       );
 
-  Widget _selectorTile(String text, {bool isSelected = true}) => Container(
-        height: 46.h,
-        width: Get.width / 2,
-        decoration: BoxDecoration(
-            color: isSelected ? Colors.white : const Color(0xffE8E8E8),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24.h))),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-                fontSize: 18.fs,
-                fontWeight: FontWeight.bold,
-                color: isSelected ? primaryColor : const Color(0xff7974FF)),
+  Widget _selectorWidget() => Obx(
+        () => Row(
+          children: [
+            _selectorTile(
+                "Характеристики", SpecsSelectorController.to.changeToSpecs,
+                isSelected: !SpecsSelectorController.to.showOptions),
+            _selectorTile("Опции", SpecsSelectorController.to.changeToOptions,
+                isSelected: SpecsSelectorController.to.showOptions)
+          ],
+        ),
+      );
+
+  Widget _selectorTile(String text, VoidCallback func,
+          {bool isSelected = true}) =>
+      GestureDetector(
+        onTap: func,
+        child: Container(
+          height: 46.h,
+          width: Get.width / 2,
+          decoration: BoxDecoration(
+              color: isSelected ? Colors.white : const Color(0xffE8E8E8),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(24.h))),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                  fontSize: 18.fs,
+                  fontWeight: FontWeight.bold,
+                  color: isSelected ? primaryColor : const Color(0xff7974FF)),
+            ),
           ),
         ),
       );

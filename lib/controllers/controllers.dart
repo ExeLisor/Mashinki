@@ -8,4 +8,6 @@ export 'marks_controller.dart';
 export '../screens/log_in_screen/controllers/log_in_text_field_controller.dart';
 export '../screens/home_screen/controllers.dart/home_screen_controller.dart';
 export '../screens/models_screen/controllers/models_controller.dart';
+
 export '../screens/car_screen/controllers/car_controller.dart';
+export '../screens/car_screen/controllers/specs_selector_controller.dart';
