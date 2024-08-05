@@ -3,8 +3,8 @@ import 'package:autoverse/exports.dart';
 const adUnitIdAndroid = 'ca-app-pub-3940256099942544/6300978111';
 const adUnitIdIOS = 'ca-app-pub-3940256099942544/2934735716';
 
-// const baseUrl = 'http://192.168.1.118:5000';
-const baseUrl = 'http://192.168.100.14:5000';
+const baseUrl = 'http://192.168.1.118:5000';
+// const baseUrl = 'http://192.168.100.14:5000';
 const welcomeImageAsset = 'assets/images/welcome.png';
 const manImageAsset = 'assets/images/man.png';
 const manIconAsset = 'assets/icons/man_icon.png';
@@ -34,6 +34,7 @@ const youtubeImage = "assets/images/youtube.svg";
 
 const primaryColor = Color(0xFF4038FF);
 const unactiveColor = Color(0xffA7A7A7);
+const boneColor = Color(0xffF3F3F3);
 
 const List<String> alphabet = [
   '☆',

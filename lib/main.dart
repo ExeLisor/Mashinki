@@ -45,7 +45,7 @@ class _MainAppState extends State<MainApp> {
       name: '/:mark/models',
       page: () => ModelsScreen(),
       transition: Transition.cupertino,
-      binding: ModelsBinding(),
+      bindings: [ModelsBinding(), ModelsSelectorBinding()],
     ),
   ];
 

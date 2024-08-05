@@ -10,17 +10,35 @@ class ModelsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const TopBar(title: 'Модельный ряд'),
-          _brandsTitle(),
-          _models()
-          // _modelsView()
-        ],
+      body: Obx(
+        () => ModelsController.to.state.value == Status.success
+            ? _modelsScreenBody()
+            : const Center(
+                child: CircularProgressIndicator(),
+              ),
       ),
     );
   }
+
+  Widget _modelsScreenBody() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TopBar(title: ModelsController.to.mark.name ?? ""),
+          _selectors(),
+          _modelsListView()
+        ],
+      );
+
+  Widget _selectors() => const Row(
+        children: [
+          SelectorWidget(),
+        ],
+      );
+
+  Widget _modelsListView() =>
+      Obx(() => ModelsSelectorController.to.selectedModels.isEmpty
+          ? _models()
+          : _filtredModels());
 
   Widget _models() {
     return Expanded(
@@ -34,6 +52,25 @@ class ModelsScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 24.fs, fontWeight: FontWeight.bold),
               ),
               _generations(ModelsController.to.models[index]),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _filtredModels() {
+    return Expanded(
+      child: Obx(
+        () => ListView.builder(
+          itemCount: ModelsSelectorController.to.selectedModels.length,
+          itemBuilder: (context, index) => Column(
+            children: [
+              Text(
+                ModelsSelectorController.to.selectedModels[index].name ?? "",
+                style: TextStyle(fontSize: 24.fs, fontWeight: FontWeight.bold),
+              ),
+              _generations(ModelsSelectorController.to.selectedModels[index]),
             ],
           ),
         ),

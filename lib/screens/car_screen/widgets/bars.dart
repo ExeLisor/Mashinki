@@ -21,12 +21,16 @@ class CarsFloatBar extends StatelessWidget {
           final String brandName = CarController.to.mark.name ?? "";
           final String modelName = CarController.to.model.name ?? "";
           final String generationName = CarController.to.generation.name ?? "";
-          return Text(
-            "$brandName $modelName $generationName",
-            style: TextStyle(
-                fontSize: 16.fs,
-                fontWeight: FontWeight.bold,
-                color: primaryColor),
+          return SizedBox(
+            width: 220.w,
+            child: Text(
+              "$brandName $modelName $generationName",
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontSize: 16.fs,
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor),
+            ),
           );
         },
       );
