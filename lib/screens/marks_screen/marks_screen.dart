@@ -13,8 +13,9 @@ class MarksScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const TopBar(title: 'Бренды'),
-          const CarsSearchBar(
+          CarsSearchBar(
             isActiveButton: false,
+            controller: MarksSearchController.to,
           ),
           _marksScreenBody()
         ],

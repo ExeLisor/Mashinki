@@ -20,14 +20,22 @@ class ModelsScreen extends StatelessWidget {
     );
   }
 
-  Widget _modelsScreenBody() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TopBar(title: ModelsController.to.mark.name ?? ""),
-          _selectors(),
-          _modelsListView()
-        ],
+  Widget _modelsScreenBody() => Obx(
+        () => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TopBar(title: ModelsController.to.mark.name ?? ""),
+            CarsSearchBar(
+              controller: ModelsSearchController.to,
+            ),
+            ModelsSearchController.to.query.isNotEmpty
+                ? _searchingResults()
+                : _modelsListView()
+          ],
+        ),
       );
+// ModelsSearchController.to.results
+  Widget _searchingResults() => _models(ModelsSearchController.to.results);
 
   Widget _selectors() => const Row(
         children: [
@@ -37,21 +45,21 @@ class ModelsScreen extends StatelessWidget {
 
   Widget _modelsListView() =>
       Obx(() => ModelsSelectorController.to.selectedModels.isEmpty
-          ? _models()
+          ? _models(ModelsController.to.models)
           : _filtredModels());
 
-  Widget _models() {
+  Widget _models(List<Model> models) {
     return Expanded(
       child: Obx(
         () => ListView.builder(
-          itemCount: ModelsController.to.models.length,
+          itemCount: models.length,
           itemBuilder: (context, index) => Column(
             children: [
               Text(
-                ModelsController.to.models[index].name ?? "",
+                models[index].name ?? "",
                 style: TextStyle(fontSize: 24.fs, fontWeight: FontWeight.bold),
               ),
-              _generations(ModelsController.to.models[index]),
+              _generations(models[index]),
             ],
           ),
         ),

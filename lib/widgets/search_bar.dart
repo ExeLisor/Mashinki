@@ -1,6 +1,12 @@
 import 'package:autoverse/exports.dart';
 
-class CarsSearchBar extends StatelessWidget {
+abstract class SearchFieldController extends GetxController {
+  void clearSearch();
+  void startSearch(String query);
+  TextEditingController get controller;
+}
+
+class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
   const CarsSearchBar(
       {super.key,
       this.isActive = true,
@@ -9,17 +15,19 @@ class CarsSearchBar extends StatelessWidget {
 
   final bool isActive;
   final bool isActiveButton;
-  final TextEditingController? controller;
+  final T? controller;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 20.h, left: 25.h),
+      padding: EdgeInsets.only(bottom: 20.h, left: 25.w, right: 25.w),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CarsSearchTextField(
+          CarsSearchTextField<T>(
             isActive: isActive,
             isActiveButton: isActiveButton,
+            controller: controller,
           ),
           _filtersIcon()
         ],
@@ -54,7 +62,8 @@ class CarsSearchBar extends StatelessWidget {
       : Container();
 }
 
-class CarsSearchTextField extends StatelessWidget {
+class CarsSearchTextField<T extends SearchFieldController>
+    extends StatelessWidget {
   const CarsSearchTextField(
       {super.key,
       required this.isActive,
@@ -63,7 +72,7 @@ class CarsSearchTextField extends StatelessWidget {
 
   final bool isActive;
   final bool isActiveButton;
-  final TextEditingController? controller;
+  final T? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -83,18 +92,18 @@ class CarsSearchTextField extends StatelessWidget {
             ),
           ],
         ),
-        child: GetBuilder<MarksSearchController>(
-          dispose: (_) => MarksSearchController.to.clearSearch(),
+        child: GetBuilder<T>(
+          dispose: (_) => controller?.clearSearch(),
           builder: (controller) => TextFormField(
             enabled: isActive,
-            controller: MarksSearchController.to.controller,
+            controller: controller.controller,
             textAlignVertical: TextAlignVertical.bottom,
             autovalidateMode: AutovalidateMode.always,
             onChanged: controller.startSearch,
             onTapOutside: (_) => FocusScope.of(context).unfocus(),
             decoration: InputDecoration(
-              filled: true, // Add this line
-              fillColor: Colors.white, // Set the background color to white
+              filled: true,
+              fillColor: Colors.white,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(40),
                 borderSide: BorderSide.none,

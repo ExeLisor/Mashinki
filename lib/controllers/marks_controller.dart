@@ -73,21 +73,25 @@ class MarksBinding extends Bindings {
   void dependencies() => Get.lazyPut(() => ModelsController());
 }
 
-class MarksSearchController extends GetxController {
+class MarksSearchController extends GetxController
+    implements SearchFieldController {
   static MarksSearchController get to => Get.find();
 
-  TextEditingController controller = TextEditingController();
   List<Mark> results = <Mark>[];
   String query = "";
-
   List<String> recentSearch = [];
 
+  @override
+  TextEditingController controller = TextEditingController();
+
+  @override
   void clearSearch() {
     query = "";
     controller.text = "";
     results = <Mark>[];
   }
 
+  @override
   void startSearch(String text) {
     query = text;
 
