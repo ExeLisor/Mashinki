@@ -34,7 +34,7 @@ class MarksScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w),
           child: SingleChildScrollView(
-            child: BrandGrid(brands: result),
+            child: MarksGrid(brands: result),
           ),
         ),
       );

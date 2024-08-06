@@ -11,3 +11,5 @@ export '../screens/models_screen/controllers/models_controller.dart';
 
 export '../screens/car_screen/controllers/car_controller.dart';
 export '../screens/car_screen/controllers/specs_selector_controller.dart';
+
+export '../screens/marks_screen/controllers/alphabet_controller.dart';

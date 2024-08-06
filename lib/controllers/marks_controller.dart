@@ -11,7 +11,6 @@ class MarksController extends GetxController {
 
   List<Mark> marks = [];
   List<Mark> popularMarks = [];
-  List<AlphabetListViewItemGroup> alphabetList = [];
 
   @override
   Future<void> onInit() async {
@@ -26,7 +25,6 @@ class MarksController extends GetxController {
     try {
       popularMarks = await getOnlyPopularMarks();
       marks = await getAllMarks();
-      alphabetList = _initAlphabetList();
 
       Get.put(MarksSearchController());
       state.value = MarksState.success;
@@ -39,66 +37,6 @@ class MarksController extends GetxController {
   }
 
   bool isMarksLoaded() => state.value == MarksState.success ? true : false;
-
-  List<AlphabetListViewItemGroup> _initAlphabetList() {
-    try {
-      alphabetList = _addPopularMarksToAlphabet();
-      Map<String, List<Mark>> taggedElements = _createTagsForAlphabet();
-      alphabetList = _createGridsForEveryTag(taggedElements);
-
-      return alphabetList;
-    } catch (error) {
-      _clearAlphabetList();
-      rethrow;
-    }
-  }
-
-  void _clearAlphabetList() {
-    alphabetList.clear();
-    update();
-  }
-
-  List<AlphabetListViewItemGroup> _addPopularMarksToAlphabet() {
-    alphabetList.add(
-      AlphabetListViewItemGroup(
-        tag: '☆',
-        children: [
-          BrandGrid(brands: popularMarks),
-        ],
-      ),
-    );
-    return alphabetList;
-  }
-
-  Map<String, List<Mark>> _createTagsForAlphabet() {
-    Map<String, List<Mark>> groupedBrands = {};
-
-    for (var brand in MarksController.to.marks) {
-      String key = brand.name![0].toUpperCase();
-      if (!groupedBrands.containsKey(key)) {
-        groupedBrands[key] = [];
-      }
-      groupedBrands[key]!.add(brand);
-    }
-    return groupedBrands;
-  }
-
-  List<AlphabetListViewItemGroup> _createGridsForEveryTag(
-      Map<String, List<Mark>> tags) {
-    tags.forEach(
-      (key, brands) {
-        alphabetList.add(
-          AlphabetListViewItemGroup(
-            tag: key,
-            children: [
-              BrandGrid(brands: brands),
-            ],
-          ),
-        );
-      },
-    );
-    return alphabetList;
-  }
 
   Future<List<Mark>> getOnlyPopularMarks() async {
     try {
@@ -128,6 +66,11 @@ class MarksController extends GetxController {
       rethrow;
     }
   }
+}
+
+class MarksBinding extends Bindings {
+  @override
+  void dependencies() => Get.lazyPut(() => ModelsController());
 }
 
 class MarksSearchController extends GetxController {

@@ -28,10 +28,10 @@ class _MainAppState extends State<MainApp> {
   final List<GetPage> _pages = [
     GetPage(name: '/', page: () => HomeScreen()),
     GetPage(
-      name: '/marks',
-      page: () => const MarksScreen(),
-      transition: Transition.cupertino,
-    ),
+        name: '/marks',
+        page: () => const MarksScreen(),
+        transition: Transition.cupertino,
+        bindings: [AlphabetBinding()]),
     GetPage(
       name: '/models/:car',
       page: () => const CarScreen(),

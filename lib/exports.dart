@@ -25,10 +25,11 @@ export 'package:smooth_page_indicator/smooth_page_indicator.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:lottie/lottie.dart';
 export 'package:pin_code_fields/pin_code_fields.dart';
-export 'package:alphabet_list_view/alphabet_list_view.dart';
+
 export 'package:shimmer/shimmer.dart';
 export 'package:firebase_analytics/firebase_analytics.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_remote_config/firebase_remote_config.dart';
 export 'firebase_options.dart';
 export 'package:url_launcher/url_launcher.dart';
+export 'package:scrollable_positioned_list/scrollable_positioned_list.dart';

@@ -22,9 +22,9 @@ export 'registration_screen/widgets/error_widget.dart';
 
 export 'search_screen/search_screen.dart';
 
-export 'brand_screen/brand_screen.dart';
-export 'brand_screen/widgets/brand_grid.dart';
-export 'brand_screen/widgets/alphabet_widget.dart';
+export 'marks_screen/marks_screen.dart';
+export 'marks_screen/widgets/marks_grid.dart';
+export 'marks_screen/widgets/alphabet_widget.dart';
 
 export 'models_screen/models_screen.dart';
 export 'models_screen/widgets/selector_widget.dart';
