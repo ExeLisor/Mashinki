@@ -11,75 +11,20 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
       {super.key,
       this.isActive = true,
       this.isActiveButton = true,
-      this.controller});
+      this.controller,
+      this.filterAction});
 
   final bool isActive;
   final bool isActiveButton;
   final T? controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 20.h, left: 25.w, right: 25.w),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CarsSearchTextField<T>(
-            isActive: isActive,
-            isActiveButton: isActiveButton,
-            controller: controller,
-          ),
-          _filtersIcon()
-        ],
-      ),
-    );
-  }
-
-  Widget _filtersIcon() => isActiveButton
-      ? Container(
-          height: 48.h,
-          width: 48.h,
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
-          decoration: BoxDecoration(
-            color: primaryColor,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                spreadRadius: 1,
-                blurRadius: 3,
-                offset: Offset(0, 2.h),
-              ),
-            ],
-          ),
-          child: SvgPicture.asset(
-            filtersIconAsset,
-            height: 22.h,
-            width: 22.w,
-            fit: BoxFit.scaleDown,
-          ),
-        )
-      : Container();
-}
-
-class CarsSearchTextField<T extends SearchFieldController>
-    extends StatelessWidget {
-  const CarsSearchTextField(
-      {super.key,
-      required this.isActive,
-      required this.isActiveButton,
-      this.controller});
-
-  final bool isActive;
-  final bool isActiveButton;
-  final T? controller;
+  final VoidCallback? filterAction;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        width: isActiveButton ? 296.w : 362.w,
         height: 48.h,
+        margin: EdgeInsets.only(bottom: 20.h, left: 25.w, right: 25.w),
         decoration: BoxDecoration(
           color: const Color(0xfffef7ff),
           borderRadius: BorderRadius.circular(41),
@@ -94,14 +39,15 @@ class CarsSearchTextField<T extends SearchFieldController>
         ),
         child: GetBuilder<T>(
           dispose: (_) => controller?.clearSearch(),
-          builder: (controller) => TextFormField(
+          builder: (controller) => TextField(
             enabled: isActive,
             controller: controller.controller,
             textAlignVertical: TextAlignVertical.bottom,
-            autovalidateMode: AutovalidateMode.always,
+            // autovalidateMode: AutovalidateMode.always,
             onChanged: controller.startSearch,
             onTapOutside: (_) => FocusScope.of(context).unfocus(),
             decoration: InputDecoration(
+              suffixIcon: _filtersIcon(),
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
@@ -130,4 +76,18 @@ class CarsSearchTextField<T extends SearchFieldController>
       ),
     );
   }
+
+  Widget _filtersIcon() => GestureDetector(
+        onTap: filterAction,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 18.w),
+          child: SvgPicture.asset(
+            filtersIconAsset,
+            height: 22.h,
+            width: 20.w,
+            fit: BoxFit.scaleDown,
+            color: primaryColor,
+          ),
+        ),
+      );
 }
