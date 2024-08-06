@@ -93,6 +93,8 @@ class CarsSearchTextField extends StatelessWidget {
             onChanged: controller.startSearch,
             onTapOutside: (_) => FocusScope.of(context).unfocus(),
             decoration: InputDecoration(
+              filled: true, // Add this line
+              fillColor: Colors.white, // Set the background color to white
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(40),
                 borderSide: BorderSide.none,

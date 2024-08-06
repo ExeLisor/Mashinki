@@ -1,6 +1,10 @@
 import 'package:autoverse/exports.dart';
 
 ThemeData themeData(BuildContext context) => ThemeData(
+      scaffoldBackgroundColor: Colors.white,
+      bottomAppBarTheme: const BottomAppBarTheme(color: Colors.white),
+      appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white, surfaceTintColor: Colors.transparent),
       textTheme: GoogleFonts.interTextTheme(
         Theme.of(context).textTheme,
       ),

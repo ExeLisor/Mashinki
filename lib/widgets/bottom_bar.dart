@@ -10,6 +10,7 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
       () => BottomNavigationBar(
         showSelectedLabels: false,
         items: _items(),
+        backgroundColor: Colors.white,
         currentIndex: _barController.currentPageIndex.value,
         onTap: _barController.changePage,
       ),
@@ -28,8 +29,11 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
       4,
       (index) => BottomNavigationBarItem(
         label: "",
+        backgroundColor: Colors.white,
         icon: SvgPicture.asset(
           _icons[index],
+          height: 22.h,
+          width: 22.h,
           color: _barController.currentPageIndex.value == index
               ? primaryColor
               : unactiveColor,
