@@ -27,6 +27,7 @@ class ModelsScreen extends StatelessWidget {
             TopBar(title: ModelsController.to.mark.name ?? ""),
             CarsSearchBar(
               controller: ModelsSearchController.to,
+              filterAction: _showModelFilters,
             ),
             ModelsSearchController.to.query.isNotEmpty
                 ? _searchingResults()
@@ -34,14 +35,12 @@ class ModelsScreen extends StatelessWidget {
           ],
         ),
       );
-// ModelsSearchController.to.results
-  Widget _searchingResults() => _models(ModelsSearchController.to.results);
-
-  Widget _selectors() => const Row(
-        children: [
-          SelectorWidget(),
-        ],
+  void _showModelFilters() => Get.bottomSheet(
+        isScrollControlled: true,
+        const ModelsFiltersWidget(),
       );
+
+  Widget _searchingResults() => _models(ModelsSearchController.to.results);
 
   Widget _modelsListView() =>
       Obx(() => ModelsSelectorController.to.selectedModels.isEmpty
@@ -92,10 +91,13 @@ class ModelsScreen extends StatelessWidget {
 
   Widget _configuration(Model model, Generation generation) => Column(
         children: [
-          Text(
-            generation.name ?? "",
-            style: TextStyle(fontSize: 20.fs, fontWeight: FontWeight.w500),
-          ),
+          generation.name == null || generation.name!.isEmpty
+              ? Container()
+              : Text(
+                  generation.name ?? "",
+                  style:
+                      TextStyle(fontSize: 20.fs, fontWeight: FontWeight.w500),
+                ),
           SizedBox(
             height: 250.h,
             child: ListView(
@@ -142,27 +144,7 @@ class ModelsScreen extends StatelessWidget {
         ),
       );
 
-  //GRID
-  // Widget _modelsView() => Obx(
-  //   () => Expanded(
-  //     child: GridView.builder(
-  //       padding: EdgeInsets.fromLTRB(25.w, 10.h, 25.w, 20.h),
-  //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //         crossAxisCount: 2, // Две колонки
-  //         crossAxisSpacing:
-  //             18.w, // Расстояние между элементами по горизонтали
-  //         mainAxisSpacing: 15.h, // Расстояние между элементами по вертикали
-  //         childAspectRatio: 172.w / 62.h,
-  //       ),
-  //       itemCount: ModelsController.to.models.length,
-  //       itemBuilder: (context, index) =>
-  //           _modelTile(ModelsController.to.models[index]),
-  //     ),
-  //   ),
-  // );
-
   Widget _modelTile(Model model) => GestureDetector(
-        // onTap: () => ModelsController.to.getGenerationsDetails(model),
         child: Container(
           height: containerHeight,
           width: containerWidth,
@@ -196,17 +178,35 @@ class ModelsScreen extends StatelessWidget {
           child: Stack(
             children: [
               _modelImage(configuration.id ?? ""),
-              Text(
-                configuration.configurationName ?? "",
-                style: TextStyle(
-                    fontSize: 20.fs,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              )
+              _configurationText(configuration)
             ],
+          ),
+        ),
+      );
+
+  Widget _configurationText(Configuration configuration) => Align(
+        alignment: Alignment.bottomLeft,
+        child: Container(
+          margin: EdgeInsets.all(14.h),
+          width: 120.w,
+          height: 32.h,
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(26.h),
+            ),
+          ),
+          child: Center(
+            child: Text(
+              configuration.configurationName ?? "",
+              style: TextStyle(
+                  fontSize: 20.fs,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black),
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
       );

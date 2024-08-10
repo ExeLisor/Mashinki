@@ -6,13 +6,7 @@ void main() async {
   MobileAds.instance.initialize();
 
   Get.put(FirebaseController());
-  // Get.put(RegistrationController());
-  // Get.put(EmailController());
-  // Get.put(RegistrationPasswordsContoller());
-
   Get.put(MarksController());
-
-  // Get.put(HomeScreenController());
 
   runApp(const MainApp());
 }
@@ -25,6 +19,19 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  @override
+  Widget build(BuildContext context) {
+    ScreenSize.init(context);
+
+    return GetMaterialApp(
+      theme: themeData(context),
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
+      initialRoute: '/',
+      getPages: _pages,
+    );
+  }
+
   final List<GetPage> _pages = [
     GetPage(name: '/', page: () => HomeScreen()),
     GetPage(
@@ -47,22 +54,17 @@ class _MainAppState extends State<MainApp> {
       transition: Transition.cupertino,
       bindings: [
         ModelsBinding(),
+        ModelsSearchBinding(),
         ModelsSelectorBinding(),
-        ModelsSearchBinding()
+        ModelsFilterBinding(),
+      ],
+      children: [
+        GetPage(
+          name: '/filters',
+          page: () => const ModelsFiltersWidget(),
+          transition: Transition.cupertino,
+        ),
       ],
     ),
   ];
-
-  @override
-  Widget build(BuildContext context) {
-    ScreenSize.init(context);
-
-    return GetMaterialApp(
-      theme: themeData(context),
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
-      initialRoute: '/',
-      getPages: _pages,
-    );
-  }
 }

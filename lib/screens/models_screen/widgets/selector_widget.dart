@@ -5,61 +5,83 @@ class SelectorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _modelButton();
+    return Obx(() => ModelsSelectorController.to.isOpened
+        ? _modelList()
+        : _closedModelFilter());
   }
+
+  Widget _closedModelFilter() => SingleChildScrollView(
+        padding: EdgeInsets.only(top: 0.h, bottom: 24.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [_modelsFilterTitle(), _selectedModelsWrap()],
+        ),
+      );
+
+  Widget _selectedModelsWrap() => Obx(
+        () => Wrap(
+          spacing: 12.h,
+          children: List.generate(
+            ModelsSelectorController.to.selectedModels.length,
+            (index) => _selectorTile(
+                ModelsSelectorController.to.selectedModels[index]),
+          ),
+        ),
+      );
 
   Future<void> _showModels() async {
     ModelsSelectorController.to.openSelector();
-    await Get.bottomSheet(modelsSheet());
+    // await Get.bottomSheet(modelsSheet());
     ModelsSelectorController.to.search();
     ModelsSelectorController.to.closeSelector();
   }
 
-  Widget modelsSheet() => IntrinsicHeight(
-        child: Container(
-          width: Get.width,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            color: Color(0XFFf5f5f5),
+  Widget _modelsFilterTitle() => Container(
+        margin: EdgeInsets.only(bottom: 12.h),
+        child: GestureDetector(
+          onTap: ModelsSelectorController.to.isOpened
+              ? ModelsSelectorController.to.closeSelector
+              : ModelsSelectorController.to.openSelector,
+          child: Container(
+            decoration: const BoxDecoration(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [_title(), _arrowIcon()],
+            ),
           ),
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.h),
-              child: _modelsWrap()),
         ),
       );
 
-  Widget _modelsWrap() => SingleChildScrollView(
-        padding: EdgeInsets.only(top: 12.h, bottom: 24.h),
+  Widget _title() => Text(
+        "Модели",
+        style: TextStyle(fontSize: 20.fs, fontWeight: FontWeight.bold),
+      );
+
+  Widget _arrowIcon() => Obx(
+        () => RotatedBox(
+          quarterTurns: ModelsSelectorController.to.isOpened ? 1 : 3,
+          child: const Icon(Icons.arrow_back_ios_new_rounded),
+        ),
+      );
+
+  Widget _modelList() => SingleChildScrollView(
+        padding: EdgeInsets.only(top: 0.h, bottom: 24.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 12.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Модели",
-                    style:
-                        TextStyle(fontSize: 24.fs, fontWeight: FontWeight.bold),
-                  ),
-                  _clearSelectedModelsButton()
-                ],
-              ),
-            ),
-            Obx(
-              () => Wrap(
-                spacing: 12.h,
-                children: [
-                  ...List.generate(
-                      ModelsSelectorController.to.models.length,
-                      (index) => _selectorTile(
-                          ModelsSelectorController.to.models[index].name ?? ""))
-                ],
-              ),
-            ),
+            _modelsFilterTitle(),
+            _modelsWrap(),
           ],
         ),
+      );
+
+  Widget _modelsWrap() => Obx(
+        () => Wrap(
+            spacing: 12.h,
+            children: List.generate(
+                ModelsSelectorController.to.models.length,
+                (index) =>
+                    _selectorTile(ModelsSelectorController.to.models[index]))),
       );
 
   Widget _clearSelectedModelsButton() => GestureDetector(
@@ -83,48 +105,7 @@ class SelectorWidget extends StatelessWidget {
         ),
       );
 
-  void _modelButtonActions() {
-    ModelsSelectorController.to.isOpened
-        ? ModelsSelectorController.to.closeSelector
-        : _showModels();
-  }
-
-  Widget _modelButton() => Obx(
-        () => GestureDetector(
-          onTap: _modelButtonActions,
-          child: Container(
-            margin: EdgeInsets.only(left: 25.h),
-            child: Container(
-              margin: EdgeInsets.only(bottom: 12.h, top: 6.h),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.h),
-                  color: ModelsSelectorController.to.isOpened ||
-                          ModelsSelectorController.to.isSelected
-                      ? primaryColor
-                      : Colors.grey.withOpacity(0.3)),
-              child: UnconstrainedBox(
-                child: Container(
-                  margin:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-                  child: Center(
-                    child: Text(
-                      "Модели",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: ModelsSelectorController.to.isOpened ||
-                                  ModelsSelectorController.to.isSelected
-                              ? Colors.white
-                              : Colors.black),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-
-  Widget _selectorTile(String model) => GestureDetector(
+  Widget _selectorTile(Model model) => GestureDetector(
         onTap: () => ModelsSelectorController.to.selectModel(model),
         child: UnconstrainedBox(
           child: ConstrainedBox(
@@ -134,7 +115,8 @@ class SelectorWidget extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: 12.h, top: 6.h),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16.h),
-                    color: ModelsSelectorController.to.isModelSelected(model)
+                    color: ModelsSelectorController.to
+                            .isModelSelected(model.name ?? "")
                         ? primaryColor
                         : Colors.grey.withOpacity(0.3)),
                 child: Container(
@@ -142,13 +124,13 @@ class SelectorWidget extends StatelessWidget {
                       EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
                   child: Center(
                     child: Text(
-                      model,
+                      model.name ?? "",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color:
-                              ModelsSelectorController.to.isModelSelected(model)
-                                  ? Colors.white
-                                  : Colors.black),
+                          color: ModelsSelectorController.to
+                                  .isModelSelected(model.name ?? "")
+                              ? Colors.white
+                              : Colors.black),
                     ),
                   ),
                 ),
@@ -178,13 +160,28 @@ class ModelsSelectorController extends GetxController {
 
   void closeSelector() => _isOpened.value = false;
 
-  void selectModel(String model) {
+  void selectModel(Model model) {
     _isSelected.value = true;
-    ModelsSelectorController.to.isModelSelected(model)
-        ? _selectedModelsNames.remove(model)
-        : _selectedModelsNames.add(model);
+    ModelsSelectorController.to.isModelSelected(model.name ?? "")
+        ? _removeFromSelected(model)
+        : _addToSelected(model);
     if (_selectedModelsNames.isEmpty) _isSelected.value = false;
   }
+
+  void _removeFromSelected(Model model) {
+    _selectedModelsNames.remove(model.name ?? "");
+    _selectedModels.remove(model);
+    return;
+  }
+
+  void _addToSelected(Model model) {
+    _selectedModelsNames.add(model.name ?? "");
+    _selectedModels.add(model);
+    return;
+  }
+
+  void updateSelectedModels(List<Model> models) =>
+      _selectedModels.value = models;
 
   void clearSelectedModels() {
     _isSelected.value = false;

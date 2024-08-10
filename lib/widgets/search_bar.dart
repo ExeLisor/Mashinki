@@ -10,12 +10,12 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
   const CarsSearchBar(
       {super.key,
       this.isActive = true,
-      this.isActiveButton = true,
+      this.showFilters = true,
       this.controller,
       this.filterAction});
 
   final bool isActive;
-  final bool isActiveButton;
+  final bool showFilters;
   final T? controller;
   final VoidCallback? filterAction;
 
@@ -47,7 +47,7 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
             onChanged: controller.startSearch,
             onTapOutside: (_) => FocusScope.of(context).unfocus(),
             decoration: InputDecoration(
-              suffixIcon: _filtersIcon(),
+              suffixIcon: showFilters ? _filtersIcon() : null,
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(

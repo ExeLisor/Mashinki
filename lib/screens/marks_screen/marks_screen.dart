@@ -14,7 +14,7 @@ class MarksScreen extends StatelessWidget {
         children: [
           const TopBar(title: 'Бренды'),
           CarsSearchBar(
-            isActiveButton: false,
+            showFilters: false,
             controller: MarksSearchController.to,
           ),
           _marksScreenBody()
