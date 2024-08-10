@@ -6,7 +6,7 @@ class Configuration {
   final String? bodyType;
   final String? configurationName;
   final Notice? notice;
-  final List<Modification>? modifications;
+  List<Modification>? modifications;
 
   Configuration({
     this.id,

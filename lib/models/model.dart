@@ -14,7 +14,7 @@ class Model {
   final Class? modelClass;
   final int? yearFrom;
   final int? yearTo;
-  final List<Generation>? generations;
+  List<Generation>? generations;
 
   Model({
     this.id,

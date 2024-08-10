@@ -7,10 +7,11 @@ class ModelsController extends GetxController {
 
   Dio dio = Dio();
   final Rxn<Mark> _mark = Rxn<Mark>();
-  RxList<Model> models = <Model>[].obs;
+  final RxList<Model> _models = <Model>[].obs;
   Rx<Status> state = Status.loading.obs;
 
   Mark get mark => _mark.value!;
+  List<Model> get models => _models;
 
   @override
   Future<void> onInit() async {
@@ -19,7 +20,7 @@ class ModelsController extends GetxController {
     _emitLoadingState();
     dio = Dio();
     _setMark();
-    models.value = await _getModels();
+    _models.value = await _getModels();
     _emitSussessState();
   }
 

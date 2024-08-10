@@ -29,13 +29,6 @@ class SelectorWidget extends StatelessWidget {
         ),
       );
 
-  Future<void> _showModels() async {
-    ModelsSelectorController.to.openSelector();
-    // await Get.bottomSheet(modelsSheet());
-    ModelsSelectorController.to.search();
-    ModelsSelectorController.to.closeSelector();
-  }
-
   Widget _modelsFilterTitle() => Container(
         margin: EdgeInsets.only(bottom: 12.h),
         child: GestureDetector(
@@ -144,13 +137,12 @@ class SelectorWidget extends StatelessWidget {
 class ModelsSelectorController extends GetxController {
   static ModelsSelectorController get to => Get.find();
 
-  final RxList<Model> _models = <Model>[].obs;
   final RxSet<String> _selectedModelsNames = <String>{}.obs;
   final RxList<Model> _selectedModels = <Model>[].obs;
   final RxBool _isOpened = false.obs;
   final RxBool _isSelected = false.obs;
 
-  List<Model> get models => _models;
+  List<Model> models = ModelsController.to.models;
   List<Model> get selectedModels => _selectedModels;
   Set<String> get selectedModelsNames => _selectedModelsNames;
   bool get isOpened => _isOpened.value;
@@ -162,7 +154,7 @@ class ModelsSelectorController extends GetxController {
 
   void selectModel(Model model) {
     _isSelected.value = true;
-    ModelsSelectorController.to.isModelSelected(model.name ?? "")
+    isModelSelected(model.name ?? "")
         ? _removeFromSelected(model)
         : _addToSelected(model);
     if (_selectedModelsNames.isEmpty) _isSelected.value = false;
@@ -198,15 +190,10 @@ class ModelsSelectorController extends GetxController {
 
   bool isModelSelected(String model) =>
       ModelsSelectorController.to.selectedModelsNames.contains(model);
-
-  @override
-  void onInit() {
-    super.onInit();
-    _models.value = ModelsController.to.models;
-  }
 }
 
 class ModelsSelectorBinding implements Bindings {
   @override
-  void dependencies() => Get.lazyPut(() => ModelsSelectorController());
+  void dependencies() =>
+      Get.lazyPut(() => ModelsSelectorController(), fenix: true);
 }

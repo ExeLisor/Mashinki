@@ -42,10 +42,9 @@ class ModelsScreen extends StatelessWidget {
 
   Widget _searchingResults() => _models(ModelsSearchController.to.results);
 
-  Widget _modelsListView() =>
-      Obx(() => ModelsSelectorController.to.selectedModels.isEmpty
-          ? _models(ModelsController.to.models)
-          : _filtredModels());
+  Widget _modelsListView() => Obx(() => FiltersController.to.isFiltesApplied
+      ? _models(FiltersController.to.models)
+      : _models(ModelsController.to.models));
 
   Widget _models(List<Model> models) {
     return Expanded(

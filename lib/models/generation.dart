@@ -6,7 +6,7 @@ class Generation {
   final int? yearStart;
   final int? yearStop;
   final bool isRestyle;
-  final List<Configuration>? configurations;
+  List<Configuration>? configurations;
 
   Generation({
     this.id,
