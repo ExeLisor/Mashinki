@@ -15,6 +15,7 @@ class CharacteristicsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _modificationTitle(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -178,15 +179,21 @@ class CharacteristicsWidget extends StatelessWidget {
         ),
       );
 
-  Widget _modificationTitle() => Text(
-        'Модификация ${double.parse(specs.volumeLitres)} ${transmissionAbbriviature(specs.transmission)}',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 18.fs,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w600,
-        ),
-      );
+  Widget _modificationTitle() =>
+      CarController.to.selectedModification.groupName != null
+          ? Container(
+              margin: EdgeInsets.only(bottom: 40.h),
+              child: Text(
+                CarController.to.selectedModification.groupName!,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18.fs,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+          : Container();
 
   Widget _detailsTile(String spec, String value, {bool isSmall = false}) =>
       Container(

@@ -28,6 +28,7 @@ class CarScreen extends StatelessWidget {
           SingleChildScrollView(
             controller: controller,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _carImage(),
                 _carTitleWidget(),
@@ -97,6 +98,7 @@ class CarScreen extends StatelessWidget {
       );
 
   Widget _carTitleWidget() => Container(
+        width: Get.width,
         margin: EdgeInsets.only(bottom: 10.h),
         decoration: BoxDecoration(
             color: Colors.white,
@@ -117,44 +119,38 @@ class CarScreen extends StatelessWidget {
         ),
       );
 
-  Widget _tagsWidget() => Column(
+  Widget _tagsWidget() => Wrap(
+        runSpacing: 6.h,
         children: [
-          Row(
-            children: [
-              _tag("IX (XV80) China Market"),
-              _tag("Седан"),
-              _tag("2023 — н.в."),
-            ],
-          ),
-          SizedBox(
-            height: 6.h,
-          ),
-          Row(
-            children: [
-              _tag("Комплектация Deluxe"),
-              _tag("2.0 CVT"),
-              _tag("вариатор"),
-            ],
-          ),
+          _tag(CarController.to.configuration.bodyType ?? ""),
+          _tag(
+              "${CarController.to.generation.yearStart} - ${CarController.to.generation.yearStop ?? "н.в."}"),
+          _tag("2.0 CVT"),
+          _tag("вариатор"),
+          CarController.to.generation.isRestyle
+              ? _tag("Рейстайлинг")
+              : Container(),
         ],
       );
 
-  Widget _tag(String text) => Container(
-        height: 32.h,
-        margin: EdgeInsets.only(right: 10.w),
-        decoration: BoxDecoration(
-          color: const Color(0xffF3F3F3),
-          borderRadius: BorderRadius.circular(20.h),
-        ),
+  Widget _tag(String text) => UnconstrainedBox(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 11.w),
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                  fontSize: 13.fs,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black),
+          height: 32.h,
+          margin: EdgeInsets.only(right: 10.w),
+          decoration: BoxDecoration(
+            color: const Color(0xffF3F3F3),
+            borderRadius: BorderRadius.circular(20.h),
+          ),
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 11.w),
+            child: Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                    fontSize: 13.fs,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black),
+              ),
             ),
           ),
         ),
