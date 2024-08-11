@@ -1,9 +1,7 @@
 import 'package:autoverse/exports.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-
-  final BarController _barController = Get.put(BarController());
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +51,7 @@ class HomeScreen extends StatelessWidget {
       );
 
   Widget _body() => Obx(
-      () => _bodyWidgets().elementAt(_barController.currentPageIndex.value));
+      () => _bodyWidgets().elementAt(BarController.to.currentPageIndex.value));
 
   List<Widget> _bodyWidgets() => <Widget>[
         _homeScreen(),

@@ -29,6 +29,7 @@ class _MainAppState extends State<MainApp> {
       home: HomeScreen(),
       initialRoute: '/',
       getPages: _pages,
+      initialBinding: BarBinding(),
     );
   }
 
