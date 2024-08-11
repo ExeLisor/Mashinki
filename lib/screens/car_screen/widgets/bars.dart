@@ -5,7 +5,7 @@ class CarsFloatBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Obx(
-        () => CarController.to.currentOffset > 350.h
+        () => CarAppbarController.to.currentOffset > 350.h
             ? Align(
                 alignment: Alignment.topCenter,
                 child: Container(

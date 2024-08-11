@@ -3,7 +3,8 @@ import 'package:autoverse/exports.dart';
 class OptionsWidget extends StatelessWidget {
   OptionsWidget({super.key});
 
-  final CarOptions options = CarController.to.options;
+  final CarOptions options =
+      CarController.to.selectedModification.carOptions ?? CarOptions();
 
   @override
   Widget build(BuildContext context) {

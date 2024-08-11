@@ -13,24 +13,17 @@ class CarController extends GetxController {
   final Rxn<Generation> _generation = Rxn<Generation>();
   final Rxn<Configuration> _configuration = Rxn<Configuration>();
   final Rxn<List<Modification>> _modifications = Rxn<List<Modification>>();
-  final Rxn<CarOptions> _options = Rxn<CarOptions>();
-  final Rxn<CarSpecifications> _specifications = Rxn<CarSpecifications>();
-  final RxDouble _currentOffset = 0.0.obs;
+  final Rxn<Modification> _selectedModification = Rxn<Modification>();
 
   Mark get mark => _mark.value!;
   Model get model => _model.value!;
   Generation get generation => _generation.value!;
   Configuration get configuration => _configuration.value!;
   List<Modification> get modifications => _modifications.value!;
-  CarSpecifications get specifications => _specifications.value!;
-  CarOptions get options => _options.value ?? CarOptions();
-  double get currentOffset => _currentOffset.value;
+  Modification get selectedModification => _selectedModification.value!;
 
-  void startListen(ScrollController controller) {
-    log(controller.hasClients);
-    if (controller.hasClients) return;
-    controller.addListener(() => _currentOffset.value = controller.offset);
-  }
+  void selectModification(Modification modification) =>
+      _selectedModification.value = modification;
 
   @override
   Future<void> onInit() async {
@@ -41,7 +34,13 @@ class CarController extends GetxController {
     _configuration.value = Get.arguments["configuration"];
     _modifications.value = configuration.modifications;
 
-    await _getSpecs(configuration.modifications?.first.complectationId ?? "");
+    for (Modification modification in configuration.modifications ?? []) {
+      final specs = await _getSpecs(modification.complectationId ?? "");
+      modification.carOptions = _getOptions(specs["options"]);
+      modification.carSpecifications =
+          _getSpecifications(specs["specifications"]);
+    }
+    _selectedModification.value = configuration.modifications?.first;
 
     _emitSussessState();
 
@@ -66,16 +65,12 @@ class CarController extends GetxController {
     return specifications;
   }
 
-  Future<bool> _getSpecs(String complecationId) async {
+  Future _getSpecs(String complecationId) async {
     try {
       log("$baseUrl/specs/${configuration.id}");
       Response response = await dio.get("$baseUrl/specs/$complecationId");
-      log(response.data["specifications"]);
-      _options.value = _getOptions(response.data["options"]);
-      _specifications.value =
-          _getSpecifications(response.data["specifications"]);
 
-      return true;
+      return response.data;
     } on DioException catch (error) {
       switch (error.type) {
         case DioExceptionType.connectionError:

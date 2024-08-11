@@ -3,7 +3,8 @@ import 'package:autoverse/exports.dart';
 class CharacteristicsWidget extends StatelessWidget {
   CharacteristicsWidget({super.key});
 
-  final CarSpecifications specs = CarController.to.specifications;
+  final CarSpecifications specs =
+      CarController.to.selectedModification.carSpecifications!;
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +15,6 @@ class CharacteristicsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _modificationTitle(),
-          SizedBox(
-            height: 40.h,
-          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -45,7 +42,6 @@ class CharacteristicsWidget extends StatelessWidget {
               title: "Характеристики двигателя", specs: _engineSpecs()),
           SpecsBlockWidget(
               title: "Подвеска и тормоза", specs: _transmissionSpecs()),
-          SpecsBlockWidget(title: "Трансмиссия", specs: _transmissionSpecs()),
           SpecsBlockWidget(title: "Размеры и объёмы", specs: _sizesSpecs()),
           SpecsBlockWidget(
               title: "Топливная система и расход", specs: _fuelSpecs()),
@@ -80,11 +76,11 @@ class CharacteristicsWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _detailsTile("Тип двигателя", specs.engineType),
+            _detailsTile("Коробка", specs.transmission),
             SizedBox(
               width: 19.w,
             ),
-            _detailsTile("Коробка", specs.transmission),
+            _detailsTile("Тип двигателя", specs.engineType),
             SizedBox(
               width: 19.w,
             ),
@@ -217,6 +213,7 @@ class CharacteristicsWidget extends StatelessWidget {
             ),
             Text(
               value,
+              textScaler: const TextScaler.linear(0.9),
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14.fs,

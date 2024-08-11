@@ -11,7 +11,7 @@ class CarScreen extends StatelessWidget {
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
     return GetBuilder<CarController>(
-      initState: (state) => CarController.to.startListen(controller),
+      initState: (state) => CarAppbarController.to.startListen(controller),
       builder: (carController) => Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: const Color(0xffEEEEEE),
@@ -31,9 +31,7 @@ class CarScreen extends StatelessWidget {
               children: [
                 _carImage(),
                 _carTitleWidget(),
-                SizedBox(
-                  height: 10.h,
-                ),
+                _carModifications(),
                 _carDetails(),
               ],
             ),
@@ -61,6 +59,8 @@ class CarScreen extends StatelessWidget {
               : CharacteristicsWidget()
         ],
       );
+
+  Widget _carModifications() => const ModificationsWidget();
 
   Widget _selectorWidget() => Obx(
         () => Row(
@@ -97,6 +97,7 @@ class CarScreen extends StatelessWidget {
       );
 
   Widget _carTitleWidget() => Container(
+        margin: EdgeInsets.only(bottom: 10.h),
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(24.h))),

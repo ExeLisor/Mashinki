@@ -6,6 +6,8 @@ class Modification {
   final int? offersPriceTo;
   final String? groupName;
   final Specifications? specifications;
+  CarOptions? carOptions;
+  CarSpecifications? carSpecifications;
 
   Modification({
     this.complectationId,
@@ -13,6 +15,8 @@ class Modification {
     this.offersPriceTo,
     this.groupName,
     this.specifications,
+    this.carOptions,
+    this.carSpecifications,
   });
 
   factory Modification.fromJson(Map<String, dynamic> json) => Modification(

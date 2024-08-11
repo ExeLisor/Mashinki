@@ -47,6 +47,7 @@ class _MainAppState extends State<MainApp> {
       bindings: [
         CarBinding(),
         SpecsSelectorBinding(),
+        CarAppBarBinding(),
       ],
     ),
     GetPage(
