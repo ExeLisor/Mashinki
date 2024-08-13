@@ -46,7 +46,17 @@ class CarsFloatBar extends StatelessWidget {
   Widget _floatingBar() {
     return SafeArea(
       child: Container(
-        color: const Color(0xffF3F3F3),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              blurRadius: 6,
+              offset: Offset(0, 6),
+              spreadRadius: 0,
+            )
+          ],
+        ),
         child: Padding(
           padding: EdgeInsets.fromLTRB(15.w, 5.h, 15.w, 5.h),
           child: Row(
