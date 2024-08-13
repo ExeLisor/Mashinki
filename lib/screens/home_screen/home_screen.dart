@@ -53,8 +53,14 @@ class HomeScreen extends StatelessWidget {
 
   List<Widget> _bodyWidgets() => <Widget>[
         _homeScreen(),
-        Container(),
-        Container(),
-        Container(),
+        _construction(),
+        _construction(),
+        _construction(),
       ];
+
+  Widget _construction() => Center(
+          child: Text(
+        "👷 🚧 🛑",
+        style: TextStyle(fontSize: 50.h),
+      ));
 }

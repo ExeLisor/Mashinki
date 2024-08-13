@@ -11,39 +11,31 @@ class OptionsWidget extends StatelessWidget {
     return Container(
       color: Colors.white,
       width: Get.width,
-      padding: EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h),
+      padding:
+          EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h, right: 25.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SpecsBlockWidget(title: "Материалы и отделка", specs: _materials()),
-          SpecsBlockWidget(title: "Сиденья и регулировки", specs: _salon()),
-          SpecsBlockWidget(
-              title: "Дополнительные внутренние характеристики",
-              specs: _internalCharacteristics()),
-          SpecsBlockWidget(title: "Крыша и окна", specs: _roofAndWindow()),
-          SpecsBlockWidget(
-              title: "Дополнительные внутренние характеристики",
-              specs: _internalCharacteristics()),
-          SpecsBlockWidget(title: "Зеркала и камеры", specs: _mirrors()),
-          SpecsBlockWidget(title: "Освещение", specs: _lighting()),
-          SpecsBlockWidget(title: "Климат и вентиляция", specs: _climate()),
-          SpecsBlockWidget(
-              title: "Системы помощи при вождении и парковке",
-              specs: _parking()),
-          SpecsBlockWidget(
-              title: "Дополнительные удобства", specs: _features()),
-          SpecsBlockWidget(
-              title: "Подушки безопасности и ремни", specs: _safe()),
-          SpecsBlockWidget(
-              title: "Торможение и стабильность", specs: _stability()),
-          SpecsBlockWidget(
-              title: "Ассистенты и предупреждения", specs: _assistents()),
-          SpecsBlockWidget(title: "Охранные системы", specs: _security()),
-          SpecsBlockWidget(title: "Аудио и мультимедиа", specs: _audio()),
-          SpecsBlockWidget(title: "Навигация и связь", specs: _navigation()),
-          SpecsBlockWidget(title: "Колеса", specs: _wheels()),
-          SpecsBlockWidget(title: "Подвеска и управление", specs: _control()),
-          SpecsBlockWidget(title: "Кузов и стиль", specs: _style()),
+          DropSpecsBlockWidget(title: "Материалы", specs: _materials()),
+          DropSpecsBlockWidget(title: "Сиденья", specs: _salon()),
+          DropSpecsBlockWidget(
+              title: "Салон", specs: _internalCharacteristics()),
+          DropSpecsBlockWidget(title: "Крыша и окна", specs: _roofAndWindow()),
+          DropSpecsBlockWidget(title: "Зеркала и камеры", specs: _mirrors()),
+          DropSpecsBlockWidget(title: "Освещение", specs: _lighting()),
+          DropSpecsBlockWidget(title: "Климат", specs: _climate()),
+          DropSpecsBlockWidget(title: "Системы помощи", specs: _parking()),
+          DropSpecsBlockWidget(title: "Доп. удобства", specs: _features()),
+          DropSpecsBlockWidget(title: "Безопасность", specs: _safe()),
+          DropSpecsBlockWidget(title: "Стабильность", specs: _stability()),
+          DropSpecsBlockWidget(title: "Ассистенты", specs: _assistents()),
+          DropSpecsBlockWidget(title: "Охрана", specs: _security()),
+          DropSpecsBlockWidget(title: "Мультимедиа", specs: _audio()),
+          DropSpecsBlockWidget(
+              title: "Навигация и связь", specs: _navigation()),
+          DropSpecsBlockWidget(title: "Колеса", specs: _wheels()),
+          DropSpecsBlockWidget(title: "Подвеска", specs: _control()),
+          DropSpecsBlockWidget(title: "Кузов и стиль", specs: _style()),
         ],
       ),
     );
@@ -60,12 +52,12 @@ class OptionsWidget extends StatelessWidget {
   List<Map<String, dynamic>> _control() => [
         {"Активная подвеска": getValue(options.activSuspension)},
         {"Пневмоподвеска": getValue(options.airSuspension)},
-        {"Уменьшенное запасное колесо": getValue(options.reduceSpareWheel)},
-        {"Запасное колесо": getValue(options.spareWheel)},
         {"Спортивная подвеска": getValue(options.sportSuspension)},
       ];
 
   List<Map<String, dynamic>> _wheels() => [
+        {"Запасное колесо": getValue(options.spareWheel)},
+        {"Уменьшенное запасное колесо": getValue(options.reduceSpareWheel)},
         {"14 дюймовые колеса": getValue(options.wheel14Inch)},
         {"15 дюймовые колеса": getValue(options.wheel15Inch)},
         {"16 дюймовые колеса": getValue(options.wheel16Inch)},
