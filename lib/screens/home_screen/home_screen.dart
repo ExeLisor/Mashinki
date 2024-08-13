@@ -25,27 +25,25 @@ class HomeScreen extends StatelessWidget {
               title: "Каталог",
               isHomeScreen: true,
             ),
-
-            // const CarsSearchBar(
-            //   isActive: false,
-            //   isActiveButton: false,
-            // ),
-            // SizedBox(
-            //   height: 20.h,
-            // ),
-            // const WeeklySelectionWidget(),
-            // SizedBox(
-            //   height: 20.h,
-            // ),
-            // const HomeScreenAdsWidget(),
-            // SizedBox(
-            //   height: 20.h,
-            // ),
+            const CarsSearchBar(
+              isActive: false,
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            const WeeklySelectionWidget(),
+            SizedBox(
+              height: 20.h,
+            ),
+            const HomeScreenAdsWidget(),
+            SizedBox(
+              height: 20.h,
+            ),
             MarksWidget(),
-            // SizedBox(
-            //   height: 20.h,
-            // ),
-            // CarsCatalogListWidget(),
+            SizedBox(
+              height: 20.h,
+            ),
+            CarsCatalogListWidget(),
           ],
         ),
       );

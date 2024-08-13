@@ -26,6 +26,7 @@ class CarsCatalogListWidget extends StatelessWidget {
 
   Widget _carsView() => HomeShimmerWidget(
         shimmer: _carsGridLoading(),
+        successCondition: true,
         child: _carsGrid(),
       );
 
@@ -58,10 +59,15 @@ class CarsCatalogListWidget extends StatelessWidget {
         ),
       );
 
-  Widget _carsCatalogWidgetTitle() => Text(
-        "Автомобили",
-        style: TextStyle(
-            fontSize: 18.fs, color: primaryColor, fontWeight: FontWeight.w600),
+  Widget _carsCatalogWidgetTitle() => Padding(
+        padding: EdgeInsets.only(left: 25.0.w),
+        child: Text(
+          "Автомобили",
+          style: TextStyle(
+              fontSize: 18.fs,
+              color: primaryColor,
+              fontWeight: FontWeight.w600),
+        ),
       );
   final SliverGridDelegate _gridDelegate =
       SliverGridDelegateWithFixedCrossAxisCount(
@@ -69,36 +75,56 @@ class CarsCatalogListWidget extends StatelessWidget {
     mainAxisSpacing: 18.0.w, // spacing between rows
     crossAxisSpacing: 8.0, // spacing between columns
   );
-  Widget _carsGrid() => GridView.builder(
-        padding: EdgeInsets.only(bottom: 16.h),
+  Widget _carsGrid() => ListView(
+        padding: EdgeInsets.only(bottom: 25.h, left: 25.w, right: 25.w),
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: _gridDelegate,
-        itemCount: 4,
-        itemBuilder: (_, index) => const CatalogTile(),
+        children: const [
+          CatalogTile(
+            name: "Toyota Camry",
+            year: "2023",
+            imageUrl:
+                "https://avatars.mds.yandex.net/get-verba/997355/2a0000018e0fd1de72d4ecb8fef86d78a72e/cattouchret",
+          ),
+          CatalogTile(
+            name: "Toyota Camry",
+            year: "2025",
+            imageUrl:
+                "https://motortrend.com/files/661fed9cfceecf0008b212e4/001-2025-toyota-camry-se-awd-lead.jpg?w=768&width=768&q=75&format=webp",
+          ),
+          CatalogTile(
+            name: "Toyota Corolla",
+            year: "2023",
+            imageUrl:
+                "https://d8a6a33f-3369-444b-9b5f-793c13ff0708.selcdn.net/media/common/just_strip/tradeins.space/uploads/models_gallery_image/13778/450d7266a8acac506ddc97c36c79cedee2addd42.jpeg?v77",
+          ),
+          CatalogTile(
+            name: "Toyota Yaris",
+            year: "2019",
+            imageUrl:
+                "https://s.auto.drom.ru/img5/catalog/photos/fullsize/toyota/yaris/toyota_yaris_297782.jpg",
+          )
+        ],
       );
 }
 
 class CatalogTile extends StatelessWidget {
-  const CatalogTile({super.key});
+  const CatalogTile(
+      {super.key,
+      required this.name,
+      required this.year,
+      required this.imageUrl});
+
+  final String name;
+  final String year;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 169.h,
-      width: 172.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.15),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 5.h), // changes position of shadow
-          ),
-        ],
-      ),
+      height: 281.h,
+      margin: EdgeInsets.only(bottom: 15.h),
+      decoration: _decoration(),
       child: Column(
         children: [
           _carImage(),
@@ -111,14 +137,56 @@ class CatalogTile extends StatelessWidget {
     );
   }
 
-  Widget _carImage() => ClipRRect(
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(24),
+  Widget _carImage() => Stack(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(24),
+            ),
+            child: Container(
+              height: 225.h,
+              width: 361.w,
+              color: Colors.black,
+              child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
+            ),
+          ),
+          _iconsRow()
+        ],
+      );
+  Widget _iconsRow() => Padding(
+        padding: EdgeInsets.only(right: 25.0.w, top: 15.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            _addToCompare(),
+            SizedBox(
+              width: 10.w,
+            ),
+            _addToFavorite()
+          ],
         ),
+      );
+  Widget _addToFavorite() => _icon(Icons.favorite_border, () {});
+  Widget _addToCompare() => _icon(Icons.copy, () {});
+
+  Widget _icon(IconData icon, VoidCallback action) => GestureDetector(
+        onTap: action,
         child: Container(
-          height: 131.h,
-          width: 172.w,
-          color: Colors.black,
+          width: 45.h,
+          height: 45.h,
+          clipBehavior: Clip.antiAlias,
+          decoration: ShapeDecoration(
+            color: Colors.black.withOpacity(0.20000000298023224),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(23),
+            ),
+          ),
+          child: Center(
+            child: Icon(
+              icon,
+              color: Colors.white,
+            ),
+          ),
         ),
       );
 
@@ -131,13 +199,34 @@ class CatalogTile extends StatelessWidget {
       );
 
   Widget _carName() => Text(
-        "BMW X3 30i xDrive",
+        name,
         style: TextStyle(
-            fontSize: 12.fs, fontWeight: FontWeight.bold, color: Colors.black),
+            fontSize: 20.fs, fontWeight: FontWeight.w600, color: Colors.black),
       );
 
   Widget _carYear() => Text(
-        "2025",
-        style: TextStyle(fontSize: 12.fs, fontWeight: FontWeight.w300),
+        year,
+        style: TextStyle(fontSize: 20.fs, fontWeight: FontWeight.w300),
+      );
+
+  ShapeDecoration _decoration() => ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        shadows: const [
+          BoxShadow(
+            color: Color(0x07000000),
+            blurRadius: 15,
+            offset: Offset(-1, 10),
+            spreadRadius: 2,
+          ),
+          BoxShadow(
+            color: Color(0x07000000),
+            blurRadius: 15,
+            offset: Offset(1, 1),
+            spreadRadius: 2,
+          )
+        ],
       );
 }

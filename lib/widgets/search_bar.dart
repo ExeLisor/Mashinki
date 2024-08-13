@@ -37,45 +37,53 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
             ),
           ],
         ),
-        child: GetBuilder<T>(
-          dispose: (_) => controller?.clearSearch(),
-          builder: (controller) => TextField(
-            enabled: isActive,
-            controller: controller.controller,
-            textAlignVertical: TextAlignVertical.bottom,
-            // autovalidateMode: AutovalidateMode.always,
-            onChanged: controller.startSearch,
-            onTapOutside: (_) => FocusScope.of(context).unfocus(),
-            decoration: InputDecoration(
-              suffixIcon: showFilters ? _filtersIcon() : null,
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(40),
-                borderSide: BorderSide.none,
+        child: controller == null
+            ? TextField(
+                enabled: false,
+                textAlignVertical: TextAlignVertical.bottom,
+                decoration: decoration(),
+              )
+            : GetBuilder<T>(
+                dispose: (_) => controller?.clearSearch(),
+                builder: (controller) => TextField(
+                  enabled: isActive,
+                  controller: controller.controller,
+                  textAlignVertical: TextAlignVertical.bottom,
+                  // autovalidateMode: AutovalidateMode.always,
+                  onChanged: controller.startSearch,
+                  onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                  decoration: decoration(),
+                ),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(40),
-                borderSide: const BorderSide(color: Colors.transparent),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(40),
-                borderSide: const BorderSide(color: Colors.transparent),
-              ),
-              hintText: "Поиск",
-              hintStyle: TextStyle(fontSize: 18.fs, color: Colors.grey),
-              prefixIcon: SvgPicture.asset(
-                lensIcon,
-                height: 22.h,
-                width: 20.w,
-                fit: BoxFit.scaleDown,
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
+
+  InputDecoration decoration() => InputDecoration(
+        suffixIcon: showFilters ? _filtersIcon() : null,
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: const BorderSide(color: Colors.transparent),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: const BorderSide(color: Colors.transparent),
+        ),
+        hintText: "Поиск",
+        hintStyle: TextStyle(fontSize: 18.fs, color: Colors.grey),
+        prefixIcon: SvgPicture.asset(
+          lensIcon,
+          height: 22.h,
+          width: 20.w,
+          fit: BoxFit.scaleDown,
+        ),
+      );
 
   Widget _filtersIcon() => GestureDetector(
         onTap: filterAction,
