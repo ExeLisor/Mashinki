@@ -11,7 +11,7 @@ class Model {
   final String? id;
   final String? name;
   final String? cyrillicName;
-  final Class? modelClass;
+  final String? modelClass;
   final int? yearFrom;
   final int? yearTo;
   List<Generation>? generations;
@@ -30,7 +30,7 @@ class Model {
         id: json["id"],
         name: json["name"],
         cyrillicName: json["cyrillic-name"],
-        modelClass: classValues.map[json["class"]]!,
+        modelClass: json["class"],
         yearFrom: json["year-from"],
         yearTo: json["year-to"],
         generations: json["generations"] == null
@@ -43,7 +43,7 @@ class Model {
         "id": id,
         "name": name,
         "cyrillic-name": cyrillicName,
-        "class": classValues.reverse[modelClass],
+        "class": modelClass,
         "year-from": yearFrom,
         "year-to": yearTo,
         "generations": generations == null

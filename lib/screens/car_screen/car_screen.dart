@@ -110,51 +110,88 @@ class CarScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _carTitle(),
+              _carSubTitle(),
               SizedBox(
-                height: 14.h,
+                height: 25.h,
               ),
-              _tagsWidget()
+              _carDescription()
             ],
           ),
+        ),
+      );
+
+  Widget _carDescription() => Container(
+        margin: EdgeInsets.only(right: 25.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Описание",
+              style: TextStyle(
+                color: const Color(0xFF4038FF),
+                fontSize: 18.fs,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+                height: 0.06,
+              ),
+            ),
+            SizedBox(
+              height: 12.h,
+            ),
+            Text(
+              CarController.to.getDescription(),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14.fs,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         ),
       );
 
   Widget _tagsWidget() => Wrap(
         runSpacing: 6.h,
         children: [
-          _tag(CarController.to.configuration.bodyType ?? ""),
+          _tag(CarController.to.generation.name),
+          _tag(CarController.to.configuration.bodyType),
           _tag(
               "${CarController.to.generation.yearStart} - ${CarController.to.generation.yearStop ?? "н.в."}"),
-          _tag("2.0 CVT"),
-          _tag("вариатор"),
+          _tag(CarController
+              .to.selectedModification.carSpecifications?.transmission),
+          _tag(CarController
+              .to.selectedModification.carSpecifications?.engineType),
           CarController.to.generation.isRestyle
               ? _tag("Рейстайлинг")
               : Container(),
         ],
       );
 
-  Widget _tag(String text) => UnconstrainedBox(
-        child: Container(
-          height: 32.h,
-          margin: EdgeInsets.only(right: 10.w),
-          decoration: BoxDecoration(
-            color: const Color(0xffF3F3F3),
-            borderRadius: BorderRadius.circular(20.h),
-          ),
+  Widget _tag(String? text) => text == null
+      ? Container()
+      : UnconstrainedBox(
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 11.w),
-            child: Center(
-              child: Text(
-                text,
-                style: TextStyle(
-                    fontSize: 13.fs,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black),
+            height: 32.h,
+            margin: EdgeInsets.only(right: 10.w),
+            decoration: BoxDecoration(
+              color: const Color(0xffF3F3F3),
+              borderRadius: BorderRadius.circular(20.h),
+            ),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 11.w),
+              child: Center(
+                child: Text(
+                  text,
+                  style: TextStyle(
+                      fontSize: 13.fs,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black),
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
 
   String _formatModelNameWithBrand(Mark mark, Model model) {
     final name = model.name ?? "";
@@ -170,11 +207,22 @@ class CarScreen extends StatelessWidget {
   Widget _carTitle() {
     String brandName = CarController.to.mark.name ?? "";
     String modelName = CarController.to.model.name ?? "";
-    String generationName = CarController.to.generation.name ?? "";
+    int? year = CarController.to.generation.yearStart;
+
     return Text(
-      "$brandName $modelName $generationName",
+      "$brandName $modelName ${year ?? ""}",
       style: TextStyle(
           fontSize: 25.fs, fontWeight: FontWeight.bold, color: primaryColor),
+    );
+  }
+
+  Widget _carSubTitle() {
+    String subtitle = CarController.to.generation.name ?? "";
+
+    return Text(
+      subtitle,
+      style: TextStyle(
+          fontSize: 20.fs, fontWeight: FontWeight.bold, color: Colors.black),
     );
   }
 

@@ -5,7 +5,6 @@ class Modification {
   final int? offersPriceFrom;
   final int? offersPriceTo;
   final String? groupName;
-  final Specifications? specifications;
   CarOptions? carOptions;
   CarSpecifications? carSpecifications;
 
@@ -14,7 +13,6 @@ class Modification {
     this.offersPriceFrom,
     this.offersPriceTo,
     this.groupName,
-    this.specifications,
     this.carOptions,
     this.carSpecifications,
   });
@@ -24,9 +22,6 @@ class Modification {
         offersPriceFrom: json["offers-price-from"],
         offersPriceTo: json["offers-price-to"],
         groupName: json["group-name"],
-        specifications: json["specifications"] == null
-            ? null
-            : Specifications.fromJson(json["specifications"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,6 +29,5 @@ class Modification {
         "offers-price-from": offersPriceFrom,
         "offers-price-to": offersPriceTo,
         "group-name": groupName,
-        "specifications": specifications?.toJson(),
       };
 }

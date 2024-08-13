@@ -134,9 +134,143 @@ class CarController extends GetxController {
   void _emitLoadingState() => state.value = Status.loading;
   void _emitErrorState() => state.value = Status.error;
   void _setState(Status newState) => state.value = newState;
+
+  String getDescription() {
+    String bodyType = (configuration.bodyType ?? "").capitalizeFirstLetter();
+    String classType =
+        model.modelClass == null ? "" : "${model.modelClass}-класса";
+    String drive = getSpecDescription(getAllDrivesTypes(), "привод", "привод");
+    String transmission =
+        "Коробка ${getSpecDescription(getAllTransmissionTypes(), "", "")}"
+            .capitalizeFirstLetter();
+
+    String engines =
+        "Типы двигателей: ${getSpecDescription(getAllEndgineTypes(), "", "")}";
+
+    String endingesVolume = getMinMaxVolumeDescription().isEmpty
+        ? ","
+        : getMinMaxVolumeDescription();
+    String horsePower = getMinMaxPowerDescription();
+
+    return "$bodyType $classType, $drive. $transmission. $engines$endingesVolume $horsePower";
+  }
+
+  List<String> getAllTransmissionTypes() {
+    Set<String> transmissions = {};
+
+    for (Modification modification in modifications) {
+      transmissions.add(modification.carSpecifications!.transmission);
+    }
+
+    return transmissions.toList();
+  }
+
+  List<String> getAllDrivesTypes() {
+    Set<String> drives = {};
+
+    for (Modification modification in modifications) {
+      drives.add(modification.carSpecifications!.drive);
+    }
+
+    return drives.toList();
+  }
+
+  List<String> getAllEndgineTypes() {
+    Set<String> engines = {};
+
+    for (Modification modification in modifications) {
+      engines.add(modification.carSpecifications!.engineType);
+    }
+
+    return engines.toList();
+  }
+
+  List<double> minMaxVolumeEngine() {
+    List<double> volumeLitres = [];
+    for (Modification modification in modifications) {
+      volumeLitres
+          .add(double.parse(modification.carSpecifications!.volumeLitres));
+    }
+
+    volumeLitres.sort();
+
+    return [volumeLitres.first, volumeLitres.last];
+  }
+
+  String getMinMaxVolumeDescription() {
+    try {
+      List<double> volumeLitres = minMaxVolumeEngine();
+      if (volumeLitres.isEmpty) return "";
+      if (volumeLitres.first == volumeLitres[1]) {
+        return ", объёмом от ${volumeLitres.first} л. и";
+      }
+      if (volumeLitres.first != volumeLitres[1]) {
+        return ", объёмом от ${volumeLitres.first} до ${volumeLitres[1]} л. и";
+      }
+      return "";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  List<double> minMaxPower() {
+    try {
+      List<double> power = [];
+      for (Modification modification in modifications) {
+        power.add(double.parse(modification.carSpecifications!.horsePower));
+      }
+
+      power.sort();
+
+      return [power.first, power.last];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  String getMinMaxPowerDescription() {
+    List<double> power = minMaxPower();
+    if (power.isEmpty) return "";
+    if (power.first == power[1]) {
+      return "мощностью от ${power.first} л.с.";
+    }
+    if (power.first != power[1]) {
+      return "мощностью от ${power.first} до ${power[1]} л.с.";
+    }
+    return "";
+  }
+
+  String getSpecDescription(
+      List specs, String singlePreffix, String multiplePreffix) {
+    log(specs);
+    if (specs.isEmpty) {
+      return "";
+    }
+
+    if (specs.length == 1) {
+      return "${specs.first} $singlePreffix".trim();
+    }
+
+    if (specs.length == 2) {
+      return "${specs[0]} и ${specs[1]} $multiplePreffix".trim();
+    }
+
+    // Если больше двух типов трансмиссий
+    String lastTransmission = specs.removeLast();
+    return "${specs.join(', ')} и $lastTransmission $multiplePreffix".trim();
+  }
 }
 
 class CarBinding implements Bindings {
   @override
   void dependencies() => Get.lazyPut(() => CarController());
+}
+
+extension StringExtensions on String {
+  String capitalizeFirstLetter() {
+    if (isEmpty) {
+      return this;
+    }
+    return '${this[0].toUpperCase()}${substring(1)}';
+  }
 }
