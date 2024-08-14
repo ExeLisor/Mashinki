@@ -27,7 +27,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
         clipBehavior: Clip.antiAlias,
         decoration: _decoration(),
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0.w, vertical: 25.h),
+            padding: EdgeInsets.symmetric(horizontal: 25.0.w, vertical: 21.h),
             child: isOpened ? _openedWidget() : _specWidget()),
       ),
     );

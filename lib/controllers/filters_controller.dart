@@ -19,7 +19,7 @@ class FiltersController extends GetxController {
 
   void applyFilters() {
     _searchSelectedModels();
-    _searchModelBodyTypes();
+    // _searchModelBodyTypes();
     _isFiltesApplied.value = true;
     Get.back();
   }

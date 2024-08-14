@@ -1,5 +1,4 @@
 import 'package:autoverse/exports.dart';
-import 'package:autoverse/screens/home_screen/widgets/home_shimmer.dart';
 
 class CarsCatalogListWidget extends StatelessWidget {
   CarsCatalogListWidget({super.key});
@@ -69,12 +68,7 @@ class CarsCatalogListWidget extends StatelessWidget {
               fontWeight: FontWeight.w600),
         ),
       );
-  final SliverGridDelegate _gridDelegate =
-      SliverGridDelegateWithFixedCrossAxisCount(
-    crossAxisCount: 2, // number of items in each row
-    mainAxisSpacing: 18.0.w, // spacing between rows
-    crossAxisSpacing: 8.0, // spacing between columns
-  );
+
   Widget _carsGrid() => ListView(
         padding: EdgeInsets.only(bottom: 25.h, left: 25.w, right: 25.w),
         shrinkWrap: true,

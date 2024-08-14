@@ -32,8 +32,15 @@ class CarScreen extends StatelessWidget {
               children: [
                 _carImage(),
                 _carTitleWidget(),
-                _carModifications(),
-                _carDetails(),
+                Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 45.h),
+                      child: _carDetails(),
+                    ),
+                    _carModifications(),
+                  ],
+                ),
               ],
             ),
           ),

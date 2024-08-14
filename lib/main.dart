@@ -48,6 +48,7 @@ class _MainAppState extends State<MainApp> {
         CarBinding(),
         SpecsSelectorBinding(),
         CarAppBarBinding(),
+        ModsGroupBinding(),
       ],
     ),
     GetPage(

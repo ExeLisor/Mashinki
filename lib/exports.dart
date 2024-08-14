@@ -33,3 +33,4 @@ export 'package:firebase_remote_config/firebase_remote_config.dart';
 export 'firebase_options.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+export 'package:collection/collection.dart' hide binarySearch, mergeSort;

@@ -242,7 +242,6 @@ class CarController extends GetxController {
 
   String getSpecDescription(
       List specs, String singlePreffix, String multiplePreffix) {
-    log(specs);
     if (specs.isEmpty) {
       return "";
     }
