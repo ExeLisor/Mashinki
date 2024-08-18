@@ -180,21 +180,27 @@ class CharacteristicsWidget extends StatelessWidget {
         ),
       );
 
-  Widget _modificationTitle() =>
-      CarController.to.selectedModification.groupName != null
-          ? Container(
-              margin: EdgeInsets.only(bottom: 40.h),
-              child: Text(
-                CarController.to.selectedModification.groupName!,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.fs,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            )
-          : Container();
+  Widget _modificationTitle() {
+    Modification modification = CarController.to.selectedModification;
+    CarSpecifications specification = modification.carSpecifications!;
+    String transmission = getTransmissionAbb(specification.transmission);
+
+    double? power = double.tryParse(specification.horsePower);
+    double? volume = double.tryParse(specification.volumeLitres);
+    String privod = specification.drive == "полный" ? "4WD" : "";
+    return Container(
+      margin: EdgeInsets.only(bottom: 40.h),
+      child: Text(
+        "${CarController.to.selectedModification.groupName ?? ""} ${volume ?? ""} $transmission ${power ?? ""} $privod",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18.fs,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
 
   Widget _detailsTile(String spec, String value, {bool isSmall = false}) =>
       Container(
