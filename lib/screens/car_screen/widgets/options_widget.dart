@@ -4,7 +4,7 @@ class OptionsWidget extends StatelessWidget {
   OptionsWidget({super.key});
 
   final CarOptions options =
-      CarController.to.selectedModification.carOptions ?? CarOptions();
+      CarController.to.car.selectedModification?.carOptions ?? CarOptions();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,8 @@ class OptionsWidget extends StatelessWidget {
   }
 
   Widget _modificationTitle() {
-    Modification modification = CarController.to.selectedModification;
+    Modification modification =
+        CarController.to.car.selectedModification ?? Modification();
     CarSpecifications specification = modification.carSpecifications!;
     String transmission = getTransmissionAbb(specification.transmission);
 
@@ -53,7 +54,7 @@ class OptionsWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 20.h),
       child: Text(
-        "${CarController.to.selectedModification.groupName ?? ""} ${volume ?? ""} $transmission ${power ?? ""} $privod",
+        "${CarController.to.car.selectedModification?.groupName ?? ""} ${volume ?? ""} $transmission ${power ?? ""} $privod",
         style: TextStyle(
           color: Colors.black,
           fontSize: 18.fs,

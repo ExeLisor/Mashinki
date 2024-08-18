@@ -56,7 +56,7 @@ class ModificationsWidget extends StatelessWidget {
                 ModsGroupContoller.to.groups[groupName] ?? [];
             return ModificationGroupTile(
               key: keys[index],
-              index: index,
+              widgetIndex: index,
               groupName: groupName,
               modifications: modifications,
             );
@@ -72,10 +72,10 @@ class ModificationGroupTile extends StatelessWidget {
       {super.key,
       required this.groupName,
       required this.modifications,
-      required this.index});
+      required this.widgetIndex});
   final String groupName;
   final List modifications;
-  final int index;
+  final int widgetIndex;
 
   @override
   Widget build(BuildContext context) => Obx(
@@ -147,7 +147,7 @@ class ModificationGroupTile extends StatelessWidget {
   Widget _modsList() {
     return Container(
       constraints: BoxConstraints(minWidth: 215.w),
-      width: ModsGroupContoller.to.headerSizes[index].width + 25.w,
+      width: ModsGroupContoller.to.headerSizes[widgetIndex].width + 25.w,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -170,7 +170,8 @@ class ModificationGroupTile extends StatelessWidget {
           modifications.length,
           (index) {
             Modification modification = modifications[index];
-            Size sizeWidget = ModsGroupContoller.to.headerSizes[index];
+
+            Size sizeWidget = ModsGroupContoller.to.headerSizes[widgetIndex];
 
             return _modsTile(
               modification,
@@ -198,7 +199,8 @@ class ModificationGroupTile extends StatelessWidget {
         String power = specification.horsePower;
         double? volume = double.tryParse(specification.volumeLitres);
 
-        bool isSelected = CarController.to.selectedModification == modification;
+        bool isSelected =
+            CarController.to.car.selectedModification == modification;
         return GestureDetector(
           onTap: () {
             CarController.to.selectModification(modification);
@@ -309,8 +311,8 @@ class ModsGroupContoller extends GetxController {
 
   @override
   void onInit() {
-    _groups.value = groupBy(
-        CarController.to.modifications, (mod) => mod.groupName ?? "Базовая");
+    _groups.value = groupBy(CarController.to.car.modifications,
+        (mod) => mod.groupName ?? "Базовая");
     super.onInit();
   }
 }

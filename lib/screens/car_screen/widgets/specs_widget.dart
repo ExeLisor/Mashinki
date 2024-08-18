@@ -4,7 +4,7 @@ class CharacteristicsWidget extends StatelessWidget {
   CharacteristicsWidget({super.key});
 
   final CarSpecifications specs =
-      CarController.to.selectedModification.carSpecifications!;
+      CarController.to.car.selectedModification!.carSpecifications!;
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +181,8 @@ class CharacteristicsWidget extends StatelessWidget {
       );
 
   Widget _modificationTitle() {
-    Modification modification = CarController.to.selectedModification;
+    Modification modification =
+        CarController.to.car.selectedModification ?? Modification();
     CarSpecifications specification = modification.carSpecifications!;
     String transmission = getTransmissionAbb(specification.transmission);
 
@@ -191,7 +192,7 @@ class CharacteristicsWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 20.h),
       child: Text(
-        "${CarController.to.selectedModification.groupName ?? ""} ${volume ?? ""} $transmission ${power ?? ""} $privod",
+        "${modification.groupName ?? ""} ${volume ?? ""} $transmission ${power ?? ""} $privod",
         style: TextStyle(
           color: Colors.black,
           fontSize: 18.fs,

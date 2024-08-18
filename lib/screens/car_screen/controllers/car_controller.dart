@@ -2,45 +2,52 @@ import 'package:autoverse/exports.dart';
 
 enum ResourceType { youtube, google, pinterest, tiktok }
 
+class Car {
+  Mark mark = Mark();
+  Model model = Model();
+  Generation generation = Generation();
+  Configuration configuration = Configuration();
+  List<Modification> modifications = <Modification>[];
+  Modification? selectedModification = Modification();
+
+  Car({
+    required this.mark,
+    required this.model,
+    required this.generation,
+    required this.configuration,
+    required this.modifications,
+    this.selectedModification,
+  });
+}
+
 class CarController extends GetxController {
   static CarController get to => Get.find();
 
   Dio dio = Dio();
   Rx<Status> state = Status.loading.obs;
 
-  final Rxn<Mark> _mark = Rxn<Mark>();
-  final Rxn<Model> _model = Rxn<Model>();
-  final Rxn<Generation> _generation = Rxn<Generation>();
-  final Rxn<Configuration> _configuration = Rxn<Configuration>();
-  final Rxn<List<Modification>> _modifications = Rxn<List<Modification>>();
-  final Rxn<Modification> _selectedModification = Rxn<Modification>();
+  final Rxn<Car> _car = Rxn<Car>();
 
-  Mark get mark => _mark.value!;
-  Model get model => _model.value!;
-  Generation get generation => _generation.value!;
-  Configuration get configuration => _configuration.value!;
-  List<Modification> get modifications => _modifications.value!;
-  Modification get selectedModification => _selectedModification.value!;
+  Car get car => _car.value!;
+  set car(Car value) => _car.value = value;
 
   void selectModification(Modification modification) =>
-      _selectedModification.value = modification;
+      _car.update((car) => car?.selectedModification = modification);
 
   @override
   Future<void> onInit() async {
     _emitLoadingState();
-    _mark.value = Get.arguments["mark"];
-    _model.value = Get.arguments["model"];
-    _generation.value = Get.arguments["generation"];
-    _configuration.value = Get.arguments["configuration"];
-    _modifications.value = configuration.modifications;
 
-    for (Modification modification in configuration.modifications ?? []) {
-      final specs = await _getSpecs(modification.complectationId ?? "");
-      modification.carOptions = _getOptions(specs["options"]);
-      modification.carSpecifications =
+    car = Get.arguments["car"];
+
+    for (int i = 0; i < car.modifications.length; i++) {
+      final specs = await _getSpecs(car.modifications[i].complectationId ?? "");
+      car.modifications[i].carOptions = _getOptions(specs["options"]);
+      car.modifications[i].carSpecifications =
           _getSpecifications(specs["specifications"]);
     }
-    _selectedModification.value = configuration.modifications?.first;
+
+    car.selectedModification = car.modifications.first;
 
     _emitSussessState();
 
@@ -67,7 +74,7 @@ class CarController extends GetxController {
 
   Future _getSpecs(String complecationId) async {
     try {
-      log("$baseUrl/specs/${configuration.id}");
+      log("$baseUrl/specs/${car.configuration.id}");
       Response response = await dio.get("$baseUrl/specs/$complecationId");
 
       return response.data;
@@ -89,9 +96,9 @@ class CarController extends GetxController {
   }
 
   Future<void> openResource(ResourceType type) async {
-    final String brandName = CarController.to.mark.name ?? "";
-    final String modelName = CarController.to.model.name ?? "";
-    final String generationName = CarController.to.generation.name ?? "";
+    final String brandName = CarController.to.car.mark.name ?? "";
+    final String modelName = CarController.to.car.model.name ?? "";
+    final String generationName = CarController.to.car.generation.name ?? "";
 
     final String searchText = "$brandName $modelName $generationName";
 
@@ -136,9 +143,10 @@ class CarController extends GetxController {
   void _setState(Status newState) => state.value = newState;
 
   String getDescription() {
-    String bodyType = (configuration.bodyType ?? "").capitalizeFirstLetter();
+    String bodyType =
+        (car.configuration.bodyType ?? "").capitalizeFirstLetter();
     String classType =
-        model.modelClass == null ? "" : "${model.modelClass}-класса";
+        car.model.modelClass == null ? "" : "${car.model.modelClass}-класса";
     String drive = getSpecDescription(getAllDrivesTypes(), "привод", "привод");
     String transmission =
         "Коробка ${getSpecDescription(getAllTransmissionTypes(), "", "")}"
@@ -158,7 +166,7 @@ class CarController extends GetxController {
   List<String> getAllTransmissionTypes() {
     Set<String> transmissions = {};
 
-    for (Modification modification in modifications) {
+    for (Modification modification in car.modifications) {
       transmissions.add(modification.carSpecifications!.transmission);
     }
 
@@ -168,7 +176,7 @@ class CarController extends GetxController {
   List<String> getAllDrivesTypes() {
     Set<String> drives = {};
 
-    for (Modification modification in modifications) {
+    for (Modification modification in car.modifications) {
       drives.add(modification.carSpecifications!.drive);
     }
 
@@ -178,7 +186,7 @@ class CarController extends GetxController {
   List<String> getAllEndgineTypes() {
     Set<String> engines = {};
 
-    for (Modification modification in modifications) {
+    for (Modification modification in car.modifications) {
       engines.add(modification.carSpecifications!.engineType);
     }
 
@@ -187,7 +195,7 @@ class CarController extends GetxController {
 
   List<double> minMaxVolumeEngine() {
     List<double> volumeLitres = [];
-    for (Modification modification in modifications) {
+    for (Modification modification in car.modifications) {
       volumeLitres
           .add(double.parse(modification.carSpecifications!.volumeLitres));
     }
@@ -216,7 +224,7 @@ class CarController extends GetxController {
   List<double> minMaxPower() {
     try {
       List<double> power = [];
-      for (Modification modification in modifications) {
+      for (Modification modification in car.modifications) {
         power.add(double.parse(modification.carSpecifications!.horsePower));
       }
 

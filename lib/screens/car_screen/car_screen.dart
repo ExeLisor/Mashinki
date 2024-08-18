@@ -159,22 +159,22 @@ class CarScreen extends StatelessWidget {
         ),
       );
 
-  Widget _tagsWidget() => Wrap(
-        runSpacing: 6.h,
-        children: [
-          _tag(CarController.to.generation.name),
-          _tag(CarController.to.configuration.bodyType),
-          _tag(
-              "${CarController.to.generation.yearStart} - ${CarController.to.generation.yearStop ?? "н.в."}"),
-          _tag(CarController
-              .to.selectedModification.carSpecifications?.transmission),
-          _tag(CarController
-              .to.selectedModification.carSpecifications?.engineType),
-          CarController.to.generation.isRestyle
-              ? _tag("Рейстайлинг")
-              : Container(),
-        ],
-      );
+  // Widget _tagsWidget() => Wrap(
+  //       runSpacing: 6.h,
+  //       children: [
+  //         _tag(CarController.to.car.generation.name),
+  //         _tag(CarController.to.car.configuration.bodyType),
+  //         _tag(
+  //             "${CarController.to.car.generation.yearStart} - ${CarController.to.car.generation.yearStop ?? "н.в."}"),
+  //         _tag(CarController
+  //             .to.car.selectedModification.carSpecifications?.transmission),
+  //         _tag(CarController
+  //             .to.car.selectedModification.carSpecifications?.engineType),
+  //         CarController.to.car.generation.isRestyle
+  //             ? _tag("Рейстайлинг")
+  //             : Container(),
+  //       ],
+  //     );
 
   Widget _tag(String? text) => text == null
       ? Container()
@@ -213,9 +213,9 @@ class CarScreen extends StatelessWidget {
   }
 
   Widget _carTitle() {
-    String brandName = CarController.to.mark.name ?? "";
-    String modelName = CarController.to.model.name ?? "";
-    int? year = CarController.to.generation.yearStart;
+    String brandName = CarController.to.car.mark.name ?? "";
+    String modelName = CarController.to.car.model.name ?? "";
+    int? year = CarController.to.car.generation.yearStart;
 
     return Text(
       "$brandName $modelName ${year ?? ""}",
@@ -225,7 +225,7 @@ class CarScreen extends StatelessWidget {
   }
 
   Widget _carSubTitle() {
-    String subtitle = CarController.to.generation.name ?? "";
+    String subtitle = CarController.to.car.generation.name ?? "";
 
     return Text(
       subtitle,
@@ -238,7 +238,8 @@ class CarScreen extends StatelessWidget {
         children: [
           ClipRRect(
             child: CachedNetworkImage(
-              imageUrl: "$baseUrl/image/${CarController.to.configuration.id}",
+              imageUrl:
+                  "$baseUrl/image/${CarController.to.car.configuration.id}",
               placeholder: (context, url) =>
                   const Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => const Icon(Icons.error),

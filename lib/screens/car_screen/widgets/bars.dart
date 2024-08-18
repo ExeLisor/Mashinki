@@ -18,9 +18,10 @@ class CarsFloatBar extends StatelessWidget {
 
   Widget _titleFB() => Obx(
         () {
-          final String brandName = CarController.to.mark.name ?? "";
-          final String modelName = CarController.to.model.name ?? "";
-          final String generationName = CarController.to.generation.name ?? "";
+          final String brandName = CarController.to.car.mark.name ?? "";
+          final String modelName = CarController.to.car.model.name ?? "";
+          final String generationName =
+              CarController.to.car.generation.name ?? "";
           return SizedBox(
             width: 220.w,
             child: Text(

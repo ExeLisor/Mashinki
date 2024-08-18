@@ -164,10 +164,12 @@ class ModelsScreen extends StatelessWidget {
         onTap: () => Get.toNamed(
           "/models/${configuration.id}",
           arguments: {
-            "mark": ModelsController.to.mark,
-            "model": model,
-            "generation": generation,
-            "configuration": configuration,
+            "car": Car(
+                mark: ModelsController.to.mark,
+                model: model,
+                generation: generation,
+                configuration: configuration,
+                modifications: configuration.modifications ?? []),
           },
         ),
         child: Container(
