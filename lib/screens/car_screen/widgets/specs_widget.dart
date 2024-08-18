@@ -11,7 +11,7 @@ class CharacteristicsWidget extends StatelessWidget {
     return Container(
       color: Colors.white,
       width: Get.width,
-      padding: EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h),
+      padding: EdgeInsets.only(left: 25.w, top: 20.h, bottom: 25.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -107,6 +107,7 @@ class CharacteristicsWidget extends StatelessWidget {
       );
 
   Widget _carSizeWidget() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [_carHeight(), _carImage()],
@@ -205,9 +206,11 @@ class CharacteristicsWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.h),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(
+              height: 11.h,
+            ),
             Text(
               spec,
               textAlign: TextAlign.center,
@@ -218,15 +221,21 @@ class CharacteristicsWidget extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
+            SizedBox(
+              height: 5.h,
+            ),
             Text(
               value,
-              textScaler: const TextScaler.linear(0.9),
+              textScaler: const TextScaler.linear(0.85),
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14.fs,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w400,
               ),
+            ),
+            SizedBox(
+              height: 11.h,
             ),
           ],
         ),

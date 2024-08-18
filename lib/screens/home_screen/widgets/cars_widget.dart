@@ -185,7 +185,7 @@ class CatalogTile extends StatelessWidget {
       );
 
   Widget _carInfo() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+        padding: EdgeInsets.fromLTRB(17.0.w, 0.h, 17.w, 17.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [_carName(), _carYear()],

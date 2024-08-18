@@ -177,36 +177,79 @@ class ModelsScreen extends StatelessWidget {
           child: Stack(
             children: [
               _modelImage(configuration.id ?? ""),
-              _configurationText(configuration)
+              _configurationText(model, generation, configuration)
             ],
           ),
         ),
       );
 
-  Widget _configurationText(Configuration configuration) => Align(
+  Widget _configurationText(
+    Model model,
+    Generation generation,
+    Configuration configuration,
+  ) =>
+      Align(
         alignment: Alignment.bottomLeft,
         child: Container(
           margin: EdgeInsets.all(14.h),
-          width: 120.w,
-          height: 32.h,
+          width: 298.w,
+          height: 52.h,
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(26.h),
             ),
           ),
-          child: Center(
-            child: Text(
-              configuration.configurationName ?? "",
-              style: TextStyle(
-                  fontSize: 20.fs,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-            ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 27.w,
+              ),
+              _verticalDivider(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 7.0.fs),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _yearText(),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    _modelText(model.name ?? "")
+                  ],
+                ),
+              ),
+            ],
           ),
+        ),
+      );
+
+  Widget _yearText() => Text(
+        '2024',
+        style: TextStyle(
+          color: primaryColor,
+          fontSize: 12.fs,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w400,
+          height: 0,
+        ),
+      );
+
+  Widget _modelText(String modelName) => Text(
+        modelName,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 20.fs,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w500,
+          height: 0.05,
+        ),
+      );
+
+  Widget _verticalDivider() => Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.h),
+        child: const VerticalDivider(
+          color: primaryColor,
         ),
       );
 
@@ -215,7 +258,7 @@ class ModelsScreen extends StatelessWidget {
         width: containerWidth,
         child: ClipRRect(
           borderRadius: const BorderRadius.all(
-            Radius.circular(20),
+            Radius.circular(30),
           ),
           child: CachedNetworkImage(
             imageUrl: "$baseUrl/image/$url",

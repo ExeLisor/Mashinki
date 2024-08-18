@@ -17,7 +17,8 @@ class MarksScreen extends StatelessWidget {
             showFilters: false,
             controller: MarksSearchController.to,
           ),
-          _marksScreenBody()
+          _marksScreenBody(),
+          HomeScreenBottomBarWidget(),
         ],
       ),
     );

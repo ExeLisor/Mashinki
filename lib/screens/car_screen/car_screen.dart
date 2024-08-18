@@ -76,7 +76,8 @@ class CarScreen extends StatelessWidget {
             _selectorTile(
                 "Характеристики", SpecsSelectorController.to.changeToSpecs,
                 isSelected: !SpecsSelectorController.to.showOptions),
-            _selectorTile("Опции", SpecsSelectorController.to.changeToOptions,
+            _selectorTile(
+                "Комплектация", SpecsSelectorController.to.changeToOptions,
                 isSelected: SpecsSelectorController.to.showOptions)
           ],
         ),
@@ -90,7 +91,7 @@ class CarScreen extends StatelessWidget {
           height: 46.h,
           width: Get.width / 2,
           decoration: BoxDecoration(
-              color: isSelected ? Colors.white : const Color(0xffE8E8E8),
+              color: isSelected ? Colors.white : const Color(0xffE2E2E2),
               borderRadius: BorderRadius.vertical(top: Radius.circular(24.h))),
           child: Center(
             child: Text(
@@ -111,7 +112,7 @@ class CarScreen extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(24.h))),
         child: Container(
-          margin: EdgeInsets.only(top: 22.h, bottom: 44.h),
+          margin: EdgeInsets.only(top: 22.h, bottom: 28.h),
           padding: EdgeInsets.only(left: 25.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -102,69 +102,71 @@ class ModificationGroupTile extends StatelessWidget {
 
   Widget _modsTile(Modification modification,
       {bool isLast = false, bool isFirst = false}) {
-    return Obx(() {
-      CarSpecifications specification = modification.carSpecifications!;
-      String transmission = getTransmissionAbb(specification.transmission);
+    return Obx(
+      () {
+        CarSpecifications specification = modification.carSpecifications!;
+        String transmission = getTransmissionAbb(specification.transmission);
 
-      String power = specification.horsePower;
-      double? volume = double.tryParse(specification.volumeLitres);
-      // String privod = specification.drive == "полный" ? "4WD" : "";
+        String power = specification.horsePower;
+        double? volume = double.tryParse(specification.volumeLitres);
+        // String privod = specification.drive == "полный" ? "4WD" : "";
 
-      bool isSelected = CarController.to.selectedModification == modification;
-      return GestureDetector(
-        onTap: () {
-          CarController.to.selectModification(modification);
-          ModsGroupContoller.to.close();
-        },
-        child: Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(isFirst ? 26.h : 0),
-              bottomLeft: Radius.circular(isLast ? 26.h : 0),
-              bottomRight: Radius.circular(isLast ? 26.h : 0),
+        bool isSelected = CarController.to.selectedModification == modification;
+        return GestureDetector(
+          onTap: () {
+            CarController.to.selectModification(modification);
+            ModsGroupContoller.to.close();
+          },
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(isFirst ? 26.h : 0),
+                bottomLeft: Radius.circular(isLast ? 26.h : 0),
+                bottomRight: Radius.circular(isLast ? 26.h : 0),
+              ),
+              color: isSelected ? const Color(0xff7974FF) : Colors.transparent,
             ),
-            color: isSelected ? const Color(0xff7974FF) : Colors.transparent,
-          ),
-          padding: EdgeInsets.fromLTRB(20.w, 14.h, 20.w, 0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${volume ?? ""} $transmission',
-                    style: TextStyle(
-                      color: isSelected ? Colors.white : primaryColor,
-                      fontSize: 18.fs,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
+            padding: EdgeInsets.fromLTRB(20.w, 14.h, 20.w, 0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${volume ?? ""} $transmission',
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : primaryColor,
+                        fontSize: 18.fs,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 23.w,
-                  ),
-                  Text(
-                    '$power л.с.',
-                    style: TextStyle(
-                      color:
-                          isSelected ? Colors.white : const Color(0xFF7974FF),
-                      fontSize: 18.fs,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
+                    SizedBox(
+                      width: 23.w,
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 14.h,
-              ),
-              isLast || isSelected ? Container() : _divider()
-            ],
+                    Text(
+                      '$power л.с.',
+                      style: TextStyle(
+                        color:
+                            isSelected ? Colors.white : const Color(0xFF7974FF),
+                        fontSize: 18.fs,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 14.h,
+                ),
+                isLast || isSelected ? Container() : _divider()
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget _divider() => Container(
@@ -266,7 +268,7 @@ class ModsGroupContoller extends GetxController {
   @override
   void onInit() {
     _groups.value = groupBy(
-        CarController.to.modifications, (mod) => mod.groupName ?? "Типы");
+        CarController.to.modifications, (mod) => mod.groupName ?? "Базовая");
     super.onInit();
   }
 }

@@ -27,9 +27,11 @@ class CarsFloatBar extends StatelessWidget {
               "$brandName $modelName $generationName",
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                  fontSize: 16.fs,
-                  fontWeight: FontWeight.bold,
-                  color: primaryColor),
+                color: primaryColor,
+                fontSize: 18.fs,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+              ),
             ),
           );
         },
@@ -50,9 +52,9 @@ class CarsFloatBar extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Colors.grey.withOpacity(0.2),
               blurRadius: 6,
-              offset: Offset(0, 6),
+              offset: const Offset(0, 6),
               spreadRadius: 0,
             )
           ],

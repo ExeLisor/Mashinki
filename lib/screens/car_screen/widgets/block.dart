@@ -12,7 +12,7 @@ class DropSpecsBlockWidget extends StatefulWidget {
 }
 
 class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
-  bool isOpened = false;
+  bool isOpened = true;
 
   void close() => setState(() => isOpened = false);
 
@@ -138,7 +138,10 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
 
   Widget _arrowIcon() => RotatedBox(
         quarterTurns: isOpened ? 1 : 3,
-        child: const Icon(Icons.arrow_back_ios_new_rounded),
+        child: const Icon(
+          Icons.arrow_back_ios_new_rounded,
+          color: Color(0xff848484),
+        ),
       );
 
   Widget _blockTitle() => SizedBox(
@@ -209,8 +212,20 @@ class SpecsBlockWidget extends StatelessWidget {
     );
   }
 
-  Widget _divider() => const Divider(
-        color: primaryColor,
+  Widget _divider() => Opacity(
+        opacity: 0.50,
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 25.w),
+          decoration: const ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                width: 1,
+                strokeAlign: BorderSide.strokeAlignCenter,
+                color: Color(0xFF7974FF),
+              ),
+            ),
+          ),
+        ),
       );
 
   Widget _specsTitle(String title) => Text(
