@@ -279,14 +279,17 @@ class CarScreen extends StatelessWidget {
           Car car = CarController.to.car;
           bool isCarCompared = controller.isCarCompared(car);
 
-          log(isCarCompared);
+          log(controller
+              .comparedCars.first.selectedModification?.complectationId);
+          log(controller.isCarCompared(car));
+          log(car.selectedModification?.complectationId);
 
           return _iconWidget(
             Icons.copy,
             () => !isCarCompared
-                ? controller.addToCompare(CarController.to.car)
+                ? controller.addToCompare(car)
                 : controller.deleteFromCompare(car),
-            condition: CompareController.to.isCarCompared(CarController.to.car),
+            condition: CompareController.to.isCarCompared(car),
           );
         },
       );

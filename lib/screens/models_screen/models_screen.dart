@@ -10,6 +10,7 @@ class ModelsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
+      bottomNavigationBar: HomeScreenBottomBarWidget(),
       body: Obx(
         () => ModelsController.to.state.value == Status.success
             ? _modelsScreenBody()

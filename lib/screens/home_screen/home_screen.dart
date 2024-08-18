@@ -1,22 +1,36 @@
 import 'package:autoverse/exports.dart';
 
+class Home extends StatelessWidget {
+  const Home({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBar(),
+      body: Navigator(
+        key: Get.nestedKey(1),
+        initialRoute: '/home',
+        onGenerateRoute: BarController.to.onGenerateRoute,
+      ),
+      bottomNavigationBar: HomeScreenBottomBarWidget(),
+    );
+  }
+}
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
-      bottomNavigationBar: _bottomBar(),
-      body: _body(),
+      appBar: appBar(),
+      body: _homeScreen(),
     );
   }
 
-  AppBar _appBar() => AppBar(
+  AppBar appBar() => AppBar(
         toolbarHeight: 0.h,
       );
-
-  Widget _bottomBar() => HomeScreenBottomBarWidget();
 
   Widget _homeScreen() => SingleChildScrollView(
         child: Column(
@@ -41,20 +55,4 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       );
-
-  Widget _body() => Obx(
-      () => _bodyWidgets().elementAt(BarController.to.currentPageIndex.value));
-
-  List<Widget> _bodyWidgets() => <Widget>[
-        _homeScreen(),
-        _construction(),
-        _construction(),
-        _construction(),
-      ];
-
-  Widget _construction() => Center(
-          child: Text(
-        "👷 🚧 🛑",
-        style: TextStyle(fontSize: 50.h),
-      ));
 }

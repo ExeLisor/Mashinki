@@ -37,3 +37,5 @@ export 'car_screen/widgets/modifications_widget.dart';
 export 'car_screen/widgets/options_widget.dart';
 export 'car_screen/widgets/block.dart';
 export 'car_screen/widgets/bars.dart';
+
+export 'compare_screen/compare_screen.dart';

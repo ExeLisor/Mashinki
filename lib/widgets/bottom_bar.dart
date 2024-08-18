@@ -32,8 +32,8 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
 
   final List<String> _icons = [
     homeIcon,
-    listIcon,
     comprIcon,
+    listIcon,
     accountCircleIcon
   ];
 
@@ -42,7 +42,7 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
       4,
       (index) => Obx(
         () => GestureDetector(
-          onTap: () => _barController.currentPageIndex(index),
+          onTap: () => _barController.changePage(index),
           child: Container(
             height: 70.h,
             padding: EdgeInsets.symmetric(

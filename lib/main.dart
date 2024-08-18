@@ -26,7 +26,7 @@ class _MainAppState extends State<MainApp> {
     return GetMaterialApp(
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: const Home(),
       initialRoute: '/',
       getPages: _pages,
       initialBinding: BarBinding(),
@@ -34,12 +34,21 @@ class _MainAppState extends State<MainApp> {
   }
 
   final List<GetPage> _pages = [
-    GetPage(name: '/', page: () => const HomeScreen()),
+    GetPage(name: '/', page: () => const Home()),
+    GetPage(name: '/home', page: () => const HomeScreen()),
     GetPage(
         name: '/marks',
         page: () => const MarksScreen(),
         transition: Transition.cupertino,
         bindings: [AlphabetBinding()]),
+    GetPage(
+      name: '/compare',
+      page: () => const CompareScreen(),
+      transition: Transition.cupertino,
+      bindings: [
+        CompareBinding(),
+      ],
+    ),
     GetPage(
       name: '/models/:car',
       page: () => const CarScreen(),
