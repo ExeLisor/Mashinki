@@ -32,15 +32,7 @@ class CarScreen extends StatelessWidget {
               children: [
                 _carImage(),
                 _carTitleWidget(),
-                Stack(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 45.h),
-                      child: _carDetails(),
-                    ),
-                    _carModifications(),
-                  ],
-                ),
+                _carDetails(),
               ],
             ),
           ),
@@ -58,13 +50,21 @@ class CarScreen extends StatelessWidget {
         child: CircularProgressIndicator(),
       );
 
-  Widget _carDetails() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _carDetails() => Stack(
         children: [
-          _selectorWidget(),
-          SpecsSelectorController.to.showOptions
-              ? OptionsWidget()
-              : CharacteristicsWidget()
+          Padding(
+            padding: EdgeInsets.only(top: 45.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _selectorWidget(),
+                SpecsSelectorController.to.showOptions
+                    ? OptionsWidget()
+                    : CharacteristicsWidget()
+              ],
+            ),
+          ),
+          _carModifications(),
         ],
       );
 

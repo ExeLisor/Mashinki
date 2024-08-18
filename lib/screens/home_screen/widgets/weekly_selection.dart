@@ -1,5 +1,4 @@
 import 'package:autoverse/exports.dart';
-import 'package:autoverse/screens/home_screen/widgets/home_shimmer.dart';
 
 class WeeklySelectionWidget extends StatelessWidget {
   const WeeklySelectionWidget({super.key});
