@@ -16,6 +16,7 @@ class OptionsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _modificationTitle(),
           DropSpecsBlockWidget(title: "Материалы", specs: _materials()),
           DropSpecsBlockWidget(title: "Сиденья", specs: _salon()),
           DropSpecsBlockWidget(
@@ -37,6 +38,28 @@ class OptionsWidget extends StatelessWidget {
           DropSpecsBlockWidget(title: "Подвеска", specs: _control()),
           DropSpecsBlockWidget(title: "Кузов и стиль", specs: _style()),
         ],
+      ),
+    );
+  }
+
+  Widget _modificationTitle() {
+    Modification modification = CarController.to.selectedModification;
+    CarSpecifications specification = modification.carSpecifications!;
+    String transmission = getTransmissionAbb(specification.transmission);
+
+    double? power = double.tryParse(specification.horsePower);
+    double? volume = double.tryParse(specification.volumeLitres);
+    String privod = specification.drive == "полный" ? "4WD" : "";
+    return Container(
+      margin: EdgeInsets.only(bottom: 20.h),
+      child: Text(
+        "${CarController.to.selectedModification.groupName ?? ""} ${volume ?? ""} $transmission ${power ?? ""} $privod",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18.fs,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

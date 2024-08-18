@@ -11,7 +11,7 @@ class CharacteristicsWidget extends StatelessWidget {
     return Container(
       color: Colors.white,
       width: Get.width,
-      padding: EdgeInsets.only(left: 25.w, top: 20.h, bottom: 25.h),
+      padding: EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -189,7 +189,7 @@ class CharacteristicsWidget extends StatelessWidget {
     double? volume = double.tryParse(specification.volumeLitres);
     String privod = specification.drive == "полный" ? "4WD" : "";
     return Container(
-      margin: EdgeInsets.only(bottom: 40.h),
+      margin: EdgeInsets.only(bottom: 20.h),
       child: Text(
         "${CarController.to.selectedModification.groupName ?? ""} ${volume ?? ""} $transmission ${power ?? ""} $privod",
         style: TextStyle(
