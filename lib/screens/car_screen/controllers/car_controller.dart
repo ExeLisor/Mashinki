@@ -74,7 +74,6 @@ class CarController extends GetxController {
 
   Future _getSpecs(String complecationId) async {
     try {
-      log("$baseUrl/specs/${car.configuration.id}");
       Response response = await dio.get("$baseUrl/specs/$complecationId");
 
       return response.data;

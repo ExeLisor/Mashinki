@@ -26,7 +26,7 @@ class _MainAppState extends State<MainApp> {
     return GetMaterialApp(
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: const HomeScreen(),
       initialRoute: '/',
       getPages: _pages,
       initialBinding: BarBinding(),
@@ -34,7 +34,7 @@ class _MainAppState extends State<MainApp> {
   }
 
   final List<GetPage> _pages = [
-    GetPage(name: '/', page: () => HomeScreen()),
+    GetPage(name: '/', page: () => const HomeScreen()),
     GetPage(
         name: '/marks',
         page: () => const MarksScreen(),
@@ -49,6 +49,7 @@ class _MainAppState extends State<MainApp> {
         SpecsSelectorBinding(),
         CarAppBarBinding(),
         ModsGroupBinding(),
+        CompareBinding(),
       ],
     ),
     GetPage(

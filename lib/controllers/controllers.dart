@@ -6,6 +6,7 @@ export 'firebase_controller.dart';
 export 'marks_controller.dart';
 export 'filters_controller.dart';
 export 'body_selector_controller.dart';
+export 'compare_controller.dart';
 
 export '../screens/log_in_screen/controllers/log_in_text_field_controller.dart';
 export '../screens/home_screen/controllers.dart/home_screen_controller.dart';

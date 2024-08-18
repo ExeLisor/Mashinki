@@ -272,11 +272,33 @@ class CarScreen extends StatelessWidget {
         ],
       );
 
-  Widget _addToCompIcon() => _iconWidget(Icons.copy, () {});
+  Widget _addToCompIcon() => Obx(
+        () {
+          CompareController controller = CompareController.to;
 
-  Widget _likeWidget() => _iconWidget(Icons.heart_broken, () {});
+          Car car = CarController.to.car;
+          bool isCarCompared = controller.isCarCompared(car);
 
-  Widget _iconWidget(IconData icon, VoidCallback function) => GestureDetector(
+          log(isCarCompared);
+
+          return _iconWidget(
+            Icons.copy,
+            () => !isCarCompared
+                ? controller.addToCompare(CarController.to.car)
+                : controller.deleteFromCompare(car),
+            condition: CompareController.to.isCarCompared(CarController.to.car),
+          );
+        },
+      );
+
+  Widget _likeWidget() => _iconWidget(
+        Icons.heart_broken,
+        () {},
+      );
+
+  Widget _iconWidget(IconData icon, VoidCallback function,
+          {bool condition = false}) =>
+      GestureDetector(
         onTap: function,
         child: Container(
           decoration: BoxDecoration(
@@ -284,7 +306,7 @@ class CarScreen extends StatelessWidget {
           height: 45.h,
           width: 45.h,
           child: Center(
-            child: Icon(icon, color: Colors.white),
+            child: Icon(icon, color: condition ? primaryColor : Colors.white),
           ),
         ),
       );
