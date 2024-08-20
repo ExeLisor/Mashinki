@@ -1,4 +1,3 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:autoverse/exports.dart';
 
 class CustomTextField extends StatelessWidget {

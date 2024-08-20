@@ -4,7 +4,7 @@ class CharacteristicsWidget extends StatelessWidget {
   CharacteristicsWidget({super.key});
 
   final CarSpecifications specs =
-      CarController.to.car.selectedModification!.carSpecifications!;
+      CarController.to.car.selectedModification.carSpecifications!;
 
   @override
   Widget build(BuildContext context) {
@@ -181,8 +181,7 @@ class CharacteristicsWidget extends StatelessWidget {
       );
 
   Widget _modificationTitle() {
-    Modification modification =
-        CarController.to.car.selectedModification ?? Modification();
+    Modification modification = CarController.to.car.selectedModification;
     CarSpecifications specification = modification.carSpecifications!;
     String transmission = getTransmissionAbb(specification.transmission);
 

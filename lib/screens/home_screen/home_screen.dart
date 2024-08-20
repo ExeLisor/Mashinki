@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
               height: 20.h,
             ),
             MarksWidget(),
-            CarsCatalogListWidget(),
+            const CarsCatalogListWidget(),
           ],
         ),
       );

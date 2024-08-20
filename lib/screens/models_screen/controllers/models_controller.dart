@@ -33,7 +33,6 @@ class ModelsController extends GetxController {
   void _emitSussessState() => state.value = Status.success;
   void _emitLoadingState() => state.value = Status.loading;
   void _emitErrorState() => state.value = Status.error;
-  void _setState(Status newState) => state.value = newState;
 
   void _setMark() => _mark.value = Get.arguments["mark"];
 

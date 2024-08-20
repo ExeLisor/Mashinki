@@ -37,12 +37,12 @@ class WeeklySelectionWidget extends StatelessWidget {
       successCondition: true,
       child: _weeklyPageView());
 
-  Widget _weeklyPageView() => Container(
+  Widget _weeklyPageView() => SizedBox(
         width: Get.width,
         height: 136.h,
         child: PageView(
           controller: PageController(viewportFraction: 0.9),
-          children: [
+          children: const [
             WeeklyCarTile(
                 carName: "Mercedes-Benz GLE",
                 carImageUrl:

@@ -161,7 +161,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
   Widget _count() => Text(
         '${widget.specs.length} опций',
         style: TextStyle(
-          color: Color(0xFF848484),
+          color: const Color(0xFF848484),
           fontSize: 14.fs,
           fontFamily: 'Inter',
           fontWeight: FontWeight.w400,

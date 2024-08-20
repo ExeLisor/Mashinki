@@ -1,7 +1,5 @@
 import 'package:autoverse/exports.dart';
 
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class NextButton extends StatelessWidget {
   final Function() onTap;

@@ -1,7 +1,7 @@
 import 'package:autoverse/exports.dart';
 
 class CarsCatalogListWidget extends StatelessWidget {
-  CarsCatalogListWidget({super.key});
+  const CarsCatalogListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

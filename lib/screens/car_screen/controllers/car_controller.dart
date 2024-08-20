@@ -157,7 +157,6 @@ class CarController extends GetxController {
   void _emitSussessState() => state.value = Status.success;
   void _emitLoadingState() => state.value = Status.loading;
   void _emitErrorState() => state.value = Status.error;
-  void _setState(Status newState) => state.value = newState;
 
   String getDescription() {
     String bodyType =
