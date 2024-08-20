@@ -18,6 +18,24 @@ class Car {
     required this.modifications,
     this.selectedModification,
   });
+
+  Car copyWith({
+    Mark? mark,
+    Model? model,
+    Generation? generation,
+    Configuration? configuration,
+    List<Modification>? modifications,
+    Modification? selectedModification,
+  }) {
+    return Car(
+      mark: mark ?? this.mark,
+      model: model ?? this.model,
+      generation: generation ?? this.generation,
+      configuration: configuration ?? this.configuration,
+      modifications: modifications ?? this.modifications,
+      selectedModification: selectedModification ?? this.selectedModification,
+    );
+  }
 }
 
 class CarController extends GetxController {

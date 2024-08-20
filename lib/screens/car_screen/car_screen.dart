@@ -217,16 +217,19 @@ class CarScreen extends StatelessWidget {
     String modelName = CarController.to.car.model.name ?? "";
     int? year = CarController.to.car.generation.yearStart;
 
-    return Text(
-      "$brandName $modelName ${year ?? ""}",
-      style: TextStyle(
-          fontSize: 25.fs, fontWeight: FontWeight.bold, color: primaryColor),
+    return Container(
+      margin: EdgeInsets.only(right: 25.0.w),
+      child: Text(
+        "$brandName $modelName ${year ?? ""}",
+        style: TextStyle(
+            fontSize: 25.fs, fontWeight: FontWeight.bold, color: primaryColor),
+      ),
     );
   }
 
   Widget _carSubTitle() {
     String subtitle = CarController.to.car.generation.name ?? "";
-
+    if (subtitle.isEmpty) return Container();
     return Text(
       subtitle,
       style: TextStyle(
@@ -276,13 +279,8 @@ class CarScreen extends StatelessWidget {
         () {
           CompareController controller = CompareController.to;
 
-          Car car = CarController.to.car;
+          Car car = CarController.to.car.copyWith();
           bool isCarCompared = controller.isCarCompared(car);
-
-          log(controller
-              .comparedCars.first.selectedModification?.complectationId);
-          log(controller.isCarCompared(car));
-          log(car.selectedModification?.complectationId);
 
           return _iconWidget(
             Icons.copy,

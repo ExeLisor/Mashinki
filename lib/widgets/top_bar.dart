@@ -1,9 +1,14 @@
 import 'package:autoverse/exports.dart';
 
 class TopBar extends StatelessWidget {
-  const TopBar({super.key, required this.title, this.isHomeScreen = false});
+  const TopBar(
+      {super.key,
+      required this.title,
+      this.isHomeScreen = false,
+      this.subtitle = ""});
   final bool isHomeScreen;
   final String title;
+  final String subtitle;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,10 +44,29 @@ class TopBar extends StatelessWidget {
         ),
       );
 
-  Widget _title() => Text(
-        title,
-        style: TextStyle(
-            fontSize: 20.fs, fontWeight: FontWeight.bold, color: primaryColor),
+  Widget _title() => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+                fontSize: 20.fs,
+                fontWeight: FontWeight.bold,
+                color: primaryColor),
+          ),
+          subtitle.isNotEmpty
+              ? Text(
+                  subtitle,
+                  style: TextStyle(
+                    color: const Color(0xFF848484),
+                    fontSize: 14.fs,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              : Container(),
+        ],
       );
 
   Widget _accountIcon() => Container(

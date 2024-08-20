@@ -262,19 +262,6 @@ class CharacteristicsWidget extends StatelessWidget {
     }
   }
 
-  String getValue(String value) {
-    if (value.isEmpty) return "-";
-    if (RegExp(r'\d').hasMatch(value)) {
-      try {
-        String newValue = "${double.parse(value)}";
-        return newValue;
-      } catch (e) {
-        return value;
-      }
-    }
-    return value;
-  }
-
   List _mainSpecs() => [
         {"Максимальная скорость (км/ч)": getValue(specs.maxSpeed)},
         {"Время разгона до 100 км/ч (с)": getValue(specs.timeTo100)},

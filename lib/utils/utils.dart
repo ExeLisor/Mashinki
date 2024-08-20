@@ -44,3 +44,16 @@ String? validatePassword(String password) {
   }
   return null;
 }
+
+String getValue(String value) {
+  if (value.isEmpty) return "-";
+  if (RegExp(r'\d').hasMatch(value)) {
+    try {
+      String newValue = "${double.parse(value)}";
+      return newValue;
+    } catch (e) {
+      return value;
+    }
+  }
+  return value;
+}
