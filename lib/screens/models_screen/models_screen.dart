@@ -170,7 +170,9 @@ class ModelsScreen extends StatelessWidget {
                 model: model,
                 generation: generation,
                 configuration: configuration,
-                modifications: configuration.modifications ?? []),
+                modifications: configuration.modifications ?? [],
+                selectedModification:
+                    (configuration.modifications ?? []).first),
           },
         ),
         child: Container(

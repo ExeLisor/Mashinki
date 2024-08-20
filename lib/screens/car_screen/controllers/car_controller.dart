@@ -8,7 +8,7 @@ class Car {
   Generation generation = Generation();
   Configuration configuration = Configuration();
   List<Modification> modifications = <Modification>[];
-  Modification? selectedModification = Modification();
+  Modification selectedModification = Modification();
 
   Car({
     required this.mark,
@@ -16,7 +16,7 @@ class Car {
     required this.generation,
     required this.configuration,
     required this.modifications,
-    this.selectedModification,
+    required this.selectedModification,
   });
 
   Car copyWith({

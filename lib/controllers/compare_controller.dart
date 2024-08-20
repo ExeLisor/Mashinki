@@ -15,13 +15,19 @@ class CompareController extends GetxController {
 
   void deleteFromCompare(Car car) {
     comparedCars.removeWhere((element) =>
-        element.selectedModification?.complectationId ==
-        car.selectedModification?.complectationId);
+        element.selectedModification.complectationId ==
+        car.selectedModification.complectationId);
   }
 
   bool isCarCompared(Car car) => comparedCars.any((element) =>
-      element.selectedModification?.complectationId ==
-      car.selectedModification?.complectationId);
+      element.selectedModification.complectationId ==
+      car.selectedModification.complectationId);
+
+  List<CarSpecifications> getAllSpecifications() => List.generate(
+      comparedCars.length, (index) => getCarSpecifications(index));
+
+  CarSpecifications getCarSpecifications(int index) =>
+      comparedCars[index].selectedModification.carSpecifications!;
 }
 
 class CompareBinding extends Bindings {

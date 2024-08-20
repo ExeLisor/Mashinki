@@ -10,6 +10,7 @@ class CompareScreen extends StatelessWidget {
       Scaffold(appBar: appBar(), body: _body());
 
   Widget _body() => SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: 25.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -63,22 +64,27 @@ class CompareScreen extends StatelessWidget {
         ),
       );
   Widget _specs() {
-    List<Car> comparedCars = controller.comparedCars;
-    List<List> specifications = [];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
         _specsTitles.length,
         (index) {
-          for (Car car in comparedCars) {
-            specifications.add(
-                _allSpecs(car.selectedModification!.carSpecifications!)[index]);
+          List<CarSpecifications> specs = controller.getAllSpecifications();
+          List values = [];
+
+          for (int i = 0; i < _allNamesSpecs.length; i++) {
+            List value = [];
+            for (CarSpecifications specs in specs) {
+              value.add(_allSpecs(specs)[i]);
+            }
+            values.add(value);
           }
+
           return CompareSpecsWidget(
-            title: _specsTitles[index],
-            specsNames: _allNamesSpecs[index],
-            specs: specifications,
-          );
+              index: index,
+              title: _specsTitles[index],
+              specsNames: _allNamesSpecs[index],
+              specs: values[index]);
         },
       ),
     );
@@ -126,10 +132,12 @@ List _transmissionSpecs(CarSpecifications specs) => [
 class CompareSpecsWidget extends StatefulWidget {
   const CompareSpecsWidget(
       {super.key,
+      required this.index,
       required this.title,
       required this.specsNames,
       required this.specs});
 
+  final int index;
   final String title;
   final List<String> specsNames;
   final List specs;
@@ -181,24 +189,31 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
 
   Widget _specs() => Column(
         children: List.generate(
-          _mainSpecsNames.length,
-          (index) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _specsName(
-                _mainSpecsNames[index],
-              ),
-              Row(
-                children: List.generate(
-                  CompareController.to.comparedCars.length,
-                  (carIndex) => _spec(widget.specs[carIndex][index]),
+          widget.specsNames.length,
+          (index) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _specsName(
+                  widget.specsNames[index],
                 ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-            ],
-          ),
+                _specsValues(index),
+                SizedBox(
+                  height: 10.h,
+                ),
+              ],
+            );
+          },
+        ),
+      );
+
+  Widget _specsValues(int index) => Row(
+        children: List.generate(
+          widget.specs.length,
+          (specsIndex) {
+            log(widget.specs[specsIndex]);
+            return _spec(widget.specs[specsIndex][index]);
+          },
         ),
       );
 
@@ -220,12 +235,12 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
         ),
       );
 
-  Widget _spec(var value) => SizedBox(
+  Widget _spec(var value, {bool isHighlighted = false}) => SizedBox(
         width: 185.w,
         child: Text(
           value,
           style: TextStyle(
-            color: Colors.black,
+            color: isHighlighted ? Colors.green : Colors.black,
             fontSize: 14.fs,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w500,
@@ -243,17 +258,6 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
           height: 0.06,
         ),
       );
-
-  List _mainSpecs(CarSpecifications specs) => [
-        "${getValue(specs.volumeLitres)} л.",
-        getValue(specs.engineType),
-        "${getValue(specs.horsePower)} л.с.",
-        getValue(specs.transmission),
-        getValue(specs.gearValue),
-        getValue(specs.drive),
-        getValue(specs.maxSpeed),
-        getValue(specs.timeTo100),
-      ];
 }
 
 class CompareCarImage extends StatelessWidget {
