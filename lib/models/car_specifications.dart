@@ -2,55 +2,61 @@ class CarSpecifications {
   final String complectationId;
   final String backBrake;
   final String feeding;
-  final String horsePower;
-  final String kvtPower;
-  final String rpmPower;
+  final int horsePower; // Power is typically an integer
+  final double kvtPower; // Kilowatts are usually represented as a double
+  final int rpmPower; // RPM is an integer value
   final String engineType;
   final String transmission;
   final String drive;
-  final String volume;
-  final String timeTo100;
+  final double volume; // Volume is generally a double (e.g., liters)
+  final double timeTo100; // Time to 100km/h is a double
   final String cylindersOrder;
-  final String maxSpeed;
-  final String compression;
-  final String cylindersValue;
-  final String diametr;
-  final String pistonStroke;
+  final int maxSpeed; // Speed is typically an integer
+  final double compression; // Compression ratio is a double
+  final int cylindersValue; // Number of cylinders is an integer
+  final double diametr; // Diameter is usually a double
+  final double pistonStroke; // Stroke length is usually a double
   final String engineFeeding;
   final String engineOrder;
-  final String gearValue;
-  final String moment;
+  final int gearValue; // Number of gears is an integer
+  final double moment; // Torque (moment) is generally a double
   final String petrolType;
-  final String valves;
-  final String weight;
+  final int valves; // Number of valves is an integer
+  final int weight; // Weight is generally an integer (e.g., kilograms)
   final String wheelSize;
-  final String wheelBase;
-  final String frontWheelBase;
-  final String backWheelBase;
+  final double wheelBase; // Wheelbase is usually a double (e.g., meters)
+  final double frontWheelBase; // Front wheelbase is typically a double
+  final double backWheelBase; // Back wheelbase is typically a double
   final String frontBrake;
   final String frontSuspension;
   final String backSuspension;
-  final String height;
-  final String width;
-  final String fuelTankCapacity;
-  final String seats;
-  final String length;
+  final int height; // Height is typically a double (e.g., meters)
+  final int width; // Width is typically a double (e.g., meters)
+  final double
+      fuelTankCapacity; // Fuel tank capacity is usually a double (e.g., liters)
+  final int seats; // Number of seats is an integer
+  final int length; // Length is typically a double (e.g., meters)
   final String emissionEuroClass;
-  final String volumeLitres;
-  final String consumptionMixed;
-  final String clearance;
-  final String trunksMinCapacity;
-  final String trunksMaxCapacity;
-  final String consumptionHiway;
-  final String consumptionCity;
-  final String momentRpm;
-  final String fullWeight;
-  final String rangeDistance;
-  final String batteryCapacity;
-  final String fuelEmission;
-  final String electricRange;
-  final String chargeTime;
-  final String safetyRating;
+  final double volumeLitres; // Volume (liters) is typically a double
+  final double
+      consumptionMixed; // Fuel consumption is usually a double (e.g., liters/100km)
+  final double
+      clearance; // Ground clearance is typically a double (e.g., meters)
+  final double trunksMinCapacity; // Trunk capacity is usually a double
+  final double trunksMaxCapacity; // Trunk capacity is usually a double
+  final double consumptionHiway; // Highway consumption is typically a double
+  final double consumptionCity; // City consumption is typically a double
+  final int momentRpm; // RPM for torque is generally an integer
+  final int fullWeight; // Full weight is typically an integer (e.g., kilograms)
+  final double
+      rangeDistance; // Range distance is typically a double (e.g., kilometers)
+  final double
+      batteryCapacity; // Battery capacity is usually a double (e.g., kWh)
+  final double fuelEmission; // Fuel emissions is usually a double (e.g., g/km)
+  final double
+      electricRange; // Electric range is typically a double (e.g., kilometers)
+  final double chargeTime; // Charge time is usually a double (e.g., hours)
+  final int safetyRating; // Safety rating is typically an integer
   final String safetyGrade;
 
   CarSpecifications({
@@ -114,55 +120,57 @@ class CarSpecifications {
       complectationId: json['complectation_id'] ?? '',
       backBrake: json['back-brake'] ?? '',
       feeding: json['feeding'] ?? '',
-      horsePower: json['horse-power'] ?? '',
-      kvtPower: json['kvt-power'] ?? '',
-      rpmPower: json['rpm-power'] ?? '',
+      horsePower: int.tryParse(json['horse-power']) ?? 0,
+      kvtPower: double.tryParse(json['kvt-power'] ?? '0') ?? 0,
+      rpmPower: int.tryParse(json['rpm-power'] ?? '0') ?? 0,
       engineType: json['engine-type'] ?? '',
       transmission: json['transmission'] ?? '',
       drive: json['drive'] ?? '',
-      volume: json['volume'] ?? '',
-      timeTo100: json['time-to-100'] ?? '',
+      volume: double.tryParse(json['volume'] ?? '0') ?? 0,
+      timeTo100: double.tryParse(json['time-to-100'] ?? '0') ?? 0,
       cylindersOrder: json['cylinders-order'] ?? '',
-      maxSpeed: json['max-speed'] ?? '',
-      compression: json['compression'] ?? '',
-      cylindersValue: json['cylinders-value'] ?? '',
-      diametr: json['diametr'] ?? '',
-      pistonStroke: json['piston-stroke'] ?? '',
+      maxSpeed: int.tryParse(json['max-speed'] ?? '0') ?? 0,
+      compression: double.tryParse(json['compression'] ?? '0') ?? 0,
+      cylindersValue: int.tryParse(json['cylinders-value'] ?? '0') ?? 0,
+      diametr: double.tryParse(json['diametr'] ?? '0') ?? 0,
+      pistonStroke: double.tryParse(json['piston-stroke'] ?? '0') ?? 0,
       engineFeeding: json['engine-feeding'] ?? '',
       engineOrder: json['engine-order'] ?? '',
-      gearValue: json['gear-value'] ?? '',
-      moment: json['moment'] ?? '',
+      gearValue: int.tryParse(json['gear-value'] ?? '0') ?? 0,
+      moment: double.tryParse(json['moment'] ?? '0') ?? 0,
       petrolType: json['petrol-type'] ?? '',
-      valves: json['valves'] ?? '',
-      weight: json['weight'] ?? '',
+      valves: int.tryParse(json['valves'] ?? '0') ?? 0,
+      weight: int.tryParse(json['weight'] ?? '0') ?? 0,
       wheelSize: json['wheel-size'] ?? '',
-      wheelBase: json['wheel-base'] ?? '',
-      frontWheelBase: json['front-wheel-base'] ?? '',
-      backWheelBase: json['back-wheel-base'] ?? '',
+      wheelBase: double.tryParse(json['wheel-base'] ?? '0') ?? 0,
+      frontWheelBase: double.tryParse(json['front-wheel-base'] ?? '0') ?? 0,
+      backWheelBase: double.tryParse(json['back-wheel-base'] ?? '0') ?? 0,
       frontBrake: json['front-brake'] ?? '',
       frontSuspension: json['front-suspension'] ?? '',
       backSuspension: json['back-suspension'] ?? '',
-      height: json['height'] ?? '',
-      width: json['width'] ?? '',
-      fuelTankCapacity: json['fuel-tank-capacity'] ?? '',
-      seats: json['seats'] ?? '',
-      length: json['length'] ?? '',
+      height: int.tryParse(json['height'] ?? '0') ?? 0,
+      width: int.tryParse(json['width'] ?? '0') ?? 0,
+      fuelTankCapacity: double.tryParse(json['fuel-tank-capacity'] ?? '0') ?? 0,
+      seats: int.tryParse(json['seats'] ?? '0') ?? 0,
+      length: int.tryParse(json['length'] ?? '0') ?? 0,
       emissionEuroClass: json['emission-euro-class'] ?? '',
-      volumeLitres: json['volume-litres'] ?? '',
-      consumptionMixed: json['consumption-mixed'] ?? '',
-      clearance: json['clearance'] ?? '',
-      trunksMinCapacity: json['trunks-min-capacity'] ?? '',
-      trunksMaxCapacity: json['trunks-max-capacity'] ?? '',
-      consumptionHiway: json['consumption-hiway'] ?? '',
-      consumptionCity: json['consumption-city'] ?? '',
-      momentRpm: json['moment-rpm'] ?? '',
-      fullWeight: json['full-weight'] ?? '',
-      rangeDistance: json['range-distance'] ?? '',
-      batteryCapacity: json['battery-capacity'] ?? '',
-      fuelEmission: json['fuel-emission'] ?? '',
-      electricRange: json['electric-range'] ?? '',
-      chargeTime: json['charge-time'] ?? '',
-      safetyRating: json['safety-rating'] ?? '',
+      volumeLitres: double.tryParse(json['volume-litres'] ?? '0') ?? 0,
+      consumptionMixed: double.tryParse(json['consumption-mixed'] ?? '0') ?? 0,
+      clearance: double.tryParse(json['clearance'] ?? '0') ?? 0,
+      trunksMinCapacity:
+          double.tryParse(json['trunks-min-capacity'] ?? '0') ?? 0,
+      trunksMaxCapacity:
+          double.tryParse(json['trunks-max-capacity'] ?? '0') ?? 0,
+      consumptionHiway: double.tryParse(json['consumption-hiway'] ?? '0') ?? 0,
+      consumptionCity: double.tryParse(json['consumption-city'] ?? '0') ?? 0,
+      momentRpm: int.tryParse(json['moment-rpm'] ?? '0') ?? 0,
+      fullWeight: int.tryParse(json['full-weight'] ?? '0') ?? 0,
+      rangeDistance: double.tryParse(json['range-distance'] ?? '0') ?? 0,
+      batteryCapacity: double.tryParse(json['battery-capacity'] ?? '0') ?? 0,
+      fuelEmission: double.tryParse(json['fuel-emission'] ?? '0') ?? 0,
+      electricRange: double.tryParse(json['electric-range'] ?? '0') ?? 0,
+      chargeTime: double.tryParse(json['charge-time'] ?? '0') ?? 0,
+      safetyRating: int.tryParse(json['safety-rating'] ?? '0') ?? 0,
       safetyGrade: json['safety-grade'] ?? '',
     );
   }

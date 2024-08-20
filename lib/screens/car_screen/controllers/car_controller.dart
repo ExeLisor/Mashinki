@@ -212,8 +212,7 @@ class CarController extends GetxController {
   List<double> minMaxVolumeEngine() {
     List<double> volumeLitres = [];
     for (Modification modification in car.modifications) {
-      volumeLitres
-          .add(double.parse(modification.carSpecifications!.volumeLitres));
+      volumeLitres.add(modification.carSpecifications!.volumeLitres);
     }
 
     volumeLitres.sort();
@@ -237,11 +236,11 @@ class CarController extends GetxController {
     }
   }
 
-  List<double> minMaxPower() {
+  List<int> minMaxPower() {
     try {
-      List<double> power = [];
+      List<int> power = [];
       for (Modification modification in car.modifications) {
-        power.add(double.parse(modification.carSpecifications!.horsePower));
+        power.add(modification.carSpecifications!.horsePower);
       }
 
       power.sort();
@@ -253,7 +252,7 @@ class CarController extends GetxController {
   }
 
   String getMinMaxPowerDescription() {
-    List<double> power = minMaxPower();
+    List<int> power = minMaxPower();
     if (power.isEmpty) return "";
     if (power.first == power[1]) {
       return "мощностью от ${power.first} л.с.";

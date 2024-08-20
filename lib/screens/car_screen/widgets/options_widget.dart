@@ -47,13 +47,13 @@ class OptionsWidget extends StatelessWidget {
     CarSpecifications specification = modification.carSpecifications!;
     String transmission = getTransmissionAbb(specification.transmission);
 
-    double? power = double.tryParse(specification.horsePower);
-    double? volume = double.tryParse(specification.volumeLitres);
+    int? power = specification.horsePower;
+    double? volume = specification.volumeLitres;
     String privod = specification.drive == "полный" ? "4WD" : "";
     return Container(
       margin: EdgeInsets.only(bottom: 20.h),
       child: Text(
-        "${CarController.to.car.selectedModification.groupName ?? ""} ${volume ?? ""} $transmission ${power ?? ""} $privod",
+        "${CarController.to.car.selectedModification.groupName ?? ""} ${volume == 0 ? "" : volume} $transmission ${power == 0 ? "" : power} $privod",
         style: TextStyle(
           color: Colors.black,
           fontSize: 18.fs,

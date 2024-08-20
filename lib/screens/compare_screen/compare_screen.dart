@@ -117,16 +117,16 @@ const List<String> _transmissionSpecsNames = [
 List _allSpecs(CarSpecifications specs) =>
     [_mainSpecs(specs), _transmissionSpecs(specs)];
 List _mainSpecs(CarSpecifications specs) => [
-      "${getValue(specs.volumeLitres)} л.",
-      getValue(specs.engineType),
-      "${getValue(specs.horsePower)} л.с.",
-      getValue(specs.maxSpeed),
-      getValue(specs.timeTo100),
+      "${specs.volumeLitres} л.",
+      specs.engineType,
+      "${specs.horsePower} л.с.",
+      specs.maxSpeed,
+      specs.timeTo100,
     ];
 List _transmissionSpecs(CarSpecifications specs) => [
-      getValue(specs.transmission),
-      getValue(specs.gearValue),
-      getValue(specs.drive),
+      specs.transmission,
+      specs.gearValue,
+      specs.drive,
     ];
 
 class CompareSpecsWidget extends StatefulWidget {

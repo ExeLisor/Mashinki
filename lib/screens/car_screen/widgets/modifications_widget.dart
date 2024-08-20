@@ -196,8 +196,8 @@ class ModificationGroupTile extends StatelessWidget {
         CarSpecifications specification = modification.carSpecifications!;
 
         String transmission = getTransmissionAbb(specification.transmission);
-        String power = specification.horsePower;
-        double? volume = double.tryParse(specification.volumeLitres);
+        String power = specification.horsePower.toString();
+        double? volume = specification.volumeLitres;
 
         bool isSelected =
             CarController.to.car.selectedModification == modification;
@@ -223,7 +223,7 @@ class ModificationGroupTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${volume ?? ""} $transmission',
+                      '${volume == 0 ? '' : volume} $transmission',
                       style: TextStyle(
                         color: isSelected ? Colors.white : primaryColor,
                         fontSize: 18.fs,

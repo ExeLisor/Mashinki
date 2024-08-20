@@ -202,7 +202,7 @@ class SpecsBlockWidget extends StatelessWidget {
         ...specs.map(
           (spec) => _specsWidget(
             spec.keys.first,
-            spec[spec.keys.first],
+            spec[spec.keys.first].toString(),
           ),
         ),
         SizedBox(
