@@ -211,8 +211,7 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
         children: List.generate(
           widget.specs.length,
           (specsIndex) {
-            log(widget.specs[specsIndex]);
-            return _spec(widget.specs[specsIndex][index]);
+            return _spec(widget.specs[specsIndex][index].toString());
           },
         ),
       );
