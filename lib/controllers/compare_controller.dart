@@ -5,12 +5,20 @@ class CompareController extends GetxController {
 
   final RxList<Car> _comparedCars = <Car>[].obs;
 
+  final RxList _comparedSpecifications = [].obs;
+
   List<Car> get comparedCars => _comparedCars;
+
+  List get comparedSpecifications => _comparedSpecifications;
+
+  List specificationTitle = ["Двигатель", "Размеры"];
 
   void addToCompare(Car car) {
     if (isCarCompared(car)) return;
 
     _comparedCars.add(car);
+
+    compare();
   }
 
   void deleteFromCompare(Car car) {
@@ -28,6 +36,11 @@ class CompareController extends GetxController {
 
   CarSpecifications getCarSpecifications(int index) =>
       comparedCars[index].selectedModification.carSpecifications!;
+
+  void compare() {
+    _comparedSpecifications.value =
+        List.generate(specificationTitle.length, (_) => []);
+  }
 }
 
 class CompareBinding extends Bindings {

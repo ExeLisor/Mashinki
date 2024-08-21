@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:autoverse/exports.dart';
 
 class CompareScreen extends StatelessWidget {
@@ -69,78 +71,30 @@ class CompareScreen extends StatelessWidget {
       children: List.generate(
         _specsTitles.length,
         (index) {
-          List<CarSpecifications> specs = controller.getAllSpecifications();
-          List values = [];
-
-          for (int i = 0; i < _allNamesSpecs.length; i++) {
-            List value = [];
-            for (CarSpecifications specs in specs) {
-              value.add(_allSpecs(specs)[i]);
-            }
-            values.add(value);
-          }
-
           return CompareSpecsWidget(
-              index: index,
               title: _specsTitles[index],
-              specsNames: _allNamesSpecs[index],
-              specs: values[index]);
+              allSpecs: controller.getAllSpecifications());
         },
       ),
     );
   }
+
+  static final List<String> _specsTitles = [
+    // "Основные",
+    "Трасмиссия",
+    // "Объём и масса",
+    // "Двигатель",
+    // "Подвеска и торомза"
+  ];
 }
-
-const List<String> _specsTitles = [
-  "Основные",
-  "Трасмиссия",
-  // "Объём и масса",
-  // "Двигатель",
-  // "Подвеска и торомза"
-];
-
-List _allNamesSpecs = [_mainSpecsNames, _transmissionSpecsNames];
-
-const List<String> _mainSpecsNames = [
-  "Объём двигателя",
-  "Тип двигателя",
-  "Мощность двигателя",
-  "Максимальная скорость",
-  "Разгон до 100 км/ч",
-];
-const List<String> _transmissionSpecsNames = [
-  "Тип КПП",
-  "Количество передач",
-  "Привод",
-];
-
-List _allSpecs(CarSpecifications specs) =>
-    [_mainSpecs(specs), _transmissionSpecs(specs)];
-List _mainSpecs(CarSpecifications specs) => [
-      "${specs.volumeLitres} л.",
-      specs.engineType,
-      "${specs.horsePower} л.с.",
-      specs.maxSpeed,
-      specs.timeTo100,
-    ];
-List _transmissionSpecs(CarSpecifications specs) => [
-      specs.transmission,
-      specs.gearValue,
-      specs.drive,
-    ];
 
 class CompareSpecsWidget extends StatefulWidget {
   const CompareSpecsWidget(
-      {super.key,
-      required this.index,
-      required this.title,
-      required this.specsNames,
-      required this.specs});
+      {super.key, required this.title, required this.allSpecs});
 
-  final int index;
   final String title;
-  final List<String> specsNames;
-  final List specs;
+
+  final List<CarSpecifications> allSpecs;
 
   @override
   State<CompareSpecsWidget> createState() => _CompareSpecsWidgetState();
@@ -151,9 +105,34 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
 
   bool isOpened = true;
 
+  List specifications = [];
+
   void close() => setState(() => isOpened = false);
 
-  void open() => setState(() => isOpened = true);
+  void open() {
+    setState(() => isOpened = true);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    specifications = getSpecs();
+  }
+
+  List getSpecs() {
+    List array = [];
+
+    for (int i = 0; i < widget.allSpecs.length; i++) {
+      List specifications = widget.allSpecs[i].getEngineSpecifications();
+      if (array.isEmpty) {
+        array = List.generate(specifications.length, (_) => []);
+      }
+      for (int k = 0; k < specifications.length; k++) {
+        array[k].add(specifications[k]);
+      }
+    }
+    return array;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,30 +167,72 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
       );
 
   Widget _specs() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(
-          widget.specsNames.length,
+          specifications.length,
           (index) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _specsName(
-                  widget.specsNames[index],
+                  specifications[index].first["name"],
                 ),
                 _specsValues(index),
-                SizedBox(
-                  height: 10.h,
-                ),
               ],
             );
           },
         ),
       );
 
+  dynamic getMaxValue(List specifications) {
+    // Фильтрация числовых значений и получение списка значений
+    List values = specifications
+        .where((spec) => spec['compareType'] == CompareType.higher)
+        .map((spec) => spec['value'])
+        .toList();
+
+    // Если список значений пуст, вернуть 0 или любое другое значение по умолчанию
+    if (values.isEmpty) {
+      return 0;
+    }
+
+    // Использовать метод max для нахождения максимального значения
+    return values.reduce((a, b) => a > b ? a : b);
+  }
+
+  double getMinValue(List<Map<String, dynamic>> specifications) {
+    // Фильтрация числовых значений и получение списка значений
+    List<double> values = specifications
+        .where((spec) => spec['compareType'] == CompareType.lower)
+        .map((spec) => spec['value'] as double)
+        .toList();
+
+    // Если список значений пуст, вернуть 0 или любое другое значение по умолчанию
+    if (values.isEmpty) {
+      return 0;
+    }
+
+    // Использовать метод min для нахождения минимального значения
+    return values.reduce((a, b) => a < b ? a : b);
+  }
+
   Widget _specsValues(int index) => Row(
         children: List.generate(
-          widget.specs.length,
-          (specsIndex) {
-            return _spec(widget.specs[specsIndex][index].toString());
+          CompareController.to.comparedCars.length,
+          (carIndex) {
+            CompareType compareType =
+                specifications[index][carIndex]["compareType"];
+            dynamic value = specifications[index][carIndex]["value"];
+
+            List compareValue = specifications[index];
+
+            if (compareType == CompareType.higher) {
+              return _spec(
+                  (value == 0 || value == 0.0) ? "-" : value.toString(),
+                  isHighlighted: value == getMaxValue(compareValue));
+            }
+
+            return _spec(value.toString());
           },
         ),
       );
