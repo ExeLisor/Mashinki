@@ -23,10 +23,22 @@ class CompareScreen extends StatelessWidget {
   Widget _topBar() => Obx(
         () => TopBar(
           title: "Сравнение",
-          subtitle: "${CompareController.to.comparedCars.length} сравнений",
-          isHomeScreen: true,
+          subtitle:
+              _declineComparison(CompareController.to.comparedCars.length),
+          isHomeScreen: false,
         ),
       );
+
+  String _declineComparison(int count) {
+    if (count % 10 == 1 && count % 100 != 11) {
+      return '$count сравнение';
+    } else if ([2, 3, 4].contains(count % 10) &&
+        !(count % 100 >= 11 && count % 100 <= 14)) {
+      return '$count сравнения';
+    } else {
+      return '$count сравнений';
+    }
+  }
 
   Widget _view() => Obx(
         () => SingleChildScrollView(
