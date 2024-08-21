@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:autoverse/exports.dart';
 
 class CompareScreen extends StatelessWidget {
@@ -10,6 +12,7 @@ class CompareScreen extends StatelessWidget {
       Scaffold(appBar: appBar(), body: _body());
 
   Widget _body() => SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.only(bottom: 25.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,26 +26,15 @@ class CompareScreen extends StatelessWidget {
   Widget _topBar() => Obx(
         () => TopBar(
           title: "Сравнение",
-          subtitle:
-              _declineComparison(CompareController.to.comparedCars.length),
+          subtitle: declineComparison(CompareController.to.comparedCars.length),
           isHomeScreen: false,
         ),
       );
 
-  String _declineComparison(int count) {
-    if (count % 10 == 1 && count % 100 != 11) {
-      return '$count сравнение';
-    } else if ([2, 3, 4].contains(count % 10) &&
-        !(count % 100 >= 11 && count % 100 <= 14)) {
-      return '$count сравнения';
-    } else {
-      return '$count сравнений';
-    }
-  }
-
   Widget _view() => Obx(
         () => SingleChildScrollView(
           scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.only(left: 25.0.w),
             child: Column(
@@ -242,9 +234,7 @@ class CompareCarImage extends StatelessWidget {
   final Car car;
 
   @override
-  Widget build(BuildContext context) {
-    return _carColumn();
-  }
+  Widget build(BuildContext context) => _carColumn();
 
   Widget _carColumn() => Padding(
         padding: EdgeInsets.only(left: 8.0.w),
@@ -275,7 +265,7 @@ class CompareCarImage extends StatelessWidget {
                   const Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
-            _removeCompare(),
+            _removeCompare()
           ],
         ),
       );
@@ -289,17 +279,28 @@ class CompareCarImage extends StatelessWidget {
             margin: EdgeInsets.all(9.h),
             clipBehavior: Clip.antiAlias,
             decoration: ShapeDecoration(
-              color: Colors.white,
+              color: const Color(0x307C7C7C),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(23.h),
               ),
             ),
-            child: Center(
-              child: Icon(Icons.clear, color: Colors.black, size: 20.h),
+            child: ClipRRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                    sigmaX: 40, sigmaY: 40, tileMode: TileMode.decal),
+                child: Center(
+                  child: SvgPicture.asset(
+                    whiteCrossIcon,
+                    height: 14.h,
+                    width: 14.h,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
       );
+
   Widget _carTitle() {
     String brandName = car.mark.name ?? "";
     String modelName = car.model.name ?? "";

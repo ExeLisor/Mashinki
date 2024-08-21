@@ -32,6 +32,7 @@ const googleImage = "assets/images/google.svg";
 const tiktokImage = "assets/images/tik_tok.svg";
 const pinterestImage = "assets/images/pinterest.svg";
 const youtubeImage = "assets/images/youtube.svg";
+const whiteCrossIcon = "assets/icons/white_cross.svg";
 
 const primaryColor = Color(0xFF4038FF);
 const paleColor = Color(0xff7974FF);

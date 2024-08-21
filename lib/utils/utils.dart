@@ -60,6 +60,17 @@ String getValue(String value) {
   return value;
 }
 
+String declineComparison(int count) {
+  if (count % 10 == 1 && count % 100 != 11) {
+    return '$count сравнение';
+  } else if ([2, 3, 4].contains(count % 10) &&
+      !(count % 100 >= 11 && count % 100 <= 14)) {
+    return '$count сравнения';
+  } else {
+    return '$count сравнений';
+  }
+}
+
 dynamic getMaxValue(List specifications) {
   // Фильтрация числовых значений и получение списка значений
   List values = specifications
