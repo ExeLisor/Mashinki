@@ -71,6 +71,28 @@ String declineComparison(int count) {
   }
 }
 
+String declineCharacteristic(int count) {
+  if (count % 10 == 1 && count % 100 != 11) {
+    return '$count характеристика';
+  } else if ([2, 3, 4].contains(count % 10) &&
+      !(count % 100 >= 11 && count % 100 <= 14)) {
+    return '$count характеристики';
+  } else {
+    return '$count характеристик';
+  }
+}
+
+String declineOption(int count) {
+  if (count % 10 == 1 && count % 100 != 11) {
+    return '$count опция';
+  } else if ([2, 3, 4].contains(count % 10) &&
+      !(count % 100 >= 11 && count % 100 <= 14)) {
+    return '$count опции';
+  } else {
+    return '$count опций';
+  }
+}
+
 dynamic getMaxValue(List specifications) {
   // Фильтрация числовых значений и получение списка значений
   List values = specifications

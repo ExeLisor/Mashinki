@@ -5,14 +5,17 @@ class TopBar extends StatelessWidget {
       {super.key,
       required this.title,
       this.isHomeScreen = false,
-      this.subtitle = ""});
+      this.subtitle = "",
+      this.disableVerticalPadding = false});
   final bool isHomeScreen;
   final String title;
   final String subtitle;
+  final bool disableVerticalPadding;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(25.w, 15.h, 25.w, 20.h),
+      padding: EdgeInsets.fromLTRB(25.w, disableVerticalPadding ? 0.h : 15.h,
+          25.w, disableVerticalPadding ? 0.h : 20.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

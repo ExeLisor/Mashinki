@@ -59,6 +59,9 @@ flutter:
     - assets/icons/home_icon.svg
     - assets/icons/list_icon.svg
     - assets/icons/compr_icon.svg
+    - assets/icons/back_icon.svg
+    - assets/icons/favorite.svg
+    - assets/icons/active_favorite.svg
     - assets/icons/account_circle_icon.svg
     - assets/animations/correct_animation.json
     - assets/animations/denied_animation.json

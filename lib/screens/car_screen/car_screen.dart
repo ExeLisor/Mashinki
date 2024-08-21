@@ -263,7 +263,7 @@ class CarScreen extends StatelessWidget {
         ),
       );
 
-  Widget _backIcon() => _iconWidget(Icons.arrow_back_ios_new_rounded, Get.back);
+  Widget _backIcon() => _iconSvg(backIcon, Get.back);
 
   Widget _iconBlock() => Wrap(
         children: [
@@ -292,8 +292,8 @@ class CarScreen extends StatelessWidget {
         },
       );
 
-  Widget _likeWidget() => _iconWidget(
-        Icons.heart_broken,
+  Widget _likeWidget() => _iconSvg(
+        favoriteIcon,
         () {},
       );
 
@@ -308,6 +308,23 @@ class CarScreen extends StatelessWidget {
           width: 45.h,
           child: Center(
             child: Icon(icon, color: condition ? primaryColor : Colors.white),
+          ),
+        ),
+      );
+
+  Widget _iconSvg(String path, VoidCallback function,
+          {bool condition = false}) =>
+      GestureDetector(
+        onTap: function,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.3), shape: BoxShape.circle),
+          height: 45.h,
+          width: 45.h,
+          child: Center(
+            child: SvgPicture.asset(
+              path,
+            ),
           ),
         ),
       );
