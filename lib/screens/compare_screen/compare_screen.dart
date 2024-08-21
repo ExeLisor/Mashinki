@@ -61,10 +61,14 @@ class CompareScreen extends StatelessWidget {
         ),
       );
 
-  Widget _images() => Row(
-        children: List.generate(
-          controller.comparedCars.length,
-          (_) => CompareCarImage(car: controller.comparedCars[_]),
+  Widget _images() => Container(
+        margin: EdgeInsets.only(right: 25.w),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List.generate(
+            controller.comparedCars.length,
+            (_) => CompareCarImage(car: controller.comparedCars[_]),
+          ),
         ),
       );
   Widget _specs() {
@@ -240,6 +244,7 @@ class CompareCarImage extends StatelessWidget {
         padding: EdgeInsets.only(left: 8.0.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             _carImage(),
             SizedBox(
@@ -305,11 +310,18 @@ class CompareCarImage extends StatelessWidget {
     String brandName = car.mark.name ?? "";
     String modelName = car.model.name ?? "";
     int? year = car.generation.yearStart;
+    Modification modification = car.selectedModification;
+    String groupName = modification.groupName ?? "Базовая";
+    CarSpecifications specification = modification.carSpecifications!;
+
+    String transmission = getTransmissionAbb(specification.transmission);
+    String power = specification.horsePower.toString();
+    double? volume = specification.volumeLitres;
 
     return SizedBox(
       width: 177.w,
       child: Text(
-        "$brandName $modelName ${year ?? ""}",
+        "$brandName $modelName ${year ?? ""} \n $groupName $power $transmission $volume",
         style: TextStyle(
           color: Colors.black,
           fontSize: 16.fs,
