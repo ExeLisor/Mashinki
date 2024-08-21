@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:autoverse/exports.dart';
 
 class CompareScreen extends StatelessWidget {
@@ -69,32 +67,32 @@ class CompareScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(
-        _specsTitles.length,
+        SpecificationType.values.length,
         (index) {
-          return CompareSpecsWidget(
-              title: _specsTitles[index],
-              allSpecs: controller.getAllSpecifications());
+          return Obx(
+            () => CompareSpecsWidget(
+              title: SpecificationType.values[index].name,
+              allSpecs: controller.getAllSpecifications(),
+              specs: controller.comparedSpecifications[index],
+            ),
+          );
         },
       ),
     );
   }
-
-  static final List<String> _specsTitles = [
-    // "Основные",
-    "Трасмиссия",
-    // "Объём и масса",
-    // "Двигатель",
-    // "Подвеска и торомза"
-  ];
 }
 
 class CompareSpecsWidget extends StatefulWidget {
   const CompareSpecsWidget(
-      {super.key, required this.title, required this.allSpecs});
+      {super.key,
+      required this.title,
+      required this.allSpecs,
+      required this.specs});
 
   final String title;
 
   final List<CarSpecifications> allSpecs;
+  final List specs;
 
   @override
   State<CompareSpecsWidget> createState() => _CompareSpecsWidgetState();
@@ -105,33 +103,10 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
 
   bool isOpened = true;
 
-  List specifications = [];
-
   void close() => setState(() => isOpened = false);
 
   void open() {
     setState(() => isOpened = true);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    specifications = getSpecs();
-  }
-
-  List getSpecs() {
-    List array = [];
-
-    for (int i = 0; i < widget.allSpecs.length; i++) {
-      List specifications = widget.allSpecs[i].getEngineSpecifications();
-      if (array.isEmpty) {
-        array = List.generate(specifications.length, (_) => []);
-      }
-      for (int k = 0; k < specifications.length; k++) {
-        array[k].add(specifications[k]);
-      }
-    }
-    return array;
   }
 
   @override
@@ -169,13 +144,13 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
   Widget _specs() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(
-          specifications.length,
+          widget.specs.length,
           (index) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _specsName(
-                  specifications[index].first["name"],
+                  widget.specs[index].first["name"],
                 ),
                 _specsValues(index),
               ],
@@ -184,47 +159,16 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
         ),
       );
 
-  dynamic getMaxValue(List specifications) {
-    // Фильтрация числовых значений и получение списка значений
-    List values = specifications
-        .where((spec) => spec['compareType'] == CompareType.higher)
-        .map((spec) => spec['value'])
-        .toList();
-
-    // Если список значений пуст, вернуть 0 или любое другое значение по умолчанию
-    if (values.isEmpty) {
-      return 0;
-    }
-
-    // Использовать метод max для нахождения максимального значения
-    return values.reduce((a, b) => a > b ? a : b);
-  }
-
-  double getMinValue(List<Map<String, dynamic>> specifications) {
-    // Фильтрация числовых значений и получение списка значений
-    List<double> values = specifications
-        .where((spec) => spec['compareType'] == CompareType.lower)
-        .map((spec) => spec['value'] as double)
-        .toList();
-
-    // Если список значений пуст, вернуть 0 или любое другое значение по умолчанию
-    if (values.isEmpty) {
-      return 0;
-    }
-
-    // Использовать метод min для нахождения минимального значения
-    return values.reduce((a, b) => a < b ? a : b);
-  }
-
   Widget _specsValues(int index) => Row(
         children: List.generate(
           CompareController.to.comparedCars.length,
           (carIndex) {
             CompareType compareType =
-                specifications[index][carIndex]["compareType"];
-            dynamic value = specifications[index][carIndex]["value"];
+                widget.specs[index][carIndex]["compareType"];
 
-            List compareValue = specifications[index];
+            dynamic value = widget.specs[index][carIndex]["value"];
+
+            List compareValue = widget.specs[index];
 
             if (compareType == CompareType.higher) {
               return _spec(
@@ -255,10 +199,10 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
         ),
       );
 
-  Widget _spec(var value, {bool isHighlighted = false}) => SizedBox(
+  Widget _spec(String value, {bool isHighlighted = false}) => SizedBox(
         width: 185.w,
         child: Text(
-          value,
+          value.isEmpty ? "-" : value,
           style: TextStyle(
             color: isHighlighted ? Colors.green : Colors.black,
             fontSize: 14.fs,
@@ -349,14 +293,17 @@ class CompareCarImage extends StatelessWidget {
     String modelName = car.model.name ?? "";
     int? year = car.generation.yearStart;
 
-    return Text(
-      "$brandName $modelName ${year ?? ""}",
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: 16.fs,
-        fontFamily: 'Inter',
-        fontWeight: FontWeight.w500,
-        height: 0,
+    return SizedBox(
+      width: 177.w,
+      child: Text(
+        "$brandName $modelName ${year ?? ""}",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 16.fs,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w500,
+          height: 0,
+        ),
       ),
     );
   }

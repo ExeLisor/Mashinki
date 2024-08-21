@@ -13,6 +13,8 @@ class CompareController extends GetxController {
 
   List specificationTitle = ["Двигатель", "Размеры"];
 
+  List<CarSpecifications> allSpecs = [];
+
   void addToCompare(Car car) {
     if (isCarCompared(car)) return;
 
@@ -25,6 +27,8 @@ class CompareController extends GetxController {
     comparedCars.removeWhere((element) =>
         element.selectedModification.complectationId ==
         car.selectedModification.complectationId);
+
+    compare();
   }
 
   bool isCarCompared(Car car) => comparedCars.any((element) =>
@@ -38,9 +42,55 @@ class CompareController extends GetxController {
       comparedCars[index].selectedModification.carSpecifications!;
 
   void compare() {
+    allSpecs = getAllSpecifications();
+
     _comparedSpecifications.value =
         List.generate(specificationTitle.length, (_) => []);
+
+    for (int i = 0; i < comparedCars.length; i++) {
+      for (int k = 0; k < comparedSpecifications.length; k++) {
+        _comparedSpecifications[k] = (_getComparedSpecifications(k));
+      }
+    }
   }
+
+  List _getComparedSpecifications(int index) {
+    List array = [];
+
+    for (int i = 0; i < allSpecs.length; i++) {
+      List specifications = _getTypedSpecifications(
+          specifications: allSpecs[i], type: SpecificationType.values[index]);
+      if (array.isEmpty) {
+        array = List.generate(specifications.length, (_) => []);
+      }
+      for (int k = 0; k < specifications.length; k++) {
+        array[k].add(specifications[k]);
+      }
+    }
+    return array;
+  }
+
+  List _getTypedSpecifications(
+      {required SpecificationType type,
+      required CarSpecifications specifications}) {
+    switch (type) {
+      case SpecificationType.engine:
+        return specifications.getEngineSpecifications();
+      case SpecificationType.safety:
+        return specifications.getSafetySpecifications();
+
+      default:
+        return [];
+    }
+  }
+}
+
+enum SpecificationType {
+  engine("Двигатель"),
+  safety("Безопасность");
+
+  final String name;
+  const SpecificationType(this.name);
 }
 
 class CompareBinding extends Bindings {

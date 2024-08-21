@@ -186,112 +186,19 @@ class CarSpecifications {
     ];
   }
 
-  Map<String, dynamic> getDimensionsSpecifications() {
-    return {
-      'Габаритные размеры': {
-        'Высота': {'value': height, 'compareType': CompareType.none},
-        'Ширина': {'value': width, 'compareType': CompareType.none},
-        'Длина': {'value': length, 'compareType': CompareType.none},
-        'Колесная база': {
-          'value': wheelBase,
-          'compareType': CompareType.higher
-        },
-        'Передняя колея': {
-          'value': frontWheelBase,
-          'compareType': CompareType.higher
-        },
-        'Задняя колея': {
-          'value': backWheelBase,
-          'compareType': CompareType.higher
-        },
-        'Дорожный просвет': {
-          'value': clearance,
-          'compareType': CompareType.higher
-        },
-      }
-    };
-  }
-
-  Map<String, dynamic> getWeightSpecifications() {
-    return {
-      'Масса и объемы': {
-        'Снаряженная масса': {
-          'value': weight,
-          'compareType': CompareType.lower
-        },
-        'Полная масса': {'value': fullWeight, 'compareType': CompareType.lower},
-        'Объем топливного бака': {
-          'value': fuelTankCapacity,
-          'compareType': CompareType.higher
-        },
-        'Минимальный объем багажника': {
-          'value': trunksMinCapacity,
-          'compareType': CompareType.higher
-        },
-        'Максимальный объем багажника': {
-          'value': trunksMaxCapacity,
-          'compareType': CompareType.higher
-        },
-      }
-    };
-  }
-
-  Map<String, dynamic> getPerformanceSpecifications() {
-    return {
-      'Характеристики производительности': {
-        'Максимальная скорость': {
-          'value': maxSpeed,
-          'compareType': CompareType.higher
-        },
-        'Разгон до 100 км/ч': {
-          'value': timeTo100,
-          'compareType': CompareType.lower
-        },
-        'Запас хода': {
-          'value': rangeDistance,
-          'compareType': CompareType.higher
-        },
-        'Средний расход топлива': {
-          'value': consumptionMixed,
-          'compareType': CompareType.lower
-        },
-        'Расход топлива на шоссе': {
-          'value': consumptionHiway,
-          'compareType': CompareType.lower
-        },
-        'Расход топлива в городе': {
-          'value': consumptionCity,
-          'compareType': CompareType.lower
-        },
-        'Выбросы CO2': {
-          'value': fuelEmission,
-          'compareType': CompareType.lower
-        },
-        'Электрический запас хода': {
-          'value': electricRange,
-          'compareType': CompareType.higher
-        },
-        'Время зарядки': {
-          'value': chargeTime,
-          'compareType': CompareType.lower
-        },
-      }
-    };
-  }
-
-  Map<String, dynamic> getSafetySpecifications() {
-    return {
-      'Характеристики безопасности': {
-        'Рейтинг безопасности': {
-          'value': safetyRating,
-          'compareType': CompareType.higher
-        },
-        'Оценка безопасности': {
-          'value': safetyGrade,
-          'compareType': CompareType.higher
-        },
-      }
-    };
+  List<Map<String, dynamic>> getSafetySpecifications() {
+    return [
+      {
+        'name': 'Рейтинг безопасности',
+        'value': safetyRating,
+        'compareType': CompareType.higher
+      },
+      {
+        'name': 'Оценка безопасности',
+        'value': safetyGrade,
+        'compareType': CompareType.none
+      },
+    ];
   }
 
   factory CarSpecifications.fromJson(Map<String, dynamic> json) {

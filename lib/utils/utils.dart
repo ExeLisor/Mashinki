@@ -1,3 +1,5 @@
+import 'package:autoverse/exports.dart';
+
 export './cache.dart';
 export './logger.dart';
 export './theme_data.dart';
@@ -56,4 +58,40 @@ String getValue(String value) {
     }
   }
   return value;
+}
+
+dynamic getMaxValue(List specifications) {
+  // Фильтрация числовых значений и получение списка значений
+  List values = specifications
+      .where((spec) => spec['compareType'] == CompareType.higher)
+      .map((spec) => spec['value'])
+      .toList();
+
+  // Если список значений пуст, вернуть 0 или любое другое значение по умолчанию
+  if (values.isEmpty) return -1;
+
+  if (values.length == 1) return -1;
+
+  var value = values.reduce((a, b) => a > b ? a : b);
+
+  if (value == 0) return -1;
+
+  // Использовать метод max для нахождения максимального значения
+  return value;
+}
+
+double getMinValue(List<Map<String, dynamic>> specifications) {
+  // Фильтрация числовых значений и получение списка значений
+  List<double> values = specifications
+      .where((spec) => spec['compareType'] == CompareType.lower)
+      .map((spec) => spec['value'] as double)
+      .toList();
+
+  // Если список значений пуст, вернуть 0 или любое другое значение по умолчанию
+  if (values.isEmpty) {
+    return 0;
+  }
+
+  // Использовать метод min для нахождения минимального значения
+  return values.reduce((a, b) => a < b ? a : b);
 }
