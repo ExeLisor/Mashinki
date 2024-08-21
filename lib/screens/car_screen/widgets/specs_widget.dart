@@ -191,7 +191,7 @@ class CharacteristicsWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 20.h),
       child: Text(
-        "${modification.groupName ?? ""} ${volume ?? ""} $transmission ${power ?? ""} $privod",
+        "${modification.groupName ?? ""} $volume $transmission $power $privod",
         style: TextStyle(
           color: Colors.black,
           fontSize: 18.fs,

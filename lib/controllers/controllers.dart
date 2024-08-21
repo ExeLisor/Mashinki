@@ -18,3 +18,5 @@ export '../screens/car_screen/controllers/specs_selector_controller.dart';
 export '../screens/car_screen/controllers/car_appbar_controller.dart';
 
 export '../screens/marks_screen/controllers/alphabet_controller.dart';
+
+export '../screens/compare_screen/controllers/compare_bar_controller.dart';

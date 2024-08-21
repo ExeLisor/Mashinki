@@ -1,7 +1,7 @@
 import 'package:autoverse/exports.dart';
 
-class CarAppbarController extends FloatingBarController {
-  static CarAppbarController get to => Get.find();
+class CompareAppbarController extends FloatingBarController {
+  static CompareAppbarController get to => Get.find();
 
   final RxDouble _currentOffset = 0.0.obs;
   @override
@@ -13,7 +13,7 @@ class CarAppbarController extends FloatingBarController {
   }
 }
 
-class CarAppBarBinding extends Bindings {
+class CompareAppBarBinding extends Bindings {
   @override
-  void dependencies() => Get.lazyPut(() => CarAppbarController());
+  void dependencies() => Get.lazyPut(() => CompareAppbarController());
 }

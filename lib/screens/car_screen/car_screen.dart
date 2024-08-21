@@ -36,7 +36,10 @@ class CarScreen extends StatelessWidget {
               ],
             ),
           ),
-          const CarsFloatBar(),
+          FloatBar(
+            controller: CarAppbarController.to,
+            child: const CarsFloatBar(),
+          ),
         ],
       );
 

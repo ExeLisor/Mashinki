@@ -22,9 +22,13 @@ class BarController extends GetxController {
 
     if (settings.name == '/compare') {
       return GetPageRoute(
-          page: () => const CompareScreen(),
-          transition: Transition.cupertino,
-          bindings: [CompareBinding()]);
+        page: () => const CompareScreen(),
+        transition: Transition.cupertino,
+        bindings: [
+          CompareBinding(),
+          CompareAppBarBinding(),
+        ],
+      );
     }
 
     return null;

@@ -1,20 +1,37 @@
 import 'package:autoverse/exports.dart';
 
+abstract class FloatingBarController extends GetxController {
+  RxDouble get currentOffset;
+}
+
+class FloatBar extends StatelessWidget {
+  const FloatBar(
+      {super.key,
+      required this.child,
+      required this.controller,
+      this.offsetValue});
+
+  final Widget child;
+  final FloatingBarController controller;
+  final double? offsetValue;
+
+  @override
+  Widget build(BuildContext context) => Obx(
+        () => controller.currentOffset.value > (offsetValue ?? 350.h)
+            ? Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                    width: Get.width, color: Colors.white, child: child),
+              )
+            : Container(),
+      );
+}
+
 class CarsFloatBar extends StatelessWidget {
   const CarsFloatBar({super.key});
 
   @override
-  Widget build(BuildContext context) => Obx(
-        () => CarAppbarController.to.currentOffset > 350.h
-            ? Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                    width: Get.width,
-                    color: Colors.white,
-                    child: _floatingBar()),
-              )
-            : Container(),
-      );
+  Widget build(BuildContext context) => _floatingBar();
 
   Widget _titleFB() => Obx(
         () {
@@ -39,12 +56,23 @@ class CarsFloatBar extends StatelessWidget {
       );
 
   Widget _iconFB(IconData icon, VoidCallback callBack) => IconButton(
-      onPressed: callBack,
-      icon: Icon(
-        icon,
-        color: primaryColor,
-        size: 24.h,
-      ));
+        onPressed: callBack,
+        icon: Icon(
+          icon,
+          color: primaryColor,
+          size: 24.h,
+        ),
+      );
+
+  Widget _iconSvg(String icon, VoidCallback callBack) => GestureDetector(
+        onTap: callBack,
+        child: SvgPicture.asset(
+          icon,
+          height: 24.h,
+          width: 24.h,
+          color: primaryColor,
+        ),
+      );
 
   Widget _floatingBar() {
     return SafeArea(
@@ -72,10 +100,10 @@ class CarsFloatBar extends StatelessWidget {
                   _titleFB(),
                 ],
               ),
-              Wrap(
+              Row(
                 children: [
                   _iconFB(Icons.copy, Get.back),
-                  _iconFB(Icons.heart_broken, Get.back),
+                  _iconSvg(favoriteIcon, Get.back),
                 ],
               ),
             ],

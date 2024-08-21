@@ -47,6 +47,7 @@ class _MainAppState extends State<MainApp> {
       transition: Transition.cupertino,
       bindings: [
         CompareBinding(),
+        CompareAppBarBinding(),
       ],
     ),
     GetPage(
