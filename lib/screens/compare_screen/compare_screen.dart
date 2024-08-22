@@ -18,7 +18,7 @@ class CompareScreen extends StatelessWidget {
           child: Stack(
             children: [
               SingleChildScrollView(
-                controller: controller,
+                controller: CompareAppbarController.to.controller,
                 physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.only(bottom: 25.h),
                 child: _view(),
@@ -103,15 +103,13 @@ class CompareFloatingBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
       height: 43.h,
-      width: double.infinity,
+      padding: EdgeInsets.only(left: 32.w),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         children: [
-          SizedBox(
-            width: 25.h,
-          ),
           ...List.generate(
             CompareController.to.comparedCars.length,
             (index) {
@@ -127,7 +125,8 @@ class CompareFloatingBar extends StatelessWidget {
     );
   }
 
-  Widget _carTitle(String title) => SizedBox(
+  Widget _carTitle(String title) => Container(
+        margin: EdgeInsets.only(right: 8.0.w),
         width: 177.w,
         child: Text(
           title,

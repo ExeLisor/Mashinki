@@ -20,8 +20,7 @@ class FloatBar extends StatelessWidget {
         () => controller.currentOffset.value > (offsetValue ?? 350.h)
             ? Align(
                 alignment: Alignment.topCenter,
-                child: Container(
-                    width: Get.width, color: Colors.white, child: child),
+                child: Container(color: Colors.white, child: child),
               )
             : Container(),
       );
