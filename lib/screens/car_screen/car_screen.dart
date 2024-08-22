@@ -3,27 +3,27 @@ import 'package:autoverse/exports.dart';
 class CarScreen extends StatelessWidget {
   const CarScreen({super.key});
 
-  static ScrollController controller = ScrollController();
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
-    return GetBuilder<CarController>(
-      initState: (state) => CarAppbarController.to.startListen(controller),
-      builder: (carController) => Scaffold(
-        extendBodyBehindAppBar: true,
-        backgroundColor: const Color(0xffEEEEEE),
-        appBar: _appBar(),
-        body: Obx(() => CarController.to.state.value == Status.success
-            ? _carBody()
-            : _loadingWidget()),
-      ),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      backgroundColor: const Color(0xffEEEEEE),
+      appBar: _appBar(),
+      body: Obx(() => CarController.to.state.value == Status.success
+          ? _carBody()
+          : _loadingWidget()),
+      bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
   }
 
-  Widget _carBody() => Stack(
+  Widget _carBody() {
+    ScrollController controller = ScrollController();
+    return GetBuilder<CarController>(
+      initState: (state) => CarAppbarController.to.startListen(controller),
+      builder: (carController) => Stack(
         children: [
           SingleChildScrollView(
             controller: controller,
@@ -41,7 +41,9 @@ class CarScreen extends StatelessWidget {
             child: const CarsFloatBar(),
           ),
         ],
-      );
+      ),
+    );
+  }
 
   AppBar _appBar() => AppBar(
         elevation: 0,

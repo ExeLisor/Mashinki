@@ -8,7 +8,6 @@ class CompareAppbarController extends FloatingBarController {
   RxDouble get currentOffset => _currentOffset;
 
   void startListen(ScrollController controller) {
-    log(controller.positions.length);
     if (controller.hasClients) return;
 
     controller.addListener(() => _currentOffset.value = controller.offset);

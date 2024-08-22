@@ -135,7 +135,7 @@ class MarksWidget extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(left: 25.h),
           children: List.generate(
-            ((Get.width / (_containerSize + 12.h) + 1)).floor(),
+            ((Get.width / (75+12) + 1)).floor(),
             (int index) => UnconstrainedBox(
               child: ShimmerWidget(
                 child: Container(

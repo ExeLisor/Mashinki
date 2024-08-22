@@ -7,12 +7,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: Navigator(
-        key: Get.nestedKey(1),
+      body: const Navigator(
         initialRoute: '/home',
-        onGenerateRoute: BarController.to.onGenerateRoute,
+        // onGenerateRoute: BarController.to.onGenerateRoute,
       ),
-      bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
   }
 }
@@ -25,6 +23,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: appBar(),
       body: _homeScreen(),
+      bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
   }
 

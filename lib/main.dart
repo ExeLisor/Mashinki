@@ -21,21 +21,61 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    ScreenSize.init(context);
-
+    ScreenSize().init(context);
+    if (!ScreenSize().isInitializated) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return GetMaterialApp(
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
-      home: const Home(),
-      initialRoute: '/',
+      home: const HomeScreen(),
+      initialRoute: '/home',
       getPages: _pages,
       initialBinding: BarBinding(),
+      routingCallback: (routing) {
+        switch (routing?.current) {
+          case '/home':
+            BarController.to.currentPageIndex(0);
+            break;
+          case '/compare':
+            BarController.to.currentPageIndex(1);
+            break;
+          default:
+            BarController.to.currentPageIndex(0);
+            break;
+        }
+      },
     );
   }
 
   final List<GetPage> _pages = [
-    GetPage(name: '/', page: () => const Home()),
-    GetPage(name: '/home', page: () => const HomeScreen()),
+    // GetPage(name: '/', page: () => const Home()),
+    GetPage(
+      name: '/home',
+      page: () => const HomeScreen(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: '/:mark/models',
+      page: () => ModelsScreen(),
+      transition: Transition.cupertino,
+      bindings: [
+        ModelsBinding(),
+        ModelsSearchBinding(),
+        ModelsSelectorBinding(),
+        BodyTypeSelectorBinding(),
+        FiltersBinding()
+      ],
+      children: [
+        GetPage(
+          name: '/filters',
+          page: () => const ModelsFiltersWidget(),
+          transition: Transition.cupertino,
+        ),
+      ],
+    ),
     GetPage(
         name: '/marks',
         page: () => const MarksScreen(),
@@ -60,25 +100,6 @@ class _MainAppState extends State<MainApp> {
         CarAppBarBinding(),
         ModsGroupBinding(),
         CompareBinding(),
-      ],
-    ),
-    GetPage(
-      name: '/:mark/models',
-      page: () => ModelsScreen(),
-      transition: Transition.cupertino,
-      bindings: [
-        ModelsBinding(),
-        ModelsSearchBinding(),
-        ModelsSelectorBinding(),
-        BodyTypeSelectorBinding(),
-        FiltersBinding()
-      ],
-      children: [
-        GetPage(
-          name: '/filters',
-          page: () => const ModelsFiltersWidget(),
-          transition: Transition.cupertino,
-        ),
       ],
     ),
   ];

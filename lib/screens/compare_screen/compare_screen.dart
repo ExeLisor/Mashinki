@@ -4,11 +4,24 @@ class CompareScreen extends StatelessWidget {
   const CompareScreen({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(appBar: _topBar(), body: _body());
+  Widget build(BuildContext context) => Obx(
+        () => Scaffold(
+          appBar: _topBar(),
+          body: CompareController.to.comparedCars.isEmpty ? _noCars() : _body(),
+          bottomNavigationBar: HomeScreenBottomBarWidget(),
+        ),
+      );
+
+  Widget _noCars() => Center(
+        child: Text(
+          "🔍🚫🚗",
+          style: TextStyle(fontSize: 40.fs),
+        ),
+      );
 
   Widget _body() {
     ScrollController controller = ScrollController();
+
     return GetBuilder<CompareAppbarController>(
       initState: (state) => CompareAppbarController.to.startListen(controller),
       builder: (_) => SingleChildScrollView(

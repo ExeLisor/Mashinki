@@ -7,32 +7,7 @@ class BarController extends GetxController {
 
   final pages = <String>['/home', '/compare'];
 
-  void changePage(int index) {
-    currentPageIndex.value = index;
-    Get.toNamed(pages[index], id: 1);
-  }
-
-  Route? onGenerateRoute(RouteSettings settings) {
-    if (settings.name == '/home') {
-      return GetPageRoute(
-        settings: settings,
-        page: () => const HomeScreen(),
-      );
-    }
-
-    if (settings.name == '/compare') {
-      return GetPageRoute(
-        page: () => const CompareScreen(),
-        transition: Transition.cupertino,
-        bindings: [
-          CompareBinding(),
-          CompareAppBarBinding(),
-        ],
-      );
-    }
-
-    return null;
-  }
+  void changePage(int index) => Get.toNamed(pages[index]);
 }
 
 class BarBinding extends Bindings {
