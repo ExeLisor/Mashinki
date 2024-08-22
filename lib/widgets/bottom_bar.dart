@@ -33,7 +33,7 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
   final List<String> _icons = [
     homeIcon,
     comprIcon,
-    listIcon,
+    favoriteIcon,
     accountCircleIcon
   ];
 
