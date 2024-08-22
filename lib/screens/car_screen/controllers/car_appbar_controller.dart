@@ -7,8 +7,11 @@ class CarAppbarController extends FloatingBarController {
   @override
   RxDouble get currentOffset => _currentOffset;
 
+  void setOffsetToStart() =>
+      WidgetsBinding.instance.addPostFrameCallback((_) => _currentOffset(0));
+
   void startListen(ScrollController controller) {
-    if (controller.hasClients) return;
+    setOffsetToStart();
     controller.addListener(() => _currentOffset.value = controller.offset);
   }
 }
