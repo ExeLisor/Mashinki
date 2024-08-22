@@ -7,13 +7,11 @@ class CompareAppbarController extends FloatingBarController {
   @override
   RxDouble get currentOffset => _currentOffset;
 
-  late ScrollController controller;
-
   void startListen(ScrollController controller) {
+    log(controller.positions.length);
     if (controller.hasClients) return;
-    this.controller = controller;
 
-    controller.addListener(() => _currentOffset.value = this.controller.offset);
+    controller.addListener(() => _currentOffset.value = controller.offset);
   }
 }
 

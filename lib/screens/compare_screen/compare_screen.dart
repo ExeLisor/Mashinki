@@ -3,34 +3,34 @@ import 'package:autoverse/exports.dart';
 class CompareScreen extends StatelessWidget {
   const CompareScreen({super.key});
 
-  static ScrollController controller = ScrollController();
-
   @override
   Widget build(BuildContext context) =>
       Scaffold(appBar: _topBar(), body: _body());
 
-  Widget _body() => GetBuilder<CompareAppbarController>(
-        initState: (state) =>
-            CompareAppbarController.to.startListen(controller),
-        builder: (_) => SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                controller: CompareAppbarController.to.controller,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: 25.h),
-                child: _view(),
-              ),
-              FloatBar(
-                  controller: CompareAppbarController.to,
-                  offsetValue: 180.h,
-                  child: const CompareFloatingBar()),
-            ],
-          ),
+  Widget _body() {
+    ScrollController controller = ScrollController();
+    return GetBuilder<CompareAppbarController>(
+      initState: (state) => CompareAppbarController.to.startListen(controller),
+      builder: (_) => SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              controller: controller,
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.only(bottom: 25.h),
+              child: _view(),
+            ),
+            FloatBar(
+                controller: CompareAppbarController.to,
+                offsetValue: 180.h,
+                child: const CompareFloatingBar()),
+          ],
         ),
-      );
+      ),
+    );
+  }
 
   PreferredSize _topBar() => PreferredSize(
         preferredSize: Size.fromHeight(82.h),
