@@ -14,12 +14,10 @@ class MarksController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    log("ON INIT");
     _initializeMarksController();
     super.onInit();
   }
-
-  void goToModels(Mark mark) =>
-      Get.toNamed("/${mark.id}/models", arguments: {"mark": mark});
 
   Future<bool> _initializeMarksController() async {
     try {

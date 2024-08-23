@@ -101,7 +101,7 @@ class MarksWidget extends StatelessWidget {
 
   Widget _markTile(Mark mark) => _markContainer(
         child: GestureDetector(
-          onTap: () => MarksController.to.goToModels(mark),
+          onTap: () => ModelsController.to.openModelsPage(mark),
           child: Center(
             child: Container(
               padding: EdgeInsets.all(8.h),
@@ -135,7 +135,7 @@ class MarksWidget extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(left: 25.h),
           children: List.generate(
-            ((Get.width / (75+12) + 1)).floor(),
+            ((Get.width / (75 + 12) + 1)).floor(),
             (int index) => UnconstrainedBox(
               child: ShimmerWidget(
                 child: Container(

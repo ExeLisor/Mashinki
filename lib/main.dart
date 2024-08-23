@@ -6,7 +6,6 @@ void main() async {
   MobileAds.instance.initialize();
 
   Get.put(FirebaseController());
-  Get.put(MarksController());
 
   runApp(const MainApp());
 }
@@ -111,5 +110,7 @@ class InititalBindingsClass extends Bindings {
   void dependencies() {
     Get.lazyPut(() => BarController());
     Get.lazyPut(() => CompareController());
+    Get.lazyPut(() => MarksController());
+    Get.lazyPut(() => ModelsController());
   }
 }

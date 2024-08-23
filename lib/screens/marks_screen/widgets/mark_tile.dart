@@ -17,7 +17,7 @@ class MarkGridTile extends StatelessWidget {
       );
 
   Widget _markLogo() => GestureDetector(
-        onTap: () => MarksController.to.goToModels(mark),
+        onTap: () => ModelsController.to.openModelsPage(mark),
         child: Container(
           height: 75.h,
           width: 75.h,

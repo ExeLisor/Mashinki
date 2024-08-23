@@ -13,15 +13,23 @@ class ModelsController extends GetxController {
   Mark get mark => _mark.value!;
   List<Model> get models => _models;
 
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-
+  Future<List<Model>> _loadModels(Mark mark) async {
     _emitLoadingState();
     dio = Dio();
-    _setMark();
-    _models.value = await _getModels();
+
+    bool isAlreadyLoaded = isMarkModelsAlreadyLoaded(mark);
+
+    _setMark(mark);
+    if (!isAlreadyLoaded) _models.value = await _getModels();
     _emitSussessState();
+    return models;
+  }
+
+  bool isMarkModelsAlreadyLoaded(Mark mark) => _mark.value == mark;
+
+  Future<void> openModelsPage(Mark mark) async {
+    Get.toNamed("/${mark.id}/models");
+    await _loadModels(mark);
   }
 
   @override
@@ -34,7 +42,7 @@ class ModelsController extends GetxController {
   void _emitLoadingState() => state.value = Status.loading;
   void _emitErrorState() => state.value = Status.error;
 
-  void _setMark() => _mark.value = Get.arguments["mark"];
+  void _setMark(Mark mark) => _mark.value = mark;
 
   String getGenerationImage(Model model) =>
       model.generations?.first.configurations?.first.id ?? "";
