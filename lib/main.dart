@@ -100,6 +100,7 @@ class _MainAppState extends State<MainApp> {
         CarAppBarBinding(),
         ModsGroupBinding(),
         CompareBinding(),
+        FavoriteBinding(),
       ],
     ),
   ];

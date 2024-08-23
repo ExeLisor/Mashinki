@@ -297,9 +297,18 @@ class CarScreen extends StatelessWidget {
         },
       );
 
-  Widget _likeWidget() => _iconSvg(
-        favoriteIcon,
-        () {},
+  Widget _likeWidget() => Obx(
+        () {
+          FavoriteController controller = FavoriteController.to;
+          Car car = CarController.to.car.copyWith();
+          bool isCarFavorite = controller.isCarFavorite(car);
+          return _iconSvg(
+            isCarFavorite ? activeFavoriteIcon : favoriteIcon,
+            () => isCarFavorite
+                ? controller.removeFromFavorite(car)
+                : controller.addToFavorite(car),
+          );
+        },
       );
 
   Widget _iconWidget(IconData icon, VoidCallback function,
@@ -308,11 +317,15 @@ class CarScreen extends StatelessWidget {
         onTap: function,
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.3), shape: BoxShape.circle),
+              color: condition ? primaryColor : Colors.black.withOpacity(0.3),
+              shape: BoxShape.circle),
           height: 45.h,
           width: 45.h,
           child: Center(
-            child: Icon(icon, color: condition ? primaryColor : Colors.white),
+            child: Icon(
+              icon,
+              color: Colors.white,
+            ),
           ),
         ),
       );
