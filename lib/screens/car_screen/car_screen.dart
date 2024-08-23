@@ -152,7 +152,7 @@ class CarScreen extends StatelessWidget {
               height: 12.h,
             ),
             Text(
-              CarController.to.getDescription(),
+              CarController.to.car.getDescription(),
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14.fs,

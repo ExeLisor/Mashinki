@@ -162,19 +162,16 @@ class ModelsScreen extends StatelessWidget {
           Model model, Generation generation, Configuration configuration,
           {bool isSingle = true}) =>
       GestureDetector(
-        onTap: () => Get.toNamed(
-          "/models/${configuration.id}",
-          arguments: {
-            "car": Car(
-                mark: ModelsController.to.mark,
-                model: model,
-                generation: generation,
-                configuration: configuration,
-                modifications: configuration.modifications ?? [],
-                selectedModification:
-                    (configuration.modifications ?? []).first),
-          },
-        ),
+        onTap: () {
+          Car car = Car(
+              mark: ModelsController.to.mark,
+              model: model,
+              generation: generation,
+              configuration: configuration,
+              modifications: configuration.modifications ?? [],
+              selectedModification: (configuration.modifications ?? []).first);
+          CarController.to.openCarPage(car, isLoadCar: true);
+        },
         child: Container(
           height: containerHeight,
           width: isSingle ? containerWidth : containerWidth - 30.w,

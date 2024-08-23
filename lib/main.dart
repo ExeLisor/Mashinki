@@ -66,7 +66,8 @@ class _MainAppState extends State<MainApp> {
         ModelsSearchBinding(),
         ModelsSelectorBinding(),
         BodyTypeSelectorBinding(),
-        FiltersBinding()
+        FiltersBinding(),
+        CarBinding(),
       ],
       children: [
         GetPage(

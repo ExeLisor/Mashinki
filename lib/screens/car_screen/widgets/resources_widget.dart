@@ -47,7 +47,7 @@ class OtherResourcesWiget extends StatelessWidget {
         ),
       );
   Widget _resourceIcon(String iconPath, ResourceType type) => GestureDetector(
-        onTap: () async => CarController.to.openResource(type),
+        onTap: () async => openResource(type),
         child: SvgPicture.asset(
           iconPath,
           height: 45.h,

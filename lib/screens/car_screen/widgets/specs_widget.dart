@@ -3,65 +3,68 @@ import 'package:autoverse/exports.dart';
 class CharacteristicsWidget extends StatelessWidget {
   CharacteristicsWidget({super.key});
 
-  final CarSpecifications specs =
-      CarController.to.car.selectedModification.carSpecifications!;
-
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       width: Get.width,
       padding: EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _modificationTitle(),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _carSizeWidget(),
-              SizedBox(
-                width: 23.w,
-              ),
-              _detailsColumnFirst(),
-            ],
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          _detailsRowFirst(),
-          SizedBox(
-            height: 10.h,
-          ),
-          _detailsRowSecond(),
-          SizedBox(
-            height: 30.h,
-          ),
-          SpecsBlockWidget(
-              title: "Основные характеристики", specs: _mainSpecs()),
-          SpecsBlockWidget(
-              title: "Характеристики двигателя", specs: _engineSpecs()),
-          SpecsBlockWidget(
-              title: "Подвеска и тормоза", specs: _transmissionSpecs()),
-          SpecsBlockWidget(title: "Размеры и объёмы", specs: _sizesSpecs()),
-          SpecsBlockWidget(
-              title: "Топливная система и расход", specs: _fuelSpecs()),
-          SpecsBlockWidget(title: "Безопасность", specs: _secutitySpecs()),
-          SpecsBlockWidget(title: "Экология", specs: _ecologySpecs()),
-          SizedBox(
-            height: 20.h,
-          ),
-          _divider(),
-          SizedBox(
-            height: 20.h,
-          ),
-          const OtherResourcesWiget(),
-        ],
-      ),
+      child: Obx(() {
+        final CarSpecifications specs =
+            CarController.to.car.selectedModification.carSpecifications!;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _modificationTitle(),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _carSizeWidget(specs),
+                SizedBox(
+                  width: 23.w,
+                ),
+                _detailsColumnFirst(specs),
+              ],
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            _detailsRowFirst(specs),
+            SizedBox(
+              height: 10.h,
+            ),
+            _detailsRowSecond(specs),
+            SizedBox(
+              height: 30.h,
+            ),
+            SpecsBlockWidget(
+                title: "Основные характеристики", specs: _mainSpecs(specs)),
+            SpecsBlockWidget(
+                title: "Характеристики двигателя", specs: _engineSpecs(specs)),
+            SpecsBlockWidget(
+                title: "Подвеска и тормоза", specs: _transmissionSpecs(specs)),
+            SpecsBlockWidget(
+                title: "Размеры и объёмы", specs: _sizesSpecs(specs)),
+            SpecsBlockWidget(
+                title: "Топливная система и расход", specs: _fuelSpecs(specs)),
+            SpecsBlockWidget(
+                title: "Безопасность", specs: _secutitySpecs(specs)),
+            SpecsBlockWidget(title: "Экология", specs: _ecologySpecs(specs)),
+            SizedBox(
+              height: 20.h,
+            ),
+            _divider(),
+            SizedBox(
+              height: 20.h,
+            ),
+            const OtherResourcesWiget(),
+          ],
+        );
+      }),
     );
   }
 
-  Widget _detailsColumnFirst() => Column(
+  Widget _detailsColumnFirst(CarSpecifications specs) => Column(
         children: [
           _detailsTile("Объём", specs.volumeLitres.toString(), isSmall: true),
           SizedBox(
@@ -72,7 +75,7 @@ class CharacteristicsWidget extends StatelessWidget {
         ],
       );
 
-  Widget _detailsRowFirst() => Padding(
+  Widget _detailsRowFirst(CarSpecifications specs) => Padding(
         padding: EdgeInsets.only(right: 25.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -90,7 +93,7 @@ class CharacteristicsWidget extends StatelessWidget {
         ),
       );
 
-  Widget _detailsRowSecond() => Padding(
+  Widget _detailsRowSecond(CarSpecifications specs) => Padding(
         padding: EdgeInsets.only(right: 25.w),
         child: Row(
           children: [
@@ -106,16 +109,16 @@ class CharacteristicsWidget extends StatelessWidget {
         ),
       );
 
-  Widget _carSizeWidget() => Column(
+  Widget _carSizeWidget(CarSpecifications specs) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            children: [_carHeight(), _carImage()],
+            children: [_carHeight(specs), _carImage()],
           ),
           SizedBox(
             height: 15.h,
           ),
-          _carLenght()
+          _carLenght(specs)
         ],
       );
 
@@ -127,7 +130,7 @@ class CharacteristicsWidget extends StatelessWidget {
         fit: BoxFit.fill,
       );
 
-  Widget _carHeight() => Column(
+  Widget _carHeight(CarSpecifications specs) => Column(
         children: [
           _arrow(0),
           SizedBox(
@@ -140,7 +143,7 @@ class CharacteristicsWidget extends StatelessWidget {
           _arrow(180)
         ],
       );
-  Widget _carLenght() => Padding(
+  Widget _carLenght(CarSpecifications specs) => Padding(
         padding: EdgeInsets.only(left: 30.w),
         child: Row(
           children: [
@@ -180,27 +183,29 @@ class CharacteristicsWidget extends StatelessWidget {
         ),
       );
 
-  Widget _modificationTitle() {
-    Modification modification = CarController.to.car.selectedModification;
-    CarSpecifications specification = modification.carSpecifications!;
-    String transmission = getTransmissionAbb(specification.transmission);
+  Widget _modificationTitle() => Obx(
+        () {
+          Modification modification = CarController.to.car.selectedModification;
+          CarSpecifications specification = modification.carSpecifications!;
+          String transmission = getTransmissionAbb(specification.transmission);
 
-    int? power = specification.horsePower;
-    double? volume = specification.volumeLitres;
-    String privod = specification.drive == "полный" ? "4WD" : "";
-    return Container(
-      margin: EdgeInsets.only(bottom: 20.h),
-      child: Text(
-        "${modification.groupName ?? ""} $volume $transmission $power $privod",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 18.fs,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
+          int? power = specification.horsePower;
+          double? volume = specification.volumeLitres;
+          String privod = specification.drive == "полный" ? "4WD" : "";
+          return Container(
+            margin: EdgeInsets.only(bottom: 20.h),
+            child: Text(
+              "${modification.groupName ?? ""} $volume $transmission $power $privod",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18.fs,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        },
+      );
 
   Widget _detailsTile(String spec, String value, {bool isSmall = false}) =>
       Container(
@@ -261,13 +266,13 @@ class CharacteristicsWidget extends StatelessWidget {
     }
   }
 
-  List _mainSpecs() => [
+  List _mainSpecs(CarSpecifications specs) => [
         {"Максимальная скорость (км/ч)": specs.maxSpeed},
         {"Время разгона до 100 км/ч (с)": specs.timeTo100},
         {"Вес автомобиля (кг)": specs.weight},
       ];
 
-  List _engineSpecs() => [
+  List _engineSpecs(CarSpecifications specs) => [
         {"Тип двигателя": specs.engineType},
         {"Объем двигателя (см³)": specs.volume},
         {"Мощность (л.с./кВт)": specs.horsePower},
@@ -283,14 +288,14 @@ class CharacteristicsWidget extends StatelessWidget {
         {"Расположение двигателя": specs.engineOrder},
       ];
 
-  List _transmissionSpecs() => [
+  List _transmissionSpecs(CarSpecifications specs) => [
         {"Тип передней подвески": specs.frontSuspension},
         {"Тип задней подвески": specs.backSuspension},
         {"Передние тормоза": specs.frontBrake},
         {"Задние тормоза": specs.backBrake},
       ];
 
-  List _sizesSpecs() => [
+  List _sizesSpecs(CarSpecifications specs) => [
         {"Длина (мм)": specs.length},
         {"Ширина (мм)": specs.weight},
         {"Высота (мм)": specs.height},
@@ -304,7 +309,7 @@ class CharacteristicsWidget extends StatelessWidget {
         {"Вместимость багажника (макс.) (л)": specs.trunksMaxCapacity},
       ];
 
-  List _fuelSpecs() => [
+  List _fuelSpecs(CarSpecifications specs) => [
         {"Объем топливного бака (л)": specs.volume},
         {"Средний расход топлива (л/100 км)": specs.consumptionMixed},
         {"Расход топлива на трассе (л/100 км)": specs.consumptionCity},
@@ -312,12 +317,12 @@ class CharacteristicsWidget extends StatelessWidget {
         {"Запас хода (км)": specs.rangeDistance},
       ];
 
-  List _secutitySpecs() => [
+  List _secutitySpecs(CarSpecifications specs) => [
         {"Рейтинг безопасности": specs.safetyRating},
         {"Класс безопасности": specs.safetyGrade},
       ];
 
-  List _ecologySpecs() => [
+  List _ecologySpecs(CarSpecifications specs) => [
         {"Евро-класс": specs.emissionEuroClass},
         {"Выбросы СО2 (г/км)": specs.fuelEmission},
       ];

@@ -128,3 +128,42 @@ double getMinValue(List<Map<String, dynamic>> specifications) {
   // Использовать метод min для нахождения минимального значения
   return values.reduce((a, b) => a < b ? a : b);
 }
+
+extension StringExtensions on String {
+  String capitalizeFirstLetter() {
+    if (isEmpty) {
+      return this;
+    }
+    return '${this[0].toUpperCase()}${substring(1)}';
+  }
+}
+
+Future<void> openResource(ResourceType type) async {
+  final String brandName = CarController.to.car.mark.name ?? "";
+  final String modelName = CarController.to.car.model.name ?? "";
+  final String generationName = CarController.to.car.generation.name ?? "";
+
+  final String searchText = "$brandName $modelName $generationName";
+
+  String url = "";
+
+  switch (type) {
+    case ResourceType.google:
+      url = "$youTubeSearchUrl=$searchText";
+      break;
+    case ResourceType.pinterest:
+      url = "$pinSearchUrl=$searchText";
+      break;
+    case ResourceType.youtube:
+      url = "$googleSearchUrl=$searchText";
+      break;
+    case ResourceType.tiktok:
+      url = "$tikTokSearchUrl=$searchText";
+      break;
+    default:
+  }
+
+  if (!await launchUrl(Uri.parse(url))) {
+    throw Exception('Could not launch $url');
+  }
+}

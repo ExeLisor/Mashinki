@@ -1,43 +1,5 @@
 import 'package:autoverse/exports.dart';
 
-enum ResourceType { youtube, google, pinterest, tiktok }
-
-class Car {
-  Mark mark = Mark();
-  Model model = Model();
-  Generation generation = Generation();
-  Configuration configuration = Configuration();
-  List<Modification> modifications = <Modification>[];
-  Modification selectedModification = Modification();
-
-  Car({
-    required this.mark,
-    required this.model,
-    required this.generation,
-    required this.configuration,
-    required this.modifications,
-    required this.selectedModification,
-  });
-
-  Car copyWith({
-    Mark? mark,
-    Model? model,
-    Generation? generation,
-    Configuration? configuration,
-    List<Modification>? modifications,
-    Modification? selectedModification,
-  }) {
-    return Car(
-      mark: mark ?? this.mark,
-      model: model ?? this.model,
-      generation: generation ?? this.generation,
-      configuration: configuration ?? this.configuration,
-      modifications: modifications ?? this.modifications,
-      selectedModification: selectedModification ?? this.selectedModification,
-    );
-  }
-}
-
 class CarController extends GetxController {
   static CarController get to => Get.find();
 
@@ -49,34 +11,60 @@ class CarController extends GetxController {
   Car get car => _car.value!;
   set car(Car value) => _car.value = value;
 
-  void selectModification(Modification modification) =>
-      _car.update((car) => car?.selectedModification = modification);
-
-  @override
-  Future<void> onInit() async {
-    _emitLoadingState();
-
-    car = Get.arguments["car"];
-
-    for (int i = 0; i < car.modifications.length; i++) {
-      final specs = await _getSpecs(car.modifications[i].complectationId ?? "");
-      car.modifications[i].carOptions = _getOptions(specs["options"]);
-      car.modifications[i].carSpecifications =
-          _getSpecifications(specs["specifications"]);
-    }
-
-    car.selectedModification = car.modifications.first;
-
-    _emitSussessState();
-
-    super.onInit();
-  }
-
   @override
   void onClose() {
     dio.close();
     super.onClose();
   }
+
+  Future<Car> openCarPage(Car car, {bool isLoadCar = false}) async {
+    _emitLoadingState();
+    Get.toNamed("/models/${car.configuration.id}");
+
+    if (isLoadCar) return await _loadCar(car);
+
+    _car.value = car;
+    _emitSussessState();
+    return car;
+  }
+
+  bool _checkIfCarAlreadyLoaded(Car loadingCar) {
+    if (_car.value == null) return false;
+
+    return loadingCar.configuration.id == car.configuration.id;
+  }
+
+  Future<Car> _loadCar(Car loadingCar) async {
+    try {
+      _emitLoadingState();
+
+      bool isCarAlreadyLoaded = _checkIfCarAlreadyLoaded(loadingCar);
+
+      _car.value = loadingCar;
+
+      if (!isCarAlreadyLoaded) await loadSpecs();
+
+      _car.value!.selectedModification = car.modifications.first;
+
+      _emitSussessState();
+      return car;
+    } catch (e) {
+      logW(e);
+      rethrow;
+    }
+  }
+
+  Future<void> loadSpecs() async {
+    for (int i = 0; i < car.modifications.length; i++) {
+      final specs = await _getSpecs(car.modifications[i].complectationId ?? "");
+      _car.value!.modifications[i].carOptions = _getOptions(specs["options"]);
+      _car.value!.modifications[i].carSpecifications =
+          _getSpecifications(specs["specifications"]);
+    }
+  }
+
+  void selectModification(Modification modification) =>
+      _car.update((car) => car?.selectedModification = modification);
 
   CarOptions? _getOptions(List data) {
     if (data.isEmpty) return null;
@@ -112,187 +100,12 @@ class CarController extends GetxController {
     }
   }
 
-  Future<void> openResource(ResourceType type) async {
-    final String brandName = CarController.to.car.mark.name ?? "";
-    final String modelName = CarController.to.car.model.name ?? "";
-    final String generationName = CarController.to.car.generation.name ?? "";
-
-    final String searchText = "$brandName $modelName $generationName";
-
-    String url = "";
-
-    switch (type) {
-      case ResourceType.google:
-        url = _launchGoogle(searchText);
-        break;
-      case ResourceType.pinterest:
-        url = _launchPinterest(searchText);
-        break;
-      case ResourceType.youtube:
-        url = _launchYoutube(searchText);
-        break;
-      case ResourceType.tiktok:
-        url = _launchTiktok(searchText);
-        break;
-      default:
-    }
-
-    if (!await launchUrl(Uri.parse(url))) {
-      throw Exception('Could not launch $url');
-    }
-  }
-
-  String _launchYoutube(String searchText) =>
-      "https://www.youtube.com/results?search_query=$searchText";
-
-  String _launchPinterest(String searchText) =>
-      "https://www.pinterest.com/search/pins/?q=$searchText&rs=typed";
-
-  String _launchGoogle(String searchText) =>
-      "https://www.google.com/search?q=$searchText";
-
-  String _launchTiktok(String searchText) =>
-      "https://www.tiktok.com/search?q=$searchText";
-
   void _emitSussessState() => state.value = Status.success;
   void _emitLoadingState() => state.value = Status.loading;
   void _emitErrorState() => state.value = Status.error;
-
-  String getDescription() {
-    String bodyType =
-        (car.configuration.bodyType ?? "").capitalizeFirstLetter();
-    String classType =
-        car.model.modelClass == null ? "" : "${car.model.modelClass}-класса";
-    String drive = getSpecDescription(getAllDrivesTypes(), "привод", "привод");
-    String transmission =
-        "Коробка ${getSpecDescription(getAllTransmissionTypes(), "", "")}"
-            .capitalizeFirstLetter();
-
-    String engines =
-        "Типы двигателей: ${getSpecDescription(getAllEndgineTypes(), "", "")}";
-
-    String endingesVolume = getMinMaxVolumeDescription().isEmpty
-        ? ","
-        : getMinMaxVolumeDescription();
-    String horsePower = getMinMaxPowerDescription();
-
-    return "$bodyType $classType, $drive. $transmission. $engines$endingesVolume $horsePower";
-  }
-
-  List<String> getAllTransmissionTypes() {
-    Set<String> transmissions = {};
-
-    for (Modification modification in car.modifications) {
-      transmissions.add(modification.carSpecifications!.transmission);
-    }
-
-    return transmissions.toList();
-  }
-
-  List<String> getAllDrivesTypes() {
-    Set<String> drives = {};
-
-    for (Modification modification in car.modifications) {
-      drives.add(modification.carSpecifications!.drive);
-    }
-
-    return drives.toList();
-  }
-
-  List<String> getAllEndgineTypes() {
-    Set<String> engines = {};
-
-    for (Modification modification in car.modifications) {
-      engines.add(modification.carSpecifications!.engineType);
-    }
-
-    return engines.toList();
-  }
-
-  List<double> minMaxVolumeEngine() {
-    List<double> volumeLitres = [];
-    for (Modification modification in car.modifications) {
-      volumeLitres.add(modification.carSpecifications!.volumeLitres);
-    }
-
-    volumeLitres.sort();
-
-    return [volumeLitres.first, volumeLitres.last];
-  }
-
-  String getMinMaxVolumeDescription() {
-    try {
-      List<double> volumeLitres = minMaxVolumeEngine();
-      if (volumeLitres.isEmpty) return "";
-      if (volumeLitres.first == volumeLitres[1]) {
-        return ", объёмом от ${volumeLitres.first} л. и";
-      }
-      if (volumeLitres.first != volumeLitres[1]) {
-        return ", объёмом от ${volumeLitres.first} до ${volumeLitres[1]} л. и";
-      }
-      return "";
-    } catch (e) {
-      return "";
-    }
-  }
-
-  List<int> minMaxPower() {
-    try {
-      List<int> power = [];
-      for (Modification modification in car.modifications) {
-        power.add(modification.carSpecifications!.horsePower);
-      }
-
-      power.sort();
-
-      return [power.first, power.last];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  String getMinMaxPowerDescription() {
-    List<int> power = minMaxPower();
-    if (power.isEmpty) return "";
-    if (power.first == power[1]) {
-      return "мощностью от ${power.first} л.с.";
-    }
-    if (power.first != power[1]) {
-      return "мощностью от ${power.first} до ${power[1]} л.с.";
-    }
-    return "";
-  }
-
-  String getSpecDescription(
-      List specs, String singlePreffix, String multiplePreffix) {
-    if (specs.isEmpty) {
-      return "";
-    }
-
-    if (specs.length == 1) {
-      return "${specs.first} $singlePreffix".trim();
-    }
-
-    if (specs.length == 2) {
-      return "${specs[0]} и ${specs[1]} $multiplePreffix".trim();
-    }
-
-    // Если больше двух типов трансмиссий
-    String lastTransmission = specs.removeLast();
-    return "${specs.join(', ')} и $lastTransmission $multiplePreffix".trim();
-  }
 }
 
 class CarBinding implements Bindings {
   @override
-  void dependencies() => Get.lazyPut(() => CarController());
-}
-
-extension StringExtensions on String {
-  String capitalizeFirstLetter() {
-    if (isEmpty) {
-      return this;
-    }
-    return '${this[0].toUpperCase()}${substring(1)}';
-  }
+  void dependencies() => Get.lazyPut(() => CarController(), fenix: true);
 }

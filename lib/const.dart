@@ -3,8 +3,8 @@ import 'package:autoverse/exports.dart';
 const adUnitIdAndroid = 'ca-app-pub-3940256099942544/6300978111';
 const adUnitIdIOS = 'ca-app-pub-3940256099942544/2934735716';
 
-// const baseUrl = 'http://192.168.1.118:5000'; //office
-const baseUrl = 'http://192.168.100.5:5000'; //grodno
+const baseUrl = 'http://192.168.1.118:5000'; //office
+// const baseUrl = 'http://192.168.100.5:5000'; //grodno
 // const baseUrl = "http://192.168.100.13:5000"; //home
 const welcomeImageAsset = 'assets/images/welcome.png';
 const manImageAsset = 'assets/images/man.png';
@@ -71,3 +71,10 @@ const List<String> alphabet = [
   'Y',
   'Z',
 ];
+
+const String youTubeSearchUrl = "https://www.youtube.com/results?search_query";
+const String googleSearchUrl = "https://www.google.com/search?q";
+const String pinSearchUrl = "https://www.pinterest.com/search/pins/?q";
+const String tikTokSearchUrl = "https://www.tiktok.com/search?q";
+
+enum ResourceType { youtube, google, pinterest, tiktok }

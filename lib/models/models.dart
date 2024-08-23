@@ -4,7 +4,7 @@ export 'generation.dart';
 export 'configuration.dart';
 export 'modification.dart';
 export 'option_package.dart';
-
+export 'car.dart';
 export 'brand.dart';
 export 'car_options.dart';
 export 'car_specifications.dart';
