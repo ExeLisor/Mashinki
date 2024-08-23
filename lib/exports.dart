@@ -8,7 +8,7 @@ export 'const.dart';
 export 'dart:convert';
 export 'dart:async';
 export 'dart:io';
-export 'package:flutter/material.dart';
+export 'package:flutter/material.dart' hide Badge;
 export 'package:flutter/foundation.dart';
 export 'package:flutter/services.dart';
 
@@ -34,3 +34,4 @@ export 'firebase_options.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 export 'package:collection/collection.dart' hide binarySearch, mergeSort;
+export 'package:badges/badges.dart';

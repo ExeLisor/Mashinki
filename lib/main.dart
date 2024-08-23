@@ -33,7 +33,7 @@ class _MainAppState extends State<MainApp> {
       home: const HomeScreen(),
       initialRoute: '/home',
       getPages: _pages,
-      initialBinding: BarBinding(),
+      initialBinding: InititalBindingsClass(),
       routingCallback: (routing) {
         switch (routing?.current) {
           case '/home':
@@ -104,4 +104,12 @@ class _MainAppState extends State<MainApp> {
       ],
     ),
   ];
+}
+
+class InititalBindingsClass extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => BarController());
+    Get.lazyPut(() => CompareController());
+  }
 }
