@@ -17,6 +17,11 @@ class FiltersController extends GetxController {
     super.onInit();
   }
 
+  void resetFilters() {
+    _models.value = ModelsController.to.models;
+    _isFiltesApplied.value = false;
+  }
+
   void applyFilters() {
     _searchSelectedModels();
     // _searchModelBodyTypes();

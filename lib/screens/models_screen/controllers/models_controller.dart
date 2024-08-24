@@ -16,6 +16,7 @@ class ModelsController extends GetxController {
   Future<List<Model>> _loadModels(Mark mark) async {
     _emitLoadingState();
     dio = Dio();
+    FiltersController.to.resetFilters();
 
     bool isAlreadyLoaded = isMarkModelsAlreadyLoaded(mark);
 

@@ -29,6 +29,7 @@ class ModelsScreen extends StatelessWidget {
             CarsSearchBar(
               controller: ModelsSearchController.to,
               filterAction: _showModelFilters,
+              searchIconColor: primaryColor,
             ),
             ModelsSearchController.to.query.isNotEmpty
                 ? _searchingResults()
@@ -91,13 +92,6 @@ class ModelsScreen extends StatelessWidget {
 
   Widget _configuration(Model model, Generation generation) => Column(
         children: [
-          generation.name == null || generation.name!.isEmpty
-              ? Container()
-              : Text(
-                  generation.name ?? "",
-                  style:
-                      TextStyle(fontSize: 20.fs, fontWeight: FontWeight.w500),
-                ),
           SizedBox(
             height: 250.h,
             child: ListView(
@@ -109,7 +103,10 @@ class ModelsScreen extends StatelessWidget {
                   Configuration configuration =
                       generation.configurations![index];
                   bool isSingle = generation.configurations?.length == 1;
-                  return _configurationTile(model, generation, configuration,
+                  return ModelTile(
+                      model: model,
+                      generation: generation,
+                      configuration: configuration,
                       isSingle: isSingle);
                 },
               ),
@@ -129,204 +126,6 @@ class ModelsScreen extends StatelessWidget {
                   color: primaryColor,
                   fontWeight: FontWeight.w500),
             ),
-          ),
-        ),
-      );
-
-  Widget _modelsList() => Obx(
-        () => Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemBuilder: (context, index) =>
-                _modelTile(ModelsController.to.models[index]),
-            itemCount: ModelsController.to.models.length,
-          ),
-        ),
-      );
-
-  Widget _modelTile(Model model) => GestureDetector(
-        child: Container(
-          height: containerHeight,
-          width: containerWidth,
-          margin: EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
-          child: Stack(
-            children: [
-              _modelImage(ModelsController.to.getGenerationImage(model)),
-              _modelDetails(model)
-            ],
-          ),
-        ),
-      );
-
-  Widget _configurationTile(
-          Model model, Generation generation, Configuration configuration,
-          {bool isSingle = true}) =>
-      GestureDetector(
-        onTap: () {
-          Car car = Car(
-              mark: ModelsController.to.mark,
-              model: model,
-              generation: generation,
-              configuration: configuration,
-              modifications: configuration.modifications ?? [],
-              selectedModification: (configuration.modifications ?? []).first);
-          CarController.to.openCarPage(car, isLoadCar: true);
-        },
-        child: Container(
-          height: containerHeight,
-          width: isSingle ? containerWidth : containerWidth - 30.w,
-          margin: EdgeInsets.fromLTRB(25.w, 15.h, 10.w, 15.h),
-          child: Stack(
-            children: [
-              _modelImage(configuration.id ?? ""),
-              _configurationText(model, generation, configuration)
-            ],
-          ),
-        ),
-      );
-
-  Widget _configurationText(
-    Model model,
-    Generation generation,
-    Configuration configuration,
-  ) =>
-      Align(
-        alignment: Alignment.bottomLeft,
-        child: Container(
-          margin: EdgeInsets.all(14.h),
-          width: 298.w,
-          height: 52.h,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(26.h),
-            ),
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 27.w,
-              ),
-              _verticalDivider(),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 7.0.fs),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _yearText(),
-                    SizedBox(
-                      height: 12.h,
-                    ),
-                    _modelText(model.name ?? "")
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  Widget _yearText() => Text(
-        '2024',
-        style: TextStyle(
-          color: primaryColor,
-          fontSize: 12.fs,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w400,
-          height: 0,
-        ),
-      );
-
-  Widget _modelText(String modelName) => Text(
-        modelName,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 20.fs,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w500,
-          height: 0.05,
-        ),
-      );
-
-  Widget _verticalDivider() => Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.h),
-        child: const VerticalDivider(
-          color: primaryColor,
-        ),
-      );
-
-  Widget _modelImage(String url) => SizedBox(
-        height: containerHeight,
-        width: containerWidth,
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(30),
-          ),
-          child: CachedNetworkImage(
-            imageUrl: "$baseUrl/image/$url",
-            placeholder: (context, url) =>
-                const Center(child: CircularProgressIndicator()),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-            fit: BoxFit.cover,
-          ),
-        ),
-      );
-
-  Widget _modelDetails(Model model) => Align(
-        alignment: Alignment.bottomLeft,
-        child: Container(
-          margin: EdgeInsets.all(14.h),
-          width: 298.w,
-          height: 52.h,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(26),
-          ),
-          child: _modelName(model),
-        ),
-      );
-
-  String _formatModelNameWithBrand(Mark mark, Model model) {
-    final name = model.name ?? "";
-    final brand = mark.name;
-
-    if (RegExp(r'\d').hasMatch(name)) {
-      return "$brand $name";
-    } else {
-      return name;
-    }
-  }
-
-  Widget _modelName(Model model) => Text(
-        _formatModelNameWithBrand(ModelsController.to.mark, model),
-        style: TextStyle(
-            fontSize: 20.fs, fontWeight: FontWeight.w500, color: Colors.black),
-        maxLines: 2,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-      );
-
-  Widget _modelsView() => Obx(
-        () => ModelsController.to.state.value == Status.success
-            ? _modelsList()
-            : _modelsLoadingWidget(),
-      );
-
-  Widget _modelsLoadingWidget() => Expanded(
-        child: ListView.builder(
-            itemCount: ((Get.height / (containerHeight + 12.h))).floor(),
-            shrinkWrap: true,
-            itemBuilder: (context, index) => _loadingModel()),
-      );
-
-  Widget _loadingModel() => ShimmerWidget(
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: 15.h, horizontal: 25.w),
-          width: containerWidth,
-          height: containerHeight,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
           ),
         ),
       );

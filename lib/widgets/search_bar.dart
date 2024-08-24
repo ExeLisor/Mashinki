@@ -11,11 +11,13 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
       {super.key,
       this.isActive = true,
       this.showFilters = true,
+      this.searchIconColor = Colors.black,
       this.controller,
       this.filterAction});
 
   final bool isActive;
   final bool showFilters;
+  final Color searchIconColor;
   final T? controller;
   final VoidCallback? filterAction;
 
@@ -81,6 +83,7 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
           lensIcon,
           height: 22.h,
           width: 20.w,
+          color: searchIconColor,
           fit: BoxFit.scaleDown,
         ),
       );

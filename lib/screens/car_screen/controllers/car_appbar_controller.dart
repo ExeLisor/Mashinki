@@ -11,8 +11,12 @@ class CarAppbarController extends FloatingBarController {
       WidgetsBinding.instance.addPostFrameCallback((_) => _currentOffset(0));
 
   void startListen(ScrollController controller) {
-    setOffsetToStart();
-    controller.addListener(() => _currentOffset.value = controller.offset);
+    try {
+      setOffsetToStart();
+      controller.addListener(() => _currentOffset.value = controller.offset);
+    } catch (e) {
+      logW(e);
+    }
   }
 }
 

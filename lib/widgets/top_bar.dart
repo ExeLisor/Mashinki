@@ -14,8 +14,8 @@ class TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(25.w, disableVerticalPadding ? 0.h : 15.h,
-          25.w, disableVerticalPadding ? 0.h : 20.h),
+      padding: EdgeInsets.fromLTRB(
+          25.w, 15.h, 25.w, disableVerticalPadding ? 0.h : 20.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
