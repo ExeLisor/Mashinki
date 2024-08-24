@@ -63,9 +63,9 @@ class CarScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _selectorWidget(),
-                SpecsSelectorController.to.showOptions
+                Obx(() => SpecsSelectorController.to.showOptions
                     ? OptionsWidget()
-                    : CharacteristicsWidget()
+                    : CharacteristicsWidget())
               ],
             ),
           ),
