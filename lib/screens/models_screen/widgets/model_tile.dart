@@ -30,7 +30,7 @@ class ModelTile extends StatelessWidget {
         child: Container(
           height: containerHeight,
           width: containerWidth,
-          margin: EdgeInsets.fromLTRB(25.w, 15.h, 0.w, 15.h),
+          margin: EdgeInsets.fromLTRB(0.w, 15.h, 10.w, 15.h),
           child: Stack(
             children: [
               _modelImage(),
@@ -128,8 +128,4 @@ class ModelTile extends StatelessWidget {
           ),
         ),
       );
-}
-
-extension NullOrEmptyExtension on String? {
-  bool get nullOrEmpty => this == null || this!.isEmpty;
 }

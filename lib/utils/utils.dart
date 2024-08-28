@@ -166,3 +166,7 @@ Future<void> openResource(ResourceType type) async {
     throw Exception('Could not launch $url');
   }
 }
+
+extension NullOrEmptyExtension on String? {
+  bool get nullOrEmpty => this == null || this!.isEmpty;
+}

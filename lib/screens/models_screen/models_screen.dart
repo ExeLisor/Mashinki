@@ -58,6 +58,7 @@ class ModelsScreen extends StatelessWidget {
       child: Obx(
         () => ListView.builder(
           itemCount: models.length,
+          padding: EdgeInsets.only(bottom: 25.h),
           itemBuilder: (context, index) => Column(
             children: [
               Text(
@@ -76,6 +77,7 @@ class ModelsScreen extends StatelessWidget {
     return Expanded(
       child: Obx(
         () => ListView.builder(
+          padding: EdgeInsets.only(bottom: 25.h),
           itemCount: ModelsSelectorController.to.selectedModels.length,
           itemBuilder: (context, index) => Column(
             children: [
@@ -95,12 +97,16 @@ class ModelsScreen extends StatelessWidget {
       children: List.generate(model.generations?.length ?? 0,
           (index) => _configuration(model, model.generations![index])));
 
-  Widget _configuration(Model model, Generation generation) => Column(
-        children: [
-          SizedBox(
-            height: 250.h,
-            child: ListView(
-              shrinkWrap: true,
+  Widget _configuration(Model model, Generation generation) {
+    PageController pageController = PageController(viewportFraction: 0.95);
+    return Column(
+      children: [
+        SizedBox(
+          height: 250.h,
+          child: Padding(
+            padding: EdgeInsets.only(left: 15.0.w),
+            child: PageView(
+              controller: pageController,
               scrollDirection: Axis.horizontal,
               children: List.generate(
                 generation.configurations?.length ?? 0,
@@ -116,9 +122,22 @@ class ModelsScreen extends StatelessWidget {
                 },
               ),
             ),
-          )
-        ],
-      );
+          ),
+        ),
+        (generation.configurations?.length ?? 0) == 1
+            ? Container()
+            : SmoothPageIndicator(
+                controller: pageController,
+                count: generation.configurations?.length ?? 0,
+                effect: WormEffect(
+                    dotColor: unactiveColor,
+                    activeDotColor: primaryColor,
+                    dotHeight: 9.h,
+                    dotWidth: 9.h),
+              )
+      ],
+    );
+  }
 
   Widget _brandsTitle() => Container(
         margin: EdgeInsets.only(bottom: 10.h),
