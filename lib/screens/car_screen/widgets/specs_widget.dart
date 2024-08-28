@@ -107,7 +107,13 @@ class CharacteristicsWidget extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [_carHeight(specs), _carImage()],
+            children: [
+              _carHeight(specs),
+              SizedBox(
+                width: 15.h,
+              ),
+              _carImage()
+            ],
           ),
           SizedBox(
             height: 15.h,
@@ -116,24 +122,23 @@ class CharacteristicsWidget extends StatelessWidget {
         ],
       );
 
-  Widget _carImage() => Image.asset(
-        carImage,
-        color: Colors.black,
-        height: 90.h,
-        width: 223.w,
+  Widget _carImage() => SvgPicture.asset(
+        sedanImage,
+        height: 80.h,
         fit: BoxFit.fill,
       );
 
   Widget _carHeight(CarSpecifications specs) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _arrow(0),
           SizedBox(
-            height: 24.h,
+            height: 8.h,
           ),
           _carImageSize(specs.height.toString()),
           SizedBox(
-            height: 24.h,
+            height: 8.h,
           ),
           _arrow(180)
         ],
@@ -144,20 +149,19 @@ class CharacteristicsWidget extends StatelessWidget {
           children: [
             _arrow(180, isShort: false),
             SizedBox(
-              width: 24.w,
+              width: 8.w,
             ),
             _carImageSize(specs.length.toString(), isHeight: false),
             SizedBox(
-              width: 24.w,
+              width: 8.w,
             ),
             _arrow(0, isShort: false)
           ],
         ),
       );
 
-  Widget _carImageSize(String size, {bool isHeight = true}) =>
-      RotationTransition(
-        turns: AlwaysStoppedAnimation(isHeight ? 270 / 360 : 0),
+  Widget _carImageSize(String size, {bool isHeight = true}) => RotatedBox(
+        quarterTurns: isHeight ? -1 : 0,
         child: Text(
           size,
           style: TextStyle(
@@ -165,7 +169,7 @@ class CharacteristicsWidget extends StatelessWidget {
             fontSize: 13.fs,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w400,
-            height: 0.12,
+            height: 0.0,
           ),
         ),
       );
@@ -174,7 +178,7 @@ class CharacteristicsWidget extends StatelessWidget {
         turns: AlwaysStoppedAnimation(rotation / 360),
         child: SvgPicture.asset(
           isShort ? shortArrow : longArrow,
-          width: isShort ? null : 74.w,
+          width: isShort ? null : 89.w,
         ),
       );
 

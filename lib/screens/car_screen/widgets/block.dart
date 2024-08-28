@@ -256,7 +256,7 @@ class SpecsBlockWidget extends StatelessWidget {
             SizedBox(
               width: 140.w,
               child: Text(
-                value.isEmpty ? "-" : value,
+                checkStringOnEmptyOrZero(value),
                 textAlign: TextAlign.right,
                 softWrap: true, // разрешаем переносить текст
                 style: TextStyle(
@@ -270,4 +270,11 @@ class SpecsBlockWidget extends StatelessWidget {
           ],
         ),
       );
+
+  String checkStringOnEmptyOrZero(String value) {
+    if (value.isEmpty) return "-";
+    if (int.tryParse(value) == 0) return "-";
+    if (double.tryParse(value) == 0) return "-";
+    return value;
+  }
 }
