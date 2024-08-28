@@ -46,7 +46,8 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
                 decoration: decoration(),
               )
             : GetBuilder<T>(
-                dispose: (_) => controller?.clearSearch(),
+                dispose: (state) =>
+                    !state.mounted ? controller?.clearSearch() : null,
                 builder: (controller) => TextField(
                   enabled: isActive,
                   controller: controller.controller,

@@ -28,14 +28,6 @@ class ModelsScreen extends StatelessWidget {
               title: "Модельный ряд",
               subtitle: ModelsController.to.mark.name ?? "",
             ),
-            SizedBox(
-              height: 20.h,
-            ),
-            CarsSearchBar(
-              controller: ModelsSearchController.to,
-              filterAction: _showModelFilters,
-              searchIconColor: primaryColor,
-            ),
             ModelsSearchController.to.query.isNotEmpty
                 ? _searchingResults()
                 : _modelsListView()
@@ -56,19 +48,29 @@ class ModelsScreen extends StatelessWidget {
   Widget _models(List<Model> models) {
     return Expanded(
       child: Obx(
-        () => ListView.builder(
-          itemCount: models.length,
-          padding: EdgeInsets.only(bottom: 25.h),
-          itemBuilder: (context, index) => Column(
-            children: [
-              Text(
-                models[index].name ?? "",
-                style: TextStyle(fontSize: 24.fs, fontWeight: FontWeight.bold),
-              ),
-              _generations(models[index]),
-            ],
+        () => ListView(padding: EdgeInsets.only(bottom: 25.h), children: [
+          SizedBox(
+            height: 20.h,
           ),
-        ),
+          CarsSearchBar(
+            controller: ModelsSearchController.to,
+            filterAction: _showModelFilters,
+            searchIconColor: primaryColor,
+          ),
+          ...List.generate(
+            models.length,
+            (index) => Column(
+              children: [
+                Text(
+                  models[index].name ?? "",
+                  style:
+                      TextStyle(fontSize: 24.fs, fontWeight: FontWeight.bold),
+                ),
+                _generations(models[index]),
+              ],
+            ),
+          ),
+        ]),
       ),
     );
   }
@@ -103,24 +105,23 @@ class ModelsScreen extends StatelessWidget {
       children: [
         SizedBox(
           height: 250.h,
-          child: Padding(
-            padding: EdgeInsets.only(left: 15.0.w),
-            child: PageView(
-              controller: pageController,
-              scrollDirection: Axis.horizontal,
-              children: List.generate(
-                generation.configurations?.length ?? 0,
-                (index) {
-                  Configuration configuration =
-                      generation.configurations![index];
+          child: PageView(
+            controller: pageController,
+            scrollDirection: Axis.horizontal,
+            children: List.generate(
+              generation.configurations?.length ?? 0,
+              (index) {
+                Configuration configuration = generation.configurations![index];
 
-                  return ModelTile(
+                return Padding(
+                  padding: EdgeInsets.only(left: index == 0 ? 15.0.w : 0),
+                  child: ModelTile(
                     model: model,
                     generation: generation,
                     configuration: configuration,
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
         ),
