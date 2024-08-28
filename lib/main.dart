@@ -34,17 +34,14 @@ class _MainAppState extends State<MainApp> {
       getPages: _pages,
       initialBinding: InititalBindingsClass(),
       routingCallback: (routing) {
-        switch (routing?.current) {
-          case '/home':
-            BarController.to.currentPageIndex(0);
-            break;
-          case '/compare':
-            BarController.to.currentPageIndex(1);
-            break;
-          default:
-            BarController.to.currentPageIndex(0);
-            break;
-        }
+        const routes = {
+          '/home': 0,
+          '/compare': 1,
+          '/favorites': 2,
+        };
+        final current =
+            routes[routing?.current] ?? routes[routing?.previous] ?? 0;
+        BarController.to.currentPageIndex(current);
       },
     );
   }
@@ -76,6 +73,14 @@ class _MainAppState extends State<MainApp> {
         ),
       ],
     ),
+    GetPage(
+        name: '/favorites',
+        page: () => const FavoritesScreen(),
+        transition: Transition.cupertino,
+        bindings: [
+          FavoriteBinding(),
+          CarBinding(),
+        ]),
     GetPage(
         name: '/marks',
         page: () => const MarksScreen(),

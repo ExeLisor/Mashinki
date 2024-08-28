@@ -245,12 +245,19 @@ class CarScreen extends StatelessWidget {
   Widget _carImage() => Stack(
         children: [
           ClipRRect(
-            child: CachedNetworkImage(
-              imageUrl:
-                  "$baseUrl/image/${CarController.to.car.configuration.id}",
-              placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+            child: Obx(
+              () => CachedNetworkImage(
+                imageUrl:
+                    "$baseUrl/image/${CarController.to.car.configuration.id}",
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => SizedBox(
+                  height: 300.h,
+                  child: const Center(
+                    child: Icon(Icons.error),
+                  ),
+                ),
+              ),
             ),
           ),
           _appBarRow(),
@@ -287,7 +294,7 @@ class CarScreen extends StatelessWidget {
           Car car = CarController.to.car.copyWith();
           bool isCarCompared = controller.isCarCompared(car);
 
-          return _iconWidget(
+          return IconWidget(
             Icons.copy,
             () => !isCarCompared
                 ? controller.addToCompare(car)
@@ -306,28 +313,9 @@ class CarScreen extends StatelessWidget {
             isCarFavorite ? activeFavoriteIcon : favoriteIcon,
             () => isCarFavorite
                 ? controller.removeFromFavorite(car)
-                : controller.addToFavorite(car),
+                : controller.addToFavorite(car.copyWith()),
           );
         },
-      );
-
-  Widget _iconWidget(IconData icon, VoidCallback function,
-          {bool condition = false}) =>
-      GestureDetector(
-        onTap: function,
-        child: Container(
-          decoration: BoxDecoration(
-              color: condition ? primaryColor : Colors.black.withOpacity(0.3),
-              shape: BoxShape.circle),
-          height: 45.h,
-          width: 45.h,
-          child: Center(
-            child: Icon(
-              icon,
-              color: Colors.white,
-            ),
-          ),
-        ),
       );
 
   Widget _iconSvg(String path, VoidCallback function,
@@ -346,4 +334,34 @@ class CarScreen extends StatelessWidget {
           ),
         ),
       );
+}
+
+class IconWidget extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback function;
+  final bool condition;
+  final double size;
+
+  const IconWidget(this.icon, this.function,
+      {super.key, this.condition = false, this.size = 45});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: function,
+      child: Container(
+        decoration: BoxDecoration(
+            color: condition ? primaryColor : Colors.black.withOpacity(0.3),
+            shape: BoxShape.circle),
+        height: size.h,
+        width: size.h,
+        child: Center(
+          child: Icon(
+            icon,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
 }

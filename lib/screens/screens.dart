@@ -42,3 +42,6 @@ export 'car_screen/widgets/bars.dart';
 export 'compare_screen/compare_screen.dart';
 export 'compare_screen/widgets/car_image.dart';
 export 'compare_screen/widgets/specs_widget.dart';
+
+export 'favorites_screen/favorites_screen.dart';
+export 'favorites_screen/widgets/favorite_tile.dart';

@@ -31,7 +31,7 @@ class CarController extends GetxController {
   bool _checkIfCarAlreadyLoaded(Car loadingCar) {
     if (_car.value == null) return false;
 
-    return loadingCar.configuration.id == car.configuration.id;
+    return loadingCar.isDownloaded;
   }
 
   Future<Car> _loadCar(Car loadingCar) async {
@@ -45,6 +45,8 @@ class CarController extends GetxController {
       if (!isCarAlreadyLoaded) await loadSpecs();
 
       _car.value!.selectedModification = car.modifications.first;
+
+      _car.value!.isDownloaded = true;
 
       _emitSussessState();
       return car;

@@ -7,6 +7,7 @@ class Car {
   Configuration configuration = Configuration();
   List<Modification> modifications = <Modification>[];
   Modification selectedModification = Modification();
+  bool isDownloaded;
 
   Car({
     required this.mark,
@@ -15,7 +16,32 @@ class Car {
     required this.configuration,
     required this.modifications,
     required this.selectedModification,
+    this.isDownloaded = false,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'mark': mark.toJson(),
+      'model': model.toJson(),
+      'generation': generation.toJson(),
+      'configuration': configuration.toJson(),
+      'modifications': modifications.map((mod) => mod.toJson()).toList(),
+      'selectedModification': selectedModification.toJson(),
+    };
+  }
+
+  factory Car.fromJson(Map<String, dynamic> json) {
+    return Car(
+      mark: Mark.fromJson(json['mark']),
+      model: Model.fromJson(json['model']),
+      generation: Generation.fromJson(json['generation']),
+      configuration: Configuration.fromJson(json['configuration']),
+      modifications: (json['modifications'] as List)
+          .map((mod) => Modification.fromJson(mod))
+          .toList(),
+      selectedModification: Modification.fromJson(json['selectedModification']),
+    );
+  }
 
   Car copyWith({
     Mark? mark,
