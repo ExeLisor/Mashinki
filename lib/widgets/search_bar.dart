@@ -78,7 +78,12 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
           borderSide: const BorderSide(color: Colors.transparent),
         ),
         hintText: "Поиск",
-        hintStyle: TextStyle(fontSize: 18.fs, color: Colors.grey),
+        hintStyle: TextStyle(
+            fontSize: 16.fs,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w400,
+            height: 0,
+            color: const Color(0xffA7A7A7)),
         prefixIcon: SvgPicture.asset(
           lensIcon,
           height: 22.h,

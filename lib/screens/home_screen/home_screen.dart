@@ -40,6 +40,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const CarsSearchBar(
               isActive: false,
+              showFilters: false,
             ),
             const WeeklySelectionWidget(),
             SizedBox(

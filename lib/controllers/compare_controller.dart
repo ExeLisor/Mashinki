@@ -19,7 +19,7 @@ class CompareController extends GetxController {
     if (isCarCompared(car)) return;
 
     _comparedCars.add(car);
-
+    showSnackBar("Добавлено в сравнение");
     compare();
   }
 

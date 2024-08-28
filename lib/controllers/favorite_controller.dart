@@ -15,7 +15,7 @@ class FavoriteController extends GetxController {
     _favoriteCars.add(car);
     _isFavorite.value = true;
 
-    log(favoriteCars.length);
+    showSnackBar("Добавлено в избранное");
   }
 
   void removeFromFavorite(Car car) {

@@ -170,7 +170,7 @@ class CatalogTile extends StatelessWidget {
           height: 45.h,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
-            color: Colors.black.withOpacity(0.20000000298023224),
+            color: Colors.black.withOpacity(0.3),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(23),
             ),

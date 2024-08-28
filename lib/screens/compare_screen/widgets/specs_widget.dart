@@ -68,7 +68,7 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
           decoration: const ShapeDecoration(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                width: 1,
+                width: 0.5,
                 strokeAlign: BorderSide.strokeAlignCenter,
                 color: Color(0xFF7974FF),
               ),

@@ -113,6 +113,6 @@ class InititalBindingsClass extends Bindings {
     Get.lazyPut(() => CompareController());
     Get.lazyPut(() => MarksController());
     Get.lazyPut(() => ModelsController());
-    Get.lazyPut(() => FiltersController());
+    FiltersBinding().dependencies();
   }
 }

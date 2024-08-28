@@ -4,8 +4,8 @@ const adUnitIdAndroid = 'ca-app-pub-3940256099942544/6300978111';
 const adUnitIdIOS = 'ca-app-pub-3940256099942544/2934735716';
 
 // const baseUrl = 'http://192.168.1.118:5000'; //office
-// const baseUrl = 'http://192.168.100.5:5000'; //grodno
-const baseUrl = "http://192.168.100.14:5000"; //home
+const baseUrl = 'http://192.168.100.5:5000'; //grodno
+// const baseUrl = "http://192.168.100.14:5000"; //home
 const welcomeImageAsset = 'assets/images/welcome.png';
 const manImageAsset = 'assets/images/man.png';
 const manIconAsset = 'assets/icons/man_icon.png';
@@ -35,6 +35,7 @@ const googleImage = "assets/images/google.svg";
 const tiktokImage = "assets/images/tik_tok.svg";
 const pinterestImage = "assets/images/pinterest.svg";
 const youtubeImage = "assets/images/youtube.svg";
+const sedanImage = "assets/images/sedan.svg";
 const whiteCrossIcon = "assets/icons/white_cross.svg";
 
 const primaryColor = Color(0xFF4038FF);

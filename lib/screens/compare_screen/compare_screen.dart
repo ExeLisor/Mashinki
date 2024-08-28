@@ -54,6 +54,7 @@ class CompareScreen extends StatelessWidget {
                 declineComparison(CompareController.to.comparedCars.length),
             isHomeScreen: false,
             disableVerticalPadding: true,
+            showShadow: false,
           ),
         ),
       );
@@ -115,18 +116,22 @@ class CompareFloatingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Car> cars = CompareController.to.comparedCars;
     return Container(
+      //max size container + padding between + padding left
+      width: cars.length == 1 ? Get.width : (177.w + 8.w + 49.w) * cars.length,
       decoration: const BoxDecoration(
         color: Colors.white,
+        border: Border(bottom: BorderSide(color: paleColor)),
       ),
       height: 43.h,
       padding: EdgeInsets.only(left: 32.w),
       child: Row(
         children: [
           ...List.generate(
-            CompareController.to.comparedCars.length,
+            cars.length,
             (index) {
-              Car car = CompareController.to.comparedCars[index];
+              Car car = cars[index];
               String brandName = car.mark.name ?? "";
               String modelName = car.model.name ?? "";
               int? year = car.generation.yearStart;

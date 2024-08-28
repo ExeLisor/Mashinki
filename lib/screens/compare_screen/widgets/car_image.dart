@@ -8,19 +8,16 @@ class CompareCarImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _carColumn();
 
-  Widget _carColumn() => Padding(
-        padding: EdgeInsets.only(left: 8.0.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            _carImage(),
-            SizedBox(
-              height: 12.h,
-            ),
-            _carTitle()
-          ],
-        ),
+  Widget _carColumn() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          _carImage(),
+          SizedBox(
+            height: 12.h,
+          ),
+          _carTitle()
+        ],
       );
 
   Widget _carImage() => GestureDetector(
@@ -30,7 +27,8 @@ class CompareCarImage extends StatelessWidget {
           height: 129.h,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(15.w),
           ),
           child: Stack(
             children: [

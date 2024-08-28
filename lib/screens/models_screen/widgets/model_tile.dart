@@ -6,13 +6,11 @@ class ModelTile extends StatelessWidget {
     required this.model,
     required this.generation,
     required this.configuration,
-    this.isSingle = true,
   });
 
   final Model model;
   final Generation generation;
   final Configuration configuration;
-  final bool isSingle;
 
   final containerHeight = 250.h;
   final containerWidth = 362.w;
@@ -31,8 +29,8 @@ class ModelTile extends StatelessWidget {
         },
         child: Container(
           height: containerHeight,
-          width: isSingle ? containerWidth : containerWidth - 30.w,
-          margin: EdgeInsets.fromLTRB(25.w, 15.h, 10.w, 15.h),
+          width: containerWidth,
+          margin: EdgeInsets.fromLTRB(25.w, 15.h, 0.w, 15.h),
           child: Stack(
             children: [
               _modelImage(),
@@ -48,32 +46,36 @@ class ModelTile extends StatelessWidget {
       );
 
   Widget _modelTitle() => _textContainer(generation.name ?? "");
-  Widget _modelYear() =>
-      _textContainer(model.yearFrom.toString(), setMinWidth: false);
+  Widget _modelYear() => _textContainer(model.yearFrom.toString(),
+      setMinWidth: false, fontSize: 16.fs, fontWeight: FontWeight.w400);
 
-  Widget _textContainer(String text, {bool setMinWidth = true}) => text.isEmpty
-      ? Container()
-      : Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 7.w),
-          constraints: BoxConstraints(maxWidth: 180.w),
-          margin: EdgeInsets.all(15.h),
-          clipBehavior: Clip.antiAlias,
-          decoration: ShapeDecoration(
-            color: Colors.black.withOpacity(0.3),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(26),
-            ),
-          ),
-          child: Text(
-            text,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.fs,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        );
+  Widget _textContainer(String text,
+          {bool setMinWidth = true,
+          double fontSize = 18,
+          FontWeight fontWeight = FontWeight.w600}) =>
+      text.isEmpty
+          ? Container()
+          : Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 7.w),
+              constraints: BoxConstraints(maxWidth: 180.w, minHeight: 38.h),
+              margin: EdgeInsets.all(15.h),
+              clipBehavior: Clip.antiAlias,
+              decoration: ShapeDecoration(
+                color: Colors.black.withOpacity(0.3),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(26),
+                ),
+              ),
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: fontSize.fs,
+                  fontFamily: 'Inter',
+                  fontWeight: fontWeight,
+                ),
+              ),
+            );
 
   Widget _configurationType() => configuration.bodyType.nullOrEmpty
       ? Container()
@@ -82,7 +84,7 @@ class ModelTile extends StatelessWidget {
           child: Container(
             height: 31.h,
             margin: EdgeInsets.all(15.h),
-            padding: EdgeInsets.symmetric(horizontal: 13.h, vertical: 7.w),
+            padding: EdgeInsets.fromLTRB(18.w, 6.h, 18.w, 8.h),
             clipBehavior: Clip.antiAlias,
             decoration: ShapeDecoration(
               color: primaryColor,

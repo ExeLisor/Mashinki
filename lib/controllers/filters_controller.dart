@@ -46,7 +46,7 @@ class FiltersController extends GetxController {
 
 class FiltersBinding extends Bindings {
   @override
-  void dependencies() => Get.lazyPut(() => FiltersController());
+  void dependencies() => Get.lazyPut(() => FiltersController(), fenix: true);
 }
 
 class RestylingFilterController extends GetxController {

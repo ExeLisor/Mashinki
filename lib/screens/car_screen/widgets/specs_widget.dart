@@ -1,7 +1,7 @@
 import 'package:autoverse/exports.dart';
 
 class CharacteristicsWidget extends StatelessWidget {
-  CharacteristicsWidget({super.key});
+  const CharacteristicsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +50,6 @@ class CharacteristicsWidget extends StatelessWidget {
             SpecsBlockWidget(
                 title: "Безопасность", specs: _secutitySpecs(specs)),
             SpecsBlockWidget(title: "Экология", specs: _ecologySpecs(specs)),
-            SizedBox(
-              height: 20.h,
-            ),
-            _divider(),
-            SizedBox(
-              height: 20.h,
-            ),
             const OtherResourcesWiget(),
           ],
         );
@@ -113,6 +106,7 @@ class CharacteristicsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [_carHeight(specs), _carImage()],
           ),
           SizedBox(
@@ -131,6 +125,7 @@ class CharacteristicsWidget extends StatelessWidget {
       );
 
   Widget _carHeight(CarSpecifications specs) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _arrow(0),
           SizedBox(

@@ -212,17 +212,14 @@ class SpecsBlockWidget extends StatelessWidget {
     );
   }
 
-  Widget _divider() => Opacity(
-        opacity: 0.50,
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 25.w),
-          decoration: const ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 1,
-                strokeAlign: BorderSide.strokeAlignCenter,
-                color: Color(0xFF7974FF),
-              ),
+  Widget _divider() => Container(
+        margin: EdgeInsets.only(right: 25.w),
+        decoration: const ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              width: 1,
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color: paleColor,
             ),
           ),
         ),
@@ -259,7 +256,7 @@ class SpecsBlockWidget extends StatelessWidget {
             SizedBox(
               width: 140.w,
               child: Text(
-                value,
+                value.isEmpty ? "-" : value,
                 textAlign: TextAlign.right,
                 softWrap: true, // разрешаем переносить текст
                 style: TextStyle(

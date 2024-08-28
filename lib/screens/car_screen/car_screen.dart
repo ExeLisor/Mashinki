@@ -65,7 +65,7 @@ class CarScreen extends StatelessWidget {
                 _selectorWidget(),
                 Obx(() => SpecsSelectorController.to.showOptions
                     ? OptionsWidget()
-                    : CharacteristicsWidget())
+                    : const CharacteristicsWidget())
               ],
             ),
           ),

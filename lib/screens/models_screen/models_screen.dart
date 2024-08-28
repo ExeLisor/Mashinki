@@ -11,21 +11,26 @@ class ModelsScreen extends StatelessWidget {
     return Scaffold(
       appBar: appBar(),
       bottomNavigationBar: HomeScreenBottomBarWidget(),
-      body: Obx(
-        () => ModelsController.to.state.value == Status.success
-            ? _modelsScreenBody()
-            : const Center(
-                child: CircularProgressIndicator(),
-              ),
-      ),
+      body: Obx(() => ModelsController.to.state.value == Status.success
+          ? _modelsScreenBody()
+          : _loadingWidget()),
     );
   }
 
+  Widget _loadingWidget() => const Center(
+        child: CircularProgressIndicator(),
+      );
   Widget _modelsScreenBody() => Obx(
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TopBar(title: ModelsController.to.mark.name ?? ""),
+            TopBar(
+              title: "Модельный ряд",
+              subtitle: ModelsController.to.mark.name ?? "",
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
             CarsSearchBar(
               controller: ModelsSearchController.to,
               filterAction: _showModelFilters,
@@ -102,12 +107,12 @@ class ModelsScreen extends StatelessWidget {
                 (index) {
                   Configuration configuration =
                       generation.configurations![index];
-                  bool isSingle = generation.configurations?.length == 1;
+
                   return ModelTile(
-                      model: model,
-                      generation: generation,
-                      configuration: configuration,
-                      isSingle: isSingle);
+                    model: model,
+                    generation: generation,
+                    configuration: configuration,
+                  );
                 },
               ),
             ),
