@@ -97,6 +97,7 @@ class AlphabetWidget extends StatelessWidget {
             itemScrollController: AlphabetController.to.itemScrollController,
             itemPositionsListener: AlphabetController.to.itemPositionsListener,
             itemCount: alphabet.length,
+            padding: EdgeInsets.only(bottom: 25.h),
             itemBuilder: (context, index) {
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 17.w),
