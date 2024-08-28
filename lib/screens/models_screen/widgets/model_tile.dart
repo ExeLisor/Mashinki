@@ -112,7 +112,26 @@ class ModelTile extends StatelessWidget {
           ),
         );
 
-  Widget _modelImage() => SizedBox(
+  Widget _modelImage() => Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x0F000000),
+              blurRadius: 15,
+              offset: Offset(0, 3),
+              spreadRadius: 2,
+            ),
+            BoxShadow(
+              color: Color(0x0F000000),
+              blurRadius: 15,
+              offset: Offset(1, 1),
+              spreadRadius: 2,
+            )
+          ],
+        ),
         height: containerHeight,
         width: containerWidth,
         child: ClipRRect(
