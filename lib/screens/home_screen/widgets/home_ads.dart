@@ -1,12 +1,14 @@
 import 'package:autoverse/exports.dart';
-import 'package:autoverse/screens/home_screen/widgets/home_shimmer.dart';
 
 class HomeScreenAdsWidget extends StatelessWidget {
   const HomeScreenAdsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return HomeShimmerWidget(shimmer: _adsLoadingWidget(), child: _adsWidget());
+    return HomeShimmerWidget(
+        shimmer: _adsLoadingWidget(),
+        successCondition: true,
+        child: _adsWidget());
   }
 
   Widget _adsContainer({Widget? child}) => Container(
@@ -21,7 +23,7 @@ class HomeScreenAdsWidget extends StatelessWidget {
   Widget _adsWidget() => _adsContainer(
         child: Center(
           child: Text(
-            "Здесь могла бы быть ваша реклама)",
+            "Покупайте деньги",
             style: TextStyle(
                 fontSize: 18.fs,
                 color: primaryColor,

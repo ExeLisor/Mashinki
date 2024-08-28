@@ -21,11 +21,14 @@ dependencies:
   lottie: ^3.1.2
   pin_code_fields: ^8.0.1
   cached_network_image: ^3.3.1
-  alphabet_list_view: ^1.1.0
   shimmer: ^3.0.0
   firebase_analytics: ^11.1.0
   firebase_core: ^3.1.1
   firebase_remote_config: ^5.0.2
+  url_launcher: ^6.3.0
+  scrollable_positioned_list: ^0.3.8
+  collection: ^1.18.0
+  badges: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +41,10 @@ flutter:
   assets:
     - assets/images/welcome.png
     - assets/images/man.png
+    - assets/images/car.png
+    - assets/images/car.svg
+    - assets/images/long_arrow.svg
+    - assets/images/short_arrow.svg
     - assets/icons/man_icon.png
     - assets/icons/account_icon.svg
     - assets/icons/lock_icon.png
@@ -48,10 +55,19 @@ flutter:
     - assets/icons/recent.svg
     - assets/icons/filters_icon.svg
     - assets/icons/cross.svg
+    - assets/icons/white_cross.svg
     - assets/icons/lens_icon.svg
     - assets/icons/home_icon.svg
     - assets/icons/list_icon.svg
     - assets/icons/compr_icon.svg
+    - assets/icons/back_icon.svg
+    - assets/icons/favorite.svg
+    - assets/icons/active_favorite.svg
     - assets/icons/account_circle_icon.svg
     - assets/animations/correct_animation.json
     - assets/animations/denied_animation.json
+    - assets/images/tik_tok.svg
+    - assets/images/youtube.svg
+    - assets/images/google.svg
+    - assets/images/pinterest.svg
+    - assets/images/sedan.svg

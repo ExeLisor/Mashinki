@@ -8,23 +8,21 @@ class MarksScreen extends StatelessWidget {
     return Scaffold(
       //alpabet gets smaller if resize set to true
       resizeToAvoidBottomInset: false,
-      appBar: _appBar(),
+      appBar: appBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const TopBar(title: 'Бренды'),
-          const CarsSearchBar(
-            isActiveButton: false,
+          CarsSearchBar(
+            showFilters: false,
+            controller: MarksSearchController.to,
           ),
-          _marksScreenBody()
+          _marksScreenBody(),
+          HomeScreenBottomBarWidget(),
         ],
       ),
     );
   }
-
-  AppBar _appBar() => AppBar(
-        toolbarHeight: 0.h,
-      );
 
   Widget _marksScreenBody() => GetBuilder<MarksSearchController>(
         builder: (controller) => controller.query.isNotEmpty
@@ -38,7 +36,7 @@ class MarksScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w),
           child: SingleChildScrollView(
-            child: BrandGrid(brands: result),
+            child: MarksGrid(brands: result),
           ),
         ),
       );

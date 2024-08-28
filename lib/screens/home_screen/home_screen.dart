@@ -1,24 +1,35 @@
 import 'package:autoverse/exports.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-
-  final BarController _barController = Get.put(BarController());
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
-      bottomNavigationBar: _bottomBar(),
-      body: _body(),
+      appBar: appBar(),
+      body: const Navigator(
+        initialRoute: '/home',
+        // onGenerateRoute: BarController.to.onGenerateRoute,
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBar(),
+      body: _homeScreen(),
+      bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
   }
 
-  AppBar _appBar() => AppBar(
+  AppBar appBar() => AppBar(
         toolbarHeight: 0.h,
       );
-
-  Widget _bottomBar() => HomeScreenBottomBarWidget();
 
   Widget _homeScreen() => SingleChildScrollView(
         child: Column(
@@ -27,38 +38,21 @@ class HomeScreen extends StatelessWidget {
               title: "Каталог",
               isHomeScreen: true,
             ),
-
-            // const CarsSearchBar(
-            //   isActive: false,
-            //   isActiveButton: false,
-            // ),
-            // SizedBox(
-            //   height: 20.h,
-            // ),
-            // const WeeklySelectionWidget(),
-            // SizedBox(
-            //   height: 20.h,
-            // ),
-            // const HomeScreenAdsWidget(),
-            // SizedBox(
-            //   height: 20.h,
-            // ),
+            const CarsSearchBar(
+              isActive: false,
+              showFilters: false,
+            ),
+            const WeeklySelectionWidget(),
+            SizedBox(
+              height: 20.h,
+            ),
+            const HomeScreenAdsWidget(),
+            SizedBox(
+              height: 20.h,
+            ),
             MarksWidget(),
-            // SizedBox(
-            //   height: 20.h,
-            // ),
-            // CarsCatalogListWidget(),
+            const CarsCatalogListWidget(),
           ],
         ),
       );
-
-  Widget _body() => Obx(
-      () => _bodyWidgets().elementAt(_barController.currentPageIndex.value));
-
-  List<Widget> _bodyWidgets() => <Widget>[
-        _homeScreen(),
-        Container(),
-        Container(),
-        Container(),
-      ];
 }

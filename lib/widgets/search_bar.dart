@@ -1,76 +1,32 @@
 import 'package:autoverse/exports.dart';
 
-class CarsSearchBar extends StatelessWidget {
+abstract class SearchFieldController extends GetxController {
+  void clearSearch();
+  void startSearch(String query);
+  TextEditingController get controller;
+}
+
+class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
   const CarsSearchBar(
       {super.key,
       this.isActive = true,
-      this.isActiveButton = true,
-      this.controller});
+      this.showFilters = true,
+      this.searchIconColor = Colors.black,
+      this.controller,
+      this.filterAction});
 
   final bool isActive;
-  final bool isActiveButton;
-  final TextEditingController? controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 20.h, left: 25.h),
-      child: Row(
-        children: [
-          CarsSearchTextField(
-            isActive: isActive,
-            isActiveButton: isActiveButton,
-          ),
-          _filtersIcon()
-        ],
-      ),
-    );
-  }
-
-  Widget _filtersIcon() => isActiveButton
-      ? Container(
-          height: 48.h,
-          width: 48.h,
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
-          decoration: BoxDecoration(
-            color: primaryColor,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                spreadRadius: 1,
-                blurRadius: 3,
-                offset: Offset(0, 2.h),
-              ),
-            ],
-          ),
-          child: SvgPicture.asset(
-            filtersIconAsset,
-            height: 22.h,
-            width: 22.w,
-            fit: BoxFit.scaleDown,
-          ),
-        )
-      : Container();
-}
-
-class CarsSearchTextField extends StatelessWidget {
-  const CarsSearchTextField(
-      {super.key,
-      required this.isActive,
-      required this.isActiveButton,
-      this.controller});
-
-  final bool isActive;
-  final bool isActiveButton;
-  final TextEditingController? controller;
+  final bool showFilters;
+  final Color searchIconColor;
+  final T? controller;
+  final VoidCallback? filterAction;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        width: isActiveButton ? 296.w : 362.w,
         height: 48.h,
+        margin: EdgeInsets.only(bottom: 20.h, left: 25.w, right: 25.w),
         decoration: BoxDecoration(
           color: const Color(0xfffef7ff),
           borderRadius: BorderRadius.circular(41),
@@ -83,40 +39,72 @@ class CarsSearchTextField extends StatelessWidget {
             ),
           ],
         ),
-        child: GetBuilder<MarksSearchController>(
-          dispose: (_) => MarksSearchController.to.clearSearch(),
-          builder: (controller) => TextFormField(
-            enabled: isActive,
-            controller: MarksSearchController.to.controller,
-            textAlignVertical: TextAlignVertical.bottom,
-            autovalidateMode: AutovalidateMode.always,
-            onChanged: controller.startSearch,
-            onTapOutside: (_) => FocusScope.of(context).unfocus(),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(40),
-                borderSide: BorderSide.none,
+        child: controller == null
+            ? TextField(
+                enabled: false,
+                textAlignVertical: TextAlignVertical.bottom,
+                decoration: decoration(),
+              )
+            : GetBuilder<T>(
+                dispose: (state) =>
+                    !state.mounted ? controller?.clearSearch() : null,
+                builder: (controller) => TextField(
+                  enabled: isActive,
+                  controller: controller.controller,
+                  textAlignVertical: TextAlignVertical.bottom,
+                  // autovalidateMode: AutovalidateMode.always,
+                  onChanged: controller.startSearch,
+                  onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                  decoration: decoration(),
+                ),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(40),
-                borderSide: const BorderSide(color: Colors.transparent),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(40),
-                borderSide: const BorderSide(color: Colors.transparent),
-              ),
-              hintText: "Поиск",
-              hintStyle: TextStyle(fontSize: 18.fs, color: Colors.grey),
-              prefixIcon: SvgPicture.asset(
-                lensIcon,
-                height: 22.h,
-                width: 20.w,
-                fit: BoxFit.scaleDown,
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
+
+  InputDecoration decoration() => InputDecoration(
+        suffixIcon: showFilters ? _filtersIcon() : null,
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: const BorderSide(color: Colors.transparent),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(40),
+          borderSide: const BorderSide(color: Colors.transparent),
+        ),
+        hintText: "Поиск",
+        hintStyle: TextStyle(
+            fontSize: 16.fs,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w400,
+            height: 0,
+            color: const Color(0xffA7A7A7)),
+        prefixIcon: SvgPicture.asset(
+          lensIcon,
+          height: 22.h,
+          width: 20.w,
+          color: searchIconColor,
+          fit: BoxFit.scaleDown,
+        ),
+      );
+
+  Widget _filtersIcon() => GestureDetector(
+        onTap: filterAction,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 18.w),
+          child: SvgPicture.asset(
+            filtersIconAsset,
+            height: 22.h,
+            width: 20.w,
+            fit: BoxFit.scaleDown,
+            color: primaryColor,
+          ),
+        ),
+      );
 }

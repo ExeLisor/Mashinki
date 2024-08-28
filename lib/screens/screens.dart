@@ -22,6 +22,23 @@ export 'registration_screen/widgets/error_widget.dart';
 
 export 'search_screen/search_screen.dart';
 
-export 'brand_screen/brand_screen.dart';
-export 'brand_screen/widgets/brand_grid.dart';
-export 'brand_screen/widgets/alphabet_widget.dart';
+export 'marks_screen/marks_screen.dart';
+export 'marks_screen/widgets/marks_grid.dart';
+export 'marks_screen/widgets/alphabet_widget.dart';
+
+export 'models_screen/models_screen.dart';
+export 'models_screen/widgets/selector_widget.dart';
+export 'models_screen/widgets/filters_widget.dart';
+export 'models_screen/widgets/model_tile.dart';
+
+export 'car_screen/car_screen.dart';
+export 'car_screen/widgets/specs_widget.dart';
+export 'car_screen/widgets/resources_widget.dart';
+export 'car_screen/widgets/modifications_widget.dart';
+export 'car_screen/widgets/options_widget.dart';
+export 'car_screen/widgets/block.dart';
+export 'car_screen/widgets/bars.dart';
+
+export 'compare_screen/compare_screen.dart';
+export 'compare_screen/widgets/car_image.dart';
+export 'compare_screen/widgets/specs_widget.dart';

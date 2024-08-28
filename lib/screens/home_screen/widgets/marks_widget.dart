@@ -100,12 +100,15 @@ class MarksWidget extends StatelessWidget {
       );
 
   Widget _markTile(Mark mark) => _markContainer(
-        child: Center(
-          child: Container(
-            padding: EdgeInsets.all(8.h),
-            child: CachedNetworkImage(
-              imageUrl: "$baseUrl/marks/${mark.id}/logo",
-              fit: BoxFit.contain,
+        child: GestureDetector(
+          onTap: () => ModelsController.to.openModelsPage(mark),
+          child: Center(
+            child: Container(
+              padding: EdgeInsets.all(8.h),
+              child: CachedNetworkImage(
+                imageUrl: "$baseUrl/marks/${mark.id}/logo",
+                fit: BoxFit.contain,
+              ),
             ),
           ),
         ),
@@ -125,21 +128,24 @@ class MarksWidget extends StatelessWidget {
       );
 
   Widget _marksLoadingWidget() => SizedBox(
-        height: _containerSize,
+        height: 85.h,
         child: ListView(
+          shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(left: 25.h),
           children: List.generate(
-            ((Get.width / (_containerSize + 12.h) + 1)).floor(),
-            (int index) => ShimmerWidget(
-              child: Container(
-                margin: EdgeInsets.only(right: 12.h),
-                width: _containerSize,
-                height: _containerSize,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
+            ((Get.width / (75 + 12) + 1)).floor(),
+            (int index) => UnconstrainedBox(
+              child: ShimmerWidget(
+                child: Container(
+                  margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
+                  width: _containerSize,
+                  height: _containerSize,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
               ),
             ),

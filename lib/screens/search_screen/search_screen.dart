@@ -20,7 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 color: Colors.black.withOpacity(0.05),
                 spreadRadius: 1,
                 blurRadius: 2,
-                offset: Offset(0, 2),
+                offset: const Offset(0, 2),
               ),
             ]),
             child: Padding(

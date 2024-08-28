@@ -8,7 +8,7 @@ export 'const.dart';
 export 'dart:convert';
 export 'dart:async';
 export 'dart:io';
-export 'package:flutter/material.dart';
+export 'package:flutter/material.dart' hide Badge;
 export 'package:flutter/foundation.dart';
 export 'package:flutter/services.dart';
 
@@ -25,9 +25,13 @@ export 'package:smooth_page_indicator/smooth_page_indicator.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:lottie/lottie.dart';
 export 'package:pin_code_fields/pin_code_fields.dart';
-export 'package:alphabet_list_view/alphabet_list_view.dart';
+
 export 'package:shimmer/shimmer.dart';
 export 'package:firebase_analytics/firebase_analytics.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_remote_config/firebase_remote_config.dart';
 export 'firebase_options.dart';
+export 'package:url_launcher/url_launcher.dart';
+export 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+export 'package:collection/collection.dart' hide binarySearch, mergeSort;
+export 'package:badges/badges.dart';

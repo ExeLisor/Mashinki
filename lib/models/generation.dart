@@ -5,15 +5,15 @@ class Generation {
   final String? name;
   final int? yearStart;
   final int? yearStop;
-  final bool? isRestyle;
-  final List<Configuration>? configurations;
+  final bool isRestyle;
+  List<Configuration>? configurations;
 
   Generation({
     this.id,
     this.name,
     this.yearStart,
     this.yearStop,
-    this.isRestyle,
+    this.isRestyle = false,
     this.configurations,
   });
 
@@ -22,7 +22,7 @@ class Generation {
         name: json["name"],
         yearStart: json["year-start"],
         yearStop: json["year-stop"],
-        isRestyle: json["is-restyle"],
+        isRestyle: json["is-restyle"] == "1",
         configurations: json["configurations"] == null
             ? []
             : List<Configuration>.from(

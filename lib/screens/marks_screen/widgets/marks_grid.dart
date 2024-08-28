@@ -1,8 +1,8 @@
 import 'package:autoverse/exports.dart';
-import 'package:autoverse/screens/brand_screen/widgets/bran_tile.dart';
+import 'package:autoverse/screens/marks_screen/widgets/mark_tile.dart';
 
-class BrandGrid extends StatelessWidget {
-  const BrandGrid({super.key, required this.brands});
+class MarksGrid extends StatelessWidget {
+  const MarksGrid({super.key, required this.brands});
 
   final List<Mark> brands;
 
