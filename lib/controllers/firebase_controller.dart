@@ -1,11 +1,15 @@
 import 'package:autoverse/exports.dart';
 
 class FirebaseController extends GetxController {
+  static FirebaseController get to => Get.find();
+
   @override
   Future<void> onInit() async {
+    log("INIT FIREBSAE");
     await _initFirebase();
     await _initFirebaseConfig();
     // await _sendAnalyticsEvent();
+
     super.onInit();
   }
 
@@ -32,26 +36,22 @@ class FirebaseController extends GetxController {
 
       await remoteConfig.fetchAndActivate();
     } catch (e) {
-      log("Failed to initialize Firebase: $e");
+      log("Failed to initialize Firebase Config: $e");
     }
   }
 
-  Future<void> _sendAnalyticsEvent() async {
+  Future<String?> loadImage(String path, String? id,
+      {String type = "jpg"}) async {
     try {
-      await FirebaseAnalytics.instance.logEvent(
-        name: 'test_event',
-        parameters: {
-          'string': 'string',
-          'int': 42,
-          'long': 12345678910,
-          'double': 42.0,
-          'bool': true.toString(),
-        },
-      );
+      final storageRef =
+          FirebaseStorage.instance.ref().child('$path/$id.$type');
+      final url = await storageRef.getDownloadURL();
 
-      log('logEvent succeeded');
+      log("Image URL: $url");
+      return url;
     } catch (e) {
-      log("Failed to initialize Firebase: $e");
+      log("Failed to load image from Firebase Storage: $e");
+      return null;
     }
   }
 }

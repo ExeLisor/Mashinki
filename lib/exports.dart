@@ -25,7 +25,7 @@ export 'package:smooth_page_indicator/smooth_page_indicator.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:lottie/lottie.dart';
 export 'package:pin_code_fields/pin_code_fields.dart';
-
+export 'package:firebase_storage/firebase_storage.dart';
 export 'package:shimmer/shimmer.dart';
 export 'package:firebase_analytics/firebase_analytics.dart';
 export 'package:firebase_core/firebase_core.dart';

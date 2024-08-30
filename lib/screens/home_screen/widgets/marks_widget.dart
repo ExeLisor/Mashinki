@@ -102,14 +102,21 @@ class MarksWidget extends StatelessWidget {
   Widget _markTile(Mark mark) => _markContainer(
         child: GestureDetector(
           onTap: () => ModelsController.to.openModelsPage(mark),
-          child: Center(
-            child: Container(
-              padding: EdgeInsets.all(8.h),
-              child: CachedNetworkImage(
-                imageUrl: "$baseUrl/marks/${mark.id}/logo",
-                fit: BoxFit.contain,
-              ),
-            ),
+          child: FutureBuilder<String?>(
+            future:
+                FirebaseController.to.loadImage("logos", mark.id, type: "png"),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return const Icon(Icons.error);
+              } else {
+                return CachedNetworkImage(
+                  imageUrl: snapshot.data!,
+                  fit: BoxFit.contain,
+                );
+              }
+            },
           ),
         ),
       );
