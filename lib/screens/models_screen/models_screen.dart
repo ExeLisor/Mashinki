@@ -48,29 +48,40 @@ class ModelsScreen extends StatelessWidget {
   Widget _models(List<Model> models) {
     return Expanded(
       child: Obx(
-        () => ListView(padding: EdgeInsets.only(bottom: 25.h), children: [
-          SizedBox(
-            height: 20.h,
-          ),
-          CarsSearchBar(
-            controller: ModelsSearchController.to,
-            filterAction: _showModelFilters,
-            searchIconColor: primaryColor,
-          ),
-          ...List.generate(
-            models.length,
-            (index) => Column(
-              children: [
-                Text(
-                  models[index].name ?? "",
-                  style:
-                      TextStyle(fontSize: 24.fs, fontWeight: FontWeight.bold),
-                ),
-                _generations(models[index]),
-              ],
+        () => ListView(
+          padding: EdgeInsets.only(bottom: 25.h),
+          children: [
+            SizedBox(
+              height: 20.h,
             ),
-          ),
-        ]),
+            CarsSearchBar(
+              controller: ModelsSearchController.to,
+              filterAction: _showModelFilters,
+              searchIconColor: primaryColor,
+            ),
+            ...List.generate(
+              models.length,
+              (index) => Column(
+                children: [
+                  Text(
+                    "${ModelsController.to.mark.name} ${models[index].name ?? ""}",
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 20.fs,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ),
+                  ),
+                  _generations(models[index]),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -127,14 +138,25 @@ class ModelsScreen extends StatelessWidget {
         ),
         (generation.configurations?.length ?? 0) == 1
             ? Container()
-            : SmoothPageIndicator(
-                controller: pageController,
-                count: generation.configurations?.length ?? 0,
-                effect: WormEffect(
-                    dotColor: unactiveColor,
-                    activeDotColor: primaryColor,
-                    dotHeight: 9.h,
-                    dotWidth: 9.h),
+            : Container(
+                height: 12.h,
+                padding: EdgeInsets.all(3.w),
+                decoration: ShapeDecoration(
+                  color: const Color(0xFFA19EFF),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(23),
+                  ),
+                ),
+                child: SmoothPageIndicator(
+                  controller: pageController,
+                  count: generation.configurations?.length ?? 0,
+                  effect: WormEffect(
+                      dotColor: Colors.white,
+                      activeDotColor: primaryColor,
+                      dotHeight: 6.h,
+                      dotWidth: 6.h,
+                      spacing: 4.w),
+                ),
               )
       ],
     );

@@ -63,8 +63,11 @@ class Car {
 
   String getDescription() {
     String bodyType = (configuration.bodyType ?? "").capitalizeFirstLetter();
-    String classType =
-        model.modelClass == null ? "" : "${model.modelClass}-класса";
+    String classType = model.modelClass == null
+        ? ""
+        : model.modelClass!.isEmpty
+            ? ""
+            : "${model.modelClass}-класса,";
     String drive = getSpecDescription(getAllDrivesTypes(), "привод", "привод");
     String transmission =
         "Коробка ${getSpecDescription(getAllTransmissionTypes(), "", "")}"
@@ -78,7 +81,7 @@ class Car {
         : getMinMaxVolumeDescription();
     String horsePower = getMinMaxPowerDescription();
 
-    return "$bodyType $classType, $drive. $transmission. $engines$endingesVolume $horsePower";
+    return "$bodyType $classType$drive. $transmission. $engines$endingesVolume $horsePower";
   }
 
   List<String> getAllTransmissionTypes() {

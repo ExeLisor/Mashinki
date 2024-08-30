@@ -30,7 +30,7 @@ class TopBar extends StatelessWidget {
               : null),
       child: Padding(
         padding: EdgeInsets.fromLTRB(
-            20.w, 15.h, 25.w, disableVerticalPadding ? 0.h : 20.h),
+            0.w, 15.h, 25.w, disableVerticalPadding ? 0.h : 20.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -56,10 +56,15 @@ class TopBar extends StatelessWidget {
 
   Widget _topBarIconBack() => GestureDetector(
         onTap: Get.back,
-        child: Icon(
-          Icons.arrow_back_ios_new_sharp,
-          size: 24.h,
-          color: primaryColor,
+        child: Container(
+          padding: EdgeInsets.fromLTRB(25.w, 16.h, 25.w, 16.h),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.transparent),
+          ),
+          child: SvgPicture.asset(
+            backIcon,
+            color: primaryColor,
+          ),
         ),
       );
 

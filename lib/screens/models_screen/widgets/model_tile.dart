@@ -32,6 +32,7 @@ class ModelTile extends StatelessWidget {
           width: containerWidth,
           margin: EdgeInsets.fromLTRB(0.w, 15.h, 10.w, 15.h),
           child: Stack(
+            fit: StackFit.passthrough,
             children: [
               _modelImage(),
               Row(
