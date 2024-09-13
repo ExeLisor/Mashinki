@@ -75,27 +75,19 @@ class MarksWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: controller.popularMarks.length,
             itemBuilder: (context, index) {
-              if (index == 0) {
-                return Row(
-                  children: [
-                    SizedBox(
-                      width: 25.w,
-                    ),
-                    MarkLogo(mark: controller.popularMarks[index])
-                  ],
-                );
-              }
-              if (index == controller.popularMarks.length) {
-                return Row(
-                  children: [
-                    SizedBox(
-                      width: 25.w,
-                    ),
-                    _moreMarks()
-                  ],
-                );
-              }
-              return MarkLogo(mark: controller.popularMarks[index]);
+              return Row(
+                children: [
+                  index == 0
+                      ? SizedBox(
+                          width: 25.w,
+                        )
+                      : Container(),
+                  MarkLogo(mark: controller.popularMarks[index]),
+                  index == controller.popularMarks.length - 1
+                      ? _moreMarks()
+                      : Container()
+                ],
+              );
             },
           ),
         ),
