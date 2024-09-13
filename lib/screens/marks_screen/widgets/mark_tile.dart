@@ -36,7 +36,6 @@ class MarkGridTile extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(15.w),
             child: CachedNetworkImage(
-              filterQuality: FilterQuality.medium,
               imageUrl: "$baseUrl/marks/${mark.id}/logo",
               fit: BoxFit.scaleDown,
             ),

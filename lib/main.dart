@@ -3,9 +3,9 @@ import 'package:autoverse/exports.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  MobileAds.instance.initialize();
-
   Get.put(FirebaseController(), permanent: true);
+
+  MobileAds.instance.initialize();
 
   runApp(const MainApp());
 }

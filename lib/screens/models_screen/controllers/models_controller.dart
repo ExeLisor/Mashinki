@@ -50,8 +50,9 @@ class ModelsController extends GetxController {
 
   Future<List<Model>> _getModels() async {
     try {
-      log("$baseUrl/${mark.id}/models");
-      Response response = await dio.get("$baseUrl/${mark.id}/models");
+      log("$baseUrl/model");
+      Response response =
+          await dio.get("$baseUrl/models", data: {"id": mark.id});
 
       List<Model> modelsFromResponse = modelsFromJson(response.data);
       return modelsFromResponse;

@@ -38,7 +38,8 @@ class MarksController extends GetxController {
 
   Future<List<Mark>> getOnlyPopularMarks() async {
     try {
-      Response response = await dio.get("$baseUrl/marks/popular");
+      Response response =
+          await dio.post("$baseUrl/marks", data: {"popularOnly": 1});
       List<Mark> popularMarksFromResponse = marksFromJson(response.data);
 
       return popularMarksFromResponse;

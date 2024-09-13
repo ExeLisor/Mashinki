@@ -35,3 +35,4 @@ export 'package:url_launcher/url_launcher.dart';
 export 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 export 'package:collection/collection.dart' hide binarySearch, mergeSort;
 export 'package:badges/badges.dart';
+export 'package:firebase_app_check/firebase_app_check.dart';

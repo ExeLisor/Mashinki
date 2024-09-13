@@ -26,7 +26,7 @@ class MarksWidget extends StatelessWidget {
           shimmer: _marksLoadingWidget(),
           successCondition:
               MarksController.to.state.value == MarksState.success,
-          child: _popularMarksList(),
+          child: buildPopularMarksList(),
         ),
       );
 
@@ -36,14 +36,12 @@ class MarksWidget extends StatelessWidget {
           padding: EdgeInsets.only(left: 25.0.w),
           child: Row(
             children: [
-              GetBuilder<MarksController>(
-                builder: (controller) => Text(
-                  "Бренды",
-                  style: TextStyle(
-                      fontSize: 18.fs,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w600),
-                ),
+              Text(
+                "Бренды",
+                style: TextStyle(
+                    fontSize: 18.fs,
+                    color: primaryColor,
+                    fontWeight: FontWeight.w600),
               ),
               SizedBox(
                 width: 13.w,
@@ -58,24 +56,47 @@ class MarksWidget extends StatelessWidget {
       );
 
   Widget _popularMarksList() => GetBuilder<MarksController>(
-        builder: (controller) => SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: GetBuilder<MarksController>(
-            builder: (controller) => Row(
-              children: [
-                //для того, чтобы при скролле виджет красиво выходил за границы экрана
-                Container(
-                  width: 25.w,
-                ),
-                ...List.generate(
-                  controller.popularMarks.length,
-                  (index) => _markTile(
-                    controller.popularMarks[index],
-                  ),
-                ),
-                _moreMarks()
-              ],
+        builder: (controller) => Row(
+          children: [
+            //для того, чтобы при скролле виджет красиво выходил за границы экрана
+            Container(
+              width: 25.w,
             ),
+            buildPopularMarksList(),
+            _moreMarks()
+          ],
+        ),
+      );
+
+  Widget buildPopularMarksList() => GetBuilder<MarksController>(
+        builder: (controller) => SizedBox(
+          height: _containerSize + 10.h,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: controller.popularMarks.length,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Row(
+                  children: [
+                    SizedBox(
+                      width: 25.w,
+                    ),
+                    MarkLogo(mark: controller.popularMarks[index])
+                  ],
+                );
+              }
+              if (index == controller.popularMarks.length) {
+                return Row(
+                  children: [
+                    SizedBox(
+                      width: 25.w,
+                    ),
+                    _moreMarks()
+                  ],
+                );
+              }
+              return MarkLogo(mark: controller.popularMarks[index]);
+            },
           ),
         ),
       );
@@ -97,28 +118,6 @@ class MarksWidget extends StatelessWidget {
           ],
         ),
         child: child,
-      );
-
-  Widget _markTile(Mark mark) => _markContainer(
-        child: GestureDetector(
-          onTap: () => ModelsController.to.openModelsPage(mark),
-          child: FutureBuilder<String?>(
-            future:
-                FirebaseController.to.loadImage("logos", mark.id, type: "png"),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return const Icon(Icons.error);
-              } else {
-                return CachedNetworkImage(
-                  imageUrl: snapshot.data!,
-                  fit: BoxFit.contain,
-                );
-              }
-            },
-          ),
-        ),
       );
 
   Widget _moreMarks() => GestureDetector(
@@ -143,20 +142,77 @@ class MarksWidget extends StatelessWidget {
           padding: EdgeInsets.only(left: 25.h),
           children: List.generate(
             ((Get.width / (75 + 12) + 1)).floor(),
-            (int index) => UnconstrainedBox(
-              child: ShimmerWidget(
-                child: Container(
-                  margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
-                  width: _containerSize,
-                  height: _containerSize,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-            ),
+            (int index) => const MarkLoadingWidget(),
           ),
         ),
       );
+}
+
+class MarkLogo extends StatelessWidget {
+  const MarkLogo({super.key, required this.mark});
+
+  final Mark mark;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<String?>(
+      future: FirebaseController.to.loadImage("logos", mark.id, type: "png"),
+      builder: (context, snapshot) {
+        return snapshot.data != null
+            ? _logo(snapshot.data!)
+            : const MarkLoadingWidget();
+      },
+    );
+  }
+
+  Widget _logo(String url) => GestureDetector(
+        onTap: () => ModelsController.to.openModelsPage(mark),
+        child: _markContainer(
+          child: CachedNetworkImage(
+            imageUrl: url,
+            fit: BoxFit.contain,
+          ),
+        ),
+      );
+
+  Widget _markContainer({Widget? child}) => Container(
+        width: 75.h,
+        height: 75.h,
+        margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.15),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 5.h), // changes position of shadow
+            ),
+          ],
+        ),
+        child: child,
+      );
+}
+
+class MarkLoadingWidget extends StatelessWidget {
+  const MarkLoadingWidget({super.key});
+
+  final double _containerSize = 75;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShimmerWidget(
+      child: Container(
+        margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
+        width: _containerSize.h,
+        height: _containerSize.h,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
+    );
+  }
 }
