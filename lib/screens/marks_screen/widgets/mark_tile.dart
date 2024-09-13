@@ -16,31 +16,12 @@ class MarkGridTile extends StatelessWidget {
         ],
       );
 
-  Widget _markLogo() => GestureDetector(
-        onTap: () => ModelsController.to.openModelsPage(mark),
-        child: Container(
-          height: 75.h,
-          width: 75.h,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15.w),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.15),
-                spreadRadius: 1,
-                blurRadius: 5,
-                offset: Offset(0, 5.h),
-              ),
-            ],
-          ),
-          child: Container(
-            padding: EdgeInsets.all(15.w),
-            child: CachedNetworkImage(
-              imageUrl: "$baseUrl/marks/${mark.id}/logo",
-              fit: BoxFit.scaleDown,
-            ),
-          ),
-        ),
+  Widget _markLogo() => ImageContainer(
+        imageData: ImageData.mark(id: mark.id ?? ""),
+        function: () => ModelsController.to.openModelsPage(mark),
+        margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
+        padding: const EdgeInsets.all(5),
+        loadingWidget: const MarkLoadingWidget(),
       );
 
   Widget _markName() => Text(
