@@ -5,3 +5,4 @@ export 'bottom_bar.dart';
 export 'shimmer_widget.dart';
 export 'app_bar.dart';
 export 'snackbars.dart';
+export 'image_container.dart';
