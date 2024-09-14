@@ -147,55 +147,10 @@ class ImageData {
 
   const ImageData.mark(
       {this.path = "logos", required this.id, this.type = "png"});
+
+  const ImageData.photo(
+      {this.path = "photos", required this.id, this.type = "jpg"});
 }
-
-// class MarkLogo extends StatelessWidget {
-//   const MarkLogo({super.key, required this.mark});
-
-//   final Mark mark;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return FutureBuilder<String?>(
-//       future: FirebaseController.to.loadImage("logos", mark.id, type: "png"),
-//       builder: (context, snapshot) {
-//         return snapshot.data != null
-//             ? _logo(snapshot.data!)
-//             : const MarkLoadingWidget();
-//       },
-//     );
-//   }
-
-//   Widget _logo(String url) => GestureDetector(
-//         onTap: () => ModelsController.to.openModelsPage(mark),
-//         child: _markContainer(
-//           child: CachedNetworkImage(
-//             imageUrl: url,
-//             fit: BoxFit.contain,
-//           ),
-//         ),
-//       );
-
-//   Widget _markContainer({Widget? child}) => Container(
-//         width: containerSize.h,
-//         height: containerSize.h,
-//         margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
-//         padding: const EdgeInsets.all(5),
-//         decoration: BoxDecoration(
-//           color: Colors.white,
-//           borderRadius: BorderRadius.circular(15),
-//           boxShadow: [
-//             BoxShadow(
-//               color: Colors.grey.withOpacity(0.15),
-//               spreadRadius: 1,
-//               blurRadius: 5,
-//               offset: Offset(0, 5.h), // changes position of shadow
-//             ),
-//           ],
-//         ),
-//         child: child,
-//       );
-// }
 
 class MarkLoadingWidget extends StatelessWidget {
   const MarkLoadingWidget({super.key});

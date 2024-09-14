@@ -4,8 +4,7 @@ class ImageContainer extends StatelessWidget {
   const ImageContainer(
       {super.key,
       required this.imageData,
-      this.height = 75,
-      this.width = 75,
+      this.size = const Size(75, 75),
       this.margin,
       this.padding,
       this.function,
@@ -13,8 +12,7 @@ class ImageContainer extends StatelessWidget {
 
   final ImageData imageData;
 
-  final double height;
-  final double width;
+  final Size size;
 
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
@@ -31,43 +29,68 @@ class ImageContainer extends StatelessWidget {
       builder: (context, snapshot) {
         return snapshot.data != null
             ? _image(snapshot.data!)
-            : loadingWidget ?? _emptyWidget();
+            : _loadingWidget();
       },
     );
   }
 
-  Widget _emptyWidget() => SizedBox(
-        height: height.h,
-        width: width.w,
-      );
-
   Widget _image(String url) => GestureDetector(
         onTap: function,
-        child: _markContainer(
-          child: CachedNetworkImage(
+        child: CachedNetworkImage(
             imageUrl: url,
-            fit: BoxFit.contain,
+            fit: BoxFit.cover,
+            imageBuilder: (context, imageProvider) =>
+                _imageBuilder(imageProvider),
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                _loadingWidget()),
+      );
+
+  Widget _imageBuilder(ImageProvider<Object> image) => _markContainer(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: image,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       );
 
-  Widget _markContainer({Widget? child}) => Container(
-        width: height.h,
-        height: width.h,
-        margin: margin,
-        padding: padding,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.15),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 5.h), // changes position of shadow
-            ),
-          ],
+  Widget _markContainer({Widget? child}) => ClipRRect(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(15),
         ),
-        child: child,
+        child: Container(
+          width: size.height.h,
+          height: size.width.h,
+          margin: margin,
+          padding: padding,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.15),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: Offset(0, 5.h), // changes position of shadow
+              ),
+            ],
+          ),
+          child: child,
+        ),
+      );
+
+  Widget _loadingWidget() =>
+      loadingWidget ??
+      ShimmerWidget(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          height: size.height.h,
+          width: size.width.w,
+        ),
       );
 }

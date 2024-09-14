@@ -14,6 +14,7 @@ class ModelsController extends GetxController {
   List<Model> get models => _models;
 
   Future<List<Model>> _loadModels(Mark mark) async {
+    log("load models");
     _emitLoadingState();
     dio = Dio();
     FiltersController.to.resetFilters();
@@ -50,9 +51,8 @@ class ModelsController extends GetxController {
 
   Future<List<Model>> _getModels() async {
     try {
-      log("$baseUrl/model");
       Response response =
-          await dio.get("$baseUrl/models", data: {"id": mark.id});
+          await dio.post("$baseUrl/models", data: {"id": mark.id});
 
       List<Model> modelsFromResponse = modelsFromJson(response.data);
       return modelsFromResponse;
