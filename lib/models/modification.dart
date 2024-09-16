@@ -30,4 +30,36 @@ class Modification {
         "offers-price-to": offersPriceTo,
         "group-name": groupName,
       };
+
+  Future<CarSpecifications?> loadCarSpecifications() async {
+    try {
+      if (carSpecifications?.complectationId != null) return carSpecifications;
+
+      Response response = await Dio()
+          .post("$baseUrl/specifications", data: {"id": complectationId});
+
+      carSpecifications = CarSpecifications.fromJson(response.data.first);
+
+      return carSpecifications;
+    } catch (error) {
+      logW(error);
+      rethrow;
+    }
+  }
+
+  Future<CarOptions?> loadCarOptions() async {
+    try {
+      if (carOptions?.complectationId != null) return carOptions;
+
+      Response response = await Dio()
+          .post("$baseUrl/specifications", data: {"id": complectationId});
+
+      carOptions = CarOptions.fromJson(response.data.first);
+
+      return carOptions;
+    } catch (error) {
+      logW(error);
+      rethrow;
+    }
+  }
 }

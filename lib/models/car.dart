@@ -14,8 +14,7 @@ class Car {
     required this.model,
     required this.generation,
     required this.configuration,
-    required this.modifications,
-    required this.selectedModification,
+    this.modifications = const <Modification>[],
     this.isDownloaded = false,
   });
 
@@ -39,8 +38,34 @@ class Car {
       modifications: (json['modifications'] as List)
           .map((mod) => Modification.fromJson(mod))
           .toList(),
-      selectedModification: Modification.fromJson(json['selectedModification']),
     );
+  }
+
+  Future<List<Modification>> loadModifications() async {
+    try {
+      if (modifications.isNotEmpty) return modifications;
+
+      Response response = await Dio()
+          .post("$baseUrl/modifications", data: {"id": configuration.id});
+
+      modifications = (response.data as List)
+          .map((mod) => Modification.fromJson(mod))
+          .toList();
+      int i = 0;
+      for (Modification modification in modifications) {
+        await modification.loadCarSpecifications();
+        i = i + 1;
+        logW("loaded $i form ${modifications.length}");
+        await modification.loadCarOptions();
+      }
+
+      selectedModification = modifications.first;
+
+      return modifications;
+    } catch (error) {
+      logW(error);
+      rethrow;
+    }
   }
 
   Car copyWith({
@@ -57,7 +82,6 @@ class Car {
       generation: generation ?? this.generation,
       configuration: configuration ?? this.configuration,
       modifications: modifications ?? this.modifications,
-      selectedModification: selectedModification ?? this.selectedModification,
     );
   }
 

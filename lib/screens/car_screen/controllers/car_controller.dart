@@ -42,9 +42,11 @@ class CarController extends GetxController {
 
       _car.value = loadingCar;
 
-      if (!isCarAlreadyLoaded) await loadSpecs();
+      log("loading!");
 
-      _car.value!.selectedModification = car.modifications.first;
+      if (!isCarAlreadyLoaded) await _car.value!.loadModifications();
+
+      log("downloaded!");
 
       _car.value!.isDownloaded = true;
 
@@ -56,14 +58,14 @@ class CarController extends GetxController {
     }
   }
 
-  Future<void> loadSpecs() async {
-    for (int i = 0; i < car.modifications.length; i++) {
-      final specs = await _getSpecs(car.modifications[i].complectationId ?? "");
-      _car.value!.modifications[i].carOptions = _getOptions(specs["options"]);
-      _car.value!.modifications[i].carSpecifications =
-          _getSpecifications(specs["specifications"]);
-    }
-  }
+  // Future<void> loadSpecs() async {
+  //   for (int i = 0; i < car.modifications.length; i++) {
+  //     final specs = await _getSpecs(car.modifications[i].complectationId ?? "");
+  //     _car.value!.modifications[i].carOptions = _getOptions(specs["options"]);
+  //     _car.value!.modifications[i].carSpecifications =
+  //         _getSpecifications(specs["specifications"]);
+  //   }
+  // }
 
   void selectModification(Modification modification) =>
       _car.update((car) => car?.selectedModification = modification);

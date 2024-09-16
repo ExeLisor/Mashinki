@@ -244,21 +244,11 @@ class CarScreen extends StatelessWidget {
 
   Widget _carImage() => Stack(
         children: [
-          ClipRRect(
-            child: Obx(
-              () => CachedNetworkImage(
-                imageUrl:
-                    "$baseUrl/image/${CarController.to.car.configuration.id}",
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => SizedBox(
-                  height: 300.h,
-                  child: const Center(
-                    child: Icon(Icons.error),
-                  ),
-                ),
-              ),
-            ),
+          ImageContainer(
+            imageData: ImageData.photo(
+                id: CarController.to.car.configuration.id ?? ""),
+            height: 300,
+            width: double.infinity,
           ),
           _appBarRow(),
         ],

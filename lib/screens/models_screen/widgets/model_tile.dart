@@ -19,12 +19,12 @@ class ModelTile extends StatelessWidget {
   Widget build(BuildContext context) => GestureDetector(
         onTap: () {
           Car car = Car(
-              mark: ModelsController.to.mark,
-              model: model,
-              generation: generation,
-              configuration: configuration,
-              modifications: configuration.modifications ?? [],
-              selectedModification: (configuration.modifications ?? []).first);
+            mark: ModelsController.to.mark,
+            model: model,
+            generation: generation,
+            configuration: configuration,
+            modifications: configuration.modifications ?? [],
+          );
           CarController.to.openCarPage(car, isLoadCar: true);
         },
         child: Container(

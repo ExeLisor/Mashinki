@@ -4,7 +4,8 @@ class ImageContainer extends StatelessWidget {
   const ImageContainer(
       {super.key,
       required this.imageData,
-      this.size = const Size(75, 75),
+      this.height = 75,
+      this.width = 75,
       this.margin,
       this.padding,
       this.function,
@@ -12,7 +13,8 @@ class ImageContainer extends StatelessWidget {
 
   final ImageData imageData;
 
-  final Size size;
+  final double width;
+  final double height;
 
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
@@ -61,8 +63,8 @@ class ImageContainer extends StatelessWidget {
           Radius.circular(15),
         ),
         child: Container(
-          width: size.height.h,
-          height: size.width.h,
+          width: width.h,
+          height: height.h,
           margin: margin,
           padding: padding,
           decoration: BoxDecoration(
@@ -89,8 +91,8 @@ class ImageContainer extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
           ),
-          height: size.height.h,
-          width: size.width.w,
+          height: height.h,
+          width: width.w,
         ),
       );
 }
