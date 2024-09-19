@@ -42,11 +42,7 @@ class CarController extends GetxController {
 
       _car.value = loadingCar;
 
-      log("loading!");
-
       if (!isCarAlreadyLoaded) await _car.value!.loadCar();
-
-      log("downloaded!");
 
       _car.value!.isDownloaded = true;
 
@@ -58,56 +54,19 @@ class CarController extends GetxController {
     }
   }
 
-  // Future<void> loadSpecs() async {
-  //   for (int i = 0; i < car.modifications.length; i++) {
-  //     final specs = await _getSpecs(car.modifications[i].complectationId ?? "");
-  //     _car.value!.modifications[i].carOptions = _getOptions(specs["options"]);
-  //     _car.value!.modifications[i].carSpecifications =
-  //         _getSpecifications(specs["specifications"]);
-  //   }
-  // }
-
   Future<void> selectModification(Modification modification) async {
-    _car.update((car) => car?.selectedModification.isLoading = true);
-    modification.isLoading = true;
-    await modification.loadCarSpecifications();
-    await modification.loadCarOptions();
-    modification.isLoading = false;
-
-    _car.update((car) => car?.selectedModification = modification);
-  }
-
-  CarOptions? _getOptions(List data) {
-    if (data.isEmpty) return null;
-
-    CarOptions options = CarOptions.fromJson(data.first);
-    return options;
-  }
-
-  CarSpecifications _getSpecifications(List data) {
-    CarSpecifications specifications = CarSpecifications.fromJson(data.first);
-    return specifications;
-  }
-
-  Future _getSpecs(String complecationId) async {
     try {
-      Response response = await dio.get("$baseUrl/specs/$complecationId");
+      _car.update((car) => car?.selectedModification.isLoading = true);
 
-      return response.data;
-    } on DioException catch (error) {
-      switch (error.type) {
-        case DioExceptionType.connectionError:
-        default:
-          _emitErrorState();
-          await Future.delayed(const Duration(seconds: 5));
-          await _getSpecs(complecationId);
-      }
+      await modification.loadCarSpecifications();
+      await modification.loadCarOptions();
+
+      modification.isLoading = false;
+
+      _car.update((car) => car?.selectedModification = modification);
+    } catch (error) {
+      logW(error);
       rethrow;
-    } catch (e) {
-      logW(e);
-      _emitErrorState();
-
-      return false;
     }
   }
 

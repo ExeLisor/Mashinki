@@ -12,13 +12,12 @@ class CharacteristicsWidget extends StatelessWidget {
       child: Obx(() {
         Modification modification = CarController.to.car.selectedModification;
 
-        if (modification.isLoading) return const CircularProgressIndicator();
         final CarSpecifications specs = modification.carSpecifications!;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _modificationTitle(),
+            const ModificationTitleWidget(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -185,31 +184,6 @@ class CharacteristicsWidget extends StatelessWidget {
         ),
       );
 
-  Widget _modificationTitle() => Obx(
-        () {
-          Modification modification = CarController.to.car.selectedModification;
-          CarSpecifications specification = modification.carSpecifications!;
-          String transmission = getTransmissionAbb(specification.transmission);
-
-          int? power = specification.horsePower;
-          double? volume = specification.volumeLitres;
-          String privod = specification.drive == "полный" ? "4WD" : "";
-          return Container(
-            margin: EdgeInsets.only(bottom: 20.h),
-            child: Text(
-              "${modification.groupName ?? ""} $volume $transmission $power $privod"
-                  .trim(),
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18.fs,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        },
-      );
-
   Widget _detailsTile(String spec, String value, {bool isSmall = false}) =>
       Container(
         padding: EdgeInsets.symmetric(horizontal: 11.h),
@@ -329,4 +303,51 @@ class CharacteristicsWidget extends StatelessWidget {
         {"Евро-класс": specs.emissionEuroClass},
         {"Выбросы СО2 (г/км)": specs.fuelEmission},
       ];
+}
+
+class ModificationTitleWidget extends StatelessWidget {
+  const ModificationTitleWidget({super.key});
+
+  Widget _modificationTitle() {
+    Modification modification = CarController.to.car.selectedModification;
+    CarSpecifications specification = modification.carSpecifications!;
+    String transmission = getTransmissionAbb(specification.transmission);
+
+    int? power = specification.horsePower;
+    double? volume = specification.volumeLitres;
+    String privod = specification.drive == "полный" ? "4WD" : "";
+
+    return Container(
+      margin: EdgeInsets.only(bottom: 20.h),
+      child: Text(
+        "${modification.groupName ?? ""} $volume $transmission $power $privod"
+            .trim(),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18.fs,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+
+  Widget _loadingTitleWidget() => ShimmerWidget(
+        child: Container(
+          margin: EdgeInsets.only(bottom: 20.h),
+          height: 24.fs,
+          width: 180.w,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(4))),
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) => Obx(() {
+        Modification modification = CarController.to.car.selectedModification;
+        return modification.isLoading
+            ? _loadingTitleWidget()
+            : _modificationTitle();
+      });
 }
