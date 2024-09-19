@@ -193,14 +193,10 @@ class ModificationGroupTile extends StatelessWidget {
   }) {
     return Obx(
       () {
-        CarSpecifications specification = modification.carSpecifications!;
-
-        String transmission = getTransmissionAbb(specification.transmission);
-        String power = specification.horsePower.toString();
-        double? volume = specification.volumeLitres;
-
         bool isSelected =
             CarController.to.car.selectedModification == modification;
+
+        List<String> title = modification.title!.split(" ");
         return GestureDetector(
           onTap: () {
             CarController.to.selectModification(modification);
@@ -223,7 +219,8 @@ class ModificationGroupTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${volume == 0 ? '' : volume} $transmission',
+                      //volume-litres transmission
+                      "${title[0]} ${title[1]}",
                       style: TextStyle(
                         color: isSelected ? Colors.white : primaryColor,
                         fontSize: 18.fs,
@@ -235,7 +232,8 @@ class ModificationGroupTile extends StatelessWidget {
                       width: 23.w,
                     ),
                     Text(
-                      '$power л.с.',
+                      // horse power
+                      title[2],
                       style: TextStyle(
                         color:
                             isSelected ? Colors.white : const Color(0xFF7974FF),

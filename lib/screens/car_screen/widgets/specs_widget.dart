@@ -10,8 +10,11 @@ class CharacteristicsWidget extends StatelessWidget {
       width: Get.width,
       padding: EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h),
       child: Obx(() {
-        final CarSpecifications specs =
-            CarController.to.car.selectedModification.carSpecifications!;
+        Modification modification = CarController.to.car.selectedModification;
+
+        if (modification.isLoading) return const CircularProgressIndicator();
+        final CarSpecifications specs = modification.carSpecifications!;
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

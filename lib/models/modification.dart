@@ -5,23 +5,27 @@ class Modification {
   final int? offersPriceFrom;
   final int? offersPriceTo;
   final String? groupName;
+  final String? title;
   CarOptions? carOptions;
   CarSpecifications? carSpecifications;
+  bool isLoading;
 
-  Modification({
-    this.complectationId,
-    this.offersPriceFrom,
-    this.offersPriceTo,
-    this.groupName,
-    this.carOptions,
-    this.carSpecifications,
-  });
+  Modification(
+      {this.complectationId,
+      this.offersPriceFrom,
+      this.offersPriceTo,
+      this.groupName,
+      this.carOptions,
+      this.carSpecifications,
+      this.title,
+      this.isLoading = true});
 
   factory Modification.fromJson(Map<String, dynamic> json) => Modification(
         complectationId: json["complectation-id"],
         offersPriceFrom: json["offers-price-from"],
         offersPriceTo: json["offers-price-to"],
         groupName: json["group-name"],
+        title: json["modification_title"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,6 +33,7 @@ class Modification {
         "offers-price-from": offersPriceFrom,
         "offers-price-to": offersPriceTo,
         "group-name": groupName,
+        "modification_title": title
       };
 
   Future<CarSpecifications?> loadCarSpecifications() async {

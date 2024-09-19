@@ -135,15 +135,9 @@ class FavoriteTile extends StatelessWidget {
 
   Widget _modificationTitle() {
     Modification modification = car.selectedModification;
-    CarSpecifications specification = modification.carSpecifications!;
-    String transmission = getTransmissionAbb(specification.transmission);
 
-    int? power = specification.horsePower;
-    double? volume = specification.volumeLitres;
-    String privod = specification.drive == "полный" ? "4WD" : "";
     return Text(
-      "${modification.groupName ?? ""} $volume $transmission $power $privod"
-          .trim(),
+      "${modification.groupName ?? ""} ${modification.title}".trim(),
       style: TextStyle(
           color: Colors.black, fontSize: 18.fs, fontWeight: FontWeight.bold),
     );

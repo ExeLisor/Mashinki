@@ -44,7 +44,7 @@ class CarController extends GetxController {
 
       log("loading!");
 
-      if (!isCarAlreadyLoaded) await _car.value!.loadModifications();
+      if (!isCarAlreadyLoaded) await _car.value!.loadCar();
 
       log("downloaded!");
 
@@ -67,8 +67,15 @@ class CarController extends GetxController {
   //   }
   // }
 
-  void selectModification(Modification modification) =>
-      _car.update((car) => car?.selectedModification = modification);
+  Future<void> selectModification(Modification modification) async {
+    _car.update((car) => car?.selectedModification.isLoading = true);
+    modification.isLoading = true;
+    await modification.loadCarSpecifications();
+    await modification.loadCarOptions();
+    modification.isLoading = false;
+
+    _car.update((car) => car?.selectedModification = modification);
+  }
 
   CarOptions? _getOptions(List data) {
     if (data.isEmpty) return null;

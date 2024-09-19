@@ -148,13 +148,13 @@ Future<void> openResource(ResourceType type) async {
 
   switch (type) {
     case ResourceType.google:
-      url = "$youTubeSearchUrl=$searchText";
+      url = "$googleSearchUrl=$searchText";
       break;
     case ResourceType.pinterest:
       url = "$pinSearchUrl=$searchText";
       break;
     case ResourceType.youtube:
-      url = "$googleSearchUrl=$searchText";
+      url = "$youTubeSearchUrl=$searchText";
       break;
     case ResourceType.tiktok:
       url = "$tikTokSearchUrl=$searchText";
