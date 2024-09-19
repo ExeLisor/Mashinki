@@ -21,7 +21,7 @@ class CharacteristicsWidget extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _carSizeWidget(specs),
+                const CarDemensions(),
                 SizedBox(
                   width: 23.w,
                 ),
@@ -61,11 +61,14 @@ class CharacteristicsWidget extends StatelessWidget {
 
   Widget _detailsColumnFirst(CarSpecifications specs) => Column(
         children: [
-          _detailsTile("Объём", specs.volumeLitres.toString(), isSmall: true),
-          SizedBox(
-            height: 10.h,
-          ),
-          _detailsTile("Расход", specs.consumptionMixed.toString(),
+          DetailsTile(
+              spec: "Объём",
+              value: specs.volumeLitres.toString(),
+              isSmall: true),
+          SizedBox(height: 10.h),
+          DetailsTile(
+              spec: "Расход",
+              value: specs.consumptionMixed.toString(),
               isSmall: true),
         ],
       );
@@ -75,15 +78,12 @@ class CharacteristicsWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _detailsTile("Коробка", specs.transmission),
-            SizedBox(
-              width: 19.w,
-            ),
-            _detailsTile("Тип двигателя", specs.engineType),
-            SizedBox(
-              width: 19.w,
-            ),
-            _detailsTile("Топливо", specs.petrolType, isSmall: true),
+            DetailsTile(spec: "Коробка", value: specs.transmission),
+            SizedBox(width: 19.w),
+            DetailsTile(spec: "Тип двигателя", value: specs.engineType),
+            SizedBox(width: 19.w),
+            DetailsTile(
+                spec: "Топливо", value: specs.petrolType, isSmall: true),
           ],
         ),
       );
@@ -92,139 +92,10 @@ class CharacteristicsWidget extends StatelessWidget {
         padding: EdgeInsets.only(right: 25.w),
         child: Row(
           children: [
-            _detailsTile("Мощность", "${specs.horsePower}"),
-            SizedBox(
-              width: 19.w,
-            ),
-            _detailsTile("Привод", specs.drive),
-            SizedBox(
-              width: 19.w,
-            ),
-          ],
-        ),
-      );
-
-  Widget _carSizeWidget(CarSpecifications specs) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _carHeight(specs),
-              SizedBox(
-                width: 15.h,
-              ),
-              _carImage()
-            ],
-          ),
-          SizedBox(
-            height: 15.h,
-          ),
-          _carLenght(specs)
-        ],
-      );
-
-  Widget _carImage() => SvgPicture.asset(
-        sedanImage,
-        height: 80.h,
-        fit: BoxFit.fill,
-      );
-
-  Widget _carHeight(CarSpecifications specs) => Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _arrow(0),
-          SizedBox(
-            height: 8.h,
-          ),
-          _carImageSize(specs.height.toString()),
-          SizedBox(
-            height: 8.h,
-          ),
-          _arrow(180)
-        ],
-      );
-  Widget _carLenght(CarSpecifications specs) => Padding(
-        padding: EdgeInsets.only(left: 30.w),
-        child: Row(
-          children: [
-            _arrow(180, isShort: false),
-            SizedBox(
-              width: 8.w,
-            ),
-            _carImageSize(specs.length.toString(), isHeight: false),
-            SizedBox(
-              width: 8.w,
-            ),
-            _arrow(0, isShort: false)
-          ],
-        ),
-      );
-
-  Widget _carImageSize(String size, {bool isHeight = true}) => RotatedBox(
-        quarterTurns: isHeight ? -1 : 0,
-        child: Text(
-          size,
-          style: TextStyle(
-            color: primaryColor,
-            fontSize: 13.fs,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w400,
-            height: 0.0,
-          ),
-        ),
-      );
-
-  Widget _arrow(double rotation, {bool isShort = true}) => RotationTransition(
-        turns: AlwaysStoppedAnimation(rotation / 360),
-        child: SvgPicture.asset(
-          isShort ? shortArrow : longArrow,
-          width: isShort ? null : 89.w,
-        ),
-      );
-
-  Widget _detailsTile(String spec, String value, {bool isSmall = false}) =>
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 11.h),
-        height: 67.h,
-        width: isSmall ? 80.w : 122.w,
-        decoration: BoxDecoration(
-          color: const Color(0xffF3F3F3),
-          borderRadius: BorderRadius.circular(20.h),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 11.h,
-            ),
-            Text(
-              spec,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: primaryColor,
-                fontSize: 13.fs,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            Text(
-              value,
-              textScaler: const TextScaler.linear(0.85),
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 14.fs,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            SizedBox(
-              height: 11.h,
-            ),
+            DetailsTile(spec: "Мощность", value: "${specs.horsePower}"),
+            SizedBox(width: 19.w),
+            DetailsTile(spec: "Привод", value: specs.drive),
+            SizedBox(width: 19.w),
           ],
         ),
       );
@@ -232,16 +103,6 @@ class CharacteristicsWidget extends StatelessWidget {
   Widget _divider() => const Divider(
         color: primaryColor,
       );
-
-  String transmissionAbbriviature(String transmission) {
-    switch (transmission) {
-      case "вариатор":
-        return "CVT";
-
-      default:
-        return "";
-    }
-  }
 
   List _mainSpecs(CarSpecifications specs) => [
         {"Максимальная скорость (км/ч)": specs.maxSpeed},
@@ -319,14 +180,17 @@ class ModificationTitleWidget extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.only(bottom: 20.h),
-      child: Text(
-        "${modification.groupName ?? ""} $volume $transmission $power $privod"
-            .trim(),
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 18.fs,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w600,
+      child: SizedBox(
+        height: 20.h,
+        child: Text(
+          "${modification.groupName ?? ""} $volume $transmission $power $privod"
+              .trim(),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18.fs,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );
@@ -335,19 +199,196 @@ class ModificationTitleWidget extends StatelessWidget {
   Widget _loadingTitleWidget() => ShimmerWidget(
         child: Container(
           margin: EdgeInsets.only(bottom: 20.h),
-          height: 24.fs,
+          height: 20.h,
           width: 180.w,
           decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(4))),
+              borderRadius: BorderRadius.all(Radius.circular(8))),
         ),
       );
 
   @override
+  Widget build(BuildContext context) => Obx(
+        () {
+          Modification modification = CarController.to.car.selectedModification;
+          return modification.isLoading
+              ? _loadingTitleWidget()
+              : _modificationTitle();
+        },
+      );
+}
+
+class CarDemensions extends StatelessWidget {
+  const CarDemensions({super.key});
+
+  @override
+  Widget build(BuildContext context) => Obx(
+        () {
+          Modification modification = CarController.to.car.selectedModification;
+
+          final CarSpecifications specs = modification.carSpecifications!;
+          return modification.isLoading
+              ? _loadingWidget()
+              : _carDemensions(specs);
+        },
+      );
+  Widget _loadingWidget() => ShimmerWidget(
+        child: Container(
+          height: 120.h,
+          width: 258.w,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8))),
+        ),
+      );
+
+  Widget _carDemensions(CarSpecifications specs) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              _carHeight(specs),
+              SizedBox(
+                width: 15.h,
+              ),
+              _carImage()
+            ],
+          ),
+          SizedBox(
+            height: 15.h,
+          ),
+          _carLenght(specs)
+        ],
+      );
+
+  Widget _carImage() => SvgPicture.asset(
+        sedanImage,
+        height: 80.h,
+        fit: BoxFit.fill,
+      );
+
+  Widget _carHeight(CarSpecifications specs) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _arrow(0),
+          SizedBox(
+            height: 8.h,
+          ),
+          _carImageSize(specs.height.toString()),
+          SizedBox(
+            height: 8.h,
+          ),
+          _arrow(180)
+        ],
+      );
+  Widget _carLenght(CarSpecifications specs) => Padding(
+        padding: EdgeInsets.only(left: 30.w),
+        child: Row(
+          children: [
+            _arrow(180, isShort: false),
+            SizedBox(
+              width: 8.w,
+            ),
+            _carImageSize(specs.length.toString(), isHeight: false),
+            SizedBox(
+              width: 8.w,
+            ),
+            _arrow(0, isShort: false)
+          ],
+        ),
+      );
+
+  Widget _arrow(double rotation, {bool isShort = true}) => RotationTransition(
+        turns: AlwaysStoppedAnimation(rotation / 360),
+        child: SvgPicture.asset(
+          isShort ? shortArrow : longArrow,
+          width: isShort ? null : 89.w,
+        ),
+      );
+
+  Widget _carImageSize(String size, {bool isHeight = true}) => RotatedBox(
+        quarterTurns: isHeight ? -1 : 0,
+        child: Text(
+          size,
+          style: TextStyle(
+            color: primaryColor,
+            fontSize: 13.fs,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w400,
+            height: 0.0,
+          ),
+        ),
+      );
+}
+
+class DetailsTile extends StatelessWidget {
+  const DetailsTile(
+      {super.key,
+      required this.spec,
+      required this.value,
+      this.isSmall = false});
+
+  final String spec;
+  final String value;
+  final bool isSmall;
+
+  @override
   Widget build(BuildContext context) => Obx(() {
         Modification modification = CarController.to.car.selectedModification;
-        return modification.isLoading
-            ? _loadingTitleWidget()
-            : _modificationTitle();
+
+        return modification.isLoading ? _loadingWidget() : _detailsTile();
       });
+
+  Widget _loadingWidget() => ShimmerWidget(
+        child: _detailContainer(),
+      );
+
+  Widget _detailContainer({Widget? child}) => Container(
+      padding: EdgeInsets.symmetric(horizontal: 11.h),
+      height: 67.h,
+      width: isSmall ? 80.w : 122.w,
+      decoration: BoxDecoration(
+        color: const Color(0xffF3F3F3),
+        borderRadius: BorderRadius.circular(20.h),
+      ),
+      child: child);
+
+  Widget _detailsTile() => _detailContainer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 11.h,
+            ),
+            Text(
+              spec,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: primaryColor,
+                fontSize: 13.fs,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
+            Text(
+              value,
+              textScaler: const TextScaler.linear(0.85),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14.fs,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            SizedBox(
+              height: 11.h,
+            ),
+          ],
+        ),
+      );
 }
