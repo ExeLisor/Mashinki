@@ -235,39 +235,54 @@ class SpecsBlockWidget extends StatelessWidget {
         ),
       );
 
-  Widget _specsWidget(String specs, String value) => Padding(
-        padding: EdgeInsets.only(right: 25.w, bottom: 15.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 200.w,
-              child: Text(
-                '$specs:',
-                maxLines: 2,
-                style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14.fs,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
+  Widget _specsWidget(String specs, String value) => Obx(() {
+        Modification modification = CarController.to.car.selectedModification;
+
+        return Padding(
+          padding: EdgeInsets.only(right: 25.w, bottom: 15.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 200.w,
+                child: Text(
+                  '$specs:',
+                  maxLines: 2,
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14.fs,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 140.w,
-              child: Text(
-                checkStringOnEmptyOrZero(value),
-                textAlign: TextAlign.right,
-                softWrap: true, // разрешаем переносить текст
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.fs,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            )
-          ],
+              modification.isLoading
+                  ? _loadingWidget()
+                  : SizedBox(
+                      width: 140.w,
+                      child: Text(
+                        checkStringOnEmptyOrZero(value),
+                        textAlign: TextAlign.right,
+                        softWrap: true, // разрешаем переносить текст
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.fs,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    )
+            ],
+          ),
+        );
+      });
+
+  Widget _loadingWidget() => ShimmerWidget(
+        child: Container(
+          height: 24.h,
+          width: 80.w,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8)),
         ),
       );
 
