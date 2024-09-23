@@ -31,6 +31,20 @@ dependencies:
   badges: ^3.1.2
   firebase_storage: ^12.2.0
   firebase_app_check: ^0.3.1+1
+  flutter_native_splash: ^2.4.1
+
+ 
+
+flutter_native_splash:
+  image: "assets/icons/splash_screen.png"
+  color: "#0034f7"
+  color_dark: "#0034f7"
+
+  android_12:
+    image: "assets/icons/splash_screen.png"
+    icon_background_color:   "#0034f7"  
+    icon_background_color_dark:   "#0034f7"
+
 
 dev_dependencies:
   flutter_test:
