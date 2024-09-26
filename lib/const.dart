@@ -3,6 +3,11 @@ import 'package:autoverse/exports.dart';
 const adUnitIdAndroid = 'ca-app-pub-3940256099942544/6300978111';
 const adUnitIdIOS = 'ca-app-pub-3940256099942544/2934735716';
 
+const supabaseUrl = "https://dyvlvmfugzgyviyewyul.supabase.co";
+
+const supabaseAnonKey =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5dmx2bWZ1Z3pneXZpeWV3eXVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjUyODE4ODksImV4cCI6MjA0MDg1Nzg4OX0.Dyr4zLYWabDr8AHdJEwGNHThHQxlmtn2_ZS68rR9kqs";
+
 const baseUrl = 'https://dyvlvmfugzgyviyewyul.supabase.co/functions/v1';
 const welcomeImageAsset = 'assets/images/welcome.png';
 const manImageAsset = 'assets/images/man.png';
