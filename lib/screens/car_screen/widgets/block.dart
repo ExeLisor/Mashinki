@@ -13,10 +13,38 @@ class DropSpecsBlockWidget extends StatefulWidget {
 
 class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
   bool isOpened = true;
+  int count = 0;
 
   void close() => setState(() => isOpened = false);
 
   void open() => setState(() => isOpened = true);
+
+  @override
+  void initState() {
+    super.initState();
+    bool hasOptions = hasValidOption();
+    if (!hasOptions) close();
+    // if (!hasOptions) count = countOptions();
+  }
+
+  bool hasValidOption() => widget.specs.any((option) {
+        return option.values.any((value) => value != "❌");
+      });
+  int countOptions() {
+    int validCount = 0;
+    log(widget.specs);
+    for (var spec in widget.specs) {
+      log(spec);
+      for (var value in spec.values) {
+        if (value != "❌") {
+          validCount++;
+        }
+      }
+    }
+
+    setState(() => count = validCount);
+    return validCount;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +187,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
       );
 
   Widget _count() => Text(
-        '${widget.specs.length} опций',
+        '$count опций',
         style: TextStyle(
           color: const Color(0xFF848484),
           fontSize: 14.fs,
@@ -168,17 +196,6 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
         ),
       );
 }
-
-// class OptionsController extends GetxController{
-//   static OptionsController get to => Get.find();
-
-//   final RxBool isOpened
-// }
-
-// class OptionsBinging extends Bindings{
-//   @override
-//   void dependencies() => Get.lazyPut(()=> OptionsController());
-// }
 
 class SpecsBlockWidget extends StatelessWidget {
   const SpecsBlockWidget({super.key, required this.title, required this.specs});

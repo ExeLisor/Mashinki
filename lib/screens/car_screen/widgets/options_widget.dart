@@ -3,14 +3,12 @@ import 'package:autoverse/exports.dart';
 class OptionsWidget extends StatelessWidget {
   OptionsWidget({super.key});
 
-  final CarOptions options =
-      CarController.to.car.selectedModification.carOptions ?? CarOptions();
-
   @override
   Widget build(BuildContext context) => Obx(() {
-        final Modification modification =
-            CarController.to.car.selectedModification;
-        if (modification.isLoading) return const CircularProgressIndicator();
+        final CarOptions options =
+            CarController.to.car.selectedModification.carOptions ??
+                CarOptions();
+        if (!options.isLoaded) return const CircularProgressIndicator();
         return Container(
           color: Colors.white,
           width: Get.width,
@@ -68,6 +66,9 @@ class OptionsWidget extends StatelessWidget {
       ),
     );
   }
+
+  final CarOptions options =
+      CarController.to.car.selectedModification.carOptions ?? CarOptions();
 
   List<Map<String, dynamic>> _style() => [
         {"Обвес": getValue(options.bodyKit)},

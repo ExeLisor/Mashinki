@@ -85,7 +85,7 @@ class Car {
       selectedModification = modifications.first;
 
       await selectedModification.loadCarSpecifications();
-      await selectedModification.loadCarOptions();
+
       selectedModification.isLoading = false;
 
       return modifications;

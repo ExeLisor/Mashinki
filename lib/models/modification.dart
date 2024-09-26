@@ -39,7 +39,7 @@ class Modification {
   Future<CarSpecifications?> loadCarSpecifications() async {
     try {
       if (carSpecifications?.complectationId != null) return carSpecifications;
-
+      log("load car specifications");
       Response response = await Dio()
           .post("$baseUrl/specifications", data: {"id": complectationId});
 
@@ -54,12 +54,17 @@ class Modification {
 
   Future<CarOptions?> loadCarOptions() async {
     try {
+      CarController controller = CarController.to;
+      if (carOptions?.isLoaded == true) return carOptions;
       if (carOptions?.complectationId != null) return carOptions;
-
-      Response response = await Dio()
-          .post("$baseUrl/specifications", data: {"id": complectationId});
-
+      controller.updateCarOptions(carOptions ?? CarOptions(isLoaded: false));
+      Response response =
+          await Dio().post("$baseUrl/options", data: {"id": complectationId});
+      if ((response.data as List).isEmpty) return CarOptions(isLoaded: true);
       carOptions = CarOptions.fromJson(response.data.first);
+      carOptions?.isLoaded = true;
+
+      controller.updateCarOptions(carOptions ?? CarOptions(isLoaded: true));
 
       return carOptions;
     } catch (error) {

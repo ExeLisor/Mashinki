@@ -59,7 +59,6 @@ class CarController extends GetxController {
       _car.update((car) => car?.selectedModification.isLoading = true);
 
       await modification.loadCarSpecifications();
-      await modification.loadCarOptions();
 
       modification.isLoading = false;
 
@@ -69,6 +68,9 @@ class CarController extends GetxController {
       rethrow;
     }
   }
+
+  void updateCarOptions(CarOptions options) =>
+      _car.update((car) => car?.selectedModification.carOptions = options);
 
   void _emitSussessState() => state.value = Status.success;
   void _emitLoadingState() => state.value = Status.loading;

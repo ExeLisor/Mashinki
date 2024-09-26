@@ -1,5 +1,6 @@
 class CarOptions {
   final String? complectationId;
+  bool isLoaded;
   final bool alcantara;
   final bool blackRoof;
   final bool comboInterior;
@@ -161,6 +162,7 @@ class CarOptions {
   final bool steelWheels;
 
   CarOptions({
+    this.isLoaded = false,
     this.complectationId,
     this.alcantara = false,
     this.blackRoof = false,
