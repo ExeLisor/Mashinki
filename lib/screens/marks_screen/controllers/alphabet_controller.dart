@@ -12,6 +12,10 @@ class AlphabetController extends GetxController {
   final RxList<List<Mark>> _alphabetList = <List<Mark>>[].obs;
   final RxInt _highlightedIndex = 0.obs;
 
+  final RxBool _isLoading = true.obs;
+
+  bool get isLoading => _isLoading.value;
+
   ScrollController get horizontalController => _horizontalController.value;
   ItemScrollController get itemScrollController => _itemScrollController.value;
   ItemPositionsListener get itemPositionsListener =>
@@ -20,9 +24,10 @@ class AlphabetController extends GetxController {
   int get highlightedIndex => _highlightedIndex.value;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     itemPositionsListener.itemPositions.addListener(_updateHighlightedIndex);
+
     initAlphabetList();
   }
 
@@ -43,17 +48,23 @@ class AlphabetController extends GetxController {
     }
   }
 
-  void initAlphabetList() {
+  Future<void> initAlphabetList() async {
+    _isLoading.value = true;
+    _alphabetList.clear();
+
     List<Mark> popularMarks = _getPopularMarks();
     _alphabetList.add(popularMarks);
-    List<List<Mark>> groupedMarks = _getGroupedMarks();
+    List<List<Mark>> groupedMarks = await _getGroupedMarks();
     _alphabetList.addAll(groupedMarks);
+
+    _isLoading.value = false;
+    log("loaded: $isLoading");
     return;
   }
 
-  List<List<Mark>> _getGroupedMarks() {
+  Future<List<List<Mark>>> _getGroupedMarks() async {
     Map<String, List<Mark>> groupedBrands = {};
-    List<Mark> brands = _getAllMarks();
+    List<Mark> brands = await MarksController.to.getAllMarks();
     List<String> keys = [];
 
     for (var brand in brands) {

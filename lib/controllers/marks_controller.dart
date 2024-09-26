@@ -22,7 +22,6 @@ class MarksController extends GetxController {
   Future<bool> _initializeMarksController() async {
     try {
       popularMarks = await getOnlyPopularMarks();
-      marks = await getAllMarks();
 
       Get.put(MarksSearchController());
       state.value = MarksState.success;
@@ -38,9 +37,9 @@ class MarksController extends GetxController {
 
   Future<List<Mark>> getOnlyPopularMarks() async {
     try {
-      Response response =
-          await dio.post("$baseUrl/marks", data: {"popularOnly": 1});
-      List<Mark> popularMarksFromResponse = marksFromJson(response.data);
+      List<Map<String, dynamic>> data =
+          await SupabaseController.to.getPopularMarks();
+      List<Mark> popularMarksFromResponse = marksFromJson(data);
 
       return popularMarksFromResponse;
     } catch (e) {
@@ -53,9 +52,13 @@ class MarksController extends GetxController {
 
   Future<List<Mark>> getAllMarks() async {
     try {
-      Response response = await dio.get("$baseUrl/marks");
+      List<Map<String, dynamic>> data = await SupabaseController.to.getMarks();
 
-      List<Mark> marksFromResponse = marksFromJson(response.data);
+      List<Mark> marksFromResponse = marksFromJson(data);
+
+      marks = marksFromResponse;
+      log(marks.length);
+      update();
 
       return marksFromResponse;
     } catch (e) {

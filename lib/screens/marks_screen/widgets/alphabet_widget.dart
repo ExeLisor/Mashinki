@@ -91,29 +91,27 @@ class AlphabetWidget extends StatelessWidget {
           ),
         ),
       );
-  Widget _body() => Obx(
-        () => Expanded(
-          child: ScrollablePositionedList.builder(
-            itemScrollController: AlphabetController.to.itemScrollController,
-            itemPositionsListener: AlphabetController.to.itemPositionsListener,
-            itemCount: alphabet.length,
-            padding: EdgeInsets.only(bottom: 25.h),
-            itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.symmetric(horizontal: 17.w),
-                child: Column(
-                  children: [
-                    _header(alphabet[index]),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    MarksGrid(
-                      brands: AlphabetController.to.alphabetList[index],
-                    )
-                  ],
-                ),
-              );
-            },
+  Widget _body() => Obx(() => Expanded(
+      child: ScrollablePositionedList.builder(
+          itemScrollController: AlphabetController.to.itemScrollController,
+          itemPositionsListener: AlphabetController.to.itemPositionsListener,
+          itemCount: alphabet.length,
+          padding: EdgeInsets.only(bottom: 25.h),
+          itemBuilder: (context, index) => _alphabetGrid(index))));
+
+  Widget _alphabetGrid(int index) => Obx(
+        () => Container(
+          margin: EdgeInsets.symmetric(horizontal: 17.w),
+          child: Column(
+            children: [
+              _header(alphabet[index]),
+              SizedBox(
+                height: 20.h,
+              ),
+              AlphabetController.to.isLoading
+                  ? const LoadingMarksGrid()
+                  : MarksGrid(brands: AlphabetController.to.alphabetList[index])
+            ],
           ),
         ),
       );

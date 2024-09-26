@@ -28,3 +28,29 @@ class MarksGrid extends StatelessWidget {
     );
   }
 }
+
+class LoadingMarksGrid extends StatelessWidget {
+  const LoadingMarksGrid({super.key});
+
+  static const SliverGridDelegate _delegate =
+      SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 3,
+    mainAxisSpacing: 15.0,
+    crossAxisSpacing: 10.0,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<MarksController>(
+      builder: (controller) => GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: _delegate,
+        itemCount: 100,
+        itemBuilder: (context, index) {
+          return const LoadingMarkGridTile();
+        },
+      ),
+    );
+  }
+}

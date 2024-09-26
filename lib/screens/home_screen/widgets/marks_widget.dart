@@ -6,7 +6,9 @@ const double spacing = 25;
 class MarksWidget extends StatelessWidget {
   const MarksWidget({super.key});
 
-  void _navigateToMarksScreen() => Get.toNamed("/marks");
+  void _navigateToMarksScreen() {
+    Get.toNamed("/marks");
+  }
 
   @override
   Widget build(BuildContext context) {

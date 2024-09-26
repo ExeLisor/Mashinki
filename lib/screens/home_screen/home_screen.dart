@@ -9,7 +9,6 @@ class Home extends StatelessWidget {
       appBar: appBar(),
       body: const Navigator(
         initialRoute: '/home',
-        // onGenerateRoute: BarController.to.onGenerateRoute,
       ),
     );
   }
