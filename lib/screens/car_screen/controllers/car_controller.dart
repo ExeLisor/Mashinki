@@ -3,19 +3,12 @@ import 'package:autoverse/exports.dart';
 class CarController extends GetxController {
   static CarController get to => Get.find();
 
-  Dio dio = Dio();
   Rx<Status> state = Status.loading.obs;
 
   final Rxn<Car> _car = Rxn<Car>();
 
   Car get car => _car.value!;
   set car(Car value) => _car.value = value;
-
-  @override
-  void onClose() {
-    dio.close();
-    super.onClose();
-  }
 
   Future<Car> openCarPage(Car car, {bool isLoadCar = false}) async {
     _emitLoadingState();
@@ -71,6 +64,12 @@ class CarController extends GetxController {
 
   void updateCarOptions(CarOptions options) =>
       _car.update((car) => car?.selectedModification.carOptions = options);
+
+  void updateCarSpecifications(CarSpecifications specs) =>
+      _car.update((car) => car?.selectedModification.carSpecifications = specs);
+
+  void updateCarSelectedModification(Modification mod) =>
+      _car.update((car) => car?.selectedModification = mod);
 
   void _emitSussessState() => state.value = Status.success;
   void _emitLoadingState() => state.value = Status.loading;

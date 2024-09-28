@@ -71,7 +71,7 @@ class SupabaseController extends GetxController {
         .select(
             '*, specifications!inner(volume-litres, transmission, horse-power)')
         .eq('configuration_id', configurationId);
-    log(response);
+
     final modifications = response.map((modification) {
       final specification = modification['specifications'].first;
       final volumeLitres = double.tryParse(specification['volume-litres']);

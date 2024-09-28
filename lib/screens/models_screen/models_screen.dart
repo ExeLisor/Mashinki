@@ -107,7 +107,7 @@ class ModelsScreen extends StatelessWidget {
   }
 
   Widget _generations(Model model) => Column(
-      children: List.generate(model.generations.length ?? 0,
+      children: List.generate(model.generations.length,
           (index) => _configuration(model, model.generations[index])));
 
   Widget _configuration(Model model, Generation generation) {
@@ -231,7 +231,7 @@ class ModelWidget extends StatelessWidget {
         ),
       );
 
-  List<Widget> _generations() => List.generate(model.generations.length ?? 0,
+  List<Widget> _generations() => List.generate(model.generations.length,
       (index) => GenerationWidget(generation: model.generations[index]));
 }
 

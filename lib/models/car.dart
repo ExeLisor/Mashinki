@@ -6,7 +6,7 @@ class Car {
   Generation generation = Generation();
   Configuration configuration = Configuration();
   List<Modification> modifications = <Modification>[];
-  Modification selectedModification = Modification();
+  Modification selectedModification;
   String description;
   bool isDownloaded;
 
@@ -17,8 +17,9 @@ class Car {
     required this.configuration,
     this.description = "",
     this.modifications = const <Modification>[],
+    Modification? selectedModification,
     this.isDownloaded = false,
-  });
+  }) : selectedModification = selectedModification ?? Modification();
 
   Map<String, dynamic> toJson() {
     return {
@@ -79,7 +80,12 @@ class Car {
 
       await selectedModification.loadCarSpecifications();
 
+      log(selectedModification.carSpecifications?.complectationId);
+
       selectedModification.isLoading = false;
+
+      // CarController.to
+      //     .updateCarSpecifications(selectedModification.carSpecifications!);
 
       return modifications;
     } catch (error) {
@@ -93,7 +99,6 @@ class Car {
     Model? model,
     Generation? generation,
     Configuration? configuration,
-    List<Modification>? modifications,
     Modification? selectedModification,
   }) {
     return Car(
@@ -101,7 +106,7 @@ class Car {
       model: model ?? this.model,
       generation: generation ?? this.generation,
       configuration: configuration ?? this.configuration,
-      modifications: modifications ?? this.modifications,
+      selectedModification: selectedModification ?? this.selectedModification,
     );
   }
 }

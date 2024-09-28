@@ -38,7 +38,8 @@ class Modification {
         "offers-price-from": offersPriceFrom,
         "offers-price-to": offersPriceTo,
         "group-name": groupName,
-        "modification_title": title
+        "modification_title": title,
+        "car-specifications": carSpecifications,
       };
 
   Future<CarSpecifications?> loadCarSpecifications() async {

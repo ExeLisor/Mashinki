@@ -23,8 +23,8 @@ class ModelsBodySelectorController extends GetxController {
     List<Model> markModels = ModelsController.to.models;
     Set<String> bodyTypes = {};
     for (Model model in markModels) {
-      for (Generation generation in model.generations ?? []) {
-        for (Configuration configuration in generation.configurations ?? []) {
+      for (Generation generation in model.generations) {
+        for (Configuration configuration in generation.configurations) {
           bodyTypes.add(configuration.bodyType ?? "");
         }
       }
@@ -37,9 +37,9 @@ class ModelsBodySelectorController extends GetxController {
     List<Model> modelsWithSelectedBodyTypes = [];
     for (Model model in markModels) {
       List<Generation> generations = [];
-      for (Generation generation in model.generations ?? []) {
+      for (Generation generation in model.generations) {
         List<Configuration> configurations = [];
-        for (Configuration configuration in generation.configurations ?? []) {
+        for (Configuration configuration in generation.configurations) {
           if (selectedBodyTypes.contains(configuration.bodyType)) {
             generations.add(generation);
             configurations.add(configuration);
@@ -50,7 +50,7 @@ class ModelsBodySelectorController extends GetxController {
       }
 
       model.generations = generations;
-      if (model.generations!.isNotEmpty) modelsWithSelectedBodyTypes.add(model);
+      if (model.generations.isNotEmpty) modelsWithSelectedBodyTypes.add(model);
     }
     return modelsWithSelectedBodyTypes;
   }
