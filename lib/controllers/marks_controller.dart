@@ -37,11 +37,9 @@ class MarksController extends GetxController {
 
   Future<List<Mark>> getOnlyPopularMarks() async {
     try {
-      List<Map<String, dynamic>> data =
-          await SupabaseController.to.getPopularMarks();
-      List<Mark> popularMarksFromResponse = marksFromJson(data);
+      List<Mark> marks = await SupabaseController.to.getPopularMarks();
 
-      return popularMarksFromResponse;
+      return marks;
     } catch (e) {
       logW(e);
       await Future.delayed(const Duration(seconds: 2));
@@ -52,15 +50,11 @@ class MarksController extends GetxController {
 
   Future<List<Mark>> getAllMarks() async {
     try {
-      List<Map<String, dynamic>> data = await SupabaseController.to.getMarks();
+      marks = await SupabaseController.to.getMarks();
 
-      List<Mark> marksFromResponse = marksFromJson(data);
-
-      marks = marksFromResponse;
-      log(marks.length);
       update();
 
-      return marksFromResponse;
+      return marks;
     } catch (e) {
       logW(e);
       await Future.delayed(const Duration(seconds: 2));

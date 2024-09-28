@@ -1,5 +1,10 @@
 import 'package:autoverse/exports.dart';
 
+List<Modification> modificationsFromJson(List<dynamic> jsonList) {
+  return List<Modification>.from(
+      jsonList.map((item) => Modification.fromJson(item)));
+}
+
 class Modification {
   final String? complectationId;
   final int? offersPriceFrom;
@@ -39,11 +44,9 @@ class Modification {
   Future<CarSpecifications?> loadCarSpecifications() async {
     try {
       if (carSpecifications?.complectationId != null) return carSpecifications;
-      log("load car specifications");
-      Response response = await Dio()
-          .post("$baseUrl/specifications", data: {"id": complectationId});
 
-      carSpecifications = CarSpecifications.fromJson(response.data.first);
+      carSpecifications =
+          await SupabaseController.to.getSpecifications(complectationId ?? "");
 
       return carSpecifications;
     } catch (error) {
@@ -58,10 +61,9 @@ class Modification {
       if (carOptions?.isLoaded == true) return carOptions;
       if (carOptions?.complectationId != null) return carOptions;
       controller.updateCarOptions(carOptions ?? CarOptions(isLoaded: false));
-      Response response =
-          await Dio().post("$baseUrl/options", data: {"id": complectationId});
-      if ((response.data as List).isEmpty) return CarOptions(isLoaded: true);
-      carOptions = CarOptions.fromJson(response.data.first);
+      carOptions =
+          await SupabaseController.to.getOptions(complectationId ?? "");
+
       carOptions?.isLoaded = true;
 
       controller.updateCarOptions(carOptions ?? CarOptions(isLoaded: true));

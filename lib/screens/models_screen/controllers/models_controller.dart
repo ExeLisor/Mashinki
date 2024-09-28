@@ -76,11 +76,9 @@ class ModelsController extends GetxController {
 
   Future<List<Model>> _getModels() async {
     try {
-      final response = await SupabaseController.to.getModels(mark.id ?? "");
-      log(response);
+      List<Model> models = await SupabaseController.to.getModels(mark.id ?? "");
 
-      List<Model> modelsFromResponse = modelsFromJson(response);
-      return modelsFromResponse;
+      return models;
     } on DioException catch (error) {
       switch (error.type) {
         case DioExceptionType.connectionError:

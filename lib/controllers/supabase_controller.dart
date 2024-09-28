@@ -5,49 +5,46 @@ class SupabaseController extends GetxController {
 
   SupabaseClient? supabase;
 
-  SupabaseQuerySchema? supabaseQueryBuilder;
-
   @override
   Future<void> onInit() async {
     super.onInit();
 
     supabase = Supabase.instance.client;
-    supabaseQueryBuilder = supabase!.schema("public");
   }
 
-  Future<List<Map<String, dynamic>>> getPopularMarks() async {
+  SupabaseQueryBuilder from(AutoTable table) =>
+      supabase!.schema("public").from(table.name);
+
+  Future<List<Mark>> getPopularMarks() async {
+    return tryCatch(() async {
+      final response = await from(AutoTable.mark).select().eq("popular", 1);
+
+      List<Mark> marks = marksFromJson(response);
+
+      return marks;
+    });
+  }
+
+  Future<List<Mark>> getMarks() async {
     try {
-      final response = await supabase!
-          .schema("public")
-          .from("mark")
-          .select()
-          .eq("popular", 1);
-      return response;
+      final response = await from(AutoTable.mark).select();
+
+      List<Mark> marks = marksFromJson(response);
+      return marks;
     } catch (error) {
       logW(error);
       rethrow;
     }
   }
 
-  Future<List<Map<String, dynamic>>> getMarks() async {
+  Future<List<Model>> getModels(String markId) async {
     try {
-      final response = await supabase!.schema("public").from("mark").select();
-      return response;
-    } catch (error) {
-      logW(error);
-      rethrow;
-    }
-  }
-
-  Future<List<Map<String, dynamic>>> getModels(String markId) async {
-    try {
-      final response = await supabase!
-          .schema("public")
-          .from('model')
+      final response = await from(AutoTable.model)
           .select('*, generation(*, configuration(*))')
           .eq('mark_id', markId);
 
-      return response;
+      List<Model> models = modelsFromJson(response);
+      return models;
     } catch (error) {
       logW(error);
       rethrow;
@@ -56,17 +53,101 @@ class SupabaseController extends GetxController {
 
   Future<List<Configuration>> getConfigurations(String generationId) async {
     try {
-      final response = await supabase!
-          .schema("public")
-          .from('configuration')
+      final response = await from(AutoTable.configuration)
           .select()
           .eq('generation_id', generationId);
-      return (response as List)
-          .map<Configuration>((config) => Configuration.fromJson(config))
-          .toList();
+
+      List<Configuration> configurations = configurationsFromJson(response);
+
+      return configurations;
     } catch (error) {
       logW(error);
       rethrow;
     }
   }
+
+  Future<List<Modification>> getModifications(String configurationId) async {
+    final response = await from(AutoTable.modification)
+        .select(
+            '*, specifications!inner(volume-litres, transmission, horse-power)')
+        .eq('configuration_id', configurationId);
+    log(response);
+    final modifications = response.map((modification) {
+      final specification = modification['specifications'].first;
+      final volumeLitres = double.tryParse(specification['volume-litres']);
+      final transmission = specification['transmission'];
+      final horsePower = specification['horse-power'];
+      modification["specifications"] = [];
+
+      // Определяем тип трансмиссии
+      String transmissionType;
+      switch (transmission) {
+        case 'механическая':
+          transmissionType = 'MT';
+          break;
+        case 'автоматическая':
+          transmissionType = 'AT';
+          break;
+        case 'робот':
+          transmissionType = 'AMT';
+          break;
+        case 'вариатор':
+          transmissionType = 'CVT';
+          break;
+        default:
+          transmissionType = 'Unknown';
+      }
+
+      // Формируем modification_title
+      final modificationTitle = '$volumeLitres $transmissionType $horsePower';
+
+      return {
+        ...modification,
+        'modification_title': modificationTitle,
+      };
+    }).toList();
+
+    List<Modification> modificataions = modificationsFromJson(modifications);
+    return modificataions;
+  }
+
+  Future<CarSpecifications> getSpecifications(String complecatationId) async {
+    try {
+      final response = await from(AutoTable.specifications)
+          .select('*')
+          .eq('complectation_id', complecatationId);
+
+      CarSpecifications specifications =
+          CarSpecifications.fromJson(response.first);
+      return specifications;
+    } catch (error) {
+      logW(error);
+      rethrow;
+    }
+  }
+
+  Future<CarOptions> getOptions(String complecatationId) async {
+    try {
+      final response = await from(AutoTable.options)
+          .select('*')
+          .eq('complectation_id', complecatationId);
+
+      if (response.isEmpty) return CarOptions();
+      CarOptions options = CarOptions.fromJson(response.first);
+      return options;
+    } catch (error) {
+      logW(error);
+      rethrow;
+    }
+  }
+}
+
+enum AutoTable {
+  configuration,
+  generation,
+  mark,
+  model,
+  modification,
+  options,
+  specifications
 }

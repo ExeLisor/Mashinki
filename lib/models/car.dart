@@ -75,12 +75,8 @@ class Car {
     try {
       if (modifications.isNotEmpty) return modifications;
 
-      Response response = await Dio()
-          .post("$baseUrl/modifications", data: {"id": configuration.id});
-
-      modifications = (response.data as List)
-          .map((mod) => Modification.fromJson(mod))
-          .toList();
+      modifications =
+          await SupabaseController.to.getModifications(configuration.id ?? "");
 
       selectedModification = modifications.first;
 

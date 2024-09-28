@@ -170,3 +170,15 @@ Future<void> openResource(ResourceType type) async {
 extension NullOrEmptyExtension on String? {
   bool get nullOrEmpty => this == null || this!.isEmpty;
 }
+
+Future<T> tryCatch<T>(Future<T> Function() func) async {
+  try {
+    return await func();
+  } on DioError catch (error) {
+    logW(error.response?.data['error'] ?? error.message);
+    rethrow;
+  } catch (error) {
+    logW(error);
+    rethrow;
+  }
+}

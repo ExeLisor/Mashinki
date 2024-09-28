@@ -1,5 +1,10 @@
 import 'package:autoverse/exports.dart';
 
+List<Configuration> configurationsFromJson(List<dynamic> jsonList) {
+  return List<Configuration>.from(
+      jsonList.map((item) => Configuration.fromJson(item)));
+}
+
 class Configuration {
   final String? id;
   final int? doorsCount;
