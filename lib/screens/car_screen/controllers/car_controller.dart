@@ -31,6 +31,8 @@ class CarController extends GetxController {
     try {
       _emitLoadingState();
 
+      log("load car");
+
       bool isCarAlreadyLoaded = _checkIfCarAlreadyLoaded(loadingCar);
 
       _car.value = loadingCar;
@@ -49,11 +51,11 @@ class CarController extends GetxController {
 
   Future<void> selectModification(Modification modification) async {
     try {
-      _car.update((car) => car?.selectedModification.isLoading = true);
+      _car.update((car) => car?.selectedModification.isLoaded = false);
 
       await modification.loadCarSpecifications();
 
-      modification.isLoading = false;
+      modification.isLoaded = true;
 
       _car.update((car) => car?.selectedModification = modification);
     } catch (error) {

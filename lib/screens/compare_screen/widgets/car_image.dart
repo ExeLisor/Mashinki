@@ -21,26 +21,20 @@ class CompareCarImage extends StatelessWidget {
       );
 
   Widget _carImage() => GestureDetector(
-        onTap: () => CarController.to.openCarPage(car.copyWith()),
-        child: Container(
-          width: 177.w,
-          height: 129.h,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(15.w),
-          ),
-          child: Stack(
-            children: [
-              CachedNetworkImage(
-                imageUrl: "$baseUrl/image/${car.configuration.id}",
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-              _removeCompare()
-            ],
-          ),
+        onTap: () {
+          log(car.copyWith().selectedModification.toJson());
+
+          // CarController.to.openCarPage(car.copyWith());
+        },
+        child: Stack(
+          children: [
+            ImageContainer(
+              imageData: ImageData.photo(id: car.configuration.id ?? ""),
+              width: 177.w,
+              height: 129.h,
+            ),
+            _removeCompare()
+          ],
         ),
       );
   Widget _removeCompare() => Align(

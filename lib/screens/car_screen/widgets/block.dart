@@ -273,9 +273,8 @@ class SpecsBlockWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              modification.isLoading
-                  ? _loadingWidget()
-                  : SizedBox(
+              modification.isLoaded
+                  ? SizedBox(
                       width: 140.w,
                       child: Text(
                         checkStringOnEmptyOrZero(value),
@@ -289,6 +288,7 @@ class SpecsBlockWidget extends StatelessWidget {
                         ),
                       ),
                     )
+                  : _loadingWidget()
             ],
           ),
         );

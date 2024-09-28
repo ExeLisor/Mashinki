@@ -13,7 +13,7 @@ class Modification {
   final String? title;
   CarOptions? carOptions;
   CarSpecifications? carSpecifications;
-  bool isLoading;
+  bool isLoaded;
 
   Modification(
       {this.complectationId,
@@ -23,7 +23,7 @@ class Modification {
       this.carOptions,
       this.carSpecifications,
       this.title,
-      this.isLoading = true});
+      this.isLoaded = true});
 
   factory Modification.fromJson(Map<String, dynamic> json) => Modification(
         complectationId: json["complectation-id"],
@@ -40,6 +40,7 @@ class Modification {
         "group-name": groupName,
         "modification_title": title,
         "car-specifications": carSpecifications,
+        "isLoaded": isLoaded
       };
 
   Future<CarSpecifications?> loadCarSpecifications() async {

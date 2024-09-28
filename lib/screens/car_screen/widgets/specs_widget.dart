@@ -169,6 +169,16 @@ class CharacteristicsWidget extends StatelessWidget {
 class ModificationTitleWidget extends StatelessWidget {
   const ModificationTitleWidget({super.key});
 
+  @override
+  Widget build(BuildContext context) => Obx(
+        () {
+          Modification modification = CarController.to.car.selectedModification;
+          return modification.isLoaded
+              ? _modificationTitle()
+              : _loadingTitleWidget();
+        },
+      );
+
   Widget _modificationTitle() {
     Modification modification = CarController.to.car.selectedModification;
     CarSpecifications specification = modification.carSpecifications!;
@@ -206,16 +216,6 @@ class ModificationTitleWidget extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8))),
         ),
       );
-
-  @override
-  Widget build(BuildContext context) => Obx(
-        () {
-          Modification modification = CarController.to.car.selectedModification;
-          return modification.isLoading
-              ? _loadingTitleWidget()
-              : _modificationTitle();
-        },
-      );
 }
 
 class CarDemensions extends StatelessWidget {
@@ -227,9 +227,9 @@ class CarDemensions extends StatelessWidget {
           Modification modification = CarController.to.car.selectedModification;
 
           final CarSpecifications specs = modification.carSpecifications!;
-          return modification.isLoading
-              ? _loadingWidget()
-              : _carDemensions(specs);
+          return modification.isLoaded
+              ? _carDemensions(specs)
+              : _loadingWidget();
         },
       );
   Widget _loadingWidget() => ShimmerWidget(
@@ -338,7 +338,7 @@ class DetailsTile extends StatelessWidget {
   Widget build(BuildContext context) => Obx(() {
         Modification modification = CarController.to.car.selectedModification;
 
-        return modification.isLoading ? _loadingWidget() : _detailsTile();
+        return modification.isLoaded ? _detailsTile() : _loadingWidget();
       });
 
   Widget _loadingWidget() => ShimmerWidget(
