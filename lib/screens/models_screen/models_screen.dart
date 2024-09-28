@@ -107,25 +107,26 @@ class ModelsScreen extends StatelessWidget {
   }
 
   Widget _generations(Model model) => Column(
-      children: List.generate(model.generations?.length ?? 0,
-          (index) => _configuration(model, model.generations![index])));
+      children: List.generate(model.generations.length ?? 0,
+          (index) => _configuration(model, model.generations[index])));
 
   Widget _configuration(Model model, Generation generation) {
     PageController pageController = PageController(viewportFraction: 0.95);
     return Column(
       children: [
-        SizedBox(
+        Container(
           height: 250.h,
+          padding: EdgeInsets.only(left: 20.0.w),
           child: PageView(
             controller: pageController,
             scrollDirection: Axis.horizontal,
             children: List.generate(
-              generation.configurations?.length ?? 0,
+              generation.configurations.length,
               (index) {
-                Configuration configuration = generation.configurations![index];
+                Configuration configuration = generation.configurations[index];
 
                 return Padding(
-                  padding: EdgeInsets.only(left: index == 0 ? 15.0.w : 0),
+                  padding: EdgeInsets.only(right: 15.0.w),
                   child: ModelTile(
                     model: model,
                     generation: generation,
@@ -136,7 +137,7 @@ class ModelsScreen extends StatelessWidget {
             ),
           ),
         ),
-        (generation.configurations?.length ?? 0) == 1
+        (generation.configurations.length) == 1
             ? Container()
             : Container(
                 height: 12.h,
@@ -149,7 +150,7 @@ class ModelsScreen extends StatelessWidget {
                 ),
                 child: SmoothPageIndicator(
                   controller: pageController,
-                  count: generation.configurations?.length ?? 0,
+                  count: generation.configurations.length,
                   effect: WormEffect(
                       dotColor: Colors.white,
                       activeDotColor: primaryColor,
@@ -176,4 +177,148 @@ class ModelsScreen extends StatelessWidget {
           ),
         ),
       );
+}
+
+class ModelsList extends StatefulWidget {
+  const ModelsList({super.key});
+
+  @override
+  State<ModelsList> createState() => _ModelsListState();
+}
+
+class _ModelsListState extends State<ModelsList> {
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => ModelsController.to.state.value == Status.success
+        ? _modelsList()
+        : _loadingWidget());
+  }
+
+  Widget _modelsList() {
+    return ListView.builder(
+      itemCount: ModelsController.to.models.length,
+      padding: EdgeInsets.all(25.w),
+      itemBuilder: (context, index) => ModelWidget(
+        model: ModelsController.to.models[index],
+      ),
+    );
+  }
+
+  Widget _loadingWidget() => const Center(
+        child: CircularProgressIndicator(),
+      );
+}
+
+class ModelWidget extends StatelessWidget {
+  const ModelWidget({super.key, required this.model});
+  final Model model;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [_model(), ..._generations()],
+    );
+  }
+
+  Widget _model() => Text(
+        "${ModelsController.to.mark.name} ${model.name ?? ""}",
+        style: TextStyle(
+          color: primaryColor,
+          fontSize: 20.fs,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w700,
+          height: 0,
+        ),
+      );
+
+  List<Widget> _generations() => List.generate(model.generations.length ?? 0,
+      (index) => GenerationWidget(generation: model.generations[index]));
+}
+
+class GenerationWidget extends StatelessWidget {
+  const GenerationWidget({super.key, required this.generation});
+  final Generation generation;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _textContainer(generation.name ?? ""),
+        _configurations(),
+      ],
+    );
+  }
+
+  Widget _textContainer(String text,
+          {bool setMinWidth = true,
+          double fontSize = 18,
+          FontWeight fontWeight = FontWeight.w600}) =>
+      text.isEmpty
+          ? Container()
+          : Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 7.w),
+              constraints: BoxConstraints(maxWidth: 180.w, minHeight: 38.h),
+              margin: EdgeInsets.all(15.h),
+              clipBehavior: Clip.antiAlias,
+              decoration: ShapeDecoration(
+                color: Colors.black.withOpacity(0.3),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(26),
+                ),
+              ),
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: fontSize.fs,
+                  fontFamily: 'Inter',
+                  fontWeight: fontWeight,
+                ),
+              ),
+            );
+
+  Widget _configurations() =>
+      ConfigurationsWidget(configurations: generation.configurations);
+}
+
+class ConfigurationsWidget extends StatelessWidget {
+  const ConfigurationsWidget({super.key, required this.configurations});
+
+  final List<Configuration> configurations;
+
+  final containerHeight = 250;
+  final containerWidth = 362;
+
+  @override
+  Widget build(BuildContext context) {
+    return _configurationsList();
+  }
+
+  Widget _configurationsList() => SizedBox(
+        height: 250.h,
+        child: PageView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: configurations.isEmpty ? null : configurations.length,
+            itemBuilder: (context, index) {
+              return configurations.isEmpty
+                  ? _loadingWidget()
+                  : _configuraiton(configurations[index]);
+            }),
+      );
+
+  Widget _configuraiton(Configuration configuration) => configuration.isLoaded
+      ? _configurationImage(configuration.id ?? "")
+      : _loadingWidget();
+
+  Widget _loadingWidget() => ShimmerWidget(
+        child: Container(
+          height: containerHeight.h,
+          width: containerWidth.w,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(15)),
+        ),
+      );
+
+  Widget _configurationImage(String id) =>
+      ImageContainer(imageData: ImageData.photo(id: id));
 }

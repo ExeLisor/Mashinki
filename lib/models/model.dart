@@ -14,7 +14,7 @@ class Model {
   final String? modelClass;
   final int? yearFrom;
   final int? yearTo;
-  List<Generation>? generations;
+  List<Generation> generations = <Generation>[];
 
   Model({
     this.id,
@@ -23,7 +23,7 @@ class Model {
     this.modelClass,
     this.yearFrom,
     this.yearTo,
-    this.generations,
+    this.generations = const [],
   });
 
   factory Model.fromJson(Map<String, dynamic> json) => Model(
@@ -33,10 +33,10 @@ class Model {
         modelClass: json["class"],
         yearFrom: json["year-from"],
         yearTo: json["year-to"],
-        generations: json["generations"] == null
+        generations: json["generation"] == null
             ? []
             : List<Generation>.from(
-                json["generations"]!.map((x) => Generation.fromJson(x))),
+                json["generation"]!.map((x) => Generation.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,8 +46,6 @@ class Model {
         "class": modelClass,
         "year-from": yearFrom,
         "year-to": yearTo,
-        "generations": generations == null
-            ? []
-            : List<dynamic>.from(generations!.map((x) => x.toJson())),
+        "generations": List<dynamic>.from(generations.map((x) => x.toJson())),
       };
 }

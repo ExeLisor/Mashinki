@@ -7,6 +7,7 @@ class Configuration {
   final String? configurationName;
 
   List<Modification>? modifications;
+  bool isLoaded = false;
 
   Configuration({
     this.id,
@@ -14,18 +15,19 @@ class Configuration {
     this.bodyType,
     this.configurationName,
     this.modifications,
+    this.isLoaded = false,
   });
 
   factory Configuration.fromJson(Map<String, dynamic> json) => Configuration(
-        id: json["id"],
-        doorsCount: json["doors-count"],
-        bodyType: json["body-type"],
-        configurationName: json["configuration-name"],
-        modifications: json["modifications"] == null
-            ? []
-            : List<Modification>.from(
-                json["modifications"].map((x) => Modification.fromJson(x))),
-      );
+      id: json["id"],
+      doorsCount: json["doors-count"],
+      bodyType: json["body-type"],
+      configurationName: json["configuration-name"],
+      modifications: json["modifications"] == null
+          ? []
+          : List<Modification>.from(
+              json["modifications"].map((x) => Modification.fromJson(x))),
+      isLoaded: true);
 
   Map<String, dynamic> toJson() => {
         "id": id,

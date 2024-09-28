@@ -15,22 +15,24 @@ class ModelTile extends StatelessWidget {
   final containerHeight = 250.h;
   final containerWidth = 362.w;
 
+  void openCarPage() {
+    Car car = Car(
+      mark: ModelsController.to.mark,
+      model: model,
+      generation: generation,
+      configuration: configuration,
+      modifications: configuration.modifications ?? [],
+    );
+    CarController.to.openCarPage(car, isLoadCar: true);
+  }
+
   @override
   Widget build(BuildContext context) => GestureDetector(
-        onTap: () {
-          Car car = Car(
-            mark: ModelsController.to.mark,
-            model: model,
-            generation: generation,
-            configuration: configuration,
-            modifications: configuration.modifications ?? [],
-          );
-          CarController.to.openCarPage(car, isLoadCar: true);
-        },
+        onTap: openCarPage,
         child: Container(
           height: containerHeight,
           width: containerWidth,
-          margin: EdgeInsets.fromLTRB(0.w, 15.h, 10.w, 15.h),
+          margin: EdgeInsets.fromLTRB(0.w, 15.h, 0.w, 15.h),
           child: Stack(
             fit: StackFit.passthrough,
             children: [
@@ -113,6 +115,10 @@ class ModelTile extends StatelessWidget {
           ),
         );
 
-  Widget _modelImage() =>
-      ImageContainer(imageData: ImageData.photo(id: configuration.id ?? ""));
+  Widget _modelImage() => ImageContainer(
+        imageData: ImageData.photo(
+          id: configuration.id ?? "",
+        ),
+        width: containerWidth,
+      );
 }

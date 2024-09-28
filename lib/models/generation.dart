@@ -6,7 +6,7 @@ class Generation {
   final int? yearStart;
   final int? yearStop;
   final bool isRestyle;
-  List<Configuration>? configurations;
+  List<Configuration> configurations = <Configuration>[];
 
   Generation({
     this.id,
@@ -14,7 +14,7 @@ class Generation {
     this.yearStart,
     this.yearStop,
     this.isRestyle = false,
-    this.configurations,
+    this.configurations = const [],
   });
 
   factory Generation.fromJson(Map<String, dynamic> json) => Generation(
@@ -23,10 +23,10 @@ class Generation {
         yearStart: json["year-start"],
         yearStop: json["year-stop"],
         isRestyle: json["is-restyle"] == "1",
-        configurations: json["configurations"] == null
+        configurations: json["configuration"] == null
             ? []
             : List<Configuration>.from(
-                json["configurations"]!.map((x) => Configuration.fromJson(x))),
+                json["configuration"]!.map((x) => Configuration.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,8 +35,8 @@ class Generation {
         "year-start": yearStart,
         "year-stop": yearStop,
         "is-restyle": isRestyle,
-        "configurations": configurations == null
+        "configurations": configurations.isEmpty
             ? []
-            : List<dynamic>.from(configurations!.map((x) => x.toJson())),
+            : List<dynamic>.from(configurations.map((x) => x.toJson())),
       };
 }

@@ -14,7 +14,6 @@ class ModelsController extends GetxController {
   List<Model> get models => _models;
 
   Future<List<Model>> _loadModels(Mark mark) async {
-    log("load models");
     _emitLoadingState();
     dio = Dio();
     FiltersController.to.resetFilters();
@@ -23,8 +22,37 @@ class ModelsController extends GetxController {
 
     _setMark(mark);
     if (!isAlreadyLoaded) _models.value = await _getModels();
+    // if (!isAlreadyLoaded) await loadModelConfigurations(0);
+    _models.refresh();
     _emitSussessState();
     return models;
+  }
+
+  Future<void> loadModelConfigurations(int index) async {
+    SupabaseController controller = SupabaseController.to;
+
+    try {
+      for (int i = 0; i < _models[index].generations.length; i++) {
+        String id = _models[index].generations[i].id ?? "";
+        _models.first.generations[i].configurations =
+            await controller.getConfigurations(id);
+      }
+    } on DioException catch (error) {
+      switch (error.type) {
+        case DioExceptionType.connectionError:
+        default:
+          _emitErrorState();
+          await Future.delayed(const Duration(seconds: 5));
+          await loadModelConfigurations(index);
+      }
+      rethrow;
+    } catch (e) {
+      logW(e);
+      _emitErrorState();
+      await Future.delayed(const Duration(seconds: 5));
+      await loadModelConfigurations(index);
+      rethrow;
+    }
   }
 
   bool isMarkModelsAlreadyLoaded(Mark mark) => _mark.value == mark;
@@ -46,15 +74,12 @@ class ModelsController extends GetxController {
 
   void _setMark(Mark mark) => _mark.value = mark;
 
-  String getGenerationImage(Model model) =>
-      model.generations?.first.configurations?.first.id ?? "";
-
   Future<List<Model>> _getModels() async {
     try {
-      Response response =
-          await dio.post("$baseUrl/models", data: {"id": mark.id});
+      final response = await SupabaseController.to.getModels(mark.id ?? "");
+      log(response);
 
-      List<Model> modelsFromResponse = modelsFromJson(response.data);
+      List<Model> modelsFromResponse = modelsFromJson(response);
       return modelsFromResponse;
     } on DioException catch (error) {
       switch (error.type) {
@@ -75,7 +100,6 @@ class ModelsController extends GetxController {
   }
 
   Future<void> getGenerationsDetails(Configuration configuration) async {
-    // log(configuration.toJson());
     Response response = await dio.get(
         "$baseUrl/specs/${configuration.modifications?.first.complectationId}");
     log(response.data);
