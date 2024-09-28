@@ -140,6 +140,95 @@ class SupabaseController extends GetxController {
       rethrow;
     }
   }
+
+  Future<String> getModificationDescription(String configurationId) async {
+    try {
+      // Получаем модификации для данной конфигурации
+      final response = await from(AutoTable.modification)
+          .select('*, specifications(*)')
+          .eq('configuration_id', configurationId);
+
+      final modifications = response as List<dynamic>;
+
+      // Если модификации пусты
+      if (modifications.isEmpty) {
+        return "No modifications found";
+      }
+
+      // Собираем необходимые данные для описания
+      final transmissionSet = <String>{};
+      final driveSet = <String>{};
+      final enginesSet = <String>{};
+      final volumeLitres = <double>[];
+      final power = <double>[];
+
+      for (final mod in modifications) {
+        if (mod['specifications'] != null && mod['specifications'].isNotEmpty) {
+          transmissionSet.add(mod['specifications'][0]['transmission']);
+          driveSet.add(mod['specifications'][0]['drive']);
+          enginesSet
+              .add(mod['specifications'][0]['engine-type']); // Тип двигателя
+
+          if (mod['specifications'][0]['volume-litres'] != null) {
+            volumeLitres.add(double.parse(
+                mod['specifications'][0]['volume-litres'].toString()));
+          }
+          if (mod['specifications'][0]['horse-power'] != null) {
+            power.add(double.parse(
+                mod['specifications'][0]['horse-power'].toString()));
+          }
+        }
+      }
+
+      // Формируем строки описания
+      final driveDesc =
+          getSpecDescription(driveSet.toList(), 'привод', 'привод');
+      final transmissionDesc =
+          "Коробка ${getSpecDescription(transmissionSet.toList(), '', '')}";
+      final engineDesc =
+          "Типы двигателей: ${getSpecDescription(enginesSet.toList(), '', '')}";
+      final volumeDesc = getMinMaxVolumeDescription(volumeLitres);
+      final powerDesc = getMinMaxPowerDescription(power);
+
+      // Финальное описание
+      final description =
+          "$driveDesc. $transmissionDesc. $engineDesc$volumeDesc $powerDesc";
+
+      return description;
+    } catch (e) {
+      return 'Error: ${e.toString()}';
+    }
+  }
+
+// Вспомогательные функции
+  String getSpecDescription(
+      List<String> specs, String singlePrefix, String multiplePrefix) {
+    if (specs.isEmpty) return "";
+    if (specs.length == 1) return "${specs[0]} $singlePrefix".trim();
+    if (specs.length == 2) {
+      return "${specs[0]} и ${specs[1]} $multiplePrefix".trim();
+    }
+    final lastSpec = specs.removeLast();
+    return "${specs.join(', ')} и $lastSpec $multiplePrefix".trim();
+  }
+
+  String getMinMaxVolumeDescription(List<double> volumeLitres) {
+    if (volumeLitres.isEmpty) return "";
+    volumeLitres.sort();
+    final minVolume = volumeLitres.first;
+    final maxVolume = volumeLitres.last;
+    if (minVolume == maxVolume) return ", объёмом от $minVolume л. и";
+    return ", объёмом от $minVolume до $maxVolume л. и";
+  }
+
+  String getMinMaxPowerDescription(List<double> power) {
+    if (power.isEmpty) return "";
+    power.sort();
+    final minPower = power.first;
+    final maxPower = power.last;
+    if (minPower == maxPower) return "мощностью от $minPower л.с.";
+    return "мощностью от $minPower до $maxPower л.с.";
+  }
 }
 
 enum AutoTable {

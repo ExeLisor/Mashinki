@@ -52,11 +52,8 @@ class Car {
 
   Future<String> loadCarDescription() async {
     try {
-      final Dio dio = Dio();
-      Response response = await dio
-          .post("$baseUrl/description", data: {"id": configuration.id});
-
-      String description = response.data["description"];
+      String description = await SupabaseController.to
+          .getModificationDescription(configuration.id ?? "");
 
       String bodyType = (configuration.bodyType ?? "").capitalizeFirstLetter();
 
