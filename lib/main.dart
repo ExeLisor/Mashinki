@@ -3,13 +3,11 @@ import 'package:autoverse/exports.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(
-    url: supabaseUrl,
-    anonKey: supabaseAnonKey,
-  );
+  final firebaseController = Get.put(FirebaseController(), permanent: true);
+  final supabaseController = Get.put(SupabaseController(), permanent: true);
 
-  Get.put(FirebaseController(), permanent: true);
-  Get.put(SupabaseController(), permanent: true);
+  await firebaseController.onInitComplete();
+  await supabaseController.onInitComplete();
 
   MobileAds.instance.initialize();
 

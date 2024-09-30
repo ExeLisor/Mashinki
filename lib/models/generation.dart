@@ -35,7 +35,7 @@ class Generation {
         "year-start": yearStart,
         "year-stop": yearStop,
         "is-restyle": isRestyle,
-        "configurations": configurations.isEmpty
+        "configuration": configurations.isEmpty
             ? []
             : List<dynamic>.from(configurations.map((x) => x.toJson())),
       };

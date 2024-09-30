@@ -5,8 +5,6 @@ enum MarksState { success, loading, error }
 class MarksController extends GetxController {
   static MarksController get to => Get.find();
 
-  final Dio dio = Dio(BaseOptions());
-
   Rx<MarksState> state = MarksState.loading.obs;
 
   List<Mark> marks = [];
@@ -14,7 +12,6 @@ class MarksController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    log("ON INIT");
     _initializeMarksController();
     super.onInit();
   }
@@ -37,11 +34,19 @@ class MarksController extends GetxController {
 
   Future<List<Mark>> getOnlyPopularMarks() async {
     try {
+      if (popularMarks.isNotEmpty) return popularMarks;
+
+      dynamic cache = await loadData("popularMarks");
+      if (cache != null) return marksFromJson(cache);
+
       List<Mark> marks = await SupabaseController.to.getPopularMarks();
+      await saveData("popularMarks", marksToJson(marks));
 
       return marks;
     } catch (e) {
       logW(e);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.clear();
       await Future.delayed(const Duration(seconds: 2));
       await getOnlyPopularMarks();
       rethrow;
@@ -50,7 +55,11 @@ class MarksController extends GetxController {
 
   Future<List<Mark>> getAllMarks() async {
     try {
+      dynamic cache = await loadData("marks");
+      if (cache != null) return marksFromJson(cache);
+
       marks = await SupabaseController.to.getMarks();
+      await saveData("marks", marksToJson(marks));
 
       update();
 

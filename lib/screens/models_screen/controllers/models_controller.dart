@@ -5,7 +5,6 @@ enum Status { success, loading, error }
 class ModelsController extends GetxController {
   static ModelsController get to => Get.find();
 
-  Dio dio = Dio();
   final Rxn<Mark> _mark = Rxn<Mark>();
   final RxList<Model> _models = <Model>[].obs;
   Rx<Status> state = Status.loading.obs;
@@ -15,14 +14,12 @@ class ModelsController extends GetxController {
 
   Future<List<Model>> _loadModels(Mark mark) async {
     _emitLoadingState();
-    dio = Dio();
+
     FiltersController.to.resetFilters();
 
-    bool isAlreadyLoaded = isMarkModelsAlreadyLoaded(mark);
-
     _setMark(mark);
-    if (!isAlreadyLoaded) _models.value = await _getModels();
-    // if (!isAlreadyLoaded) await loadModelConfigurations(0);
+    _models.value = await _getModels();
+
     _models.refresh();
     _emitSussessState();
     return models;
@@ -62,12 +59,6 @@ class ModelsController extends GetxController {
     await _loadModels(mark);
   }
 
-  @override
-  void onClose() {
-    dio.close();
-    super.onClose();
-  }
-
   void _emitSussessState() => state.value = Status.success;
   void _emitLoadingState() => state.value = Status.loading;
   void _emitErrorState() => state.value = Status.error;
@@ -76,7 +67,11 @@ class ModelsController extends GetxController {
 
   Future<List<Model>> _getModels() async {
     try {
+      dynamic cache = await loadData("${mark.name}/models");
+      if (cache != null) return modelsFromJson(cache);
+      log("load models");
       List<Model> models = await SupabaseController.to.getModels(mark.id ?? "");
+      await saveData("${mark.name}/models", modelsToJson(models));
 
       return models;
     } on DioException catch (error) {
@@ -95,12 +90,6 @@ class ModelsController extends GetxController {
       await _getModels();
       rethrow;
     }
-  }
-
-  Future<void> getGenerationsDetails(Configuration configuration) async {
-    Response response = await dio.get(
-        "$baseUrl/specs/${configuration.modifications?.first.complectationId}");
-    log(response.data);
   }
 }
 

@@ -4,8 +4,10 @@ List<Mark> marksFromJson(List<dynamic> jsonList) {
   return List<Mark>.from(jsonList.map((item) => Mark.fromJson(item)));
 }
 
-String marksToJson(List<Mark> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String marksToJson(List<Mark> data) {
+  // Преобразуем список объектов Mark в один JSON-строку
+  return jsonEncode(data.map((mark) => mark.toJson()).toList());
+}
 
 class Mark {
   final String? id;

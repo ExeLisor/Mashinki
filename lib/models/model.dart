@@ -5,7 +5,7 @@ List<Model> modelsFromJson(List<dynamic> jsonList) {
 }
 
 String modelsToJson(List<Model> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+    jsonEncode(data.map((model) => model.toJson()).toList());
 
 class Model {
   final String? id;
@@ -46,6 +46,6 @@ class Model {
         "class": modelClass,
         "year-from": yearFrom,
         "year-to": yearTo,
-        "generations": List<dynamic>.from(generations.map((x) => x.toJson())),
+        "generation": List<dynamic>.from(generations.map((x) => x.toJson())),
       };
 }

@@ -20,6 +20,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () => clearCache()),
       appBar: appBar(),
       body: _homeScreen(),
       bottomNavigationBar: HomeScreenBottomBarWidget(),

@@ -5,8 +5,8 @@ class FirebaseController extends GetxController {
 
   final Map<String, String?> _imageCache = {};
 
-  @override
-  Future<void> onInit() async {
+  Future<void> onInitComplete() async {
+    // Инициализация Firebase и всех необходимых сервисов
     await _initFirebase();
     await _initFirebaseConfig();
     await _initAppCheck();

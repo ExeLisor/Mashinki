@@ -1,9 +1,9 @@
 import 'package:autoverse/exports.dart';
 
-export './cache.dart';
-export './logger.dart';
-export './theme_data.dart';
-export './adaptive.dart';
+export 'logger.dart';
+export 'theme_data.dart';
+export 'adaptive.dart';
+export 'shared_preferences.dart';
 
 final RegExp nicknameRegExp = RegExp(
   r'^[a-zA-Z0-9_]+$',
@@ -180,5 +180,24 @@ Future<T> tryCatch<T>(Future<T> Function() func) async {
   } catch (error) {
     logW(error);
     rethrow;
+  }
+}
+
+extension NullCheckExtension<T> on T? {
+  bool get isNull {
+    return this == null;
+  }
+
+  bool get isNullOrEmpty {
+    if (this == null) {
+      return true;
+    }
+    if (this is String) {
+      return (this as String).isEmpty;
+    }
+    if (this is List) {
+      return (this as List).isEmpty;
+    }
+    return false;
   }
 }

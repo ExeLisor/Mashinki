@@ -5,11 +5,13 @@ class SupabaseController extends GetxController {
 
   SupabaseClient? supabase;
 
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-
+  Future<void> onInitComplete() async {
+    await Supabase.initialize(
+      url: supabaseUrl,
+      anonKey: supabaseAnonKey,
+    );
     supabase = Supabase.instance.client;
+    super.onInit();
   }
 
   SupabaseQueryBuilder from(AutoTable table) =>
@@ -18,7 +20,7 @@ class SupabaseController extends GetxController {
   Future<List<Mark>> getPopularMarks() async {
     return tryCatch(() async {
       final response = await from(AutoTable.mark).select().eq("popular", 1);
-
+      log(response);
       List<Mark> marks = marksFromJson(response);
 
       return marks;
