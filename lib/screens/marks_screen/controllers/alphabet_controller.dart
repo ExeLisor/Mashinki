@@ -58,28 +58,28 @@ class AlphabetController extends GetxController {
     _alphabetList.addAll(groupedMarks);
 
     _isLoading.value = false;
-    log("loaded: $isLoading");
+
     return;
   }
 
   Future<List<List<Mark>>> _getGroupedMarks() async {
-    Map<String, List<Mark>> groupedBrands = {};
-    List<Mark> brands = await MarksController.to.getAllMarks();
+    Map<String, List<Mark>> groupedMarks = {};
+    List<Mark> marks = await MarksController.to.getAllMarks();
     List<String> keys = [];
 
-    for (var brand in brands) {
+    for (var brand in marks) {
       String key = brand.id![0].toUpperCase();
 
-      if (!groupedBrands.containsKey(key)) {
+      if (!groupedMarks.containsKey(key)) {
         keys.add(key);
-        groupedBrands[key] = [];
+        groupedMarks[key] = [];
       }
-      groupedBrands[key]!.add(brand);
+      groupedMarks[key]!.add(brand);
     }
 
     // Преобразуем Map в List<List<Mark>>
     List<List<Mark>> result = [];
-    for (var group in groupedBrands.values) {
+    for (var group in groupedMarks.values) {
       result.add(group);
     }
 

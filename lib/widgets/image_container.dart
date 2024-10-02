@@ -44,7 +44,11 @@ class ImageContainer extends StatelessWidget {
             imageBuilder: (context, imageProvider) =>
                 _imageBuilder(imageProvider),
             progressIndicatorBuilder: (context, url, downloadProgress) =>
-                _loadingWidget()),
+                SizedBox(
+                  width: width.h,
+                  height: height.h,
+                )),
+        // _loadingWidget()),
       );
 
   Widget _imageBuilder(ImageProvider<Object> image) => _markContainer(

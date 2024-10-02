@@ -110,7 +110,7 @@ class AlphabetWidget extends StatelessWidget {
               ),
               AlphabetController.to.isLoading
                   ? const LoadingMarksGrid()
-                  : MarksGrid(brands: AlphabetController.to.alphabetList[index])
+                  : MarksGrid(marks: AlphabetController.to.alphabetList[index])
             ],
           ),
         ),

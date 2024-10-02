@@ -2,9 +2,9 @@ import 'package:autoverse/exports.dart';
 import 'package:autoverse/screens/marks_screen/widgets/mark_tile.dart';
 
 class MarksGrid extends StatelessWidget {
-  const MarksGrid({super.key, required this.brands});
+  const MarksGrid({super.key, required this.marks});
 
-  final List<Mark> brands;
+  final List<Mark> marks;
 
   static const SliverGridDelegate _delegate =
       SliverGridDelegateWithFixedCrossAxisCount(
@@ -20,9 +20,9 @@ class MarksGrid extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: _delegate,
-        itemCount: brands.length,
+        itemCount: marks.length,
         itemBuilder: (context, index) {
-          return MarkGridTile(mark: brands[index]);
+          return MarkGridTile(mark: marks[index]);
         },
       ),
     );

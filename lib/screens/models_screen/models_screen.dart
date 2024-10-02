@@ -163,7 +163,7 @@ class ModelsScreen extends StatelessWidget {
     );
   }
 
-  Widget _brandsTitle() => Container(
+  Widget _marksTitle() => Container(
         margin: EdgeInsets.only(bottom: 10.h),
         child: Center(
           child: Obx(
