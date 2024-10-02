@@ -95,3 +95,13 @@ flutter:
     - assets/images/google.svg
     - assets/images/pinterest.svg
     - assets/images/sedan.svg
+    - assets/configurations/cabrio.svg
+    - assets/configurations/coupe.svg
+    - assets/configurations/fastback.svg
+    - assets/configurations/jeep.svg
+    - assets/configurations/limousine.svg
+    - assets/configurations/minivan.svg
+    - assets/configurations/pickup.svg
+    - assets/configurations/sedan.svg
+    - assets/configurations/van.svg
+    - assets/configurations/wagon.svg

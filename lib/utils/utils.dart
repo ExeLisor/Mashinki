@@ -4,6 +4,7 @@ export 'logger.dart';
 export 'theme_data.dart';
 export 'adaptive.dart';
 export 'shared_preferences.dart';
+export 'car_bodies.dart';
 
 final RegExp nicknameRegExp = RegExp(
   r'^[a-zA-Z0-9_]+$',

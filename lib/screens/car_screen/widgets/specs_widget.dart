@@ -262,11 +262,26 @@ class CarDemensions extends StatelessWidget {
         ],
       );
 
-  Widget _carImage() => SvgPicture.asset(
-        sedanImage,
-        height: 80.h,
-        fit: BoxFit.fill,
-      );
+  Widget _carImage() {
+    CarController carController = CarController.to;
+    CarBodyType bodyType = CarBodyType.fromCyrillicName(
+        carController.car.configuration.bodyType ?? "");
+
+    return GestureDetector(
+      onTap: () {
+        log("assets/images/${bodyType.name}.svg");
+      },
+      child: SizedBox(
+        width: 223.w,
+        child: SvgPicture.asset(
+          bodyType.assetPath,
+          clipBehavior: Clip.antiAlias,
+          height: 80.h,
+          fit: BoxFit.contain,
+        ),
+      ),
+    );
+  }
 
   Widget _carHeight(CarSpecifications specs) => Column(
         mainAxisSize: MainAxisSize.min,
