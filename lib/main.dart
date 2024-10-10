@@ -79,6 +79,7 @@ class _MainAppState extends State<MainApp> {
           name: '/filters',
           page: () => const ModelsFiltersWidget(),
           transition: Transition.cupertino,
+          bindings: [FilterBinding()],
         ),
       ],
     ),
@@ -123,11 +124,13 @@ class _MainAppState extends State<MainApp> {
 class InititalBindingsClass extends Bindings {
   @override
   void dependencies() {
+    Get.lazyPut(() => FilterController());
     Get.lazyPut(() => BarController());
     Get.lazyPut(() => CompareController());
     Get.lazyPut(() => MarksController());
     Get.lazyPut(() => ModelsController());
     Get.lazyPut(() => FirebaseController());
+
     FiltersBinding().dependencies();
   }
 }
