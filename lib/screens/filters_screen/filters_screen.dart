@@ -25,6 +25,7 @@ class FiltersScreen extends StatelessWidget {
 
   Widget _body() => Stack(children: [
         ListView(
+          padding: EdgeInsets.only(bottom: 25.h),
           children: const [
             ModelSelectorWidget(),
             MainOptionsWidget(),
