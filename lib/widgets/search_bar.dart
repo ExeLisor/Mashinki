@@ -81,7 +81,6 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
         hintText: "Поиск",
         hintStyle: TextStyle(
             fontSize: 16.fs,
-            fontFamily: 'Inter',
             fontWeight: FontWeight.w400,
             height: 0,
             color: const Color(0xffA7A7A7)),

@@ -83,7 +83,6 @@ class AlphabetWidget extends StatelessWidget {
                       ? Colors.white
                       : primaryColor,
                   fontSize: 16.fs,
-                  fontFamily: 'Inter',
                   fontWeight: FontWeight.w500,
                 ),
               ),

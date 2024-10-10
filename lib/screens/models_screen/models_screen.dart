@@ -68,7 +68,6 @@ class ModelsScreen extends StatelessWidget {
                     style: TextStyle(
                       color: primaryColor,
                       fontSize: 20.fs,
-                      fontFamily: 'Inter',
                       fontWeight: FontWeight.w700,
                       height: 0,
                     ),
@@ -225,7 +224,6 @@ class ModelWidget extends StatelessWidget {
         style: TextStyle(
           color: primaryColor,
           fontSize: 20.fs,
-          fontFamily: 'Inter',
           fontWeight: FontWeight.w700,
           height: 0,
         ),
@@ -271,7 +269,6 @@ class GenerationWidget extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: fontSize.fs,
-                  fontFamily: 'Inter',
                   fontWeight: fontWeight,
                 ),
               ),

@@ -136,7 +136,6 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
         style: TextStyle(
           color: const Color(0xFF7974FF),
           fontSize: 12.fs,
-          fontFamily: 'Inter',
           fontWeight: FontWeight.w400,
         ),
       );
@@ -148,7 +147,6 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
           style: TextStyle(
             color: isHighlighted ? Colors.green : Colors.black,
             fontSize: 14.fs,
-            fontFamily: 'Inter',
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -159,7 +157,6 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
         style: TextStyle(
           color: Colors.black,
           fontSize: 18.fs,
-          fontFamily: 'Inter',
           fontWeight: FontWeight.w600,
           height: 0.06,
         ),

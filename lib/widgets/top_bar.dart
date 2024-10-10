@@ -94,7 +94,6 @@ class TopBar extends StatelessWidget {
                   style: TextStyle(
                     color: const Color(0xFF848484),
                     fontSize: 14.fs,
-                    fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
                     height: 0,
                   ),

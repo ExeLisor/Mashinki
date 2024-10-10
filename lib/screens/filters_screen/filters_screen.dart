@@ -73,7 +73,6 @@ class FiltersScreen extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
-                    fontFamily: 'Inter',
                     fontWeight: FontWeight.w600,
                     height: 0,
                   ),

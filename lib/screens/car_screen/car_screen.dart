@@ -143,7 +143,6 @@ class CarScreen extends StatelessWidget {
               style: TextStyle(
                 color: const Color(0xFF4038FF),
                 fontSize: 18.fs,
-                fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
                 height: 0.06,
               ),
@@ -156,7 +155,6 @@ class CarScreen extends StatelessWidget {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14.fs,
-                fontFamily: 'Inter',
                 fontWeight: FontWeight.w400,
               ),
             ),

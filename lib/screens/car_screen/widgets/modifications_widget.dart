@@ -120,7 +120,6 @@ class ModificationGroupTile extends StatelessWidget {
         style: TextStyle(
           color: Colors.white,
           fontSize: 18.fs,
-          fontFamily: 'Inter',
           fontWeight: FontWeight.w600,
         ),
       );
@@ -224,7 +223,6 @@ class ModificationGroupTile extends StatelessWidget {
                       style: TextStyle(
                         color: isSelected ? Colors.white : primaryColor,
                         fontSize: 18.fs,
-                        fontFamily: 'Inter',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -238,7 +236,6 @@ class ModificationGroupTile extends StatelessWidget {
                         color:
                             isSelected ? Colors.white : const Color(0xFF7974FF),
                         fontSize: 18.fs,
-                        fontFamily: 'Inter',
                         fontWeight: FontWeight.w400,
                       ),
                     )

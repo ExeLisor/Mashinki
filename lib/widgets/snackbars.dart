@@ -10,7 +10,6 @@ GetSnackBar commonSnackbar(String text) => GetSnackBar(
           style: TextStyle(
             color: Colors.white,
             fontSize: 15.fs,
-            fontFamily: 'Inter',
             fontWeight: FontWeight.w600,
             height: 0,
           ),

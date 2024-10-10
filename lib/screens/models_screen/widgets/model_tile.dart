@@ -74,7 +74,6 @@ class ModelTile extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: fontSize.fs,
-                  fontFamily: 'Inter',
                   fontWeight: fontWeight,
                 ),
               ),
@@ -105,7 +104,6 @@ class ModelTile extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14.fs,
-                    fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
                     height: 0,
                   ),

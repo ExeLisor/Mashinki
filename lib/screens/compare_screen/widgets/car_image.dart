@@ -80,7 +80,6 @@ class CompareCarImage extends StatelessWidget {
         style: TextStyle(
           color: Colors.black,
           fontSize: 16.fs,
-          fontFamily: 'Inter',
           fontWeight: FontWeight.w500,
           height: 0,
         ),

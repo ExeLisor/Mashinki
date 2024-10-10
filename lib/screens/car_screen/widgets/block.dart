@@ -118,7 +118,6 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
                     maxLines: 2,
                     style: TextStyle(
                       fontSize: 14.fs,
-                      fontFamily: 'Inter',
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -134,7 +133,6 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14.fs,
-                  fontFamily: 'Inter',
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -180,7 +178,6 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
           style: TextStyle(
             color: Colors.black,
             fontSize: 18.fs,
-            fontFamily: 'Inter',
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -191,7 +188,6 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
         style: TextStyle(
           color: const Color(0xFF848484),
           fontSize: 14.fs,
-          fontFamily: 'Inter',
           fontWeight: FontWeight.w400,
         ),
       );
@@ -247,7 +243,6 @@ class SpecsBlockWidget extends StatelessWidget {
         style: TextStyle(
           color: Colors.black,
           fontSize: 18.fs,
-          fontFamily: 'Inter',
           fontWeight: FontWeight.w600,
         ),
       );
@@ -268,7 +263,6 @@ class SpecsBlockWidget extends StatelessWidget {
                   style: TextStyle(
                     color: primaryColor,
                     fontSize: 14.fs,
-                    fontFamily: 'Inter',
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -283,7 +277,6 @@ class SpecsBlockWidget extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14.fs,
-                          fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                         ),
                       ),

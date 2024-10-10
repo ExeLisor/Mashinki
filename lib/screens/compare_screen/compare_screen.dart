@@ -79,7 +79,6 @@ class CompareScreen extends StatelessWidget {
         style: TextStyle(
           color: primaryColor,
           fontSize: 18.fs,
-          fontFamily: 'Inter',
           fontWeight: FontWeight.w700,
           height: 0,
         ),
@@ -151,7 +150,6 @@ class CompareFloatingBar extends StatelessWidget {
           style: const TextStyle(
             color: Colors.black,
             fontSize: 16,
-            fontFamily: 'Inter',
             fontWeight: FontWeight.w500,
             height: 0,
           ),

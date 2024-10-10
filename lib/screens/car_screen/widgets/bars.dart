@@ -46,7 +46,6 @@ class CarsFloatBar extends StatelessWidget {
               style: TextStyle(
                 color: primaryColor,
                 fontSize: 18.fs,
-                fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
               ),
             ),

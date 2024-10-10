@@ -60,7 +60,6 @@ class OptionsWidget extends StatelessWidget {
         style: TextStyle(
           color: Colors.black,
           fontSize: 18.fs,
-          fontFamily: 'Inter',
           fontWeight: FontWeight.w600,
         ),
       ),

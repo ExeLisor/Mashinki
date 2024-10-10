@@ -198,7 +198,6 @@ class ModificationTitleWidget extends StatelessWidget {
           style: TextStyle(
             color: Colors.black,
             fontSize: 18.fs,
-            fontFamily: 'Inter',
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -330,7 +329,6 @@ class CarDemensions extends StatelessWidget {
           style: TextStyle(
             color: primaryColor,
             fontSize: 13.fs,
-            fontFamily: 'Inter',
             fontWeight: FontWeight.w400,
             height: 0.0,
           ),
@@ -383,7 +381,6 @@ class DetailsTile extends StatelessWidget {
               style: TextStyle(
                 color: primaryColor,
                 fontSize: 13.fs,
-                fontFamily: 'Inter',
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -396,7 +393,6 @@ class DetailsTile extends StatelessWidget {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14.fs,
-                fontFamily: 'Inter',
                 fontWeight: FontWeight.w400,
               ),
             ),
