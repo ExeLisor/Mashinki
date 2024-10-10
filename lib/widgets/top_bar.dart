@@ -7,12 +7,14 @@ class TopBar extends StatelessWidget {
       this.isHomeScreen = false,
       this.subtitle = "",
       this.disableVerticalPadding = false,
-      this.showShadow = false});
+      this.showShadow = false,
+      this.showAccount = true});
   final bool isHomeScreen;
   final String title;
   final String subtitle;
   final bool disableVerticalPadding;
   final bool showShadow;
+  final bool showAccount;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,7 +42,12 @@ class TopBar extends StatelessWidget {
                   )
                 : _topBarIconBack(),
             _title(),
-            _accountIcon()
+            showAccount
+                ? _accountIcon()
+                : SizedBox(
+                    height: 32.h,
+                    width: 32.h,
+                  ),
           ],
         ),
       ),

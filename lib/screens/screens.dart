@@ -45,3 +45,8 @@ export 'compare_screen/widgets/specs_widget.dart';
 
 export 'favorites_screen/favorites_screen.dart';
 export 'favorites_screen/widgets/favorite_tile.dart';
+
+export 'filters_screen/filters_screen.dart';
+export 'filters_screen/widgets/add_options_widget.dart';
+export 'filters_screen/widgets/main_options_widget.dart';
+export 'filters_screen/widgets/model_selector_widget.dart';

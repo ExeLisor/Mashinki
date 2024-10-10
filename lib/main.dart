@@ -3,13 +3,13 @@ import 'package:autoverse/exports.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final firebaseController = Get.put(FirebaseController(), permanent: true);
-  final supabaseController = Get.put(SupabaseController(), permanent: true);
+  // final firebaseController = Get.put(FirebaseController(), permanent: true);
+  // final supabaseController = Get.put(SupabaseController(), permanent: true);
 
-  await firebaseController.onInitComplete();
-  await supabaseController.onInitComplete();
+  // await firebaseController.onInitComplete();
+  // await supabaseController.onInitComplete();
 
-  MobileAds.instance.initialize();
+  // MobileAds.instance.initialize();
 
   runApp(const MainApp());
 }
@@ -34,7 +34,7 @@ class _MainAppState extends State<MainApp> {
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
-      initialRoute: '/home',
+      initialRoute: '/filters',
       getPages: _pages,
       initialBinding: InititalBindingsClass(),
       routingCallback: (routing) {
@@ -55,6 +55,11 @@ class _MainAppState extends State<MainApp> {
     GetPage(
       name: '/home',
       page: () => const HomeScreen(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: '/filters',
+      page: () => const FiltersScreen(),
       transition: Transition.noTransition,
     ),
     GetPage(

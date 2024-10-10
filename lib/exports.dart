@@ -38,3 +38,4 @@ export 'package:badges/badges.dart';
 export 'package:firebase_app_check/firebase_app_check.dart';
 export 'package:supabase_flutter/supabase_flutter.dart'
     hide MultipartFile, Headers;
+export 'package:sqflite/sqflite.dart';
