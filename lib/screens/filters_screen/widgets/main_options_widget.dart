@@ -5,47 +5,70 @@ class MainOptionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        _title(),
-        _container(
-            child: Column(
+    return Container(
+      margin: EdgeInsets.only(bottom: 22.h),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _title(),
+          _container(
+              child: Column(
+            children: [
+              _selectors(),
+              _chips(),
+              _range(),
+            ],
+          )),
+        ],
+      ),
+    );
+  }
+
+  Widget _selectors() => const Column(
+        children: [
+          MainOptionSelector(text: "Кузов"),
+          MainOptionSelector(text: "Коробка"),
+          MainOptionSelector(text: "Двигатель"),
+        ],
+      );
+
+  Widget _chips() => Container(
+        margin: EdgeInsets.only(top: 28.h),
+        child: const Column(
           children: [
-            const MainOptionSelector(text: "Кузов"),
-            const MainOptionSelector(text: "Коробка"),
-            const MainOptionSelector(text: "Двигатель"),
-            SizedBox(height: 28.h),
-            const MainOptionsChips(
+            MainOptionsChips(
               title: "Привод",
               chips: ["Передний", "Задний", "Полный"],
             ),
-            const MainOptionsChips(
+            MainOptionsChips(
               title: "Руль",
               chips: ["Левый", "Правый"],
             ),
             MainOptionsChips(
               title: "Кол-во мест",
-              chips: List.generate(7, (index) => "${index + 1}"),
+              chips: ["1", "2", "3", "4", "5", "6", "7"],
               roundChips: true,
             ),
-            const MainOptionsRangeWidget(
-              title: "Объём двигателя, л",
-            ),
-            const MainOptionsRangeWidget(
-              title: "Мощность, л.с.",
-            ),
-            const MainOptionsRangeWidget(
-              title: "Разгон до 100 км/ч, (с)",
-            ),
-            const MainOptionsRangeWidget(
-              title: "Год выпуска",
-            ),
           ],
-        )),
-      ],
-    );
-  }
+        ),
+      );
+
+  Widget _range() => const Column(
+        children: [
+          MainOptionsRangeWidget(
+            title: "Объём двигателя, л",
+          ),
+          MainOptionsRangeWidget(
+            title: "Мощность, л.с.",
+          ),
+          MainOptionsRangeWidget(
+            title: "Разгон до 100 км/ч, (с)",
+          ),
+          MainOptionsRangeWidget(
+            title: "Год выпуска",
+          ),
+        ],
+      );
 
   Widget _title() => Container(
         margin: EdgeInsets.only(bottom: 20.h),
