@@ -12,13 +12,14 @@ class MainOptionsWidget extends StatelessWidget {
         children: [
           _title(),
           _container(
-              child: Column(
-            children: [
-              _selectors(),
-              _chips(),
-              _range(),
-            ],
-          )),
+            child: Column(
+              children: [
+                _selectors(),
+                _chips(),
+                _range(),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -38,14 +39,17 @@ class MainOptionsWidget extends StatelessWidget {
           children: [
             MainOptionsChips(
               title: "Привод",
+              value: "drives",
               chips: ["Передний", "Задний", "Полный"],
             ),
             MainOptionsChips(
               title: "Руль",
+              value: "steeringWheel",
               chips: ["Левый", "Правый"],
             ),
             MainOptionsChips(
               title: "Кол-во мест",
+              value: "seatsCount",
               chips: ["1", "2", "3", "4", "5", "6", "7"],
               roundChips: true,
             ),
@@ -56,17 +60,11 @@ class MainOptionsWidget extends StatelessWidget {
   Widget _range() => const Column(
         children: [
           MainOptionsRangeWidget(
-            title: "Объём двигателя, л",
-          ),
+              title: "Объём двигателя, л", field: "engineVolume"),
+          MainOptionsRangeWidget(title: "Мощность, л.с.", field: "power"),
           MainOptionsRangeWidget(
-            title: "Мощность, л.с.",
-          ),
-          MainOptionsRangeWidget(
-            title: "Разгон до 100 км/ч, (с)",
-          ),
-          MainOptionsRangeWidget(
-            title: "Год выпуска",
-          ),
+              title: "Разгон до 100 км/ч, (с)", field: "acceleration"),
+          MainOptionsRangeWidget(title: "Год выпуска", field: "year"),
         ],
       );
 
@@ -143,11 +141,13 @@ class MainOptionsChips extends StatelessWidget {
       {super.key,
       required this.title,
       required this.chips,
+      required this.value,
       this.roundChips = false});
 
   final String title;
   final List<String> chips;
   final bool roundChips;
+  final dynamic value;
 
   @override
   Widget build(BuildContext context) {
@@ -187,69 +187,89 @@ class MainOptionsChips extends StatelessWidget {
         ),
       );
 
-  Widget _chip(String value) => Container(
-        height: 36.h,
-        padding: chips.length > 5
-            ? EdgeInsets.all(10.h)
-            : EdgeInsets.symmetric(horizontal: 22.w),
-        margin: chips.length < 3 ? EdgeInsets.only(right: 10.w) : null,
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: const Color(0xFF4038FF),
-          ),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              value,
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.8700000047683716),
-                fontSize: 16.fs,
-                fontWeight: FontWeight.w400,
-                height: 0.08,
-              ),
+  Widget _chip(String valueText) => GestureDetector(
+        onTap: () => FilterController.to.actionWithValue(valueText, value),
+        child: Obx(
+          () => Container(
+            height: 36.h,
+            padding: chips.length > 5
+                ? EdgeInsets.all(10.h)
+                : EdgeInsets.symmetric(horizontal: 22.w),
+            margin: chips.length < 3 ? EdgeInsets.only(right: 10.w) : null,
+            decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: primaryColor,
+                ),
+                borderRadius: BorderRadius.circular(15),
+                color: FilterController.to.checkValue(valueText, value)
+                    ? primaryColor
+                    : Colors.transparent),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  valueText,
+                  style: TextStyle(
+                    color: FilterController.to.checkValue(valueText, value)
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 16.fs,
+                    fontWeight: FontWeight.w400,
+                    height: 0.08,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       );
 
-  Widget _roundedChip(String value) => Container(
-        width: 36.w,
-        height: 36.w,
-        margin: chips.length < 3 ? EdgeInsets.only(right: 10.w) : null,
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: const Color(0xFF4038FF),
-          ),
-          borderRadius: BorderRadius.circular(11),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              value,
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.8700000047683716),
-                fontSize: 16.fs,
-                fontWeight: FontWeight.w400,
-                height: 0.08,
-              ),
+  Widget _roundedChip(String valueText) => GestureDetector(
+        onTap: () => FilterController.to.actionWithValue(valueText, value),
+        child: Obx(
+          () => Container(
+            width: 36.w,
+            height: 36.w,
+            margin: chips.length < 3 ? EdgeInsets.only(right: 10.w) : null,
+            decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: const Color(0xFF4038FF),
+                ),
+                borderRadius: BorderRadius.circular(11),
+                color: FilterController.to.checkValue(valueText, value)
+                    ? primaryColor
+                    : Colors.transparent),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  valueText,
+                  style: TextStyle(
+                    color: FilterController.to.checkValue(valueText, value)
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 16.fs,
+                    fontWeight: FontWeight.w400,
+                    height: 0.08,
+                  ),
+                )
+              ],
             ),
-          ],
+          ),
         ),
       );
 }
 
 class MainOptionsRangeWidget extends StatelessWidget {
-  const MainOptionsRangeWidget({super.key, required this.title});
+  const MainOptionsRangeWidget(
+      {super.key, required this.title, required this.field});
 
   final String title;
+  final String field;
 
   @override
   Widget build(BuildContext context) {
@@ -277,7 +297,7 @@ class MainOptionsRangeWidget extends StatelessWidget {
 
   Widget _rangeWidget() => Row(
         children: [
-          _rangeContainer("От"),
+          _rangeContainer("От", isStart: true),
           Container(
             width: 10,
             margin: EdgeInsets.symmetric(horizontal: 10.w),
@@ -291,31 +311,40 @@ class MainOptionsRangeWidget extends StatelessWidget {
               ),
             ),
           ),
-          _rangeContainer("До"),
+          _rangeContainer("До", isStart: false),
         ],
       );
 
-  Widget _rangeContainer(String text) => Container(
+  Widget _rangeContainer(String hintText, {required bool isStart}) => Container(
         height: 40.h,
         width: 160.w,
-        padding: EdgeInsets.only(left: 20.h),
+        padding: EdgeInsets.zero,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Colors.white,
+          border: Border.all(color: primaryColor),
+          color: Colors.transparent,
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(text,
-                style: TextStyle(
-                  color: const Color(0xFF848484),
-                  fontSize: 16.fs,
-                  fontWeight: FontWeight.w400,
-                  height: 0.08,
-                )),
-          ],
+        child: TextField(
+          onChanged: (input) => FilterController.to.actionWithValue(
+            input,
+            "$field${isStart ? "Start" : "End"}",
+          ),
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyle(
+              color: const Color(0xFF848484),
+              fontSize: 16.fs,
+              fontWeight: FontWeight.w400,
+              height: 0.08,
+            ),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+            ),
+          ),
+          textAlignVertical: TextAlignVertical.top,
         ),
       );
 }

@@ -12,7 +12,7 @@ class ModelSelectorWidget extends StatelessWidget {
       );
 
   Widget _selectorsList() => Obx(() => Column(children: [
-        ...List.generate(controller.filterModel.configurations.length,
+        ...List.generate(controller.getFilterModel.configurations.length,
             (index) => _selectorBloc())
       ]));
 
@@ -38,8 +38,8 @@ class MarkSelectField extends StatefulWidget {
 class _MarkSelectFieldState extends State<MarkSelectField> {
   @override
   Widget build(BuildContext context) => GestureDetector(
-        onTap: () => FilterController.to
-            .addConfiguration(FilterModelConfiguration(markName: "Audi")),
+        // onTap: () => FilterController.to
+        //     .addConfiguration(FilterModelConfiguration(markName: "Audi")),
         child: Container(
           height: 50.h,
           margin: EdgeInsets.fromLTRB(15.w, 15.h, 15.w, 13.h),
