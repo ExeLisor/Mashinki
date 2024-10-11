@@ -34,19 +34,14 @@ class FilterController extends GetxController {
     log(filterModel.toJson());
   }
 
-  void _addValue(dynamic value, String field) {
-    log(field);
+  void _addValue(String value, String field) {
     var jsonValue = getFilterModel.toJson()[field];
-    log(jsonValue.runtimeType);
-    switch (jsonValue.runtimeType) {
-      case const (List<dynamic>):
-        jsonValue = List.from(getFilterModel.toJson()[field]);
-        jsonValue.add(value);
-        break;
 
-      default:
-        jsonValue = value;
-        break;
+    if (jsonValue is List<String>) {
+      jsonValue = List.from(getFilterModel.toJson()[field]);
+      jsonValue.add(value);
+    } else {
+      jsonValue = value;
     }
 
     var json = getFilterModel.toJson();

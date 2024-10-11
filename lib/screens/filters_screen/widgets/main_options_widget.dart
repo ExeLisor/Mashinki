@@ -329,20 +329,26 @@ class MainOptionsRangeWidget extends StatelessWidget {
             input,
             "$field${isStart ? "Start" : "End"}",
           ),
+          onTapOutside: (_) => FocusScope.of(Get.context!).unfocus(),
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(
-              color: const Color(0xFF848484),
               fontSize: 16.fs,
+              color: const Color(0xFF848484),
               fontWeight: FontWeight.w400,
               height: 0.08,
             ),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: const BorderSide(color: Colors.transparent),
             ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.transparent),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: const BorderSide(color: Colors.transparent),
             ),
+            filled: true,
+            fillColor: Colors.white,
           ),
           textAlignVertical: TextAlignVertical.top,
         ),
