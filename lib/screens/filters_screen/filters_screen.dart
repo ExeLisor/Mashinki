@@ -8,7 +8,10 @@ class FiltersScreen extends StatelessWidget {
     return Scaffold(
       appBar: _topBar(),
       bottomNavigationBar: HomeScreenBottomBarWidget(),
-      body: _body(),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: _body(),
+      ),
     );
   }
 

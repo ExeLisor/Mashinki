@@ -1,4 +1,5 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/screens/filters_screen/models/exterior_elements/exterior_elements.dart';
 
 class AddOptionsWidget extends StatelessWidget {
   const AddOptionsWidget({super.key});
@@ -8,8 +9,10 @@ class AddOptionsWidget extends StatelessWidget {
     return Column(
       children: [
         _title(),
-        const AddOptionsBloc(
-          title: "Экстерьер",
+        AddOptionsBloc(
+          title: "Элементы экстерьера",
+          exteriorElementsJson:
+              FilterController.to.getFilterModel.exteriorElements.toJson(),
         )
       ],
     );
@@ -35,69 +38,81 @@ class AddOptionsWidget extends StatelessWidget {
 }
 
 class AddOptionsBloc extends StatelessWidget {
-  const AddOptionsBloc({super.key, required this.title});
+  const AddOptionsBloc(
+      {super.key, required this.title, required this.exteriorElementsJson});
 
   final String title;
+  final Map<String, dynamic> exteriorElementsJson;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         _title(),
-        SizedBox(
-          height: 20.h,
-        ),
+        const SizedBox(height: 20),
         _container(
-            child: Container(
-          padding: EdgeInsets.fromLTRB(20.w, 0.h, 20.w, 0.h),
-          child: const Column(
-            children: [
-              AddOptionCheckBox(
-                value: "Легкосплавные диски",
-              ),
-              AddOptionCheckBox(
-                value: "Райлинги на крыше",
-              ),
-              AddOptionCheckBox(
-                value: "Легкосплавные диски",
-              )
-            ],
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: Column(
+              children: _generateCheckboxes(),
+            ),
           ),
-        ))
+        ),
       ],
     );
   }
 
   Widget _title() => Text(
         title,
-        style: TextStyle(
-          color: const Color(0xFF4038FF),
-          fontSize: 14.fs,
+        style: const TextStyle(
+          color: Color(0xFF4038FF),
+          fontSize: 14,
           fontWeight: FontWeight.w500,
           height: 0.10,
         ),
       );
 
   Widget _container({required Widget child}) => Container(
-      margin: EdgeInsets.fromLTRB(15.w, 0.h, 15.w, 0.h),
-      padding: EdgeInsets.only(bottom: 15.h),
+      margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+      padding: const EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: const Color(0xffF5F4FF),
       ),
       child: child);
+
+  List<Widget> _generateCheckboxes() {
+    // Decode the JSON into an ExteriorElements instance
+
+    // Create a list of widgets based on the properties of ExteriorElements
+    return ExteriorElements.localizedFieldNames.entries.map((entry) {
+      final fieldName = entry.key;
+      final localizedName = entry.value;
+      final isChecked = exteriorElementsJson[fieldName] as bool? ?? false;
+
+      return AddOptionCheckBox(
+        value: localizedName,
+        isChecked: isChecked,
+        onChanged: (value) {
+          exteriorElementsJson[fieldName] = value;
+        },
+      );
+    }).toList();
+  }
 }
 
-class AddOptionCheckBox extends StatefulWidget {
-  const AddOptionCheckBox({super.key, required this.value});
+class AddOptionCheckBox extends StatelessWidget {
+  const AddOptionCheckBox({
+    super.key,
+    required this.value,
+    required this.isChecked,
+    required this.onChanged,
+  });
 
   final String value;
+  final bool isChecked;
+  final ValueChanged<bool?> onChanged;
 
-  @override
-  State<AddOptionCheckBox> createState() => _AddOptionCheckBoxState();
-}
-
-class _AddOptionCheckBoxState extends State<AddOptionCheckBox> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -107,18 +122,18 @@ class _AddOptionCheckBoxState extends State<AddOptionCheckBox> {
   }
 
   Widget _valueText() => Text(
-        widget.value,
-        style: TextStyle(
-          color: const Color(0xFF4038FF),
-          fontSize: 16.fs,
+        value,
+        style: const TextStyle(
+          color: Color(0xFF4038FF),
+          fontSize: 16,
           fontWeight: FontWeight.w400,
           height: 0.08,
         ),
       );
 
   Widget _checkBox() => Checkbox(
-        value: true,
-        onChanged: (value) {},
+        value: isChecked,
+        onChanged: onChanged,
         activeColor: const Color(0xFF4038FF),
         side: const BorderSide(color: Color(0xFF4038FF)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),

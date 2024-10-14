@@ -1,60 +1,76 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/screens/filters_screen/models/exterior_elements/exterior_elements.dart';
+
+import 'package:autoverse/screens/filters_screen/models/filter_model/filter_model.dart';
+import 'package:autoverse/screens/filters_screen/models/main_options/main_options.dart';
 
 class FilterController extends GetxController {
   static FilterController get to => Get.find();
 
-  final Rx<FilterModel> filterModel = FilterModel().obs;
+  final Rx<FilterModel> filterModel = FilterModel(
+          configurations: [],
+          mainOptions: MainOptionsClass(),
+          exteriorElements: ExteriorElements())
+      .obs;
 
   FilterModel get getFilterModel => filterModel.value;
 
+  Map<String, dynamic> get jsonModel => filterModel.value.toJson();
+
   bool configurationsIsEmpty() => getFilterModel.configurations.isEmpty;
 
-  void actionWithValue(dynamic value, String field) => checkValue(value, field)
-      ? _removeValue(value, field)
-      : _addValue(value, field);
+  void actionWithValue(
+          dynamic value, String category, String type, String field) =>
+      checkValue(value, category, type, field)
+          ? _removeValue(value, category, type, field)
+          : _addValue(value, category, type, field);
 
-  void _removeValue(dynamic value, String field) {
-    var jsonValue = List.from(getFilterModel.toJson()[field]);
+  void _removeValue(dynamic value, String category, String type, String field) {
+    var jsFilterModel = getFilterModel.toJson();
+    var json = jsFilterModel[category];
+    var jsonValue = json[field];
 
-    switch (jsonValue.runtimeType) {
-      case const (List<dynamic>):
-        jsonValue.remove(value);
-        break;
-
-      default:
-        jsonValue.clear();
-        break;
+    if (type == "chips" || type == "selector") {
+      jsonValue.remove(value);
+    } else {
+      jsonValue.clear();
     }
 
-    var json = getFilterModel.toJson();
     json[field] = jsonValue;
 
-    filterModel.value = FilterModel.fromJson(json);
+    FilterModel filterModelJs = FilterModel.fromJson(jsFilterModel);
 
-    log(filterModel.toJson());
+    filterModel.value = filterModelJs;
   }
 
-  void _addValue(String value, String field) {
-    var jsonValue = getFilterModel.toJson()[field];
+  void _addValue(dynamic value, String category, String type, String field) {
+    log("$value $category $type $field");
+    var jsFilterModel = getFilterModel.toJson();
+    var json = jsFilterModel[category];
+    var jsonValue = json[field];
 
-    if (jsonValue is List<String>) {
-      jsonValue = List.from(getFilterModel.toJson()[field]);
+    log(json);
+
+    if (type == "chips") {
+      jsonValue = List.from(getFilterModel.toJson()[category][field]);
       jsonValue.add(value);
+    } else if (type == "selector") {
+      jsonValue = List.from(getFilterModel.toJson()[category][field]);
+      jsonValue = value;
     } else {
       jsonValue = value;
     }
 
-    var json = getFilterModel.toJson();
     json[field] = jsonValue;
 
-    filterModel.value = FilterModel.fromJson(json);
+    FilterModel filterModelJs = FilterModel.fromJson(jsFilterModel);
 
-    log(filterModel.toJson());
+    filterModel.value = filterModelJs;
   }
 
-  bool checkValue(dynamic value, String field) {
+  bool checkValue(dynamic value, String category, String type, String field) {
     try {
-      var jsonList = List.from(getFilterModel.toJson()[field]);
+      var jsonList = List.from(getFilterModel.toJson()[category][field]);
 
       return jsonList.contains(value);
     } catch (e) {
@@ -67,65 +83,6 @@ class FilterBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => FilterController());
-  }
-}
-
-class FilterModel {
-  List<FilterModelConfiguration> configurations = [];
-  List<String> drives = [];
-  List<String> steeringWheel = [];
-  List<String> seatsCount = [];
-  String engineVolumeStart = "";
-  String engineVolumeEnd = "";
-  String yearStart = "";
-  String yearEnd = "";
-  String powerStart = "";
-  String powerEnd = "";
-
-  FilterModel({
-    this.configurations = const [],
-    this.drives = const [],
-    this.steeringWheel = const [],
-    this.seatsCount = const [],
-    this.engineVolumeStart = "",
-    this.engineVolumeEnd = "",
-    this.yearStart = "",
-    this.yearEnd = "",
-    this.powerStart = "",
-    this.powerEnd = "",
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'configurations': configurations.map((c) => c.toJson()).toList(),
-      'drives': drives,
-      'steeringWheel': steeringWheel,
-      'seatsCount': seatsCount,
-      'engineVolumeStart': engineVolumeStart,
-      'engineVolumeEnd': engineVolumeEnd,
-      'yearStart': yearStart,
-      'yearEnd': yearEnd,
-      'powerStart': powerStart,
-      'powerEnd': powerEnd,
-    };
-  }
-
-  factory FilterModel.fromJson(Map<String, dynamic> json) {
-    return FilterModel(
-      configurations: (json['configurations'] as List<dynamic>)
-          .map<FilterModelConfiguration>(
-              (c) => FilterModelConfiguration.fromJson(c))
-          .toList(),
-      drives: List<String>.from(json['drives'] as List<dynamic>),
-      steeringWheel: List<String>.from(json['steeringWheel'] as List<dynamic>),
-      seatsCount: List<String>.from(json['seatsCount'] as List<dynamic>),
-      engineVolumeStart: json['engineVolumeStart'] as String,
-      engineVolumeEnd: json['engineVolumeEnd'] as String,
-      yearStart: json['yearStart'] as String,
-      yearEnd: json['yearEnd'] as String,
-      powerStart: json['powerStart'] as String,
-      powerEnd: json['powerEnd'] as String,
-    );
   }
 }
 
