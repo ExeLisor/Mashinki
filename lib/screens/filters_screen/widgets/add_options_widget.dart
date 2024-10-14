@@ -9,11 +9,11 @@ class AddOptionsWidget extends StatelessWidget {
     return Column(
       children: [
         _title(),
-        AddOptionsBloc(
-          title: "Элементы экстерьера",
-          exteriorElementsJson:
-              FilterController.to.getFilterModel.exteriorElements.toJson(),
-        )
+        // AddOptionsBloc(
+        //   title: "Элементы экстерьера",
+        //   exteriorElementsJson:
+        //       FilterController.to.getFilterModel.exteriorElements.toJson(),
+        // )
       ],
     );
   }
@@ -82,9 +82,6 @@ class AddOptionsBloc extends StatelessWidget {
       child: child);
 
   List<Widget> _generateCheckboxes() {
-    // Decode the JSON into an ExteriorElements instance
-
-    // Create a list of widgets based on the properties of ExteriorElements
     return ExteriorElements.localizedFieldNames.entries.map((entry) {
       final fieldName = entry.key;
       final localizedName = entry.value;
@@ -94,7 +91,13 @@ class AddOptionsBloc extends StatelessWidget {
         value: localizedName,
         isChecked: isChecked,
         onChanged: (value) {
-          exteriorElementsJson[fieldName] = value;
+          // log("$value, addOptions, checkbox, $fieldName");
+          // log(FilterController.to.jsonModel);
+          var test = {};
+          log(test);
+          log(test["asdsa"]);
+          test[fieldName] = value;
+          log(test);
         },
       );
     }).toList();

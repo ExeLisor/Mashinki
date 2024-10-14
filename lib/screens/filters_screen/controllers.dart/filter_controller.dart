@@ -13,11 +13,11 @@ class FilterController extends GetxController {
           exteriorElements: ExteriorElements())
       .obs;
 
-  FilterModel get getFilterModel => filterModel.value;
+  RxMap filter =
+      {"configurations": {}, "mainOptions": {}, "addOptions": {}}.obs;
+  // FilterModel get getFilterModel => filterModel.value;
 
-  Map<String, dynamic> get jsonModel => filterModel.value.toJson();
-
-  bool configurationsIsEmpty() => getFilterModel.configurations.isEmpty;
+  // Map<String, dynamic> get jsonModel => filterModel.value.toJson();
 
   void actionWithValue(
           dynamic value, String category, String type, String field) =>
@@ -26,53 +26,77 @@ class FilterController extends GetxController {
           : _addValue(value, category, type, field);
 
   void _removeValue(dynamic value, String category, String type, String field) {
-    var jsFilterModel = getFilterModel.toJson();
-    var json = jsFilterModel[category];
-    var jsonValue = json[field];
+    Map<String, Map<dynamic, dynamic>> newFilter = Map.from(filter);
+    var categoryValue = newFilter[category];
 
-    if (type == "chips" || type == "selector") {
-      jsonValue.remove(value);
-    } else {
-      jsonValue.clear();
+    var fieldValues = categoryValue![field];
+
+    if (type == "chips") {
+      fieldValues.remove(value);
+    } else if (type == "selector") {
+      fieldValues = value;
+    } else if (type == "range") {
+      fieldValues = value;
     }
 
-    json[field] = jsonValue;
+    newFilter[category]![field] = fieldValues;
+    filter.value = newFilter;
 
-    FilterModel filterModelJs = FilterModel.fromJson(jsFilterModel);
+    if (filter[category]![field].isEmpty) filter[category]!.remove(field);
 
-    filterModel.value = filterModelJs;
+    // log(filter);
+  }
+
+  _addNewField(String category, String field, String type) {
+    if (type == "chips") {
+      filter[category]?[field] = [];
+    } else if (type == "selector") {
+      filter[category]?[field] = {};
+    }
   }
 
   void _addValue(dynamic value, String category, String type, String field) {
-    log("$value $category $type $field");
-    var jsFilterModel = getFilterModel.toJson();
-    var json = jsFilterModel[category];
-    var jsonValue = json[field];
+    log("add");
+    Map<String, Map<dynamic, dynamic>> newFilter = Map.from(filter);
 
-    log(json);
+    var categoryValue = newFilter[category];
+    if (categoryValue?[field] == null) _addNewField(category, field, type);
 
-    if (type == "chips") {
-      jsonValue = List.from(getFilterModel.toJson()[category][field]);
-      jsonValue.add(value);
-    } else if (type == "selector") {
-      jsonValue = List.from(getFilterModel.toJson()[category][field]);
-      jsonValue = value;
-    } else {
-      jsonValue = value;
+    var fieldValues = categoryValue![field];
+
+    switch (type) {
+      case "chips":
+        fieldValues = List.from(categoryValue[field]);
+        fieldValues.add(value);
+        break;
+      case "selector":
+        fieldValues = value;
+        break;
+      default:
+        fieldValues = value;
     }
 
-    json[field] = jsonValue;
-
-    FilterModel filterModelJs = FilterModel.fromJson(jsFilterModel);
-
-    filterModel.value = filterModelJs;
+    newFilter[category]![field] = fieldValues;
+    filter.value = newFilter;
+    log(filter);
   }
 
   bool checkValue(dynamic value, String category, String type, String field) {
     try {
-      var jsonList = List.from(getFilterModel.toJson()[category][field]);
+      switch (type) {
+        case "chips":
+          return filter[category]?[field].contains(value);
 
-      return jsonList.contains(value);
+        case "range":
+          return filter[category]?[field].contains(value);
+
+        case "selector":
+          if (value.isEmpty) return true;
+          return filter[category]?[field].contains(value);
+
+        default:
+          return true;
+      }
     } catch (e) {
       return false;
     }

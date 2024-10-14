@@ -27,8 +27,8 @@ class MainOptionSelector extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              FilterController
-                      .to.jsonModel["mainOptions"][mainOption.field].isEmpty
+              FilterController.to.filter["mainOptions"][mainOption.field] ==
+                      null
                   ? _title()
                   : _selectedParams(),
             ],
@@ -52,7 +52,7 @@ class MainOptionSelector extends StatelessWidget {
 
   Widget _selectedParams() => Flexible(
         child: Text(
-          FilterController.to.jsonModel["mainOptions"][mainOption.field]
+          FilterController.to.filter["mainOptions"][mainOption.field]
               .join(", "),
           style: TextStyle(
             fontSize: 16.fs,
@@ -90,37 +90,41 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
   void initState() {
     super.initState();
 
-    values = List.from(
-        FilterController.to.jsonModel["mainOptions"][widget.mainOption.field]);
+    values = List.from(FilterController.to.filter["mainOptions"]
+            [widget.mainOption.field] ??
+        []);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // margin: EdgeInsets.only(top: 260.h),
-      height: Get.height / 1.5,
-      width: Get.width,
-      padding: EdgeInsets.only(top: 28.h),
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _homeLine(),
-          SizedBox(height: 13.h),
-          _titleRow(),
-          Expanded(
-            // Фиксируем высоту для прокрутки
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: 28.h),
-              child: _chips(),
+    return IntrinsicHeight(
+      child: Container(
+        constraints: BoxConstraints(maxHeight: Get.height / 1.5),
+        // margin: EdgeInsets.only(top: 260.h),
+
+        width: Get.width,
+        padding: EdgeInsets.only(top: 28.h),
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _homeLine(),
+            SizedBox(height: 13.h),
+            _titleRow(),
+            Expanded(
+              // Фиксируем высоту для прокрутки
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: 28.h),
+                child: _chips(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

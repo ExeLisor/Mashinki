@@ -6,15 +6,15 @@ class ModelSelectorWidget extends StatelessWidget {
   static FilterController controller = FilterController.to;
 
   @override
-  Widget build(BuildContext context) => Container(
-        margin: EdgeInsets.only(bottom: 22.h),
-        child: _selectorsList(),
-      );
+  Widget build(BuildContext context) =>
+      Container(margin: EdgeInsets.only(bottom: 22.h), child: Container()
+          // _selectorsList(),
+          );
 
-  Widget _selectorsList() => Obx(() => Column(children: [
-        ...List.generate(controller.getFilterModel.configurations.length,
-            (index) => _selectorBloc())
-      ]));
+  // Widget _selectorsList() => Obx(() => Column(children: [
+  //       ...List.generate(controller.getFilterModel.configurations.length,
+  //           (index) => _selectorBloc())
+  //     ]));
 
   Widget _selectorBloc() => Container(
         margin: EdgeInsets.fromLTRB(15.w, 0.h, 15.w, 0.h),

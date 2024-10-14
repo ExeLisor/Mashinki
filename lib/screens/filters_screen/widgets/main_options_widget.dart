@@ -23,10 +23,12 @@ class MainOptionsWidget extends StatelessWidget {
   }
 
   Widget _mainOptions() => _container(
-        child: Container(
-          margin: EdgeInsets.only(top: 22.h),
-          child: Column(
-            children: List.generate(mainOptions.length, (index) {
+          child: Container(
+        margin: EdgeInsets.only(top: 22.h),
+        child: Column(
+          children: List.generate(
+            mainOptions.length,
+            (index) {
               final mainOption = mainOptions[index];
               if (mainOption.type == "selector") {
                 return MainOptionSelector(
@@ -41,10 +43,10 @@ class MainOptionsWidget extends StatelessWidget {
                     title: mainOption.title, field: mainOption.field);
               }
               return Container();
-            }),
+            },
           ),
         ),
-      );
+      ));
 
   Widget _title() => Container(
         margin: EdgeInsets.only(bottom: 20.h),
