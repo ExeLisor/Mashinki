@@ -15,9 +15,6 @@ class FilterController extends GetxController {
 
   RxMap filter =
       {"configurations": {}, "mainOptions": {}, "addOptions": {}}.obs;
-  // FilterModel get getFilterModel => filterModel.value;
-
-  // Map<String, dynamic> get jsonModel => filterModel.value.toJson();
 
   void actionWithValue(
           dynamic value, String category, String type, String field) =>
@@ -27,9 +24,9 @@ class FilterController extends GetxController {
 
   void _removeValue(dynamic value, String category, String type, String field) {
     Map<String, Map<dynamic, dynamic>> newFilter = Map.from(filter);
-    var categoryValue = newFilter[category];
+    dynamic categoryValue = newFilter[category];
 
-    var fieldValues = categoryValue![field];
+    dynamic fieldValues = categoryValue![field];
 
     if (type == "chips") {
       fieldValues.remove(value);
@@ -37,14 +34,14 @@ class FilterController extends GetxController {
       fieldValues = value;
     } else if (type == "range") {
       fieldValues = value;
+    } else if (type == "checkbox") {
+      fieldValues = "";
     }
 
     newFilter[category]![field] = fieldValues;
     filter.value = newFilter;
 
-    if (filter[category]![field].isEmpty) filter[category]!.remove(field);
-
-    // log(filter);
+    if (filter[category]?[field].isEmpty) filter[category]!.remove(field);
   }
 
   _addNewField(String category, String field, String type) {
@@ -56,7 +53,6 @@ class FilterController extends GetxController {
   }
 
   void _addValue(dynamic value, String category, String type, String field) {
-    log("add");
     Map<String, Map<dynamic, dynamic>> newFilter = Map.from(filter);
 
     var categoryValue = newFilter[category];
@@ -92,6 +88,10 @@ class FilterController extends GetxController {
 
         case "selector":
           if (value.isEmpty) return true;
+          return filter[category]?[field].contains(value);
+
+        case "checkbox":
+          if (value == false) return true;
           return filter[category]?[field].contains(value);
 
         default:

@@ -100,8 +100,6 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
     return IntrinsicHeight(
       child: Container(
         constraints: BoxConstraints(maxHeight: Get.height / 1.5),
-        // margin: EdgeInsets.only(top: 260.h),
-
         width: Get.width,
         padding: EdgeInsets.only(top: 28.h),
         decoration: const BoxDecoration(
@@ -116,7 +114,6 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
             SizedBox(height: 13.h),
             _titleRow(),
             Expanded(
-              // Фиксируем высоту для прокрутки
               child: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
                 padding: EdgeInsets.only(bottom: 28.h),

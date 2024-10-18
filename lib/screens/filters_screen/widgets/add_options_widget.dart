@@ -1,5 +1,7 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/screens/filters_screen/models/add_options/add_options.dart';
 import 'package:autoverse/screens/filters_screen/models/exterior_elements/exterior_elements.dart';
+import 'package:autoverse/screens/filters_screen/models/main_options/main_options_list.dart';
 
 class AddOptionsWidget extends StatelessWidget {
   const AddOptionsWidget({super.key});
@@ -9,17 +11,14 @@ class AddOptionsWidget extends StatelessWidget {
     return Column(
       children: [
         _title(),
-        // AddOptionsBloc(
-        //   title: "Элементы экстерьера",
-        //   exteriorElementsJson:
-        //       FilterController.to.getFilterModel.exteriorElements.toJson(),
-        // )
+        ...options.entries
+            .map((e) => AddOptionsBloc(title: e.key, field: e.value)),
       ],
     );
   }
 
   Widget _title() => Container(
-        margin: EdgeInsets.only(bottom: 20.h),
+        margin: EdgeInsets.only(bottom: 10.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -38,16 +37,16 @@ class AddOptionsWidget extends StatelessWidget {
 }
 
 class AddOptionsBloc extends StatelessWidget {
-  const AddOptionsBloc(
-      {super.key, required this.title, required this.exteriorElementsJson});
+  const AddOptionsBloc({super.key, required this.title, required this.field});
 
   final String title;
-  final Map<String, dynamic> exteriorElementsJson;
+  final List<MainOptionField> field;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 20),
         _title(),
         const SizedBox(height: 20),
         _container(
@@ -73,72 +72,88 @@ class AddOptionsBloc extends StatelessWidget {
       );
 
   Widget _container({required Widget child}) => Container(
-      margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-      padding: const EdgeInsets.only(bottom: 15),
+      margin: EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
+      padding: EdgeInsets.only(bottom: 7.h, top: 7.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: const Color(0xffF5F4FF),
       ),
       child: child);
 
-  List<Widget> _generateCheckboxes() {
-    return ExteriorElements.localizedFieldNames.entries.map((entry) {
-      final fieldName = entry.key;
-      final localizedName = entry.value;
-      final isChecked = exteriorElementsJson[fieldName] as bool? ?? false;
-
-      return AddOptionCheckBox(
-        value: localizedName,
-        isChecked: isChecked,
-        onChanged: (value) {
-          // log("$value, addOptions, checkbox, $fieldName");
-          // log(FilterController.to.jsonModel);
-          var test = {};
-          log(test);
-          log(test["asdsa"]);
-          test[fieldName] = value;
-          log(test);
-        },
+  List<Widget> _generateCheckboxes() => List.generate(
+        field.length,
+        (index) => AddOptionCheckBox(
+          field: field[index],
+          isLast: index == field.length - 1,
+        ),
       );
-    }).toList();
-  }
 }
 
 class AddOptionCheckBox extends StatelessWidget {
   const AddOptionCheckBox({
     super.key,
-    required this.value,
-    required this.isChecked,
-    required this.onChanged,
+    required this.field,
+    this.isLast = false,
   });
 
-  final String value;
-  final bool isChecked;
-  final ValueChanged<bool?> onChanged;
+  final MainOptionField field;
+  final bool isLast;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [_valueText(), _checkBox()],
+    return Column(
+      children: [
+        SizedBox(height: 6.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _valueText(),
+            _checkBox(),
+          ],
+        ),
+        SizedBox(height: 6.h),
+        !isLast ? _dividerLine() : Container(),
+      ],
     );
   }
 
-  Widget _valueText() => Text(
-        value,
-        style: const TextStyle(
-          color: Color(0xFF4038FF),
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          height: 0.08,
+  Widget _dividerLine() => Opacity(
+        opacity: 0.50,
+        child: Container(
+          decoration: const ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                width: 0.5,
+                color: paleColor,
+              ),
+            ),
+          ),
         ),
       );
 
-  Widget _checkBox() => Checkbox(
-        value: isChecked,
-        onChanged: onChanged,
-        activeColor: const Color(0xFF4038FF),
-        side: const BorderSide(color: Color(0xFF4038FF)),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+  Widget _valueText() => SizedBox(
+        width: 240.w,
+        child: Text(
+          field.title,
+          maxLines: 2,
+          style: TextStyle(
+            color: primaryColor,
+            fontSize: 16.fs,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
       );
+
+  Widget _checkBox() => Obx(
+        () => Checkbox(
+          value: FilterController.to.filter["addOptions"][field.field] ?? false,
+          onChanged: changeValue,
+          activeColor: primaryColor,
+          side: const BorderSide(color: primaryColor),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        ),
+      );
+
+  void changeValue(bool? value) => FilterController.to
+      .actionWithValue(value, "addOptions", field.type, field.field);
 }
