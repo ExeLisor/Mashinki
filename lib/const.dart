@@ -82,3 +82,26 @@ const String pinSearchUrl = "https://www.pinterest.com/search/pins/?q";
 const String tikTokSearchUrl = "https://www.tiktok.com/search?q";
 
 enum ResourceType { youtube, google, pinterest, tiktok }
+
+const String carScreenAsset = 'assets/screens/car.png';
+const String catalogScreenAsset = 'assets/screens/catalog.png';
+const String comparisonScreenAsset = 'assets/screens/comparison.png';
+const String favoriteScreenAsset = 'assets/screens/favorite.png';
+const String filtersScreenAsset = 'assets/screens/filters.png';
+const String marksScreenAsset = 'assets/screens/marks.png';
+const String modelsScreenAsset = 'assets/screens/models.png';
+
+const String accountIconAsset = 'assets/icons_v2/account_icon.svg';
+const String backIconAsset = 'assets/icons_v2/back_icon.svg';
+const String checkIconAsset = 'assets/icons_v2/check_icon.svg';
+const String closeIconAsset = 'assets/icons_v2/close_icon.svg';
+const String comparisonIconAsset = 'assets/icons_v2/comparison_icon.svg';
+const String favoriteIconAsset = 'assets/icons_v2/favorite_icon.svg';
+const String filterIconAsset = 'assets/icons_v2/filters_icon.svg';
+const String forwardIconAsset = 'assets/icons_v2/forward_icon.svg';
+const String homeIconAsset = 'assets/icons_v2/home_icon.svg';
+const String logoIconAsset = 'assets/icons_v2/logo_icon.svg';
+const String openIconAsset = 'assets/icons_v2/open_icon.svg';
+const String removeIconAsset = 'assets/icons_v2/remove_icon.svg';
+const String searchIconAsset = 'assets/icons_v2/search_icon.svg';
+const String uncheckIconAsset = 'assets/icons_v2/uncheck_icon.svg';

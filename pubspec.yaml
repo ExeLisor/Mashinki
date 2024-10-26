@@ -110,3 +110,24 @@ flutter:
     - assets/configurations/sedan.svg
     - assets/configurations/van.svg
     - assets/configurations/wagon.svg
+    - assets/screens/car.png
+    - assets/screens/catalog.png
+    - assets/screens/comparison.png
+    - assets/screens/favorite.png
+    - assets/screens/filters.png
+    - assets/screens/marks.png
+    - assets/screens/models.png
+    - assets/icons_v2/account_icon.svg
+    - assets/icons_v2/back_icon.svg
+    - assets/icons_v2/check_icon.svg
+    - assets/icons_v2/close_icon.svg
+    - assets/icons_v2/comparison_icon.svg
+    - assets/icons_v2/favorite_icon.svg
+    - assets/icons_v2/filters_icon.svg
+    - assets/icons_v2/forward_icon.svg
+    - assets/icons_v2/home_icon.svg
+    - assets/icons_v2/logo_icon.svg
+    - assets/icons_v2/open_icon.svg
+    - assets/icons_v2/remove_icon.svg
+    - assets/icons_v2/search_icon.svg
+    - assets/icons_v2/uncheck_icon.svg
