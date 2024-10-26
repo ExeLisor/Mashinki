@@ -16,13 +16,18 @@ class FilterController extends GetxController {
   RxMap filter =
       {"configurations": {}, "mainOptions": {}, "addOptions": {}}.obs;
 
+  void clearField(String category, String type, String field) {
+    if (filter[category]?[field] != null) filter[category]?[field].clear();
+    if (filter[category]?[field].isEmpty) filter[category]!.remove(field);
+  }
+
   void actionWithValue(
           dynamic value, String category, String type, String field) =>
       checkValue(value, category, type, field)
-          ? _removeValue(value, category, type, field)
-          : _addValue(value, category, type, field);
+          ? removeValue(value, category, type, field)
+          : addValue(value, category, type, field);
 
-  void _removeValue(dynamic value, String category, String type, String field) {
+  void removeValue(dynamic value, String category, String type, String field) {
     Map<String, Map<dynamic, dynamic>> newFilter = Map.from(filter);
     dynamic categoryValue = newFilter[category];
 
@@ -31,7 +36,10 @@ class FilterController extends GetxController {
     if (type == "chips") {
       fieldValues.remove(value);
     } else if (type == "selector") {
-      fieldValues = value;
+      if (value is List) {
+        fieldValues = fieldValues..removeWhere((v) => value.contains(v));
+      }
+      fieldValues.remove(value);
     } else if (type == "range") {
       fieldValues = value;
     } else if (type == "checkbox") {
@@ -48,11 +56,11 @@ class FilterController extends GetxController {
     if (type == "chips") {
       filter[category]?[field] = [];
     } else if (type == "selector") {
-      filter[category]?[field] = {};
+      filter[category]?[field] = [];
     }
   }
 
-  void _addValue(dynamic value, String category, String type, String field) {
+  void addValue(dynamic value, String category, String type, String field) {
     Map<String, Map<dynamic, dynamic>> newFilter = Map.from(filter);
 
     var categoryValue = newFilter[category];
@@ -66,7 +74,8 @@ class FilterController extends GetxController {
         fieldValues.add(value);
         break;
       case "selector":
-        fieldValues = value;
+        fieldValues = List.from(categoryValue[field]);
+        fieldValues.addAll(value);
         break;
       default:
         fieldValues = value;
@@ -88,6 +97,7 @@ class FilterController extends GetxController {
 
         case "selector":
           if (value.isEmpty) return true;
+          if (value is List) return value.isSubsetOf(filter[category]?[field]);
           return filter[category]?[field].contains(value);
 
         case "checkbox":

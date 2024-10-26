@@ -33,9 +33,9 @@ export 'package:firebase_remote_config/firebase_remote_config.dart';
 export 'firebase_options.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-export 'package:collection/collection.dart' hide binarySearch, mergeSort;
+export 'package:collection/collection.dart'
+    hide binarySearch, mergeSort, ListExtensions;
 export 'package:badges/badges.dart';
 export 'package:firebase_app_check/firebase_app_check.dart';
 export 'package:supabase_flutter/supabase_flutter.dart'
     hide MultipartFile, Headers;
-export 'package:sqflite/sqflite.dart';

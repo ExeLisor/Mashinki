@@ -1,15 +1,17 @@
 import 'package:autoverse/exports.dart';
 
+import 'screens/filters_screen/widgets/option_selector.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // final firebaseController = Get.put(FirebaseController(), permanent: true);
-  // final supabaseController = Get.put(SupabaseController(), permanent: true);
+  final firebaseController = Get.put(FirebaseController(), permanent: true);
+  final supabaseController = Get.put(SupabaseController(), permanent: true);
 
-  // await firebaseController.onInitComplete();
-  // await supabaseController.onInitComplete();
+  await firebaseController.onInitComplete();
+  await supabaseController.onInitComplete();
 
-  // MobileAds.instance.initialize();
+  MobileAds.instance.initialize();
 
   runApp(const MainApp());
 }
@@ -34,7 +36,7 @@ class _MainAppState extends State<MainApp> {
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
-      initialRoute: '/filters',
+      initialRoute: '/home',
       getPages: _pages,
       initialBinding: InititalBindingsClass(),
       routingCallback: (routing) {
@@ -79,7 +81,7 @@ class _MainAppState extends State<MainApp> {
           name: '/filters',
           page: () => const ModelsFiltersWidget(),
           transition: Transition.cupertino,
-          bindings: [FilterBinding()],
+          bindings: [FilterBinding(), OptionSelectorBinding()],
         ),
       ],
     ),
@@ -124,7 +126,8 @@ class _MainAppState extends State<MainApp> {
 class InititalBindingsClass extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => FilterController());
+    Get.lazyPut(() => FilterController(), fenix: true);
+    Get.lazyPut(() => OptionSelectorController(), fenix: true);
     Get.lazyPut(() => BarController());
     Get.lazyPut(() => CompareController());
     Get.lazyPut(() => MarksController());

@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:autoverse/exports.dart';
 import 'package:autoverse/screens/filters_screen/models/main_options/main_options_list.dart';
+import 'package:autoverse/screens/filters_screen/widgets/option_selector.dart';
 
 class MainOptionSelector extends StatelessWidget {
   const MainOptionSelector({super.key, required this.mainOption});
@@ -100,6 +103,7 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
     return IntrinsicHeight(
       child: Container(
         constraints: BoxConstraints(maxHeight: Get.height / 1.5),
+        height: 614.h,
         width: Get.width,
         padding: EdgeInsets.only(top: 28.h),
         decoration: const BoxDecoration(
@@ -113,11 +117,12 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
             _homeLine(),
             SizedBox(height: 13.h),
             _titleRow(),
+            SizedBox(height: 13.h),
             Expanded(
               child: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
                 padding: EdgeInsets.only(bottom: 28.h),
-                child: _chips(),
+                child: _checkBoxes(),
               ),
             ),
           ],
@@ -196,125 +201,44 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
   Widget _title() => Text(
         widget.mainOption.title,
         style: TextStyle(
-          color: primaryColor,
-          fontSize: 18.fs,
-          fontWeight: FontWeight.w600,
-          height: 0,
+          color: Colors.black,
+          fontSize: 20.fs,
+          fontWeight: FontWeight.w700,
         ),
       );
 
-  Widget _chips() {
+  Widget _checkBoxes() {
     var entriesList = widget.mainOption.values.entries.toList();
+
     return Container(
-      margin: EdgeInsets.only(left: 20.w),
+      margin: EdgeInsets.only(left: 30.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(entriesList.length, (index) {
-          var entry = entriesList[index];
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _chipTitle(entry.key), // Отображаем ключ как заголовок
-              SizedBox(height: 13.h),
-              Wrap(
-                spacing: 10.w,
-                runSpacing: 13.h,
-                children: List.generate(
-                    entry.value.length,
-                    (i) => _chip(
-                        entry.value[i]) // Генерируем чип для каждого значения
+        children: List.generate(
+          entriesList.length,
+          (index) {
+            var entry = entriesList[index];
 
-                    ),
-              ),
-            ],
-          );
-        }),
+            return OptionCheckBox(
+              category: "mainOptions",
+              entry: entry,
+              field: widget.mainOption,
+            );
+          },
+        ),
       ),
     );
   }
-
-  Widget _category(Map<String, List<String>> category) => Column(
-        children: [
-          for (var entry in category.entries) ...[
-            _chipTitle(entry.key), // Ключ категории в _chipTitle
-            SizedBox(height: 13.h),
-            for (var subCategory in entry.value) ...[
-              _chip(subCategory), // Чип для каждого значения (подкатегории)
-              SizedBox(height: 8.h), // Отступ между чипами
-            ],
-          ]
-        ],
-      );
-
-  Widget _chipTitle(String categoryTitle) => categoryTitle.isEmpty
-      ? const SizedBox.shrink()
-      : Container(
-          margin: EdgeInsets.only(left: 9.w, top: 18.h),
-          child: Text(
-            categoryTitle,
-            style: const TextStyle(
-              color: Color(0xFF4038FF),
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              height: 0.08,
-            ),
-          ),
-        );
-
-  Widget _chip(String valueText) => GestureDetector(
-        onTap: () => action(valueText),
-        child: IntrinsicWidth(
-          child: Container(
-            height: 36.h,
-            padding: widget.mainOption.values!.length > 5
-                ? EdgeInsets.all(10.h)
-                : EdgeInsets.symmetric(horizontal: 22.w),
-            margin: widget.mainOption.values!.length < 3
-                ? EdgeInsets.only(right: 10.w)
-                : null,
-            decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: primaryColor,
-                ),
-                borderRadius: BorderRadius.circular(15),
-                color: values.contains(valueText)
-                    ? primaryColor
-                    : Colors.transparent),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  valueText,
-                  style: TextStyle(
-                    color: values.contains(valueText)
-                        ? Colors.white
-                        : Colors.black,
-                    fontSize: 16.fs,
-                    fontWeight: FontWeight.w400,
-                    height: 0.08,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
 
   void action(String text) => setState(
       () => values.contains(text) ? values.remove(text) : values.add(text));
 
   void _applyAction() {
-    FilterController.to.actionWithValue(
-        values, "mainOptions", widget.mainOption.type, widget.mainOption.field);
+    OptionSelectorController.to.applyAction("mainOptions", widget.mainOption);
     Get.back();
   }
 
-  void _resetAction() {
-    setState(() => values.clear());
-    FilterController.to.actionWithValue(
-        values, "mainOptions", widget.mainOption.type, widget.mainOption.field);
-  }
+  void _resetAction() =>
+      OptionSelectorController.to.clearAction("mainOptions", widget.mainOption);
 }

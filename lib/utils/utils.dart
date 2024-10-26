@@ -202,3 +202,7 @@ extension NullCheckExtension<T> on T? {
     return false;
   }
 }
+
+extension ListExtensions on List {
+  bool isSubsetOf(List otherList) => every(otherList.contains);
+}

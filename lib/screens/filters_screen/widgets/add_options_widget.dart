@@ -1,6 +1,5 @@
 import 'package:autoverse/exports.dart';
 import 'package:autoverse/screens/filters_screen/models/add_options/add_options.dart';
-import 'package:autoverse/screens/filters_screen/models/exterior_elements/exterior_elements.dart';
 import 'package:autoverse/screens/filters_screen/models/main_options/main_options_list.dart';
 
 class AddOptionsWidget extends StatelessWidget {
