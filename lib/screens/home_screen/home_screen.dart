@@ -5,9 +5,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar(),
-      body: const Navigator(
+    return const Scaffold(
+      body: Navigator(
         initialRoute: '/home',
       ),
     );
@@ -20,35 +19,48 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
       body: _homeScreen(),
       bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
   }
 
-  AppBar appBar() => AppBar(
-        toolbarHeight: 0.h,
+  AppBar _appBar() => AppBar(
+        title: _appBarText(),
+        leadingWidth: 30.w,
+        leading: _iconBack(),
+        centerTitle: true,
+        actions: [_accountIcon(), SizedBox(width: 25.w)],
+      );
+
+  Widget _appBarText() => Text(
+        'Каталог',
+        style: TextStyle(
+          color: primaryColor,
+          fontSize: 20.fs,
+          fontWeight: FontWeight.w700,
+        ),
+      );
+  Widget _iconBack() => Center(
+        child: SvgPicture.asset(
+          "assets/svg/logo.svg",
+        ),
+      );
+
+  Widget _accountIcon() => SvgPicture.asset(
+        "assets/svg/account_active.svg",
+        height: 24.h,
+        width: 24.w,
       );
 
   Widget _homeScreen() => SingleChildScrollView(
         child: Column(
           children: [
-            const TopBar(
-              title: "Каталог",
-              isHomeScreen: true,
-            ),
-            const CarsSearchBar(
-              isActive: false,
-              showFilters: false,
-            ),
+            _appBar(),
+            SizedBox(height: 5.h),
+            const CarsSearchBar(),
+            SizedBox(height: 20.h),
             const WeeklySelectionWidget(),
-            SizedBox(
-              height: 20.h,
-            ),
-            const HomeScreenAdsWidget(),
-            SizedBox(
-              height: 20.h,
-            ),
+            SizedBox(height: 20.h),
             const MarksWidget(),
             const CarsCatalogListWidget(),
           ],

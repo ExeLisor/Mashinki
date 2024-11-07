@@ -9,12 +9,14 @@ class ImageContainer extends StatelessWidget {
       this.margin,
       this.padding,
       this.function,
+      this.shadows,
       this.loadingWidget});
 
   final ImageData imageData;
 
   final double width;
   final double height;
+  final List<BoxShadow>? shadows;
 
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
@@ -38,16 +40,19 @@ class ImageContainer extends StatelessWidget {
 
   Widget _image(String url) => GestureDetector(
         onTap: function,
-        child: CachedNetworkImage(
-            imageUrl: url,
-            fit: BoxFit.cover,
-            imageBuilder: (context, imageProvider) =>
-                _imageBuilder(imageProvider),
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                SizedBox(
-                  width: width.h,
-                  height: height.h,
-                )),
+        child: Container(
+          decoration: BoxDecoration(boxShadow: shadows),
+          child: CachedNetworkImage(
+              imageUrl: url,
+              fit: BoxFit.cover,
+              imageBuilder: (context, imageProvider) =>
+                  _imageBuilder(imageProvider),
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  SizedBox(
+                    width: width.h,
+                    height: height.h,
+                  )),
+        ),
         // _loadingWidget()),
       );
 
@@ -74,13 +79,19 @@ class ImageContainer extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.15),
-                spreadRadius: 1,
-                blurRadius: 5,
-                offset: Offset(0, 5.h), // changes position of shadow
+                color: Color(0x0F000000),
+                blurRadius: 15,
+                offset: Offset(-1, 10),
+                spreadRadius: 2,
               ),
+              BoxShadow(
+                color: Color(0x0F000000),
+                blurRadius: 15,
+                offset: Offset(1, 1),
+                spreadRadius: 2,
+              )
             ],
           ),
           child: child,

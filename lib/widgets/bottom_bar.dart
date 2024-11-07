@@ -30,11 +30,11 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
     );
   }
 
-  final List<String> _icons = [
-    homeIcon,
-    comprIcon,
-    favoriteIcon,
-    accountCircleIcon
+  final List<BottomIcon> _icons = [
+    BottomIcon.home(),
+    BottomIcon.compare(),
+    BottomIcon.favorite(),
+    BottomIcon.account(),
   ];
 
   List<Widget> _items() {
@@ -62,12 +62,10 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
           decoration:
               BoxDecoration(border: Border.all(color: Colors.transparent)),
           child: SvgPicture.asset(
-            _icons[index],
+            _icons[index].getPath(index),
+            color: _icons[index].isActive(index) ? primaryColor : unactiveColor,
             height: 24.h,
             width: 24.h,
-            color: _barController.currentPageIndex.value == index
-                ? primaryColor
-                : unactiveColor,
           ),
         ),
       ),
@@ -97,10 +95,10 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 12.fs),
               ),
               child: SvgPicture.asset(
-                _icons[index],
+                _icons[index].getPath(index),
                 height: 24.h,
                 width: 24.h,
-                color: _barController.currentPageIndex.value == index
+                color: _icons[index].isActive(index)
                     ? primaryColor
                     : unactiveColor,
               ),
@@ -110,4 +108,32 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+class BottomIcon {
+  final String active;
+  final String inactive;
+
+  static const String path = "assets/svg";
+
+  BottomIcon.home()
+      : active = '$path/home_active.svg',
+        inactive = '$path/home.svg';
+
+  BottomIcon.compare()
+      : active = '$path/comp_bottom.svg',
+        inactive = '$path/comp_bottom.svg';
+
+  BottomIcon.favorite()
+      : active = '$path/favorite_blue.svg',
+        inactive = '$path/favorite_bottom.svg';
+
+  BottomIcon.account()
+      : active = '$path/account_active.svg',
+        inactive = '$path/account.svg';
+
+  String getPath(int index) =>
+      BarController.to.currentPageIndex.value == index ? active : inactive;
+
+  bool isActive(int index) => BarController.to.currentPageIndex.value == index;
 }

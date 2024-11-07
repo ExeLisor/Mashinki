@@ -1,37 +1,22 @@
 import 'package:autoverse/exports.dart';
 
-const double containerSize = 75;
+const double containerSize = 58;
 const double spacing = 25;
 
-class MarksWidget extends StatelessWidget {
+class MarksWidget extends GetView<MarksController> {
   const MarksWidget({super.key});
 
-  void _navigateToMarksScreen() {
-    Get.toNamed("/marks");
-  }
+  void _navigateToMarksScreen() => Get.toNamed("/marks");
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _marksWidgetTitle(),
-        SizedBox(height: 15.h),
-        _marksView(),
-      ],
+      children: [_title(), SizedBox(height: 10.h), _marks()],
     );
   }
 
-  Widget _marksView() => Obx(
-        () => HomeShimmerWidget(
-          shimmer: _marksLoadingWidget(),
-          successCondition:
-              MarksController.to.state.value == MarksState.success,
-          child: buildPopularMarksList(),
-        ),
-      );
-
-  Widget _marksWidgetTitle() => GestureDetector(
+  Widget _title() => GestureDetector(
         onTap: _navigateToMarksScreen,
         child: Padding(
           padding: EdgeInsets.only(left: spacing.w),
@@ -39,59 +24,36 @@ class MarksWidget extends StatelessWidget {
             children: [
               Text("Бренды",
                   style: TextStyle(
-                      fontSize: 18.fs,
+                      fontSize: 16.fs,
                       color: primaryColor,
                       fontWeight: FontWeight.w600)),
               SizedBox(width: 13.w),
-              const Icon(Icons.arrow_forward_ios_rounded, color: primaryColor),
+              SvgPicture.asset("assets/svg/arrow_right.svg"),
             ],
           ),
         ),
       );
 
-  Widget _popularMarksList() => GetBuilder<MarksController>(
-        builder: (controller) => Row(
-          children: [
-            //для того, чтобы при скролле виджет красиво выходил за границы экрана
-            Container(width: spacing.w),
-            buildPopularMarksList(),
-            _moreMarks()
-          ],
-        ),
-      );
-
-  Widget buildPopularMarksList() => GetBuilder<MarksController>(
-        builder: (controller) => SizedBox(
-          height: containerSize.h + 10.h,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: controller.popularMarks.length,
-            itemBuilder: (context, index) {
-              Mark mark = controller.popularMarks[index];
-              return Row(
-                children: [
-                  index == 0
-                      ? SizedBox(
-                          width: spacing.w,
-                        )
-                      : Container(),
-                  _image(mark),
-                  index == controller.popularMarks.length - 1
-                      ? _moreMarks()
-                      : Container()
-                ],
-              );
-            },
+  Widget _marks() => controller.popularMarks.isEmpty
+      ? _marksLoadingWidget()
+      : SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(spacing.w, 10.h, spacing.w, 20.w),
+            child: Wrap(
+              spacing: 25.w,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [..._popularMarks(), _moreMarks()],
+            ),
           ),
-        ),
-      );
+        );
+
+  List<Widget> _popularMarks() => List.generate(controller.popularMarks.length,
+      (index) => _markContainer(child: _image(controller.popularMarks[index])));
 
   Widget _image(Mark mark) {
     return ImageContainer(
       imageData: ImageData.mark(id: mark.id ?? ""),
-      function: () => ModelsController.to.openModelsPage(mark),
-      margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
-      padding: const EdgeInsets.all(5),
       loadingWidget: const MarkLoadingWidget(),
     );
   }
@@ -99,18 +61,24 @@ class MarksWidget extends StatelessWidget {
   Widget _markContainer({Widget? child}) => Container(
         width: containerSize.h,
         height: containerSize.h,
-        margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.15),
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: Offset(0, 5.h) // changes position of shadow
-                  )
-            ]),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x0F000000),
+              blurRadius: 15,
+              offset: Offset(-1, 10),
+              spreadRadius: 2,
+            ),
+            BoxShadow(
+              color: Color(0x0F000000),
+              blurRadius: 15,
+              offset: Offset(1, 1),
+              spreadRadius: 2,
+            )
+          ],
+        ),
         child: child,
       );
 
@@ -135,7 +103,7 @@ class MarksWidget extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(left: spacing.h),
           children: List.generate(
-            ((Get.width / (75 + 12) + 1)).floor(),
+            ((Get.width / (75 + 12) + 2)).floor(),
             (int index) => const MarkLoadingWidget(),
           ),
         ),

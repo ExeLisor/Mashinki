@@ -23,44 +23,84 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        height: 48.h,
-        margin: EdgeInsets.only(bottom: 20.h, left: 25.w, right: 25.w),
-        decoration: BoxDecoration(
-          color: const Color(0xfffef7ff),
-          borderRadius: BorderRadius.circular(41),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: Offset(0, 2.h),
-            ),
-          ],
-        ),
-        child: controller == null
-            ? TextField(
-                enabled: false,
-                textAlignVertical: TextAlignVertical.bottom,
-                decoration: decoration(),
-              )
-            : GetBuilder<T>(
-                dispose: (state) =>
-                    !state.mounted ? controller?.clearSearch() : null,
-                builder: (controller) => TextField(
-                  enabled: isActive,
-                  controller: controller.controller,
-                  textAlignVertical: TextAlignVertical.bottom,
-                  // autovalidateMode: AutovalidateMode.always,
-                  onChanged: controller.startSearch,
-                  onTapOutside: (_) => FocusScope.of(context).unfocus(),
-                  decoration: decoration(),
-                ),
-              ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      child: Row(
+        children: [
+          _searchContainer(),
+          SizedBox(width: 15.w),
+          _iconContainer(),
+        ],
       ),
     );
   }
+
+  Widget _filterIcon() => GestureDetector(
+        onTap: filterAction,
+        child: SizedBox(
+          height: 48.h,
+          width: 48.h,
+          child: SvgPicture.asset(
+            "assets/svg/filters.svg",
+            height: 48.h,
+            width: 48.h,
+            fit: BoxFit.scaleDown,
+          ),
+        ),
+      );
+
+  Widget _iconContainer() => Container(
+        height: 48.h,
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.circular(41),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x23000000),
+              blurRadius: 15,
+              offset: Offset(-1, 10),
+              spreadRadius: 2,
+            ),
+            BoxShadow(
+              color: Color(0x1C000000),
+              blurRadius: 15,
+              offset: Offset(1, 1),
+              spreadRadius: 2,
+            )
+          ],
+        ),
+        child: _filterIcon(),
+      );
+
+  Widget _searchContainer() => Container(
+        height: 48.h,
+        width: 298.w,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(41),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x0F000000),
+              blurRadius: 15,
+              offset: Offset(-1, 10),
+              spreadRadius: 2,
+            ),
+            BoxShadow(
+              color: Color(0x0F000000),
+              blurRadius: 15,
+              offset: Offset(1, 1),
+              spreadRadius: 2,
+            )
+          ],
+        ),
+        child: _searchField(),
+      );
+
+  Widget _searchField() => TextField(
+        enabled: false,
+        textAlignVertical: TextAlignVertical.bottom,
+        decoration: decoration(),
+      );
 
   InputDecoration decoration() => InputDecoration(
         suffixIcon: showFilters ? _filtersIcon() : null,
@@ -85,12 +125,13 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
             height: 0,
             color: const Color(0xffA7A7A7)),
         prefixIcon: SvgPicture.asset(
-          lensIcon,
+          'assets/svg/zoom.svg',
           height: 22.h,
           width: 20.w,
-          color: searchIconColor,
           fit: BoxFit.scaleDown,
         ),
+        contentPadding: EdgeInsets.symmetric(
+            vertical: 12.h), // Adjust padding to center hint text
       );
 
   Widget _filtersIcon() => GestureDetector(

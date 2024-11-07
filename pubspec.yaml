@@ -100,6 +100,7 @@ flutter:
     - assets/images/google.svg
     - assets/images/pinterest.svg
     - assets/images/sedan.svg
+    - assets/images/logo.png
     - assets/configurations/cabrio.svg
     - assets/configurations/coupe.svg
     - assets/configurations/fastback.svg
@@ -110,37 +111,37 @@ flutter:
     - assets/configurations/sedan.svg
     - assets/configurations/van.svg
     - assets/configurations/wagon.svg
-    - assets\svg\account_active.svg
-    - assets\svg\account.svg
-    - assets\svg\add_active.svg
-    - assets\svg\arrow_back.svg
-    - assets\svg\arrow_down.svg
-    - assets\svg\arrow_right.svg
-    - assets\svg\arrow_up.svg
-    - assets\svg\back.svg
-    - assets\svg\bottom_sheet_indicator.svg
-    - assets\svg\check_big.svg
-    - assets\svg\check.svg
-    - assets\svg\checkbox.svg
-    - assets\svg\checkox_active.svg
-    - assets\svg\close_active.svg
-    - assets\svg\close_comp.svg
-    - assets\svg\close.svg
-    - assets\svg\comp_active.svg
-    - assets\svg\comp_bottom.svg
-    - assets\svg\comp_grey.svg
-    - assets\svg\comp.svg
-    - assets\svg\favorite_active.svg
-    - assets\svg\favorite_bottom.svg
-    - assets\svg\favorite_grey.svg
-    - assets\svg\favorite.svg
-    - assets\svg\filters.svg
-    - assets\svg\google.svg
-    - assets\svg\home_active.svg
-    - assets\svg\home.svg
-    - assets\svg\pinterest.svg
-    - assets\svg\recent_active.svg
-    - assets\svg\tik_tok.svg
-    - assets\svg\Vector.svg
-    - assets\svg\youtube.svg
-    - assets\svg\zoom.svg
+    - assets/svg/account_active.svg
+    - assets/svg/account.svg
+    - assets/svg/add_active.svg
+    - assets/svg/arrow_back.svg
+    - assets/svg/arrow_down.svg
+    - assets/svg/arrow_right.svg
+    - assets/svg/arrow_up.svg
+    - assets/svg/back.svg
+    - assets/svg/bottom_sheet_indicator.svg
+    - assets/svg/check_big.svg
+    - assets/svg/check.svg
+    - assets/svg/checkbox.svg
+    - assets/svg/checkox_active.svg
+    - assets/svg/close_active.svg
+    - assets/svg/close_comp.svg
+    - assets/svg/close.svg
+    - assets/svg/comp_active.svg
+    - assets/svg/comp_bottom.svg
+    - assets/svg/comp.svg
+    - assets/svg/favorite_active.svg
+    - assets/svg/favorite_bottom.svg
+    - assets/svg/favorite_blue.svg
+    - assets/svg/favorite.svg
+    - assets/svg/filters.svg
+    - assets/svg/google.svg
+    - assets/svg/home_active.svg
+    - assets/svg/home.svg
+    - assets/svg/pinterest.svg
+    - assets/svg/recent_active.svg
+    - assets/svg/tik_tok.svg
+    - assets/svg/Vector.svg
+    - assets/svg/youtube.svg
+    - assets/svg/zoom.svg
+    - assets/svg/logo.svg

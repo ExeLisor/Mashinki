@@ -27,8 +27,8 @@ class WeeklySelectionWidget extends StatelessWidget {
           "Недельная подборка",
           style: TextStyle(
               color: primaryColor,
-              fontSize: 18.fs,
-              fontWeight: FontWeight.w700),
+              fontSize: 16.fs,
+              fontWeight: FontWeight.w600),
         ),
       );
 
@@ -41,7 +41,7 @@ class WeeklySelectionWidget extends StatelessWidget {
         width: Get.width,
         height: 136.h,
         child: PageView(
-          controller: PageController(viewportFraction: 0.9),
+          controller: PageController(viewportFraction: 0.9, initialPage: 1),
           children: const [
             WeeklyCarTile(
                 carName: "Mercedes-Benz GLE",

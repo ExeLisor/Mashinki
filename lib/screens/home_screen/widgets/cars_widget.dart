@@ -11,7 +11,7 @@ class CarsCatalogListWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _carsCatalogWidgetTitle(),
+              _title(),
               SizedBox(
                 height: 15.h,
               ),
@@ -58,12 +58,12 @@ class CarsCatalogListWidget extends StatelessWidget {
         ),
       );
 
-  Widget _carsCatalogWidgetTitle() => Padding(
+  Widget _title() => Padding(
         padding: EdgeInsets.only(left: 25.0.w),
         child: Text(
           "Автомобили",
           style: TextStyle(
-              fontSize: 18.fs,
+              fontSize: 16.fs,
               color: primaryColor,
               fontWeight: FontWeight.w600),
         ),
@@ -87,7 +87,8 @@ class CarsCatalogListWidget extends StatelessWidget {
                 "https://motortrend.com/files/661fed9cfceecf0008b212e4/001-2025-toyota-camry-se-awd-lead.jpg?w=768&width=768&q=75&format=webp",
           ),
           CatalogTile(
-            name: "Toyota Corolla",
+            name:
+                "Toyota CorollaToyota CorollaToyota CorollaToyota CorollaToyota CorollaToyota CorollaToyota CorollaToyota Corolla",
             year: "2023",
             imageUrl:
                 "https://d8a6a33f-3369-444b-9b5f-793c13ff0708.selcdn.net/media/common/just_strip/tradeins.space/uploads/models_gallery_image/13778/450d7266a8acac506ddc97c36c79cedee2addd42.jpeg?v77",
@@ -116,7 +117,6 @@ class CatalogTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 281.h,
       margin: EdgeInsets.only(bottom: 15.h),
       decoration: _decoration(),
       child: Column(
@@ -148,7 +148,7 @@ class CatalogTile extends StatelessWidget {
         ],
       );
   Widget _iconsRow() => Padding(
-        padding: EdgeInsets.only(right: 25.0.w, top: 15.h),
+        padding: EdgeInsets.only(right: 15.0.w, top: 13.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -160,14 +160,14 @@ class CatalogTile extends StatelessWidget {
           ],
         ),
       );
-  Widget _addToFavorite() => _icon(Icons.favorite_border, () {});
-  Widget _addToCompare() => _icon(Icons.copy, () {});
+  Widget _addToFavorite() => _icon("favorite", () {});
+  Widget _addToCompare() => _icon("comp", () {});
 
-  Widget _icon(IconData icon, VoidCallback action) => GestureDetector(
+  Widget _icon(String icon, VoidCallback action) => GestureDetector(
         onTap: action,
         child: Container(
-          width: 45.h,
-          height: 45.h,
+          width: 32.h,
+          height: 32.h,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
             color: Colors.black.withOpacity(0.3),
@@ -176,9 +176,8 @@ class CatalogTile extends StatelessWidget {
             ),
           ),
           child: Center(
-            child: Icon(
-              icon,
-              color: Colors.white,
+            child: SvgPicture.asset(
+              "assets/svg/$icon.svg",
             ),
           ),
         ),
@@ -192,10 +191,17 @@ class CatalogTile extends StatelessWidget {
         ),
       );
 
-  Widget _carName() => Text(
-        name,
-        style: TextStyle(
-            fontSize: 20.fs, fontWeight: FontWeight.w600, color: Colors.black),
+  Widget _carName() => SizedBox(
+        width: 200.w,
+        child: Text(
+          name,
+          softWrap: true,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+              fontSize: 20.fs,
+              fontWeight: FontWeight.w600,
+              color: Colors.black),
+        ),
       );
 
   Widget _carYear() => Text(
