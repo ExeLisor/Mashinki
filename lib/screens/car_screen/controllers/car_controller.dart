@@ -51,11 +51,16 @@ class CarController extends GetxController {
 
   Future<void> selectModification(Modification modification) async {
     try {
+      SpecsSelectorController.to.changeCategory(force: false);
       _car.update((car) => car?.selectedModification.isLoaded = false);
 
       await modification.loadCarSpecifications();
 
       modification.isLoaded = true;
+
+      CarOptions? options = await modification.loadCarOptions();
+      await Future.delayed(const Duration(milliseconds: 800));
+      CarController.to.updateCarOptions(options ?? CarOptions(isLoaded: true));
 
       _car.update((car) => car?.selectedModification = modification);
     } catch (error) {

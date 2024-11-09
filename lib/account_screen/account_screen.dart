@@ -5,18 +5,9 @@ class AccountScreen extends GetView<SettingsController> {
 
   @override
   Widget build(BuildContext context) {
-    return PixelPerfect.extended(
-      image: Image.asset(
-        // any image file
-        'assets/profile.png',
-      ),
-      initBottom: 20,
-      offset: Offset.zero,
-      initOpacity: 0.4,
-      child: Scaffold(
-        body: _homeScreen(),
-        bottomNavigationBar: HomeScreenBottomBarWidget(),
-      ),
+    return Scaffold(
+      body: _homeScreen(),
+      bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
   }
 
@@ -47,11 +38,18 @@ class AccountScreen extends GetView<SettingsController> {
           fontWeight: FontWeight.w700,
         ),
       );
-  Widget _iconBack() => Padding(
-        padding: EdgeInsets.only(left: 4.0.w),
-        child: Center(
-          child: SvgPicture.asset(
-            "assets/svg/back.svg",
+  Widget _iconBack() => GestureDetector(
+        onTap: Get.back,
+        child: Padding(
+          padding: EdgeInsets.only(left: 4.0.w),
+          child: Container(
+            decoration:
+                BoxDecoration(border: Border.all(color: Colors.transparent)),
+            child: Center(
+              child: SvgPicture.asset(
+                "assets/svg/back.svg",
+              ),
+            ),
           ),
         ),
       );

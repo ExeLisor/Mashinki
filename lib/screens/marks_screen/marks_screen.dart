@@ -7,20 +7,24 @@ class MarksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      bottomNavigationBar: _bottomBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _appBar(),
           SizedBox(height: 5.h),
-          CarsSearchBar(
-              showFilters: false, controller: MarksSearchController.to),
+          _searchBar(),
           SizedBox(height: 20.h),
           _marksScreenBody(),
-          HomeScreenBottomBarWidget(),
         ],
       ),
     );
   }
+
+  Widget _searchBar() =>
+      CarsSearchBar(showFilters: false, controller: MarksSearchController.to);
+
+  Widget _bottomBar() => HomeScreenBottomBarWidget();
 
   AppBar _appBar() => AppBar(
         title: _appBarText(),
@@ -36,13 +40,20 @@ class MarksScreen extends StatelessWidget {
           fontWeight: FontWeight.w700,
         ),
       );
-  Widget _iconBack() => Padding(
-        padding: EdgeInsets.only(left: 4.0.w),
-        child: SizedBox(
-          child: SvgPicture.asset(
-            "assets/svg/back.svg",
-            color: primaryColor,
-            fit: BoxFit.scaleDown,
+  Widget _iconBack() => GestureDetector(
+        onTap: Get.back,
+        child: Container(
+          decoration:
+              BoxDecoration(border: Border.all(color: Colors.transparent)),
+          child: Padding(
+            padding: EdgeInsets.only(left: 4.0.w),
+            child: SizedBox(
+              child: SvgPicture.asset(
+                "assets/svg/back.svg",
+                color: primaryColor,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
           ),
         ),
       );

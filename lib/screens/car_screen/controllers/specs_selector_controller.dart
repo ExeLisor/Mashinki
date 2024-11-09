@@ -7,17 +7,10 @@ class SpecsSelectorController extends GetxController {
 
   bool get showOptions => _showOptions.value;
 
-  void changeCategory() =>
-      !showOptions ? _showOptions.value = true : _showOptions.value = false;
+  void changeCategory({bool? force}) =>
+      _showOptions.value = force ?? !showOptions;
 
-  Future<void> changeToOptions() async {
-    _showOptions.value = true;
-    Modification modification = CarController.to.car.selectedModification;
-    log(modification.carOptions?.isLoaded);
-    CarOptions? options = await modification.loadCarOptions();
-    CarController.to.updateCarOptions(options ?? CarOptions(isLoaded: true));
-    log(modification.carOptions?.isLoaded);
-  }
+  Future<void> changeToOptions() async => _showOptions.value = true;
 
   void changeToSpecs() => _showOptions.value = false;
 }

@@ -3,47 +3,45 @@ import 'package:autoverse/exports.dart';
 class OptionsWidget extends StatelessWidget {
   OptionsWidget({super.key});
 
+  final CarOptions options =
+      CarController.to.car.selectedModification.carOptions ?? CarOptions();
+
   @override
-  Widget build(BuildContext context) => Obx(() {
-        final CarOptions options =
-            CarController.to.car.selectedModification.carOptions ??
-                CarOptions();
-        if (!options.isLoaded) return const CircularProgressIndicator();
-        return Container(
-          color: Colors.white,
-          width: Get.width,
-          padding:
-              EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h, right: 25.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _modificationTitle(),
-              DropSpecsBlockWidget(title: "Материалы", specs: _materials()),
-              DropSpecsBlockWidget(title: "Сиденья", specs: _salon()),
-              DropSpecsBlockWidget(
-                  title: "Салон", specs: _internalCharacteristics()),
-              DropSpecsBlockWidget(
-                  title: "Крыша и окна", specs: _roofAndWindow()),
-              DropSpecsBlockWidget(
-                  title: "Зеркала и камеры", specs: _mirrors()),
-              DropSpecsBlockWidget(title: "Освещение", specs: _lighting()),
-              DropSpecsBlockWidget(title: "Климат", specs: _climate()),
-              DropSpecsBlockWidget(title: "Системы помощи", specs: _parking()),
-              DropSpecsBlockWidget(title: "Доп. удобства", specs: _features()),
-              DropSpecsBlockWidget(title: "Безопасность", specs: _safe()),
-              DropSpecsBlockWidget(title: "Стабильность", specs: _stability()),
-              DropSpecsBlockWidget(title: "Ассистенты", specs: _assistents()),
-              DropSpecsBlockWidget(title: "Охрана", specs: _security()),
-              DropSpecsBlockWidget(title: "Мультимедиа", specs: _audio()),
-              DropSpecsBlockWidget(
-                  title: "Навигация и связь", specs: _navigation()),
-              DropSpecsBlockWidget(title: "Колеса", specs: _wheels()),
-              DropSpecsBlockWidget(title: "Подвеска", specs: _control()),
-              DropSpecsBlockWidget(title: "Кузов и стиль", specs: _style()),
-            ],
-          ),
-        );
-      });
+  Widget build(BuildContext context) => _options();
+
+  Widget _options() => Container(
+        color: Colors.white,
+        width: Get.width,
+        padding:
+            EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h, right: 25.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _modificationTitle(),
+            DropSpecsBlockWidget(title: "Материалы", specs: _materials()),
+            DropSpecsBlockWidget(title: "Сиденья", specs: _salon()),
+            DropSpecsBlockWidget(
+                title: "Салон", specs: _internalCharacteristics()),
+            DropSpecsBlockWidget(
+                title: "Крыша и окна", specs: _roofAndWindow()),
+            DropSpecsBlockWidget(title: "Зеркала и камеры", specs: _mirrors()),
+            DropSpecsBlockWidget(title: "Освещение", specs: _lighting()),
+            DropSpecsBlockWidget(title: "Климат", specs: _climate()),
+            DropSpecsBlockWidget(title: "Системы помощи", specs: _parking()),
+            DropSpecsBlockWidget(title: "Доп. удобства", specs: _features()),
+            DropSpecsBlockWidget(title: "Безопасность", specs: _safe()),
+            DropSpecsBlockWidget(title: "Стабильность", specs: _stability()),
+            DropSpecsBlockWidget(title: "Ассистенты", specs: _assistents()),
+            DropSpecsBlockWidget(title: "Охрана", specs: _security()),
+            DropSpecsBlockWidget(title: "Мультимедиа", specs: _audio()),
+            DropSpecsBlockWidget(
+                title: "Навигация и связь", specs: _navigation()),
+            DropSpecsBlockWidget(title: "Колеса", specs: _wheels()),
+            DropSpecsBlockWidget(title: "Подвеска", specs: _control()),
+            DropSpecsBlockWidget(title: "Кузов и стиль", specs: _style()),
+          ],
+        ),
+      );
 
   Widget _modificationTitle() {
     Modification modification = CarController.to.car.selectedModification;
@@ -65,9 +63,6 @@ class OptionsWidget extends StatelessWidget {
       ),
     );
   }
-
-  final CarOptions options =
-      CarController.to.car.selectedModification.carOptions ?? CarOptions();
 
   List<Map<String, dynamic>> _style() => [
         {"Обвес": getValue(options.bodyKit)},

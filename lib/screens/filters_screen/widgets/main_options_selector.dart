@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:autoverse/exports.dart';
 import 'package:autoverse/screens/filters_screen/models/main_options/main_options_list.dart';
 import 'package:autoverse/screens/filters_screen/widgets/option_selector.dart';
@@ -47,8 +45,8 @@ class MainOptionSelector extends StatelessWidget {
           style: TextStyle(
             color: const Color(0xFF848484),
             fontSize: 16.fs,
+            fontFamily: "Inter",
             fontWeight: FontWeight.w400,
-            height: 0.08,
           ),
         ),
       );

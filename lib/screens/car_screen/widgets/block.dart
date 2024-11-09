@@ -23,18 +23,17 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
   void initState() {
     super.initState();
     bool hasOptions = hasValidOption();
+    countOptions();
     if (!hasOptions) close();
-    // if (!hasOptions) count = countOptions();
   }
 
-  bool hasValidOption() => widget.specs.any((option) {
-        return option.values.any((value) => value != "❌");
-      });
+  bool hasValidOption() =>
+      widget.specs.any((option) => option.values.any((value) => value != "❌"));
+
   int countOptions() {
     int validCount = 0;
-    log(widget.specs);
+
     for (var spec in widget.specs) {
-      log(spec);
       for (var value in spec.values) {
         if (value != "❌") {
           validCount++;
@@ -48,16 +47,17 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: isOpened ? close : open,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 13.h),
-        clipBehavior: Clip.antiAlias,
-        decoration: _decoration(),
-        child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0.w, vertical: 21.h),
-            child: isOpened ? _openedWidget() : _specWidget()),
-      ),
+    return Column(
+      children: [
+        const SettingsDivider(),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.h),
+          child: GestureDetector(
+              onTap: isOpened ? close : open,
+              child: isOpened ? _openedWidget() : _specWidget()),
+        ),
+        const SettingsDivider(),
+      ],
     );
   }
 
@@ -83,9 +83,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
           Row(
             children: [
               _blockTitle(),
-              SizedBox(
-                width: 10.w,
-              ),
+              SizedBox(width: 10.w),
               _count(),
             ],
           ),
@@ -100,17 +98,8 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
           children: [
             Row(
               children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const ShapeDecoration(
-                    color: Color(0xFF7974FF),
-                    shape: OvalBorder(),
-                  ),
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
+                _dot(),
+                SizedBox(width: 8.w),
                 ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: 265.w),
                   child: Text(
@@ -119,47 +108,28 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
                     style: TextStyle(
                       fontSize: 14.fs,
                       fontWeight: FontWeight.w500,
+                      fontFamily: "Inter",
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              width: 30.w,
-              child: Text(
-                value,
-                textAlign: TextAlign.right,
-                softWrap: true, // разрешаем переносить текст
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.fs,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            )
+            _icon(value != "❌"),
           ],
         ),
       );
 
-  ShapeDecoration _decoration() => ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+  Widget _icon(bool value) => Center(
+      child:
+          SvgPicture.asset("assets/svg/${value ? "check_big" : "close"}.svg"));
+
+  Widget _dot() => Container(
+        width: 8.h,
+        height: 8.h,
+        decoration: const ShapeDecoration(
+          color: Color(0xFF7974FF),
+          shape: OvalBorder(),
         ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x0A000000),
-            blurRadius: 15,
-            offset: Offset(-1, 10),
-            spreadRadius: 2,
-          ),
-          BoxShadow(
-            color: Color(0x0A000000),
-            blurRadius: 15,
-            offset: Offset(1, 1),
-            spreadRadius: 2,
-          )
-        ],
       );
 
   Widget _arrowIcon() => RotatedBox(
@@ -177,6 +147,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
           softWrap: true,
           style: TextStyle(
             color: Colors.black,
+            fontFamily: "Inter",
             fontSize: 18.fs,
             fontWeight: FontWeight.w600,
           ),
@@ -188,6 +159,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
         style: TextStyle(
           color: const Color(0xFF848484),
           fontSize: 14.fs,
+          fontFamily: "Inter",
           fontWeight: FontWeight.w400,
         ),
       );

@@ -8,14 +8,23 @@ class CarScreen extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: const Color(0xffEEEEEE),
-      appBar: _appBar(),
-      body: Obx(() => CarController.to.state.value == Status.success
-          ? _carBody()
-          : _loadingWidget()),
-      bottomNavigationBar: HomeScreenBottomBarWidget(),
+    return PixelPerfect.extended(
+      image: Image.asset(
+        // any image file
+        'assets/specs.png',
+      ),
+      initBottom: 20,
+      offset: Offset.zero,
+      initOpacity: 0.4,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: const Color(0xffEEEEEE),
+        appBar: _appBar(),
+        body: Obx(() => CarController.to.state.value == Status.success
+            ? _carBody()
+            : _loadingWidget()),
+        bottomNavigationBar: HomeScreenBottomBarWidget(),
+      ),
     );
   }
 
@@ -25,25 +34,23 @@ class CarScreen extends StatelessWidget {
       initState: (state) => CarAppbarController.to.startListen(controller),
       builder: (carController) => Stack(
         children: [
-          SingleChildScrollView(
-            controller: controller,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _carImage(),
-                _carTitleWidget(),
-                _carDetails(),
-              ],
-            ),
-          ),
-          FloatBar(
-            controller: CarAppbarController.to,
-            child: const CarsFloatBar(),
-          ),
+          _body(controller),
+          _floatBar(),
         ],
       ),
     );
   }
+
+  Widget _floatBar() => FloatBar(
+        controller: CarAppbarController.to,
+        child: const CarsFloatBar(),
+      );
+
+  Widget _body(ScrollController controller) => SingleChildScrollView(
+      controller: controller,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [_carImage(), _carTitleWidget(), _carDetails()]));
 
   AppBar _appBar() => AppBar(
         elevation: 0,
@@ -57,23 +64,29 @@ class CarScreen extends StatelessWidget {
 
   Widget _carDetails() => Stack(
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 45.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _selectorWidget(),
-                Obx(() => SpecsSelectorController.to.showOptions
-                    ? OptionsWidget()
-                    : const CharacteristicsWidget())
-              ],
-            ),
-          ),
-          _carModifications(),
+          _details(),
+          _modifications(),
         ],
       );
 
-  Widget _carModifications() => const ModificationsWidget();
+  Widget _details() => Padding(
+        padding: EdgeInsets.only(top: 70.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _selectorWidget(),
+            _specs(),
+          ],
+        ),
+      );
+
+  Widget _specs() => Obx(() => !SpecsSelectorController.to.showOptions
+      ? const CharacteristicsWidget()
+      : OptionsWidget());
+
+  Widget _modifications() => Container(
+      margin: const EdgeInsets.only(top: 10),
+      child: const ModificationsWidget());
 
   Widget _selectorWidget() => Obx(
         () => Row(
@@ -103,6 +116,7 @@ class CarScreen extends StatelessWidget {
               text,
               style: TextStyle(
                   fontSize: 18.fs,
+                  fontFamily: "Inter",
                   fontWeight: FontWeight.bold,
                   color: isSelected ? primaryColor : const Color(0xff7974FF)),
             ),
@@ -117,16 +131,14 @@ class CarScreen extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(24.h))),
         child: Container(
-          margin: EdgeInsets.only(top: 22.h, bottom: 28.h),
+          margin: EdgeInsets.only(top: 22.h, bottom: 30.h),
           padding: EdgeInsets.only(left: 25.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _carTitle(),
               _carSubTitle(),
-              SizedBox(
-                height: 25.h,
-              ),
+              SizedBox(height: 105.h),
               _carDescription()
             ],
           ),
@@ -143,18 +155,17 @@ class CarScreen extends StatelessWidget {
               style: TextStyle(
                 color: const Color(0xFF4038FF),
                 fontSize: 18.fs,
+                fontFamily: "Inter",
                 fontWeight: FontWeight.w600,
-                height: 0.06,
               ),
             ),
-            SizedBox(
-              height: 12.h,
-            ),
+            SizedBox(height: 8.h),
             Text(
               CarController.to.car.description,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14.fs,
+                fontFamily: "Inter",
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -225,7 +236,10 @@ class CarScreen extends StatelessWidget {
       child: Text(
         "$brandName $modelName ${year ?? ""}",
         style: TextStyle(
-            fontSize: 25.fs, fontWeight: FontWeight.bold, color: primaryColor),
+            fontSize: 25.fs,
+            fontWeight: FontWeight.bold,
+            fontFamily: "Inter",
+            color: primaryColor),
       ),
     );
   }
@@ -236,7 +250,11 @@ class CarScreen extends StatelessWidget {
     return Text(
       subtitle,
       style: TextStyle(
-          fontSize: 20.fs, fontWeight: FontWeight.bold, color: Colors.black),
+        fontSize: 20.fs,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontFamily: "Inter",
+      ),
     );
   }
 
@@ -245,7 +263,8 @@ class CarScreen extends StatelessWidget {
           ImageContainer(
             imageData: ImageData.photo(
                 id: CarController.to.car.configuration.id ?? ""),
-            height: 300,
+            borderRaduis: 0,
+            height: 348.h,
             width: double.infinity,
           ),
           _appBarRow(),
@@ -253,27 +272,20 @@ class CarScreen extends StatelessWidget {
       );
 
   Widget _appBarRow() => Container(
-        margin: EdgeInsets.fromLTRB(15.w, 45.h, 25.w, 0.h),
+        margin: EdgeInsets.fromLTRB(25.w, 48.h, 25.w, 0.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _backIcon(),
-            _iconBlock(),
+            _favoriteAndCompareIcons(),
           ],
         ),
       );
 
   Widget _backIcon() => _iconSvg(backIcon, Get.back);
 
-  Widget _iconBlock() => Wrap(
-        children: [
-          _addToCompIcon(),
-          SizedBox(
-            width: 15.w,
-          ),
-          _likeWidget()
-        ],
-      );
+  Widget _favoriteAndCompareIcons() =>
+      Row(children: [_addToCompIcon(), SizedBox(width: 15.w), _likeWidget()]);
 
   Widget _addToCompIcon() => Obx(
         () {
@@ -283,7 +295,8 @@ class CarScreen extends StatelessWidget {
           bool isCarCompared = controller.isCarCompared(car);
 
           return IconWidget(
-            Icons.copy,
+            "assets/svg/comp.svg",
+            "assets/svg/comp_active.svg",
             () => !isCarCompared
                 ? controller.addToCompare(car)
                 : controller.deleteFromCompare(car),
@@ -313,8 +326,8 @@ class CarScreen extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.3), shape: BoxShape.circle),
-          height: 45.h,
-          width: 45.h,
+          height: 33.h,
+          width: 33.h,
           child: Center(
             child: SvgPicture.asset(
               path,
@@ -325,13 +338,14 @@ class CarScreen extends StatelessWidget {
 }
 
 class IconWidget extends StatelessWidget {
-  final IconData icon;
+  final String iconPath;
+  final String activeIconPath;
   final VoidCallback function;
   final bool condition;
   final double size;
 
-  const IconWidget(this.icon, this.function,
-      {super.key, this.condition = false, this.size = 45});
+  const IconWidget(this.iconPath, this.activeIconPath, this.function,
+      {super.key, this.condition = false, this.size = 33});
 
   @override
   Widget build(BuildContext context) {
@@ -344,10 +358,7 @@ class IconWidget extends StatelessWidget {
         height: size.h,
         width: size.h,
         child: Center(
-          child: Icon(
-            icon,
-            color: Colors.white,
-          ),
+          child: SvgPicture.asset(condition ? activeIconPath : iconPath),
         ),
       ),
     );

@@ -6,6 +6,7 @@ class ImageContainer extends StatelessWidget {
       required this.imageData,
       this.height = 75,
       this.width = 75,
+      this.borderRaduis = 15,
       this.margin,
       this.padding,
       this.function,
@@ -22,6 +23,7 @@ class ImageContainer extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
 
   final GestureTapCallback? function;
+  final double borderRaduis;
 
   final Widget? loadingWidget;
 
@@ -68,9 +70,7 @@ class ImageContainer extends StatelessWidget {
       );
 
   Widget _markContainer({Widget? child}) => ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(borderRaduis)),
         child: Container(
           width: width.h,
           height: height.h,
@@ -78,7 +78,7 @@ class ImageContainer extends StatelessWidget {
           padding: padding,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(borderRaduis),
             boxShadow: const [
               BoxShadow(
                 color: Color(0x0F000000),
@@ -103,9 +103,8 @@ class ImageContainer extends StatelessWidget {
       ShimmerWidget(
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-          ),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(borderRaduis)),
           height: height.h,
           width: width.w,
         ),

@@ -8,7 +8,7 @@ class CharacteristicsWidget extends StatelessWidget {
     return Container(
       color: Colors.white,
       width: Get.width,
-      padding: EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h),
+      padding: EdgeInsets.only(left: 25.w, top: 20.h, bottom: 25.h),
       child: Obx(() {
         Modification modification = CarController.to.car.selectedModification;
 
@@ -17,7 +17,7 @@ class CharacteristicsWidget extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ModificationTitleWidget(),
+            _title(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -58,6 +58,8 @@ class CharacteristicsWidget extends StatelessWidget {
       }),
     );
   }
+
+  Widget _title() => const ModificationTitleWidget();
 
   Widget _detailsColumnFirst(CarSpecifications specs) => Column(
         children: [
@@ -187,19 +189,17 @@ class ModificationTitleWidget extends StatelessWidget {
     int? power = specification.horsePower;
     double? volume = specification.volumeLitres;
     String privod = specification.drive == "полный" ? "4WD" : "";
-
+    String title =
+        "${modification.groupName ?? ""} $volume $transmission $power $privod"
+            .trim();
     return Container(
-      margin: EdgeInsets.only(bottom: 20.h),
-      child: SizedBox(
-        height: 20.h,
-        child: Text(
-          "${modification.groupName ?? ""} $volume $transmission $power $privod"
-              .trim(),
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18.fs,
-            fontWeight: FontWeight.w600,
-          ),
+      margin: EdgeInsets.only(bottom: 40.h),
+      child: Text(
+        title,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18.fs,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

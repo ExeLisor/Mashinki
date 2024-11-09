@@ -63,7 +63,8 @@ class FavoriteTile extends StatelessWidget {
           bool isCarCompared = controller.isCarCompared(car.copyWith());
 
           return IconWidget(
-            Icons.copy,
+            "assets/svg/comp.svg",
+            "assets/svg/comp_active.svg",
             () => !isCarCompared
                 ? controller.addToCompare(car)
                 : controller.deleteFromCompare(car),
@@ -79,7 +80,8 @@ class FavoriteTile extends StatelessWidget {
           bool isCarFavorite = controller.isCarFavorite(car);
 
           return IconWidget(
-            Icons.favorite_border,
+            "assets/svg/favorite.svg",
+            "assets/svg/favorite_active.svg",
             () => controller.removeFromFavorite(car),
             condition: isCarFavorite,
           );

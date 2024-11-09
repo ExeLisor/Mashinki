@@ -20,8 +20,7 @@ class FloatBar extends StatelessWidget {
         () => controller.currentOffset.value > (offsetValue ?? 350.h)
             ? Align(
                 alignment: Alignment.topCenter,
-                child: Container(color: Colors.white, child: child),
-              )
+                child: Container(color: Colors.white, child: child))
             : Container(),
       );
 }
@@ -46,29 +45,68 @@ class CarsFloatBar extends StatelessWidget {
               style: TextStyle(
                 color: primaryColor,
                 fontSize: 18.fs,
-                fontWeight: FontWeight.w600,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w700,
               ),
             ),
           );
         },
       );
 
-  Widget _iconFB(IconData icon, VoidCallback callBack) => IconButton(
-        onPressed: callBack,
-        icon: Icon(
-          icon,
-          color: primaryColor,
-          size: 24.h,
+  Widget _iconSvg(
+          {required String icon,
+          String? activeIcon,
+          required VoidCallback callBack,
+          bool? condition = false,
+          bool? highlight = false}) =>
+      Padding(
+        padding: EdgeInsets.all(14.h),
+        child: GestureDetector(
+          onTap: callBack,
+          child: SvgPicture.asset(
+            condition ?? false ? activeIcon ?? "" : icon,
+            height: 24.h,
+            width: 24.h,
+            color:
+                (condition == false && highlight == true) ? primaryColor : null,
+          ),
         ),
       );
 
-  Widget _iconSvg(String icon, VoidCallback callBack) => GestureDetector(
-        onTap: callBack,
-        child: SvgPicture.asset(
-          icon,
-          height: 24.h,
-          width: 24.h,
-          color: primaryColor,
+  Widget _addToCompareIcon() => _iconSvg(
+      icon: "assets/svg/comp.svg",
+      activeIcon: "assets/svg/comp_active.svg",
+      condition: CompareController.to.isCarCompared(CarController.to.car),
+      highlight: true,
+      callBack: _addToCompare);
+
+  void _addToCompare() =>
+      CompareController.to.addToCompare(CarController.to.car);
+
+  Widget _addToFavIcon() => Obx(() => _iconSvg(
+      icon: "assets/svg/favorite_blue.svg",
+      activeIcon: "assets/svg/favorite_active.svg",
+      condition: FavoriteController.to.isCarFavorite(CarController.to.car),
+      callBack: _addToFavorite));
+
+  void _addToFavorite() =>
+      FavoriteController.to.addToFavorite(CarController.to.car);
+
+  Widget _iconBack() => GestureDetector(
+        onTap: Get.back,
+        child: Container(
+          decoration:
+              BoxDecoration(border: Border.all(color: Colors.transparent)),
+          child: Padding(
+            padding: EdgeInsets.only(left: 4.0.w),
+            child: SizedBox(
+              child: SvgPicture.asset(
+                "assets/svg/back.svg",
+                color: primaryColor,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+          ),
         ),
       );
 
@@ -94,14 +132,15 @@ class CarsFloatBar extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _iconFB(Icons.arrow_back_ios_new_rounded, Get.back),
+                  _iconBack(),
+                  SizedBox(width: 20.w),
                   _titleFB(),
                 ],
               ),
               Row(
                 children: [
-                  _iconFB(Icons.copy, Get.back),
-                  _iconSvg(favoriteIcon, Get.back),
+                  _addToCompareIcon(),
+                  _addToFavIcon(),
                 ],
               ),
             ],
