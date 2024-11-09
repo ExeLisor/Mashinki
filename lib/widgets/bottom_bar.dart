@@ -8,9 +8,7 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 70.h,
-      padding: EdgeInsets.symmetric(
-        horizontal: 12.w,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -42,13 +40,8 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
   }
 
   Widget _item(int index) {
-    if (_icons[index] == comprIcon) {
-      return Obx(
-        () => _itemWithBudget(
-          index,
-          CompareController.to.comparedCars.length,
-        ),
-      );
+    if (_icons[index].type == BottomIconType.compare) {
+      return _compareIcon(index);
     }
 
     return Obx(
@@ -71,6 +64,13 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
       ),
     );
   }
+
+  Widget _compareIcon(int index) => Obx(
+        () => _itemWithBudget(
+          index,
+          CompareController.to.comparedCars.length,
+        ),
+      );
 
   Widget _itemWithBudget(int index, int count) {
     return Obx(
@@ -110,27 +110,39 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
   }
 }
 
+enum BottomIconType {
+  home,
+  compare,
+  favorite,
+  account,
+}
+
 class BottomIcon {
   final String active;
   final String inactive;
+  final BottomIconType type;
 
   static const String path = "assets/svg";
 
   BottomIcon.home()
       : active = '$path/home_active.svg',
-        inactive = '$path/home.svg';
+        inactive = '$path/home.svg',
+        type = BottomIconType.home;
 
   BottomIcon.compare()
       : active = '$path/comp_bottom.svg',
-        inactive = '$path/comp_bottom.svg';
+        inactive = '$path/comp_bottom.svg',
+        type = BottomIconType.compare;
 
   BottomIcon.favorite()
       : active = '$path/favorite_blue.svg',
-        inactive = '$path/favorite_bottom.svg';
+        inactive = '$path/favorite_bottom.svg',
+        type = BottomIconType.favorite;
 
   BottomIcon.account()
       : active = '$path/account_active.svg',
-        inactive = '$path/account.svg';
+        inactive = '$path/account.svg',
+        type = BottomIconType.account;
 
   String getPath(int index) =>
       BarController.to.currentPageIndex.value == index ? active : inactive;

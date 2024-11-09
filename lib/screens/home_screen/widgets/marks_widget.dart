@@ -58,6 +58,7 @@ class MarksWidget extends GetView<MarksController> {
   Widget _image(Mark mark) {
     return ImageContainer(
       imageData: ImageData.mark(id: mark.id ?? ""),
+      function: () => ModelsController.to.openModelsPage(mark),
       loadingWidget: const MarkLoadingWidget(),
     );
   }

@@ -8,23 +8,14 @@ class CarScreen extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
-    return PixelPerfect.extended(
-      image: Image.asset(
-        // any image file
-        'assets/specs.png',
-      ),
-      initBottom: 20,
-      offset: Offset.zero,
-      initOpacity: 0.4,
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        backgroundColor: const Color(0xffEEEEEE),
-        appBar: _appBar(),
-        body: Obx(() => CarController.to.state.value == Status.success
-            ? _carBody()
-            : _loadingWidget()),
-        bottomNavigationBar: HomeScreenBottomBarWidget(),
-      ),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      backgroundColor: const Color(0xffEEEEEE),
+      appBar: _appBar(),
+      body: Obx(() => CarController.to.state.value == Status.success
+          ? _carBody()
+          : _loadingWidget()),
+      bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
   }
 
@@ -70,7 +61,7 @@ class CarScreen extends StatelessWidget {
       );
 
   Widget _details() => Padding(
-        padding: EdgeInsets.only(top: 70.h),
+        padding: EdgeInsets.only(top: 65.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -85,8 +76,7 @@ class CarScreen extends StatelessWidget {
       : OptionsWidget());
 
   Widget _modifications() => Container(
-      margin: const EdgeInsets.only(top: 10),
-      child: const ModificationsWidget());
+      margin: EdgeInsets.only(top: 10.h), child: const ModificationsWidget());
 
   Widget _selectorWidget() => Obx(
         () => Row(
