@@ -47,7 +47,7 @@ const unactiveColor = Color(0xffA7A7A7);
 const boneColor = Color(0xffF3F3F3);
 
 const List<String> alphabet = [
-  '☆',
+  '#',
   'A',
   'B',
   'C',

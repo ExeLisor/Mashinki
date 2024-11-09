@@ -9,20 +9,41 @@ class MarkGridTile extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         children: [
           _markLogo(),
-          SizedBox(
-            height: 5.h,
-          ),
+          SizedBox(height: 10.h),
           _markName(),
         ],
       );
 
-  Widget _markLogo() => ImageContainer(
+  Widget _markContainer({Widget? child}) => Container(
+        width: 75.h,
+        height: 75.h,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x0F000000),
+              blurRadius: 15,
+              offset: Offset(-1, 10),
+              spreadRadius: 2,
+            ),
+            BoxShadow(
+              color: Color(0x0F000000),
+              blurRadius: 15,
+              offset: Offset(1, 1),
+              spreadRadius: 2,
+            )
+          ],
+        ),
+        child: child,
+      );
+
+  Widget _markLogo() => _markContainer(
+          child: ImageContainer(
         imageData: ImageData.mark(id: mark.id ?? ""),
         function: () => ModelsController.to.openModelsPage(mark),
-        margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
-        padding: EdgeInsets.all(5.h),
         loadingWidget: const MarkLoadingWidget(),
-      );
+      ));
 
   Widget _markName() => Text(
         mark.name ?? "",
@@ -30,7 +51,7 @@ class MarkGridTile extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: Colors.black, fontSize: 12.fs, fontWeight: FontWeight.w600),
+            color: Colors.black, fontSize: 14.fs, fontWeight: FontWeight.w400),
       );
 }
 

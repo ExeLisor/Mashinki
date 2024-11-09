@@ -5,24 +5,62 @@ class MarksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //alpabet gets smaller if resize set to true
-      resizeToAvoidBottomInset: false,
-      appBar: appBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const TopBar(title: 'Бренды'),
-          CarsSearchBar(
-            showFilters: false,
-            controller: MarksSearchController.to,
-          ),
-          _marksScreenBody(),
-          HomeScreenBottomBarWidget(),
-        ],
+    return PixelPerfect.extended(
+      image: Image.asset(
+        // any image file
+        'assets/marks.png',
+      ),
+      initBottom: 20,
+      offset: Offset.zero,
+      initOpacity: 0.4,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _appBar(),
+            SizedBox(height: 5.h),
+            CarsSearchBar(
+                showFilters: false, controller: MarksSearchController.to),
+            SizedBox(height: 20.h),
+            _marksScreenBody(),
+            HomeScreenBottomBarWidget(),
+          ],
+        ),
       ),
     );
   }
+
+  AppBar _appBar() => AppBar(
+        title: _appBarText(),
+        leading: _iconBack(),
+        actions: [_accountIcon(), SizedBox(width: 25.w)],
+      );
+
+  Widget _appBarText() => Text(
+        'Марки',
+        style: TextStyle(
+          color: primaryColor,
+          fontSize: 20.fs,
+          fontWeight: FontWeight.w700,
+        ),
+      );
+  Widget _iconBack() => Padding(
+        padding: EdgeInsets.only(left: 4.0.w),
+        child: SizedBox(
+          child: SvgPicture.asset(
+            "assets/svg/back.svg",
+            color: primaryColor,
+            fit: BoxFit.scaleDown,
+          ),
+        ),
+      );
+
+  Widget _accountIcon() => SvgPicture.asset(
+        "assets/svg/account_active.svg",
+        height: 24.h,
+        width: 24.w,
+      );
 
   Widget _marksScreenBody() => GetBuilder<MarksSearchController>(
         builder: (controller) => controller.query.isNotEmpty

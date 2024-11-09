@@ -26,14 +26,19 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.w),
       child: Row(
-        children: [
-          _searchContainer(),
-          SizedBox(width: 15.w),
-          _iconContainer(),
-        ],
+        children: [_searchContainer(), _filterButton()],
       ),
     );
   }
+
+  Widget _filterButton() => showFilters
+      ? Row(
+          children: [
+            SizedBox(width: 15.w),
+            _iconContainer(),
+          ],
+        )
+      : Container();
 
   Widget _filterIcon() => GestureDetector(
         onTap: filterAction,
@@ -74,7 +79,7 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
 
   Widget _searchContainer() => Container(
         height: 48.h,
-        width: 298.w,
+        width: showFilters ? 298.w : 362.w,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(41),

@@ -1,7 +1,7 @@
 import 'package:autoverse/exports.dart';
 import 'package:autoverse/screens/marks_screen/widgets/mark_tile.dart';
 
-class MarksGrid extends StatelessWidget {
+class MarksGrid extends GetView<MarksController> {
   const MarksGrid({super.key, required this.marks});
 
   final List<Mark> marks;
@@ -9,23 +9,19 @@ class MarksGrid extends StatelessWidget {
   static const SliverGridDelegate _delegate =
       SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 3,
-    mainAxisSpacing: 15.0,
-    crossAxisSpacing: 10.0,
+    mainAxisSpacing: 0,
+    crossAxisSpacing: 0,
   );
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MarksController>(
-      builder: (controller) => GridView.builder(
+    return GridView.builder(
         shrinkWrap: true,
+        padding: EdgeInsets.symmetric(horizontal: 25.w),
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: _delegate,
         itemCount: marks.length,
-        itemBuilder: (context, index) {
-          return MarkGridTile(mark: marks[index]);
-        },
-      ),
-    );
+        itemBuilder: (context, index) => MarkGridTile(mark: marks[index]));
   }
 }
 
