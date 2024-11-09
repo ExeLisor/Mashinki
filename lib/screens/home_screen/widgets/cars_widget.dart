@@ -64,6 +64,7 @@ class CarsCatalogListWidget extends StatelessWidget {
           "Автомобили",
           style: TextStyle(
               fontSize: 16.fs,
+              fontFamily: "Inter",
               color: primaryColor,
               fontWeight: FontWeight.w600),
         ),

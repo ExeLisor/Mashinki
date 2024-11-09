@@ -25,6 +25,7 @@ class MarksWidget extends GetView<MarksController> {
               Text("Бренды",
                   style: TextStyle(
                       fontSize: 16.fs,
+                      fontFamily: "Inter",
                       color: primaryColor,
                       fontWeight: FontWeight.w600)),
               SizedBox(width: 13.w),
@@ -34,19 +35,22 @@ class MarksWidget extends GetView<MarksController> {
         ),
       );
 
-  Widget _marks() => controller.popularMarks.isEmpty
-      ? _marksLoadingWidget()
-      : SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(spacing.w, 10.h, spacing.w, 20.w),
-            child: Wrap(
-              spacing: 25.w,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [..._popularMarks(), _moreMarks()],
-            ),
-          ),
-        );
+  Widget _marks() => Obx(
+        () => controller.state.value == MarksState.loading
+            ? _marksLoadingWidget()
+            : SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding:
+                      EdgeInsets.fromLTRB(spacing.w, 10.h, spacing.w, 20.w),
+                  child: Wrap(
+                    spacing: 25.w,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [..._popularMarks(), _moreMarks()],
+                  ),
+                ),
+              ),
+      );
 
   List<Widget> _popularMarks() => List.generate(controller.popularMarks.length,
       (index) => _markContainer(child: _image(controller.popularMarks[index])));
@@ -95,16 +99,20 @@ class MarksWidget extends GetView<MarksController> {
         ),
       );
 
-  Widget _marksLoadingWidget() => SizedBox(
-        height: (containerSize + 10).h,
-        child: ListView(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.only(left: spacing.h),
-          children: List.generate(
-            ((Get.width / (75 + 12) + 2)).floor(),
-            (int index) => const MarkLoadingWidget(),
+  Widget _marksLoadingWidget() => Padding(
+        padding: EdgeInsets.fromLTRB(spacing.w, 10.h, spacing.w, 10.h),
+        child: SizedBox(
+          height: (containerSize + 10).h,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
+            child: Wrap(
+              spacing: 25.w,
+              children: List.generate(
+                ((Get.width / (75 + 12) + 2)).floor(),
+                (int index) => const MarkLoadingWidget(),
+              ),
+            ),
           ),
         ),
       );
@@ -129,7 +137,7 @@ class MarkLoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShimmerWidget(
       child: Container(
-        margin: EdgeInsets.only(right: 12.h, bottom: 10.h),
+        margin: EdgeInsets.only(bottom: 10.h),
         width: containerSize.h,
         height: containerSize.h,
         decoration: BoxDecoration(

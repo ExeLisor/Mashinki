@@ -28,6 +28,7 @@ class WeeklySelectionWidget extends StatelessWidget {
           style: TextStyle(
               color: primaryColor,
               fontSize: 16.fs,
+              fontFamily: "Inter",
               fontWeight: FontWeight.w600),
         ),
       );
@@ -114,6 +115,7 @@ class WeeklyCarTile extends StatelessWidget {
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.fs,
+                  fontFamily: "Inter",
                   fontWeight: FontWeight.bold),
             ),
           ),
