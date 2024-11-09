@@ -50,3 +50,5 @@ export 'filters_screen/filters_screen.dart';
 export 'filters_screen/widgets/add_options_widget.dart';
 export 'filters_screen/widgets/main_options_widget.dart';
 export 'filters_screen/widgets/model_selector_widget.dart';
+
+export 'package:autoverse/account_screen/account_screen.dart';

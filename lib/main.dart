@@ -44,6 +44,7 @@ class _MainAppState extends State<MainApp> {
           '/home': 0,
           '/compare': 1,
           '/favorites': 2,
+          '/account': 3,
         };
         final current =
             routes[routing?.current] ?? routes[routing?.previous] ?? 0;
@@ -58,6 +59,12 @@ class _MainAppState extends State<MainApp> {
       name: '/home',
       page: () => const HomeScreen(),
       transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: '/account',
+      page: () => const AccountScreen(),
+      transition: Transition.noTransition,
+      binding: SettingsBinding(),
     ),
     GetPage(
       name: '/filters',

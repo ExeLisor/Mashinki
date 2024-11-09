@@ -5,7 +5,7 @@ class BarController extends GetxController {
 
   RxInt currentPageIndex = 0.obs;
 
-  final pages = <String>['/home', '/compare', '/favorites'];
+  final pages = <String>['/home', '/compare', '/favorites', '/account'];
 
   void changePage(int index) => Get.toNamed(pages[index]);
 }

@@ -5,28 +5,19 @@ class MarksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PixelPerfect.extended(
-      image: Image.asset(
-        // any image file
-        'assets/marks.png',
-      ),
-      initBottom: 20,
-      offset: Offset.zero,
-      initOpacity: 0.4,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _appBar(),
-            SizedBox(height: 5.h),
-            CarsSearchBar(
-                showFilters: false, controller: MarksSearchController.to),
-            SizedBox(height: 20.h),
-            _marksScreenBody(),
-            HomeScreenBottomBarWidget(),
-          ],
-        ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _appBar(),
+          SizedBox(height: 5.h),
+          CarsSearchBar(
+              showFilters: false, controller: MarksSearchController.to),
+          SizedBox(height: 20.h),
+          _marksScreenBody(),
+          HomeScreenBottomBarWidget(),
+        ],
       ),
     );
   }
