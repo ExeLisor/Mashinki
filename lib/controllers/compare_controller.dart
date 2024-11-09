@@ -7,6 +7,12 @@ class CompareController extends GetxController {
 
   final RxList _comparedSpecifications = [].obs;
 
+  final RxBool _isHideIdentical = false.obs;
+
+  bool get isHideIdentical => _isHideIdentical.value;
+
+  set isHideIdentical(bool value) => _isHideIdentical.value = value;
+
   List<Car> get comparedCars => _comparedCars;
 
   List get comparedSpecifications => _comparedSpecifications;
@@ -22,6 +28,8 @@ class CompareController extends GetxController {
     showSnackBar("Добавлено в сравнение");
     compare();
   }
+
+  void hideIdentical() => _isHideIdentical.value = !_isHideIdentical.value;
 
   void deleteFromCompare(Car car) {
     comparedCars.removeWhere((element) =>

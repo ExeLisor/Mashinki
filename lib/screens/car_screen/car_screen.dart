@@ -300,11 +300,13 @@ class CarScreen extends StatelessWidget {
           FavoriteController controller = FavoriteController.to;
           Car car = CarController.to.car.copyWith();
           bool isCarFavorite = controller.isCarFavorite(car);
-          return _iconSvg(
-            isCarFavorite ? activeFavoriteIcon : favoriteIcon,
+          return IconWidget(
+            "assets/svg/favorite.svg",
+            "assets/svg/favorite_active.svg",
             () => isCarFavorite
                 ? controller.removeFromFavorite(car)
                 : controller.addToFavorite(car.copyWith()),
+            condition: isCarFavorite,
           );
         },
       );
@@ -343,8 +345,7 @@ class IconWidget extends StatelessWidget {
       onTap: function,
       child: Container(
         decoration: BoxDecoration(
-            color: condition ? primaryColor : Colors.black.withOpacity(0.3),
-            shape: BoxShape.circle),
+            color: Colors.black.withOpacity(0.3), shape: BoxShape.circle),
         height: size.h,
         width: size.h,
         child: Center(

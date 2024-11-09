@@ -6,17 +6,85 @@ class CompareScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Obx(
         () => Scaffold(
-          appBar: _topBar(),
+          appBar: _appBar(),
           body: CompareController.to.comparedCars.isEmpty ? _noCars() : _body(),
           bottomNavigationBar: HomeScreenBottomBarWidget(),
         ),
       );
+  AppBar _appBar() => AppBar(
+        title: _appBarText(),
+        leading: _iconBack(),
+        centerTitle: true,
+        actions: [_accountIcon(), SizedBox(width: 25.w)],
+      );
 
-  Widget _noCars() => Center(
-        child: Text(
-          "🔍🚫🚗",
-          style: TextStyle(fontSize: 40.fs),
+  Widget _hideIdentical() => GestureDetector(
+        onTap: CompareController.to.hideIdentical,
+        child: Row(
+          children: [
+            Obx(
+              () => SvgPicture.asset(CompareController.to.isHideIdentical
+                  ? "assets/svg/checkbox_active.svg"
+                  : "assets/svg/checkbox.svg"),
+            ),
+            SizedBox(width: 10.w),
+            Text(
+              'Скрыть одинаковые параметры',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 12.fs,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
+      );
+
+  Widget _appBarText() => Column(
+        children: [
+          Text(
+            'Сравнение',
+            style: TextStyle(
+              color: primaryColor,
+              fontSize: 20.fs,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            declineComparison(CompareController.to.comparedCars.length),
+            style: TextStyle(
+              color: const Color(0xFF848484),
+              fontSize: 14.fs,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w400,
+            ),
+          )
+        ],
+      );
+  Widget _iconBack() => GestureDetector(
+        onTap: Get.back,
+        child: Container(
+          decoration:
+              BoxDecoration(border: Border.all(color: Colors.transparent)),
+          child: Padding(
+            padding: EdgeInsets.only(left: 4.0.w),
+            child: SizedBox(
+              child: SvgPicture.asset(
+                "assets/svg/back.svg",
+                color: primaryColor,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Widget _accountIcon() => SvgPicture.asset(
+        "assets/svg/account_active.svg",
+        height: 24.h,
+        width: 24.w,
       );
 
   Widget _body() {
@@ -24,40 +92,29 @@ class CompareScreen extends StatelessWidget {
 
     return GetBuilder<CompareAppbarController>(
       initState: (state) => CompareAppbarController.to.startListen(controller),
-      builder: (_) => SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              controller: controller,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: 25.h),
-              child: _view(),
-            ),
-            FloatBar(
-                controller: CompareAppbarController.to,
-                offsetValue: 180.h,
-                child: const CompareFloatingBar()),
-          ],
+      builder: (_) => Padding(
+        padding: EdgeInsets.only(top: 27.0.h),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                controller: controller,
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: 25.h),
+                child: _view(),
+              ),
+              FloatBar(
+                  controller: CompareAppbarController.to,
+                  offsetValue: 180.h,
+                  child: const CompareFloatingBar()),
+            ],
+          ),
         ),
       ),
     );
   }
-
-  PreferredSize _topBar() => PreferredSize(
-        preferredSize: Size.fromHeight(82.h),
-        child: Obx(
-          () => TopBar(
-            title: "Сравнение",
-            subtitle:
-                declineComparison(CompareController.to.comparedCars.length),
-            isHomeScreen: false,
-            disableVerticalPadding: true,
-            showShadow: false,
-          ),
-        ),
-      );
 
   Widget _view() => Obx(
         () => Padding(
@@ -66,6 +123,8 @@ class CompareScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _images(),
+              SizedBox(height: 15.h),
+              _hideIdentical(),
               SizedBox(height: 15.h),
               _specsTitle(),
               _specs(),
@@ -79,6 +138,7 @@ class CompareScreen extends StatelessWidget {
         style: TextStyle(
           color: primaryColor,
           fontSize: 18.fs,
+          fontFamily: 'Inter',
           fontWeight: FontWeight.w700,
           height: 0,
         ),
@@ -94,6 +154,7 @@ class CompareScreen extends StatelessWidget {
           ),
         ),
       );
+
   Widget _specs() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,6 +169,13 @@ class CompareScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _noCars() => Center(
+        child: Text(
+          "🔍🚫🚗",
+          style: TextStyle(fontSize: 40.fs),
+        ),
+      );
 }
 
 class CompareFloatingBar extends StatelessWidget {
@@ -150,6 +218,7 @@ class CompareFloatingBar extends StatelessWidget {
           style: const TextStyle(
             color: Colors.black,
             fontSize: 16,
+            fontFamily: 'Inter',
             fontWeight: FontWeight.w500,
             height: 0,
           ),

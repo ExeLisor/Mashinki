@@ -26,32 +26,36 @@ class CompareCarImage extends StatelessWidget {
 
           // CarController.to.openCarPage(car.copyWith());
         },
-        child: Stack(
-          children: [
-            ImageContainer(
-              imageData: ImageData.photo(id: car.configuration.id ?? ""),
-              width: 177.w,
-              height: 129.h,
-            ),
-            _removeCompare()
-          ],
+        child: SizedBox(
+          width: 177.w,
+          child: Stack(
+            children: [
+              ImageContainer(
+                imageData: ImageData.photo(id: car.configuration.id ?? ""),
+                width: 177.w,
+                height: 129.h,
+              ),
+              _removeCompare()
+            ],
+          ),
         ),
       );
-  Widget _removeCompare() => Align(
-        alignment: Alignment.topRight,
-        child: GestureDetector(
-          onTap: () => CompareController.to.deleteFromCompare(car),
+  Widget _removeCompare() => GestureDetector(
+        onTap: () => CompareController.to.deleteFromCompare(car),
+        child: Align(
+          alignment: Alignment.topRight,
           child: Container(
             width: 28.h,
             height: 28.h,
-            margin: EdgeInsets.all(9.h),
+            margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.h),
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.3), shape: BoxShape.circle),
             child: ClipRRect(
               child: Center(
                 child: SvgPicture.asset(
-                  whiteCrossIcon,
+                  "assets/svg/close.svg",
+                  color: Colors.white,
                   height: 14.h,
                   width: 14.h,
                 ),
@@ -80,6 +84,7 @@ class CompareCarImage extends StatelessWidget {
         style: TextStyle(
           color: Colors.black,
           fontSize: 16.fs,
+          fontFamily: "Inter",
           fontWeight: FontWeight.w500,
           height: 0,
         ),

@@ -37,6 +37,7 @@ class MarksScreen extends StatelessWidget {
         style: TextStyle(
           color: primaryColor,
           fontSize: 20.fs,
+          fontFamily: 'Inter',
           fontWeight: FontWeight.w700,
         ),
       );

@@ -124,7 +124,7 @@ flutter:
     - assets/svg/check_big.svg
     - assets/svg/check.svg
     - assets/svg/checkbox.svg
-    - assets/svg/checkox_active.svg
+    - assets/svg/checkbox_active.svg
     - assets/svg/close_active.svg
     - assets/svg/close_comp.svg
     - assets/svg/close.svg
