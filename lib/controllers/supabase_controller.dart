@@ -14,6 +14,44 @@ class SupabaseController extends GetxController {
     super.onInit();
   }
 
+  List<String> ids = ['22738666', '21491985', '21596394', '21468406'];
+
+  Future<List<Car>> getWeeklyCars() async => await tryCatch(
+        () async {
+          List<Car> cars = [];
+          final response = await from(AutoTable.configuration)
+              .select('*, generation(*, model(*, mark(*)))')
+              .inFilter("id", ids);
+
+          for (Map<String, dynamic> json in response) {
+            Car? car = await getWeeklyCar(json);
+            if (car != null) cars.add(car);
+          }
+          log(cars.length);
+          return cars;
+        },
+      );
+
+  Future<Car>? getWeeklyCar(Map<String, dynamic> id) {
+    return tryCatch(() async {
+      final carJson = id;
+
+      final configuration = Configuration.fromJson(carJson);
+      final generation = Generation.fromJson(carJson['generation'] ?? {});
+      final model = Model.fromJson(carJson['generation']['model'] ?? {});
+      final mark = Mark.fromJson(carJson['generation']['model']['mark'] ?? {});
+
+      final car = Car(
+        mark: mark,
+        model: model,
+        generation: generation,
+        configuration: configuration,
+      );
+
+      return car;
+    });
+  }
+
   SupabaseQueryBuilder from(AutoTable table) =>
       supabase!.schema("public").from(table.name);
 

@@ -1,6 +1,6 @@
 import 'package:autoverse/exports.dart';
 
-class WeeklySelectionWidget extends StatelessWidget {
+class WeeklySelectionWidget extends GetView<WeeklyCarsController> {
   const WeeklySelectionWidget({super.key});
 
   @override
@@ -41,42 +41,38 @@ class WeeklySelectionWidget extends StatelessWidget {
   Widget _weeklyPageView() => SizedBox(
         width: Get.width,
         height: 136.h,
-        child: PageView(
-          controller: PageController(viewportFraction: 0.9, initialPage: 1),
-          children: const [
-            WeeklyCarTile(
-                carName: "Mercedes-Benz GLE",
-                carImageUrl:
-                    "https://avatars.mds.yandex.net/get-verba/787013/2a00000167116561097ce22cba5910afa46a/320x240"),
-            WeeklyCarTile(
-                carName: "Tesla CyberTruck",
-                carImageUrl:
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Cybertruck-fremont-cropped.jpg/1200px-Cybertruck-fremont-cropped.jpg"),
-            WeeklyCarTile(
-                carName: "Jeep Wrangler",
-                carImageUrl:
-                    "https://www.autocar.co.uk/sites/autocar.co.uk/files/jeep-wrangler-review-2024-01-cornering-front.jpg"),
-          ],
-        ),
+        child: Obx(
+            () => controller.cars.isNotEmpty ? _cars() : _emptyWeeklyWidget()),
       );
 
+  Widget _cars() => Obx(() => PageView(
+        controller: PageController(viewportFraction: 0.9, initialPage: 1),
+        children: List.generate(controller.cars.length,
+            (index) => WeeklyCarTile(car: controller.cars[index])),
+      ));
+
+  Widget _emptyWeeklyWidget() => PageView(
+      controller: PageController(viewportFraction: 0.9, initialPage: 1),
+      children: [_weeklyWidgetLoadingShimmer()]);
+
   Widget _weeklyWidgetLoadingShimmer() => ShimmerWidget(
-        child: Container(
-          width: 362.w,
-          height: 136.h,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(30),
+        child: UnconstrainedBox(
+          child: Container(
+            width: 362.w,
+            height: 136.h,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(30),
+            ),
           ),
         ),
       );
 }
 
 class WeeklyCarTile extends StatelessWidget {
-  const WeeklyCarTile({super.key, this.carName, this.carImageUrl});
+  const WeeklyCarTile({super.key, required this.car});
 
-  final String? carName;
-  final String? carImageUrl;
+  final Car car;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +107,7 @@ class WeeklyCarTile extends StatelessWidget {
               ),
             ),
             child: Text(
-              carName ?? "",
+              car.model.name ?? "",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.fs,
@@ -122,17 +118,44 @@ class WeeklyCarTile extends StatelessWidget {
         ),
       );
 
-  Widget _carImage() => SizedBox(
-        width: 362.w,
-        height: 136.h,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: carImageUrl == null
-              ? Container()
-              : CachedNetworkImage(
-                  imageUrl: carImageUrl ?? "",
-                  fit: BoxFit.cover,
-                ),
+  Widget _carImage() => GestureDetector(
+        onTap: () => CarController.to.openCarPage(car, isLoadCar: true),
+        child: SizedBox(
+          width: 362.w,
+          height: 136.h,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: ImageContainer(
+              imageData: ImageData.photo(id: car.configuration.id ?? ""),
+            ),
+          ),
         ),
       );
+}
+
+class WeeklyCarsController extends GetxController {
+  final RxList<Car> cars = <Car>[].obs;
+  final RxList<String> ids = <String>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _init();
+  }
+
+  Future<void> _init() async {
+    try {
+      cars.value = await SupabaseController.to.getWeeklyCars();
+    } catch (e) {
+      logW(e);
+      return;
+    }
+  }
+}
+
+class WeeklyCarsBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<WeeklyCarsController>(() => WeeklyCarsController());
+  }
 }

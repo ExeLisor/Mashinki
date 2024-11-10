@@ -140,7 +140,9 @@ class InititalBindingsClass extends Bindings {
     Get.lazyPut(() => MarksController());
     Get.lazyPut(() => ModelsController());
     Get.lazyPut(() => FirebaseController());
+    WeeklyCarsBinding().dependencies();
 
     FiltersBinding().dependencies();
+    CarBinding().dependencies();
   }
 }

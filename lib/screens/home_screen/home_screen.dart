@@ -7,6 +7,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _homeScreen(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => SupabaseController.to.getWeeklyCars(),
+      ),
       bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
   }

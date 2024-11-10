@@ -108,7 +108,7 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
       );
 
   InputDecoration decoration() => InputDecoration(
-        suffixIcon: showFilters ? _filtersIcon() : null,
+        // suffixIcon: showFilters ? _filtersIcon() : null,
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(
