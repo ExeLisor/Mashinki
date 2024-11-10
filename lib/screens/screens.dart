@@ -5,7 +5,7 @@ export 'welcome_screeen/welcome_screen.dart';
 
 export 'home_screen/home_screen.dart';
 export 'home_screen/widgets/weekly_selection.dart';
-export 'home_screen/widgets/cars_widget.dart';
+export 'home_screen/widgets/catalog_widget.dart';
 export 'home_screen/widgets/home_ads.dart';
 export 'home_screen/widgets/marks_widget.dart';
 export 'home_screen/widgets/home_shimmer.dart';

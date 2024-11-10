@@ -1,6 +1,6 @@
 import 'package:autoverse/exports.dart';
 
-class CarsCatalogListWidget extends StatelessWidget {
+class CarsCatalogListWidget extends GetView<CarCatalogController> {
   const CarsCatalogListWidget({super.key});
 
   @override
@@ -12,10 +12,10 @@ class CarsCatalogListWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _title(),
-              SizedBox(
-                height: 15.h,
+              SizedBox(height: 15.h),
+              Obx(
+                () => controller.cars.isNotEmpty ? _carsList() : _carsEmpty(),
               ),
-              _carsView(),
             ],
           ),
         ),
@@ -23,21 +23,30 @@ class CarsCatalogListWidget extends StatelessWidget {
     );
   }
 
-  Widget _carsView() => HomeShimmerWidget(
-        shimmer: _carsGridLoading(),
-        successCondition: true,
-        child: _carsGrid(),
-      );
-
-  Widget _carsGridLoading() => ShimmerWidget(
-        child: Row(
-          children: [
-            _catalogTileContainer(),
-            SizedBox(
-              width: 18.w,
+  Widget _carsEmpty() => Container(
+        height: 169.h,
+        width: 172.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.15),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 5.h), // changes position of shadow
             ),
-            _catalogTileContainer(),
           ],
+        ),
+        child: Center(
+          child: Text(
+            "Нет автомобилей",
+            style: TextStyle(
+                fontSize: 16.fs,
+                fontFamily: "Inter",
+                color: primaryColor,
+                fontWeight: FontWeight.w600),
+          ),
         ),
       );
 
@@ -70,50 +79,19 @@ class CarsCatalogListWidget extends StatelessWidget {
         ),
       );
 
-  Widget _carsGrid() => ListView(
+  Widget _carsList() => ListView(
         padding: EdgeInsets.only(bottom: 25.h, left: 25.w, right: 25.w),
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          CatalogTile(
-            name: "Toyota Camry",
-            year: "2023",
-            imageUrl:
-                "https://avatars.mds.yandex.net/get-verba/997355/2a0000018e0fd1de72d4ecb8fef86d78a72e/cattouchret",
-          ),
-          CatalogTile(
-            name: "Toyota Camry",
-            year: "2025",
-            imageUrl:
-                "https://motortrend.com/files/661fed9cfceecf0008b212e4/001-2025-toyota-camry-se-awd-lead.jpg?w=768&width=768&q=75&format=webp",
-          ),
-          CatalogTile(
-            name:
-                "Toyota CorollaToyota CorollaToyota CorollaToyota CorollaToyota CorollaToyota CorollaToyota CorollaToyota Corolla",
-            year: "2023",
-            imageUrl:
-                "https://d8a6a33f-3369-444b-9b5f-793c13ff0708.selcdn.net/media/common/just_strip/tradeins.space/uploads/models_gallery_image/13778/450d7266a8acac506ddc97c36c79cedee2addd42.jpeg?v77",
-          ),
-          CatalogTile(
-            name: "Toyota Yaris",
-            year: "2019",
-            imageUrl:
-                "https://s.auto.drom.ru/img5/catalog/photos/fullsize/toyota/yaris/toyota_yaris_297782.jpg",
-          )
-        ],
+        children: List.generate(controller.cars.length,
+            (index) => CatalogTile(car: controller.cars[index])),
       );
 }
 
 class CatalogTile extends StatelessWidget {
-  const CatalogTile(
-      {super.key,
-      required this.name,
-      required this.year,
-      required this.imageUrl});
+  const CatalogTile({super.key, required this.car});
 
-  final String name;
-  final String year;
-  final String imageUrl;
+  final Car car;
 
   @override
   Widget build(BuildContext context) {
@@ -134,15 +112,21 @@ class CatalogTile extends StatelessWidget {
 
   Widget _carImage() => Stack(
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(24),
-            ),
-            child: Container(
-              height: 225.h,
-              width: 361.w,
-              color: Colors.black,
-              child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
+          GestureDetector(
+            onTap: () => CarController.to.openCarPage(car, isLoadCar: true),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(24),
+              ),
+              child: Container(
+                height: 225.h,
+                width: 361.w,
+                color: Colors.black,
+                child: ImageContainer(
+                  borderRaduis: 0,
+                  imageData: ImageData.photo(id: car.configuration.id ?? ""),
+                ),
+              ),
             ),
           ),
           _iconsRow()
@@ -161,10 +145,20 @@ class CatalogTile extends StatelessWidget {
           ],
         ),
       );
-  Widget _addToFavorite() => _icon("favorite", () {});
-  Widget _addToCompare() => _icon("comp", () {});
+  Widget _addToFavorite() => Obx(() => _icon(
+      "favorite",
+      "favorite_active",
+      FavoriteController.to.isCarFavorite(car),
+      () => FavoriteController.to.addToFavorite(car)));
+  Widget _addToCompare() => Obx(() => _icon(
+      "comp",
+      "comp_active",
+      CompareController.to.isCarCompared(car),
+      () => CompareController.to.compareAction(car)));
 
-  Widget _icon(String icon, VoidCallback action) => GestureDetector(
+  Widget _icon(String icon, String activeIcon, bool condition,
+          VoidCallback action) =>
+      GestureDetector(
         onTap: action,
         child: Container(
           width: 32.h,
@@ -178,7 +172,7 @@ class CatalogTile extends StatelessWidget {
           ),
           child: Center(
             child: SvgPicture.asset(
-              "assets/svg/$icon.svg",
+              "assets/svg/${condition ? activeIcon : icon}.svg",
             ),
           ),
         ),
@@ -195,7 +189,7 @@ class CatalogTile extends StatelessWidget {
   Widget _carName() => SizedBox(
         width: 200.w,
         child: Text(
-          name,
+          "${car.mark.name} ${car.model.name}",
           softWrap: true,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
@@ -206,7 +200,7 @@ class CatalogTile extends StatelessWidget {
       );
 
   Widget _carYear() => Text(
-        year,
+        "${car.generation.yearStart}",
         style: TextStyle(fontSize: 20.fs, fontWeight: FontWeight.w300),
       );
 
@@ -230,4 +224,32 @@ class CatalogTile extends StatelessWidget {
           )
         ],
       );
+}
+
+class CarCatalogController extends GetxController {
+  final RxList<Car> _cars = <Car>[].obs;
+
+  List<Car> get cars => _cars;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _init();
+  }
+
+  Future<void> _init() async {
+    try {
+      _cars.value = await SupabaseController.to.getCatalogCars();
+    } catch (e) {
+      logW(e);
+      return;
+    }
+  }
+}
+
+class CarCatalogBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => CarCatalogController());
+  }
 }

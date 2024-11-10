@@ -107,7 +107,7 @@ class WeeklyCarTile extends StatelessWidget {
               ),
             ),
             child: Text(
-              car.model.name ?? "",
+              "${car.mark.name} ${car.model.name}",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.fs,

@@ -206,7 +206,7 @@ class CarSpecifications {
       complectationId: json['complectation_id'] ?? '',
       backBrake: json['back-brake'] ?? '',
       feeding: json['feeding'] ?? '',
-      horsePower: int.tryParse(json['horse-power']) ?? 0,
+      horsePower: int.tryParse(json['horse-power'] ?? '0') ?? 0,
       kvtPower: double.tryParse(json['kvt-power'] ?? '0') ?? 0,
       rpmPower: int.tryParse(json['rpm-power'] ?? '0') ?? 0,
       engineType: json['engine-type'] ?? '',

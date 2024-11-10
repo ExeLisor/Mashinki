@@ -14,17 +14,15 @@ class SupabaseController extends GetxController {
     super.onInit();
   }
 
-  List<String> ids = ['22738666', '21491985', '21596394', '21468406'];
-
   Future<List<Car>> getWeeklyCars() async => await tryCatch(
         () async {
           List<Car> cars = [];
           final response = await from(AutoTable.configuration)
               .select('*, generation(*, model(*, mark(*)))')
-              .inFilter("id", ids);
+              .inFilter("id", weeklyCars);
 
           for (Map<String, dynamic> json in response) {
-            Car? car = await getWeeklyCar(json);
+            Car? car = await carFromSupabaseJson(json);
             if (car != null) cars.add(car);
           }
           log(cars.length);
@@ -32,9 +30,75 @@ class SupabaseController extends GetxController {
         },
       );
 
-  Future<Car>? getWeeklyCar(Map<String, dynamic> id) {
+  List getRandomCatalogCars() {
+    List random = catalog.toList()..shuffle();
+    random = random.take(10).toList();
+    return random;
+  }
+
+  Future<List<Car>> getCatalogCars() async => await tryCatch(
+        () async {
+          List<Car> cars = [];
+
+          final response = await from(AutoTable.configuration)
+              .select('*, generation(*, model(*, mark(*)))')
+              .inFilter("id", getRandomCatalogCars());
+
+          for (Map<String, dynamic> json in response) {
+            Car? car = await carFromSupabaseJson(json);
+            Modification? modification = await loadCatalogTileChips(json["id"]);
+            car?.selectedModification = modification ?? Modification();
+            if (car != null) cars.add(car);
+          }
+
+          return cars;
+        },
+      );
+
+  Future<Modification?> loadCatalogTileChips(String id) async {
+    Modification? modification;
+
+    final chips = await from(AutoTable.modification)
+        .select('complectation-id, specifications(*), options(*)')
+        .eq("configuration_id", id)
+        .limit(1);
+
+    modification = Modification.fromJson(chips.first);
+    final specifications =
+        CarSpecifications.fromJson(chips.first['specifications'].first);
+    modification.carSpecifications = specifications;
+
+    return modification;
+  }
+
+  Future<List<Car>> getCar() async => await tryCatch(
+        () async {
+          List<Car> cars = [];
+
+          final response = await from(AutoTable.configuration)
+              .select('*, generation(*, model(*, mark(*)))')
+              .eq("id", '21491985')
+              .limit(1);
+
+          log(response);
+          Car? car = await carFromSupabaseJson(response.first);
+
+          log(car?.toJson());
+
+          // for (Map<String, dynamic> json in response) {
+          //   Car? car = await carFromSupabaseJson(json);
+          //   if (car != null) cars.add(car);
+          // }
+
+          return cars;
+        },
+      );
+
+  Future<Car>? carFromSupabaseJson(
+    Map<String, dynamic> json,
+  ) {
     return tryCatch(() async {
-      final carJson = id;
+      final carJson = json;
 
       final configuration = Configuration.fromJson(carJson);
       final generation = Generation.fromJson(carJson['generation'] ?? {});

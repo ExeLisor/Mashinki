@@ -21,6 +21,9 @@ class CompareController extends GetxController {
 
   List<CarSpecifications> allSpecs = [];
 
+  void compareAction(Car car) =>
+      isCarCompared(car) ? deleteFromCompare(car) : addToCompare(car);
+
   void addToCompare(Car car) {
     if (isCarCompared(car)) return;
 

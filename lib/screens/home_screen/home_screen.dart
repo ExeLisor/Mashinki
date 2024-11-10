@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: _homeScreen(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => SupabaseController.to.getWeeklyCars(),
+        onPressed: () => SupabaseController.to.getCar(),
       ),
       bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
