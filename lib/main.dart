@@ -1,4 +1,5 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/services/lang_service.dart';
 
 import 'screens/filters_screen/widgets/option_selector.dart';
 
@@ -7,7 +8,9 @@ void main() async {
 
   final firebaseController = Get.put(FirebaseController(), permanent: true);
   final supabaseController = Get.put(SupabaseController(), permanent: true);
+  final localizationService = LocalizationService();
 
+  await localizationService.loadTranslations();
   await firebaseController.onInitComplete();
   await supabaseController.onInitComplete();
 
@@ -36,6 +39,9 @@ class _MainAppState extends State<MainApp> {
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
+      translations: LocalizationService(),
+      locale: LocalizationService.locale,
+      fallbackLocale: LocalizationService.fallbackLocale,
       initialRoute: '/home',
       getPages: _pages,
       initialBinding: InititalBindingsClass(),

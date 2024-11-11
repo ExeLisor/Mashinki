@@ -203,10 +203,7 @@ mixin SettingsMixin on GetxController {
   final RxString title = ''.obs;
   final RxString selectedSetting = ''.obs;
 
-  void select(String value) {
-    log("select");
-    selectedSetting.value = value;
-  }
+  void select(String value) => selectedSetting.value = value;
 
   bool isSelected(String value) => selectedSetting.value == value;
 }
@@ -225,6 +222,16 @@ class LanguageController extends GetxController with SettingsMixin {
     selectedSetting.value = "Русский";
     settings.addAll(['Русский', 'Английский']);
   }
+
+  @override
+  void onInit() {
+    super.onInit();
+    ever(selectedSetting, (_) => changeLocalization());
+  }
+
+  void changeLocalization() => selectedSetting.value == 'Русский'
+      ? Get.updateLocale(const Locale('en'))
+      : Get.updateLocale(const Locale('ru'));
 }
 
 class SettingsController extends GetxController {

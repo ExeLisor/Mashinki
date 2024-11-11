@@ -148,4 +148,6 @@ flutter:
     - assets/svg/logo.svg
     - assets/car.png
     - assets/specs.png
+    - assets/langs/en.json
+    - assets/langs/ru.json
 
