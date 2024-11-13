@@ -8,9 +8,10 @@ void main() async {
 
   final firebaseController = Get.put(FirebaseController(), permanent: true);
   final supabaseController = Get.put(SupabaseController(), permanent: true);
-  final localizationService = LocalizationService();
+  final localizationService = Get.put(LocalizationService());
+  await localizationService
+      .loadLocalizations(); // Гарантируем загрузку локализации
 
-  await localizationService.loadTranslations();
   await firebaseController.onInitComplete();
   await supabaseController.onInitComplete();
 
@@ -39,9 +40,8 @@ class _MainAppState extends State<MainApp> {
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
-      translations: LocalizationService(),
-      locale: LocalizationService.locale,
-      fallbackLocale: LocalizationService.fallbackLocale,
+      translations: Languages(),
+      locale: Get.deviceLocale,
       initialRoute: '/home',
       getPages: _pages,
       initialBinding: InititalBindingsClass(),
@@ -147,9 +147,10 @@ class InititalBindingsClass extends Bindings {
     Get.lazyPut(() => ModelsController());
     Get.lazyPut(() => FirebaseController());
     WeeklyCarsBinding().dependencies();
-    CarCatalogBinding().dependencies();
+    // CarCatalogBinding().dependencies();
     FavoriteBinding().dependencies();
     FiltersBinding().dependencies();
     CarBinding().dependencies();
+    LanguageBinding().dependencies();
   }
 }

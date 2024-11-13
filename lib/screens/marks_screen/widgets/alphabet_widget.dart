@@ -27,7 +27,7 @@ class AlphabetWidget extends StatelessWidget {
   Widget _headerText(String symbol) => Padding(
         padding: EdgeInsets.symmetric(horizontal: symbol == '#' ? 0 : 12.0.h),
         child: Text(
-          symbol == '#' ? 'Популярные бренды' : symbol,
+          symbol == '#' ? 'popular-marks'.tr : symbol,
           style: TextStyle(
               color: primaryColor,
               fontWeight: FontWeight.w500,

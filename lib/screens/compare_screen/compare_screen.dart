@@ -29,7 +29,7 @@ class CompareScreen extends StatelessWidget {
             ),
             SizedBox(width: 10.w),
             Text(
-              'Скрыть одинаковые параметры',
+              'hide-simmilar-specifications'.tr,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 12.fs,
@@ -44,7 +44,7 @@ class CompareScreen extends StatelessWidget {
   Widget _appBarText() => Column(
         children: [
           Text(
-            'Сравнение',
+            'comparison'.tr,
             style: TextStyle(
               color: primaryColor,
               fontSize: 20.fs,
@@ -52,15 +52,15 @@ class CompareScreen extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          Text(
-            declineComparison(CompareController.to.comparedCars.length),
-            style: TextStyle(
-              color: const Color(0xFF848484),
-              fontSize: 14.fs,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w400,
-            ),
-          )
+          // Text(
+          //   declineComparison(CompareController.to.comparedCars.length),
+          //   style: TextStyle(
+          //     color: const Color(0xFF848484),
+          //     fontSize: 14.fs,
+          //     fontFamily: 'Inter',
+          //     fontWeight: FontWeight.w400,
+          //   ),
+          // )
         ],
       );
   Widget _iconBack() => GestureDetector(
@@ -134,7 +134,7 @@ class CompareScreen extends StatelessWidget {
       );
 
   Widget _specsTitle() => Text(
-        'Характеристики',
+        'specifications'.tr,
         style: TextStyle(
           color: primaryColor,
           fontSize: 18.fs,

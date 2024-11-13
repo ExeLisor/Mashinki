@@ -82,10 +82,10 @@ class CarScreen extends StatelessWidget {
         () => Row(
           children: [
             _selectorTile(
-                "Характеристики", SpecsSelectorController.to.changeToSpecs,
+                "specifications".tr, SpecsSelectorController.to.changeToSpecs,
                 isSelected: !SpecsSelectorController.to.showOptions),
             _selectorTile(
-                "Комплектация", SpecsSelectorController.to.changeToOptions,
+                "group-name".tr, SpecsSelectorController.to.changeToOptions,
                 isSelected: SpecsSelectorController.to.showOptions)
           ],
         ),
@@ -141,7 +141,7 @@ class CarScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Описание",
+              "description".tr,
               style: TextStyle(
                 color: const Color(0xFF4038FF),
                 fontSize: 18.fs,

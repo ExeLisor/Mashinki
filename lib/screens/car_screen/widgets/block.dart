@@ -103,7 +103,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
                 ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: 265.w),
                   child: Text(
-                    specs,
+                    specs.tr,
                     maxLines: 2,
                     style: TextStyle(
                       fontSize: 14.fs,
@@ -142,7 +142,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
 
   Widget _blockTitle() => SizedBox(
         child: Text(
-          widget.title,
+          widget.title.tr,
           maxLines: 2,
           softWrap: true,
           style: TextStyle(
@@ -155,7 +155,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
       );
 
   Widget _count() => Text(
-        '$count опций',
+        '$count ${"options-rp".tr}',
         style: TextStyle(
           color: const Color(0xFF848484),
           fontSize: 14.fs,
@@ -230,7 +230,7 @@ class SpecsBlockWidget extends StatelessWidget {
               SizedBox(
                 width: 200.w,
                 child: Text(
-                  '$specs:',
+                  '${specs.tr}:',
                   maxLines: 2,
                   style: TextStyle(
                     color: primaryColor,
@@ -243,7 +243,7 @@ class SpecsBlockWidget extends StatelessWidget {
                   ? SizedBox(
                       width: 140.w,
                       child: Text(
-                        checkStringOnEmptyOrZero(value),
+                        checkStringOnEmptyOrZero(value).tr,
                         textAlign: TextAlign.right,
                         softWrap: true, // разрешаем переносить текст
                         style: TextStyle(

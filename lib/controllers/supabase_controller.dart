@@ -286,13 +286,13 @@ class SupabaseController extends GetxController {
 
       // Формируем строки описания
       final driveDesc =
-          getSpecDescription(driveSet.toList(), 'привод', 'привод');
+          getSpecDescription(driveSet.toList(), "привод".tr, "привод".tr);
       final transmissionDesc =
-          "Коробка ${getSpecDescription(transmissionSet.toList(), '', '')}";
+          "${"Коробка".tr} ${getSpecDescription(transmissionSet.toList(), '', '').tr}";
       final engineDesc =
-          "Типы двигателей: ${getSpecDescription(enginesSet.toList(), '', '')}";
-      final volumeDesc = getMinMaxVolumeDescription(volumeLitres);
-      final powerDesc = getMinMaxPowerDescription(power);
+          "${"Типы двигателей".tr}: ${getSpecDescription(enginesSet.toList(), '', '').tr}";
+      final volumeDesc = getMinMaxVolumeDescription(volumeLitres).tr;
+      final powerDesc = getMinMaxPowerDescription(power).tr;
 
       // Финальное описание
       final description =
@@ -308,12 +308,12 @@ class SupabaseController extends GetxController {
   String getSpecDescription(
       List<String> specs, String singlePrefix, String multiplePrefix) {
     if (specs.isEmpty) return "";
-    if (specs.length == 1) return "${specs[0]} $singlePrefix".trim();
+    if (specs.length == 1) return "${specs[0].tr} $singlePrefix".trim();
     if (specs.length == 2) {
-      return "${specs[0]} и ${specs[1]} $multiplePrefix".trim();
+      return "${specs[0].tr} ${"и".tr} ${specs[1].tr} $multiplePrefix".trim();
     }
     final lastSpec = specs.removeLast();
-    return "${specs.join(', ')} и $lastSpec $multiplePrefix".trim();
+    return "${specs.join(', ').tr} ${"и".tr} $lastSpec $multiplePrefix".trim();
   }
 
   String getMinMaxVolumeDescription(List<double> volumeLitres) {
@@ -321,8 +321,10 @@ class SupabaseController extends GetxController {
     volumeLitres.sort();
     final minVolume = volumeLitres.first;
     final maxVolume = volumeLitres.last;
-    if (minVolume == maxVolume) return ", объёмом от $minVolume л. и";
-    return ", объёмом от $minVolume до $maxVolume л. и";
+    if (minVolume == maxVolume) {
+      return ", ${"объёмом".tr} ${"от".tr} $minVolume ${"л.".tr} ${"и".tr}";
+    }
+    return ", ${"объёмом".tr} ${"от".tr} $minVolume ${"до".tr} $maxVolume ${"л.".tr} ${"и".tr}";
   }
 
   String getMinMaxPowerDescription(List<double> power) {
@@ -330,8 +332,10 @@ class SupabaseController extends GetxController {
     power.sort();
     final minPower = power.first;
     final maxPower = power.last;
-    if (minPower == maxPower) return "мощностью от $minPower л.с.";
-    return "мощностью от $minPower до $maxPower л.с.";
+    if (minPower == maxPower) {
+      return "${"мощностью".tr} ${"от".tr} $minPower ${"л.с.".tr}";
+    }
+    return "${"мощностью".tr} ${"от".tr} $minPower ${"до".tr} $maxPower ${"л.с.".tr}";
   }
 }
 

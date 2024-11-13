@@ -7,11 +7,23 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _homeScreen(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => SupabaseController.to.getCar(),
-      ),
+      floatingActionButton: FloatingActionButton(onPressed: openGooglePlayPage),
       bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
+  }
+
+  void openGooglePlayPage() async {
+    const String googlePlayUrl =
+        'https://play.google.com/store/apps/details?id=com.ParallelSpace.Cerberus';
+
+    // Замените <PackageName> на имя пакета вашего приложения, например: com.example.app
+    final Uri playStoreUri = Uri.parse(googlePlayUrl);
+
+    if (await canLaunch(playStoreUri.toString())) {
+      await launch(playStoreUri.toString());
+    } else {
+      throw 'Не удалось открыть Google Play';
+    }
   }
 
   AppBar _appBar() => AppBar(
@@ -23,7 +35,7 @@ class HomeScreen extends StatelessWidget {
       );
 
   Widget _appBarText() => Text(
-        'Каталог',
+        'catalog'.tr,
         style: TextStyle(
           color: primaryColor,
           fontSize: 20.fs,
@@ -53,7 +65,7 @@ class HomeScreen extends StatelessWidget {
             const WeeklySelectionWidget(),
             SizedBox(height: 20.h),
             const MarksWidget(),
-            const CarsCatalogListWidget(),
+            // const CarsCatalogListWidget(),
           ],
         ),
       );

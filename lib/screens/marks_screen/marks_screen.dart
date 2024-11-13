@@ -33,7 +33,7 @@ class MarksScreen extends StatelessWidget {
       );
 
   Widget _appBarText() => Text(
-        'Марки',
+        'marks'.tr,
         style: TextStyle(
           color: primaryColor,
           fontSize: 20.fs,

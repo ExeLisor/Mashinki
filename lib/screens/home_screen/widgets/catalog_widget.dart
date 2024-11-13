@@ -70,7 +70,7 @@ class CarsCatalogListWidget extends GetView<CarCatalogController> {
   Widget _title() => Padding(
         padding: EdgeInsets.only(left: 25.0.w),
         child: Text(
-          "Автомобили",
+          "cars".tr,
           style: TextStyle(
               fontSize: 16.fs,
               fontFamily: "Inter",

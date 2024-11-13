@@ -1,4 +1,5 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/services/lang_service.dart';
 
 class AccountScreen extends GetView<SettingsController> {
   const AccountScreen({super.key});
@@ -7,6 +8,9 @@ class AccountScreen extends GetView<SettingsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _homeScreen(),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () =>
+              LocalizationService.to.updateLocale(const Locale('en', 'US'))),
       bottomNavigationBar: HomeScreenBottomBarWidget(),
     );
   }
@@ -56,15 +60,13 @@ class AccountScreen extends GetView<SettingsController> {
 
   Widget _theme() => AccountSettingsSelector(controller: ThemeController());
 
-  Widget _language() =>
-      AccountSettingsSelector(controller: LanguageController());
+  Widget _language() => const LanguageSelector();
 
-  Widget _disbaleAds() => _button("Отключить рекламу", controller.disableAds);
+  Widget _disbaleAds() => _button("disableAds".tr, controller.disableAds);
 
-  Widget _rateApp() => _button("Оценить приложение", controller.rateApp);
+  Widget _rateApp() => _button("rateApp".tr, controller.rateApp);
 
-  Widget _contactDevs() =>
-      _button("Связаться с разработчиками", controller.contactDevs);
+  Widget _contactDevs() => _button("contactDevs".tr, controller.contactDevs);
 
   Widget _button(String title, VoidCallback? onTap) => Column(
         children: [
@@ -118,13 +120,10 @@ class SettingsDivider extends StatelessWidget {
       );
 }
 
-class AccountSettingsSelector extends StatelessWidget {
-  const AccountSettingsSelector({
+class LanguageSelector extends GetView<LanguageController> {
+  const LanguageSelector({
     super.key,
-    required this.controller,
   });
-
-  final SettingsMixin controller;
 
   @override
   Widget build(BuildContext context) {
@@ -145,14 +144,16 @@ class AccountSettingsSelector extends StatelessWidget {
 
   Widget _divider() => const SettingsDivider();
 
-  Widget _title() => Text(
-        controller.title.value,
-        textAlign: TextAlign.start,
-        style: TextStyle(
-          color: primaryColor,
-          fontSize: 16.fs,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w600,
+  Widget _title() => Obx(
+        () => Text(
+          controller.title.value, // Слушаем изменения title
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            color: primaryColor,
+            fontSize: 16.fs,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w600,
+          ),
         ),
       );
 
@@ -176,7 +177,89 @@ class AccountSettingsSelector extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  value,
+                  value.tr,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.fs,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+                controller.isSelected(value)
+                    ? SvgPicture.asset("assets/svg/check.svg",
+                        width: 12.w, height: 24.h)
+                    : Container(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AccountSettingsSelector<T extends SettingsMixin> extends StatelessWidget {
+  const AccountSettingsSelector({
+    super.key,
+    required this.controller,
+  });
+
+  final T controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 25.0.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 20.h),
+          _title(),
+          SizedBox(height: 12.h),
+          _settings(),
+          _divider(),
+        ],
+      ),
+    );
+  }
+
+  Widget _divider() => const SettingsDivider();
+
+  Widget _title() => Obx(
+        () => Text(
+          controller.title.value, // Слушаем изменения title
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            color: primaryColor,
+            fontSize: 16.fs,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+
+  Widget _settings() {
+    return Column(
+      children: List.generate(controller.settings.length,
+          (index) => _settingItem(controller.settings[index])),
+    );
+  }
+
+  Widget _settingItem(String value) {
+    return GestureDetector(
+      onTap: () => controller.select(value),
+      child: Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.transparent)),
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 16.h),
+          child: Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  value.tr,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.fs,
@@ -210,28 +293,46 @@ mixin SettingsMixin on GetxController {
 
 class ThemeController extends GetxController with SettingsMixin {
   ThemeController() {
-    title.value = 'Тема';
-    selectedSetting.value = "Светлая";
-    settings.addAll(['Светлая', 'Темная', 'Системная']);
+    title.value = 'theme'.tr;
+    selectedSetting.value = "theme-light";
+    settings.addAll(['theme-light', 'theme-dark', 'theme-system']);
   }
 }
 
 class LanguageController extends GetxController with SettingsMixin {
   LanguageController() {
-    title.value = 'Язык';
-    selectedSetting.value = "Русский";
-    settings.addAll(['Русский', 'Английский']);
+    title.value = "language".tr;
+    selectedSetting.value = "ru";
+    settings.addAll(['ru', 'en']);
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    ever(selectedSetting, (_) => changeLocalization());
+    String? language = await loadData("language");
+
+    if (language != null) select(language);
+
+    if (language == null) select(Get.deviceLocale.toString());
   }
 
-  void changeLocalization() => selectedSetting.value == 'Русский'
-      ? Get.updateLocale(const Locale('en'))
-      : Get.updateLocale(const Locale('ru'));
+  @override
+  void select(String value) {
+    super.select(value);
+    changeLocalization(value);
+    saveData("language", value);
+  }
+
+  void changeLocalization(String value) => value == 'en' || value == "en_US"
+      ? LocalizationService.to.updateLocale(const Locale('en', 'US'))
+      : LocalizationService.to.updateLocale(const Locale('ru', 'RU'));
+}
+
+class LanguageBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(LanguageController(), permanent: true);
+  }
 }
 
 class SettingsController extends GetxController {

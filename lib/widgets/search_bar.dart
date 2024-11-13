@@ -123,7 +123,7 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
           borderRadius: BorderRadius.circular(40),
           borderSide: const BorderSide(color: Colors.transparent),
         ),
-        hintText: "Поиск",
+        hintText: 'search'.tr,
         hintStyle: TextStyle(
             fontSize: 16.fs,
             fontWeight: FontWeight.w400,

@@ -56,10 +56,12 @@ class Car {
       String description = await SupabaseController.to
           .getModificationDescription(configuration.id ?? "");
 
-      String bodyType = (configuration.bodyType ?? "").capitalizeFirstLetter();
+      String bodyType =
+          (configuration.bodyType ?? "").tr.capitalizeFirstLetter();
 
-      String modelClass =
-          model.modelClass.nullOrEmpty ? "" : "${model.modelClass}-класса";
+      String modelClass = model.modelClass.nullOrEmpty
+          ? ""
+          : "${model.modelClass}-${"класса".tr}";
 
       this.description = "$bodyType $modelClass, $description";
       return description;

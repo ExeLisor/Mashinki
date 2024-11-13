@@ -22,7 +22,7 @@ class MarksWidget extends GetView<MarksController> {
           padding: EdgeInsets.only(left: spacing.w),
           child: Row(
             children: [
-              Text("Бренды",
+              Text('marks'.tr,
                   style: TextStyle(
                       fontSize: 16.fs,
                       fontFamily: "Inter",

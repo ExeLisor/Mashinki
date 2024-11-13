@@ -1,21 +1,46 @@
 import 'package:autoverse/exports.dart';
 
-class LocalizationService extends Translations {
-  static const locale = Locale('en', 'US');
-  static const fallbackLocale = Locale('en', 'US');
+class LocalizationService extends GetxController {
+  static LocalizationService get to => Get.find();
+
+  final RxMap<String, String> enLocalized = <String, String>{}.obs;
+  final RxMap<String, String> ruLocalized = <String, String>{}.obs;
 
   @override
-  Map<String, Map<String, String>> get keys => {};
-
-  Future<void> loadTranslations() async {
-    final enData = await rootBundle.loadString('assets/langs/en.json');
-    final ruData = await rootBundle.loadString('assets/langs/ru.json');
-
-    keys.addAll({
-      'en_US': Map<String, String>.from(jsonDecode(enData)),
-      'ru_RU': Map<String, String>.from(jsonDecode(ruData)),
-    });
+  void onInit() async {
+    await loadLocalizations();
+    updateLocale(Get.deviceLocale ?? const Locale('en', 'US'));
+    super.onInit();
   }
 
-  void changeLocale(Locale locale) => Get.updateLocale(locale);
+  Future<void> loadLocalizations() async {
+    await loadEnUsLocalization();
+    await loadRuRuLocalization();
+  }
+
+  Future<void> loadEnUsLocalization() async {
+    String jsonString = await rootBundle.loadString('assets/langs/en.json');
+    Map<String, dynamic> jsonMap = json.decode(jsonString);
+    enLocalized.value =
+        jsonMap.map((key, value) => MapEntry(key, value.toString()));
+  }
+
+  Future<void> loadRuRuLocalization() async {
+    String jsonString = await rootBundle.loadString('assets/langs/ru.json');
+    Map<String, dynamic> jsonMap = json.decode(jsonString);
+    ruLocalized.value =
+        jsonMap.map((key, value) => MapEntry(key, value.toString()));
+  }
+
+  void updateLocale(Locale locale) => Get.updateLocale(locale);
+}
+
+class Languages extends Translations {
+  final LocalizationService localizationService = LocalizationService.to;
+
+  @override
+  Map<String, Map<String, String>> get keys => {
+        'en_US': localizationService.enLocalized,
+        'ru_RU': localizationService.ruLocalized,
+      };
 }

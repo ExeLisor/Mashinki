@@ -24,7 +24,7 @@ class WeeklySelectionWidget extends GetView<WeeklyCarsController> {
   Widget _weeklyTitle() => Padding(
         padding: EdgeInsets.only(left: 25.w),
         child: Text(
-          "Недельная подборка",
+          'weekly-selection'.tr,
           style: TextStyle(
               color: primaryColor,
               fontSize: 16.fs,

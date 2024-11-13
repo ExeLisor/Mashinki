@@ -18,7 +18,7 @@ class OtherResourcesWiget extends StatelessWidget {
   }
 
   Widget _otherResourcesText() => Text(
-        'Подробнее о данной модели\nна других ресурсах:',
+        'other-resources'.tr,
         style: TextStyle(
           color: Colors.black,
           fontSize: 18.fs,
