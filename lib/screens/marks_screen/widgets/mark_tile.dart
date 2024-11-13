@@ -18,17 +18,17 @@ class MarkGridTile extends StatelessWidget {
         width: 75.h,
         height: 75.h,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: whiteColor,
           borderRadius: BorderRadius.circular(15),
           boxShadow: const [
             BoxShadow(
-              color: Color(0x0F000000),
+              color: boxShadowColor,
               blurRadius: 15,
               offset: Offset(-1, 10),
               spreadRadius: 2,
             ),
             BoxShadow(
-              color: Color(0x0F000000),
+              color: boxShadowColor,
               blurRadius: 15,
               offset: Offset(1, 1),
               spreadRadius: 2,
@@ -51,7 +51,7 @@ class MarkGridTile extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: Colors.black, fontSize: 14.fs, fontWeight: FontWeight.w400),
+            color: blackColor, fontSize: 14.fs, fontWeight: FontWeight.w400),
       );
 }
 
@@ -79,6 +79,6 @@ class LoadingMarkGridTile extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: Colors.black, fontSize: 12.fs, fontWeight: FontWeight.w600),
+            color: blackColor, fontSize: 12.fs, fontWeight: FontWeight.w600),
       );
 }

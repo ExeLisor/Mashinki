@@ -11,10 +11,10 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 12.w),
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: whiteColor,
         boxShadow: [
           BoxShadow(
-            color: Color(0x33000000),
+            color: boxShadowColor,
             blurRadius: 13,
             offset: Offset(0, -1),
             spreadRadius: 0,
@@ -92,7 +92,7 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
               badgeAnimation: const BadgeAnimation.rotation(),
               badgeContent: Text(
                 count.toString(),
-                style: TextStyle(color: Colors.white, fontSize: 12.fs),
+                style: TextStyle(color: whiteColor, fontSize: 12.fs),
               ),
               child: SvgPicture.asset(
                 _icons[index].getPath(index),

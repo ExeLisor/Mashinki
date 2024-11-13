@@ -10,7 +10,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: whiteColor,
       ),
       body: Center(
         child: Padding(
@@ -49,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                   padding: EdgeInsets.only(left: 220),
                   child: Text(
                     "Забыли пароль?",
-                    style: TextStyle(color: Color(0xff4038FF)),
+                    style: TextStyle(color: primaryColor),
                   ),
                 ),
               ),
@@ -69,12 +69,12 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           Text(
                             "У вас нету аккаунта? ",
-                            style: TextStyle(color: Color(0xff4038FF)),
+                            style: TextStyle(color: primaryColor),
                           ),
                           Text(
                             "Зарегистрироваться",
                             style: TextStyle(
-                              color: Color(0xff4038FF),
+                              color: primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

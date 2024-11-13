@@ -19,11 +19,11 @@ class TopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: whiteColor,
           boxShadow: showShadow
               ? [
                   const BoxShadow(
-                    color: Color(0x33000000),
+                    color: boxShadowColor,
                     blurRadius: 13,
                     offset: Offset(0, -1),
                     spreadRadius: 0,
@@ -58,7 +58,7 @@ class TopBar extends StatelessWidget {
         height: 32.h,
         width: 32.h,
         decoration:
-            const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+            const BoxDecoration(shape: BoxShape.circle, color: greyColor),
       );
 
   Widget _topBarIconBack() => GestureDetector(
@@ -92,7 +92,7 @@ class TopBar extends StatelessWidget {
               ? Text(
                   subtitle,
                   style: TextStyle(
-                    color: const Color(0xFF848484),
+                    color: greyColor,
                     fontSize: 14.fs,
                     fontWeight: FontWeight.w400,
                     height: 0,

@@ -23,7 +23,7 @@ class MainOptionsRangeWidget extends StatelessWidget {
         child: Text(
           title,
           style: const TextStyle(
-            color: Color(0xFF4038FF),
+            color: primaryColor,
             fontSize: 16,
             fontWeight: FontWeight.w400,
             height: 0.08,
@@ -42,7 +42,7 @@ class MainOptionsRangeWidget extends StatelessWidget {
                 side: BorderSide(
                   width: 1,
                   strokeAlign: BorderSide.strokeAlignCenter,
-                  color: Color(0xFF4038FF),
+                  color: primaryColor,
                 ),
               ),
             ),
@@ -74,7 +74,7 @@ class MainOptionsRangeWidget extends StatelessWidget {
             hintText: hintText,
             hintStyle: TextStyle(
               fontSize: 16.fs,
-              color: const Color(0xFF848484),
+              color: greyColor,
               fontWeight: FontWeight.w400,
               height: 0.08,
             ),
@@ -87,7 +87,7 @@ class MainOptionsRangeWidget extends StatelessWidget {
               borderSide: const BorderSide(color: Colors.transparent),
             ),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: whiteColor,
           ),
           textAlignVertical: TextAlignVertical.top,
         ),

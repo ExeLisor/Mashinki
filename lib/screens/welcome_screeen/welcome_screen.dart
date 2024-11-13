@@ -48,24 +48,20 @@ class WelcomeScreen extends StatelessWidget {
             Text(
               "Добро пожаловать в",
               style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 28,
-                  color: Colors.white),
+                  fontWeight: FontWeight.w600, fontSize: 28, color: whiteColor),
             ),
             Text(
               "AutoVerse",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 52,
-                color: Color(0xFF4038FF),
+                color: primaryColor,
               ),
             ),
             Text(
               "Выберите автомобиль\nподходящий именно вам",
               style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: Colors.white),
+                  fontWeight: FontWeight.w600, fontSize: 16, color: whiteColor),
             ),
           ],
         ),
@@ -99,7 +95,7 @@ class WelcomeScreen extends StatelessWidget {
           width: 342,
           height: 70,
           decoration: const BoxDecoration(
-              color: Colors.white,
+              color: whiteColor,
               borderRadius: BorderRadius.all(Radius.circular(15))),
           child: Center(
             child: Padding(
@@ -109,7 +105,7 @@ class WelcomeScreen extends StatelessWidget {
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 15,
-                  color: Color(0xFF4038FF),
+                  color: primaryColor,
                 ),
               ),
             ),

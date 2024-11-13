@@ -14,9 +14,7 @@ class RegistrationTitleWidget extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 23.fs,
-            color: const Color(0xff4038FF)),
+            fontWeight: FontWeight.bold, fontSize: 23.fs, color: primaryColor),
       ),
     );
   }

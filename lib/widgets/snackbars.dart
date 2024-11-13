@@ -8,7 +8,7 @@ GetSnackBar commonSnackbar(String text) => GetSnackBar(
         child: Text(
           text,
           style: TextStyle(
-            color: Colors.white,
+            color: whiteColor,
             fontSize: 15.fs,
             fontWeight: FontWeight.w600,
             height: 0,
@@ -17,13 +17,13 @@ GetSnackBar commonSnackbar(String text) => GetSnackBar(
       ),
       boxShadows: const [
         BoxShadow(
-          color: Color(0x0F000000),
+          color: boxShadowColor,
           blurRadius: 15,
           offset: Offset(-1, 10),
           spreadRadius: 2,
         ),
         BoxShadow(
-          color: Color(0x0F000000),
+          color: boxShadowColor,
           blurRadius: 15,
           offset: Offset(1, 1),
           spreadRadius: 2,

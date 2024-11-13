@@ -127,7 +127,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
         width: 8.h,
         height: 8.h,
         decoration: const ShapeDecoration(
-          color: Color(0xFF7974FF),
+          color: paleColor,
           shape: OvalBorder(),
         ),
       );
@@ -136,7 +136,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
         quarterTurns: isOpened ? 1 : 3,
         child: const Icon(
           Icons.arrow_back_ios_new_rounded,
-          color: Color(0xff848484),
+          color: greyColor,
         ),
       );
 
@@ -146,7 +146,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
           maxLines: 2,
           softWrap: true,
           style: TextStyle(
-            color: Colors.black,
+            color: blackColor,
             fontFamily: "Inter",
             fontSize: 18.fs,
             fontWeight: FontWeight.w600,
@@ -157,7 +157,7 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
   Widget _count() => Text(
         '$count ${"options-rp".tr}',
         style: TextStyle(
-          color: const Color(0xFF848484),
+          color: greyColor,
           fontSize: 14.fs,
           fontFamily: "Inter",
           fontWeight: FontWeight.w400,
@@ -176,7 +176,7 @@ class SpecsBlockWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _divider(),
+        const SettingsDivider(),
         SizedBox(
           height: 20.h,
         ),
@@ -213,7 +213,7 @@ class SpecsBlockWidget extends StatelessWidget {
   Widget _specsTitle(String title) => Text(
         title,
         style: TextStyle(
-          color: Colors.black,
+          color: blackColor,
           fontSize: 18.fs,
           fontWeight: FontWeight.w600,
         ),
@@ -247,7 +247,7 @@ class SpecsBlockWidget extends StatelessWidget {
                         textAlign: TextAlign.right,
                         softWrap: true, // разрешаем переносить текст
                         style: TextStyle(
-                          color: Colors.black,
+                          color: blackColor,
                           fontSize: 14.fs,
                           fontWeight: FontWeight.w400,
                         ),
@@ -264,7 +264,7 @@ class SpecsBlockWidget extends StatelessWidget {
           height: 24.h,
           width: 80.w,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(8)),
+              color: whiteColor, borderRadius: BorderRadius.circular(8)),
         ),
       );
 

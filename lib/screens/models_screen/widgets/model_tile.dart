@@ -64,7 +64,7 @@ class ModelTile extends StatelessWidget {
               margin: EdgeInsets.all(15.h),
               clipBehavior: Clip.antiAlias,
               decoration: ShapeDecoration(
-                color: Colors.black.withOpacity(0.3),
+                color: blackColor.withOpacity(0.3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(26),
                 ),
@@ -72,7 +72,7 @@ class ModelTile extends StatelessWidget {
               child: Text(
                 text,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: whiteColor,
                   fontSize: fontSize.fs,
                   fontWeight: fontWeight,
                 ),
@@ -102,7 +102,7 @@ class ModelTile extends StatelessWidget {
                 Text(
                   (configuration.bodyType ?? "").capitalizeFirstLetter(),
                   style: TextStyle(
-                    color: Colors.white,
+                    color: whiteColor,
                     fontSize: 14.fs,
                     fontWeight: FontWeight.w400,
                     height: 0,

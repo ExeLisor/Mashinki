@@ -11,7 +11,7 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
       {super.key,
       this.isActive = true,
       this.showFilters = true,
-      this.searchIconColor = Colors.black,
+      this.searchIconColor = blackColor,
       this.controller,
       this.filterAction});
 
@@ -61,13 +61,13 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
           borderRadius: BorderRadius.circular(41),
           boxShadow: const [
             BoxShadow(
-              color: Color(0x23000000),
+              color: boxShadowColor,
               blurRadius: 15,
               offset: Offset(-1, 10),
               spreadRadius: 2,
             ),
             BoxShadow(
-              color: Color(0x1C000000),
+              color: boxShadowColor,
               blurRadius: 15,
               offset: Offset(1, 1),
               spreadRadius: 2,
@@ -81,17 +81,17 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
         height: 48.h,
         width: showFilters ? 298.w : 362.w,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: whiteColor,
           borderRadius: BorderRadius.circular(41),
           boxShadow: const [
             BoxShadow(
-              color: Color(0x0F000000),
+              color: boxShadowColor,
               blurRadius: 15,
               offset: Offset(-1, 10),
               spreadRadius: 2,
             ),
             BoxShadow(
-              color: Color(0x0F000000),
+              color: boxShadowColor,
               blurRadius: 15,
               offset: Offset(1, 1),
               spreadRadius: 2,
@@ -110,7 +110,7 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
   InputDecoration decoration() => InputDecoration(
         // suffixIcon: showFilters ? _filtersIcon() : null,
         filled: true,
-        fillColor: Colors.white,
+        fillColor: whiteColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(40),
           borderSide: BorderSide.none,
@@ -129,7 +129,7 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
             fontWeight: FontWeight.w400,
             fontFamily: "Inter",
             height: 0,
-            color: const Color(0xffA7A7A7)),
+            color: unactiveColor),
         prefixIcon: SvgPicture.asset(
           'assets/svg/zoom.svg',
           height: 22.h,

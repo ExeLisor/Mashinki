@@ -40,7 +40,7 @@ class MainOptionsChips extends StatelessWidget {
         child: Text(
           mainOption.title,
           style: const TextStyle(
-            color: Color(0xFF4038FF),
+            color: primaryColor,
             fontSize: 16,
             fontWeight: FontWeight.w400,
             height: 0.08,
@@ -79,8 +79,8 @@ class MainOptionsChips extends StatelessWidget {
                   style: TextStyle(
                     color: FilterController.to.checkValue(
                             valueText, "mainOptions", "chips", mainOption.field)
-                        ? Colors.white
-                        : Colors.black,
+                        ? whiteColor
+                        : blackColor,
                     fontSize: 16.fs,
                     fontWeight: FontWeight.w400,
                     height: 0.08,
@@ -105,7 +105,7 @@ class MainOptionsChips extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
-                  color: const Color(0xFF4038FF),
+                  color: primaryColor,
                 ),
                 borderRadius: BorderRadius.circular(11),
                 color: FilterController.to.checkValue(
@@ -121,8 +121,8 @@ class MainOptionsChips extends StatelessWidget {
                   style: TextStyle(
                     color: FilterController.to.checkValue(
                             valueText, "mainOptions", "chips", mainOption.field)
-                        ? Colors.white
-                        : Colors.black,
+                        ? whiteColor
+                        : blackColor,
                     fontSize: 16.fs,
                     fontWeight: FontWeight.w400,
                     height: 0.08,

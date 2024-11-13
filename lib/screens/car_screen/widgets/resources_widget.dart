@@ -20,7 +20,7 @@ class OtherResourcesWiget extends StatelessWidget {
   Widget _otherResourcesText() => Text(
         'other-resources'.tr,
         style: TextStyle(
-          color: Colors.black,
+          color: blackColor,
           fontSize: 18.fs,
           fontWeight: FontWeight.w600,
         ),
@@ -29,7 +29,7 @@ class OtherResourcesWiget extends StatelessWidget {
   Widget _otherResourcesRow() => Container(
         width: 362.w,
         decoration: BoxDecoration(
-          color: const Color(0xffEEEEEE),
+          color: boneColor,
           borderRadius: BorderRadius.circular(43.h),
         ),
         child: Padding(

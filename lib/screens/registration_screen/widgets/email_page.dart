@@ -136,7 +136,7 @@ class RegistrationEmailPage extends StatelessWidget {
             autoFocus: true,
             showCursor: false,
             textStyle: TextStyle(
-                color: const Color(0xff4038FF),
+                color: primaryColor,
                 fontSize: 27.h,
                 fontWeight: FontWeight.normal),
             pinTheme: PinTheme(
@@ -145,10 +145,10 @@ class RegistrationEmailPage extends StatelessWidget {
                 fieldHeight: 55.h,
                 fieldWidth: 55.h,
                 borderWidth: 1.h,
-                activeFillColor: Colors.white,
-                activeColor: const Color(0xff4038FF),
-                selectedColor: const Color(0xff4038FF),
-                inactiveColor: const Color(0xff4038FF)),
+                activeFillColor: whiteColor,
+                activeColor: primaryColor,
+                selectedColor: primaryColor,
+                inactiveColor: primaryColor),
             animationDuration: const Duration(milliseconds: 300),
           ),
         ),

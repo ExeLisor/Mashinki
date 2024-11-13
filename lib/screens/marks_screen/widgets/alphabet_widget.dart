@@ -19,7 +19,7 @@ class AlphabetWidget extends StatelessWidget {
 
   Widget _divider() => Expanded(
         child: Divider(
-          color: const Color(0xff7974FF).withOpacity(0.5),
+          color: paleColor.withOpacity(0.5),
           thickness: 1,
         ),
       );
@@ -72,7 +72,7 @@ class AlphabetWidget extends StatelessWidget {
 class AlphabetRow extends StatelessWidget {
   const AlphabetRow({super.key});
 
-  final Color paleBlueColor = const Color(0xff7974FF);
+  final Color paleBlueColor = paleColor;
 
   @override
   Widget build(BuildContext context) => _alphabet();
@@ -106,7 +106,7 @@ class AlphabetRow extends StatelessWidget {
               symbol,
               style: TextStyle(
                 color: AlphabetController.to.highlightedIndex == index
-                    ? Colors.white
+                    ? whiteColor
                     : primaryColor,
                 fontSize: 16.fs,
                 fontWeight: FontWeight.w500,

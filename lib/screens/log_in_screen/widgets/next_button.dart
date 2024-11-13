@@ -1,6 +1,5 @@
 import 'package:autoverse/exports.dart';
 
-
 class NextButton extends StatelessWidget {
   final Function() onTap;
   final ButtonController controller =
@@ -10,17 +9,18 @@ class NextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Container(
-          height: 55.h,
-          width: 342.w,
-          decoration: BoxDecoration(
-              color: controller.isEnabled.value == true
-                  ? const Color(0xFF4038FF)
-                  : const Color(0xff7974FF),
-              borderRadius: BorderRadius.circular(20)),
-          child: const Center(
-              child: Text("Далее",
-                  style: TextStyle(color: Colors.white, fontSize: 14))),
-        ));
+    return Obx(
+      () => Container(
+        height: 55.h,
+        width: 342.w,
+        decoration: BoxDecoration(
+            color:
+                controller.isEnabled.value == true ? primaryColor : paleColor,
+            borderRadius: BorderRadius.circular(20)),
+        child: const Center(
+            child: Text("Далее",
+                style: TextStyle(color: whiteColor, fontSize: 14))),
+      ),
+    );
   }
 }

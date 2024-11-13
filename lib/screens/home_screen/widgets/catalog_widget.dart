@@ -28,7 +28,7 @@ class CarsCatalogListWidget extends GetView<CarCatalogController> {
         width: 172.w,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
+          color: whiteColor,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.15),
@@ -55,7 +55,7 @@ class CarsCatalogListWidget extends GetView<CarCatalogController> {
         width: 172.w,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
+          color: whiteColor,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.15),
@@ -121,7 +121,7 @@ class CatalogTile extends StatelessWidget {
               child: Container(
                 height: 225.h,
                 width: 361.w,
-                color: Colors.black,
+                color: blackColor,
                 child: ImageContainer(
                   borderRaduis: 0,
                   imageData: ImageData.photo(id: car.configuration.id ?? ""),
@@ -165,7 +165,7 @@ class CatalogTile extends StatelessWidget {
           height: 32.h,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
-            color: Colors.black.withOpacity(0.3),
+            color: blackColor.withOpacity(0.3),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(23),
             ),
@@ -193,9 +193,7 @@ class CatalogTile extends StatelessWidget {
           softWrap: true,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-              fontSize: 20.fs,
-              fontWeight: FontWeight.w600,
-              color: Colors.black),
+              fontSize: 20.fs, fontWeight: FontWeight.w600, color: blackColor),
         ),
       );
 
@@ -205,19 +203,19 @@ class CatalogTile extends StatelessWidget {
       );
 
   ShapeDecoration _decoration() => ShapeDecoration(
-        color: Colors.white,
+        color: whiteColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         shadows: const [
           BoxShadow(
-            color: Color(0x07000000),
+            color: boxShadowColor,
             blurRadius: 15,
             offset: Offset(-1, 10),
             spreadRadius: 2,
           ),
           BoxShadow(
-            color: Color(0x07000000),
+            color: boxShadowColor,
             blurRadius: 15,
             offset: Offset(1, 1),
             spreadRadius: 2,

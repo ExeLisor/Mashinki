@@ -17,7 +17,7 @@ class MainOptionSelector extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(
-          color: Colors.white,
+          color: whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -43,7 +43,7 @@ class MainOptionSelector extends StatelessWidget {
         child: Text(
           mainOption.title,
           style: TextStyle(
-            color: const Color(0xFF848484),
+            color: greyColor,
             fontSize: 16.fs,
             fontFamily: "Inter",
             fontWeight: FontWeight.w400,
@@ -105,7 +105,7 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
         width: Get.width,
         padding: EdgeInsets.only(top: 28.h),
         decoration: const BoxDecoration(
-            color: Colors.white,
+            color: whiteColor,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30), topRight: Radius.circular(30))),
         child: Column(
@@ -186,7 +186,7 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
               width: 49,
               height: 4,
               decoration: ShapeDecoration(
-                color: const Color(0xFFDEDEDE),
+                color: unactiveColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
@@ -199,7 +199,7 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
   Widget _title() => Text(
         widget.mainOption.title,
         style: TextStyle(
-          color: Colors.black,
+          color: blackColor,
           fontSize: 20.fs,
           fontWeight: FontWeight.w700,
         ),

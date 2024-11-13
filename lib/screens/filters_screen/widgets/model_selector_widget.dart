@@ -20,7 +20,7 @@ class ModelSelectorWidget extends StatelessWidget {
         margin: EdgeInsets.fromLTRB(15.w, 0.h, 15.w, 0.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: const Color(0xffF5F4FF),
+          color: unactiveColor,
         ),
         child: const Column(
           children: [MarkSelectField(), ModelSelectorField()],
@@ -46,7 +46,7 @@ class _MarkSelectFieldState extends State<MarkSelectField> {
           padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
-            color: Colors.white,
+            color: whiteColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
@@ -60,7 +60,7 @@ class _MarkSelectFieldState extends State<MarkSelectField> {
                 child: Text(
                   'Марка',
                   style: TextStyle(
-                    color: const Color(0xFF848484),
+                    color: greyColor,
                     fontSize: 16.fs,
                     fontWeight: FontWeight.w400,
                     height: 0.08,
@@ -91,7 +91,7 @@ class _ModelSelectorFieldState extends State<ModelSelectorField> {
           padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
-            color: Colors.white,
+            color: whiteColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
@@ -105,7 +105,7 @@ class _ModelSelectorFieldState extends State<ModelSelectorField> {
                 child: Text(
                   'Модель',
                   style: TextStyle(
-                    color: const Color(0xFF848484),
+                    color: greyColor,
                     fontSize: 16.fs,
                     fontWeight: FontWeight.w400,
                     height: 0.08,

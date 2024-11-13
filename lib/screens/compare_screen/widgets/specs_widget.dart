@@ -70,7 +70,7 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
               side: BorderSide(
                 width: 0.5,
                 strokeAlign: BorderSide.strokeAlignCenter,
-                color: Color(0xFF7974FF),
+                color: paleColor,
               ),
             ),
           ),
@@ -127,14 +127,14 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
         quarterTurns: isOpened ? 1 : 3,
         child: const Icon(
           Icons.arrow_back_ios_new_rounded,
-          color: Color(0xff848484),
+          color: greyColor,
         ),
       );
 
   Widget _specsName(String specsName) => Text(
         specsName,
         style: TextStyle(
-          color: const Color(0xFF7974FF),
+          color: paleColor,
           fontSize: 12.fs,
           fontWeight: FontWeight.w400,
           fontFamily: 'Inter',
@@ -146,7 +146,7 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
         child: Text(
           value.isEmpty ? "-" : value,
           style: TextStyle(
-            color: isHighlighted ? Colors.green : Colors.black,
+            color: isHighlighted ? Colors.green : blackColor,
             fontSize: 14.fs,
             fontWeight: FontWeight.w500,
             fontFamily: 'Inter',
@@ -157,7 +157,7 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
   Widget _specsTitle(String title) => Text(
         title,
         style: TextStyle(
-          color: Colors.black,
+          color: blackColor,
           fontSize: 18.fs,
           fontWeight: FontWeight.w600,
           fontFamily: 'Inter',

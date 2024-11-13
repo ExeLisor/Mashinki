@@ -40,14 +40,17 @@ class ScreenSize {
 
 extension DobuleAdaptiveDesign on double {
   double get h {
+    if (ScreenSize().height == 0) return this;
     return this * ScreenSize().height / uiHeight;
   }
 
   double get w {
+    if (ScreenSize().width == 0) return this;
     return this * ScreenSize().width / uiWidth;
   }
 
   double get fs {
+    if (ScreenSize().width == 0 || ScreenSize().height == 0) return this;
     if (ScreenSize().width < ScreenSize().height) {
       return this * ScreenSize().height / uiHeight;
     }
@@ -57,14 +60,20 @@ extension DobuleAdaptiveDesign on double {
 
 extension IntAdaptiveDesign on int {
   double get h {
+    if (ScreenSize().height == 0) return this.toDouble();
     return this * ScreenSize().height / uiHeight;
   }
 
   double get w {
+    if (ScreenSize().width == 0) return this.toDouble();
     return this * ScreenSize().width / uiWidth;
   }
 
   double get fs {
+    if (ScreenSize().width == 0 || ScreenSize().height == 0) {
+      return this.toDouble();
+    }
+
     if (ScreenSize().width < ScreenSize().height) {
       return this * ScreenSize().height / uiHeight;
     }

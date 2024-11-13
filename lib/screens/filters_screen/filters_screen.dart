@@ -54,13 +54,13 @@ class FiltersScreen extends StatelessWidget {
               ),
               shadows: const [
                 BoxShadow(
-                  color: Color(0x0F000000),
+                  color: boxShadowColor,
                   blurRadius: 15,
                   offset: Offset(-1, 10),
                   spreadRadius: 2,
                 ),
                 BoxShadow(
-                  color: Color(0x0F000000),
+                  color: boxShadowColor,
                   blurRadius: 15,
                   offset: Offset(1, 1),
                   spreadRadius: 2,
@@ -75,7 +75,7 @@ class FiltersScreen extends StatelessWidget {
                 Text(
                   'Применить',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: whiteColor,
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
                     height: 0,

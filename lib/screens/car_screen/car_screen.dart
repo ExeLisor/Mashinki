@@ -10,7 +10,7 @@ class CarScreen extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: const Color(0xffEEEEEE),
+      backgroundColor: greyBackground,
       appBar: _appBar(),
       body: Obx(() => CarController.to.state.value == Status.success
           ? _carBody()
@@ -99,7 +99,7 @@ class CarScreen extends StatelessWidget {
           height: 46.h,
           width: Get.width / 2,
           decoration: BoxDecoration(
-              color: isSelected ? Colors.white : const Color(0xffE2E2E2),
+              color: isSelected ? whiteColor : greySurface,
               borderRadius: BorderRadius.vertical(top: Radius.circular(24.h))),
           child: Center(
             child: Text(
@@ -108,7 +108,7 @@ class CarScreen extends StatelessWidget {
                   fontSize: 18.fs,
                   fontFamily: "Inter",
                   fontWeight: FontWeight.bold,
-                  color: isSelected ? primaryColor : const Color(0xff7974FF)),
+                  color: isSelected ? primaryColor : paleColor),
             ),
           ),
         ),
@@ -118,7 +118,7 @@ class CarScreen extends StatelessWidget {
         width: Get.width,
         margin: EdgeInsets.only(bottom: 10.h),
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: whiteColor,
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(24.h))),
         child: Container(
           margin: EdgeInsets.only(top: 22.h, bottom: 30.h),
@@ -128,7 +128,7 @@ class CarScreen extends StatelessWidget {
             children: [
               _carTitle(),
               _carSubTitle(),
-              SizedBox(height: 105.h),
+              SizedBox(height: 20.h),
               _carDescription()
             ],
           ),
@@ -143,7 +143,7 @@ class CarScreen extends StatelessWidget {
             Text(
               "description".tr,
               style: TextStyle(
-                color: const Color(0xFF4038FF),
+                color: primaryColor,
                 fontSize: 18.fs,
                 fontFamily: "Inter",
                 fontWeight: FontWeight.w600,
@@ -153,7 +153,7 @@ class CarScreen extends StatelessWidget {
             Text(
               CarController.to.car.description,
               style: TextStyle(
-                color: Colors.black,
+                color: blackColor,
                 fontSize: 14.fs,
                 fontFamily: "Inter",
                 fontWeight: FontWeight.w400,
@@ -187,7 +187,7 @@ class CarScreen extends StatelessWidget {
             height: 32.h,
             margin: EdgeInsets.only(right: 10.w),
             decoration: BoxDecoration(
-              color: const Color(0xffF3F3F3),
+              color: unactiveColor,
               borderRadius: BorderRadius.circular(20.h),
             ),
             child: Container(
@@ -198,7 +198,7 @@ class CarScreen extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 13.fs,
                       fontWeight: FontWeight.w400,
-                      color: Colors.black),
+                      color: blackColor),
                 ),
               ),
             ),
@@ -242,7 +242,7 @@ class CarScreen extends StatelessWidget {
       style: TextStyle(
         fontSize: 20.fs,
         fontWeight: FontWeight.bold,
-        color: Colors.black,
+        color: blackColor,
         fontFamily: "Inter",
       ),
     );
@@ -317,7 +317,7 @@ class CarScreen extends StatelessWidget {
         onTap: function,
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.3), shape: BoxShape.circle),
+              color: blackColor.withOpacity(0.3), shape: BoxShape.circle),
           height: 33.h,
           width: 33.h,
           child: Center(
@@ -345,7 +345,7 @@ class IconWidget extends StatelessWidget {
       onTap: function,
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.3), shape: BoxShape.circle),
+            color: blackColor.withOpacity(0.3), shape: BoxShape.circle),
         height: size.h,
         width: size.h,
         child: Center(

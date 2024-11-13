@@ -101,7 +101,7 @@ class WeeklyCarTile extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 11.w),
             decoration: ShapeDecoration(
-              color: Colors.black.withOpacity(0.4),
+              color: blackColor.withOpacity(0.4),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18),
               ),
@@ -109,7 +109,7 @@ class WeeklyCarTile extends StatelessWidget {
             child: Text(
               "${car.mark.name} ${car.model.name}",
               style: TextStyle(
-                  color: Colors.white,
+                  color: whiteColor,
                   fontSize: 18.fs,
                   fontFamily: "Inter",
                   fontWeight: FontWeight.bold),

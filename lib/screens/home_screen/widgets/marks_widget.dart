@@ -67,17 +67,17 @@ class MarksWidget extends GetView<MarksController> {
         width: containerSize.h,
         height: containerSize.h,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: whiteColor,
           borderRadius: BorderRadius.circular(15),
           boxShadow: const [
             BoxShadow(
-              color: Color(0x0F000000),
+              color: boxShadowColor,
               blurRadius: 15,
               offset: Offset(-1, 10),
               spreadRadius: 2,
             ),
             BoxShadow(
-              color: Color(0x0F000000),
+              color: boxShadowColor,
               blurRadius: 15,
               offset: Offset(1, 1),
               spreadRadius: 2,
@@ -142,7 +142,7 @@ class MarkLoadingWidget extends StatelessWidget {
         width: containerSize.h,
         height: containerSize.h,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: whiteColor,
           borderRadius: BorderRadius.circular(15),
         ),
       ),

@@ -48,7 +48,7 @@ class RegistrationScreen extends StatelessWidget {
           onTap: () => controller.goToPreviousPage(),
           child: const Icon(
             Icons.arrow_back,
-            color: Color(0xff4038FF),
+            color: primaryColor,
           ),
         ),
       );

@@ -9,7 +9,7 @@ class RegistrationPageIconWidget extends StatelessWidget {
       assetPath,
       height: 100.h,
       width: 100.h,
-      color: const Color(0xff4038FF),
+      color: primaryColor,
     );
   }
 }

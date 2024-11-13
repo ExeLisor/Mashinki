@@ -56,7 +56,7 @@ class MainOptionsWidget extends StatelessWidget {
             Text(
               'Основные параметры',
               style: TextStyle(
-                color: const Color(0xFF4038FF),
+                color: primaryColor,
                 fontSize: 14.fs,
                 fontWeight: FontWeight.w600,
                 height: 0.10,
@@ -71,7 +71,7 @@ class MainOptionsWidget extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 15.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: const Color(0xffF5F4FF),
+        color: unactiveColor,
       ),
       child: child);
 }

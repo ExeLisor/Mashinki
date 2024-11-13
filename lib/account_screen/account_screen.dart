@@ -72,7 +72,7 @@ class AccountScreen extends GetView<SettingsController> {
         children: [
           InkWell(
             onTap: onTap,
-            splashColor: const Color(0xff7974FF),
+            splashColor: paleColor,
             child: Container(
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.transparent)),
@@ -112,7 +112,7 @@ class SettingsDivider extends StatelessWidget {
               side: BorderSide(
                 width: 0.5.w,
                 strokeAlign: BorderSide.strokeAlignCenter,
-                color: const Color(0xFF7974FF),
+                color: paleColor,
               ),
             ),
           ),
@@ -179,7 +179,7 @@ class LanguageSelector extends GetView<LanguageController> {
                 Text(
                   value.tr,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: blackColor,
                     fontSize: 16.fs,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
@@ -261,7 +261,7 @@ class AccountSettingsSelector<T extends SettingsMixin> extends StatelessWidget {
                 Text(
                   value.tr,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: blackColor,
                     fontSize: 16.fs,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,

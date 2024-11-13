@@ -10,7 +10,7 @@ class OptionsWidget extends StatelessWidget {
   Widget build(BuildContext context) => _options();
 
   Widget _options() => Container(
-        color: Colors.white,
+        color: whiteColor,
         width: Get.width,
         padding:
             EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h, right: 25.h),
@@ -56,7 +56,7 @@ class OptionsWidget extends StatelessWidget {
       child: Text(
         "${CarController.to.car.selectedModification.groupName ?? ""} ${volume == 0 ? "" : volume} $transmission ${power == 0 ? "" : power} $privod",
         style: TextStyle(
-          color: Colors.black,
+          color: blackColor,
           fontSize: 18.fs,
           fontWeight: FontWeight.w600,
         ),

@@ -20,7 +20,7 @@ class FloatBar extends StatelessWidget {
         () => controller.currentOffset.value > (offsetValue ?? 350.h)
             ? Align(
                 alignment: Alignment.topCenter,
-                child: Container(color: Colors.white, child: child))
+                child: Container(color: whiteColor, child: child))
             : Container(),
       );
 }
@@ -114,7 +114,7 @@ class CarsFloatBar extends StatelessWidget {
     return SafeArea(
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: whiteColor,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.2),

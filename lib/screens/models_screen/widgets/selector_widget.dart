@@ -91,7 +91,7 @@ class SelectorWidget extends StatelessWidget {
               child: Text(
                 "Очистить",
                 style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
               ),
             ),
           ),
@@ -122,8 +122,8 @@ class SelectorWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: ModelsSelectorController.to
                                   .isModelSelected(model.name ?? "")
-                              ? Colors.white
-                              : Colors.black),
+                              ? whiteColor
+                              : blackColor),
                     ),
                   ),
                 ),

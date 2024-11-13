@@ -34,7 +34,7 @@ class FavoriteTile extends StatelessWidget {
             child: Container(
               height: 225.h,
               width: 361.w,
-              color: Colors.black,
+              color: blackColor,
               child: CachedNetworkImage(
                   imageUrl: "$baseUrl/image/${car.configuration.id}",
                   fit: BoxFit.cover),
@@ -95,7 +95,7 @@ class FavoriteTile extends StatelessWidget {
           height: 45.h,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
-            color: Colors.black.withOpacity(0.3),
+            color: blackColor.withOpacity(0.3),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(23),
             ),
@@ -103,7 +103,7 @@ class FavoriteTile extends StatelessWidget {
           child: Center(
             child: Icon(
               icon,
-              color: Colors.white,
+              color: whiteColor,
             ),
           ),
         ),
@@ -141,7 +141,7 @@ class FavoriteTile extends StatelessWidget {
     return Text(
       "${modification.groupName ?? ""} ${modification.title}".trim(),
       style: TextStyle(
-          color: Colors.black, fontSize: 18.fs, fontWeight: FontWeight.bold),
+          color: blackColor, fontSize: 18.fs, fontWeight: FontWeight.bold),
     );
   }
 
@@ -154,19 +154,19 @@ class FavoriteTile extends StatelessWidget {
   }
 
   ShapeDecoration decoration() => ShapeDecoration(
-        color: Colors.white,
+        color: whiteColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         shadows: const [
           BoxShadow(
-            color: Color(0x07000000),
+            color: boxShadowColor,
             blurRadius: 15,
             offset: Offset(-1, 10),
             spreadRadius: 2,
           ),
           BoxShadow(
-            color: Color(0x07000000),
+            color: boxShadowColor,
             blurRadius: 15,
             offset: Offset(1, 1),
             spreadRadius: 2,

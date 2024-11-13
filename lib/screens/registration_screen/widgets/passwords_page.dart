@@ -93,15 +93,15 @@ class RegistrationPasswordsPage extends StatelessWidget {
           Checkbox(
             value: true,
             onChanged: (value) {},
-            activeColor: const Color(0xFF4038FF),
-            side: const BorderSide(color: Color(0xFF4038FF)),
+            activeColor: primaryColor,
+            side: const BorderSide(color: primaryColor),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           ),
           Text(
             "Сохранить пароль",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13.fs, color: const Color(0xff4038FF)),
+            style: TextStyle(fontSize: 13.fs, color: primaryColor),
           ),
         ],
       );

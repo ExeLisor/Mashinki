@@ -15,7 +15,7 @@ class RegistrationDescriptionWidget extends StatelessWidget {
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 13.fs, color: const Color(0xff4038FF)),
+        style: TextStyle(fontSize: 13.fs, color: primaryColor),
       ),
     );
   }

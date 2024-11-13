@@ -1,27 +1,27 @@
 import 'package:autoverse/exports.dart';
 
 ThemeData themeData(BuildContext context) => ThemeData(
-      scaffoldBackgroundColor: Colors.white,
-      bottomAppBarTheme: const BottomAppBarTheme(color: Colors.white),
+      scaffoldBackgroundColor: whiteColor,
+      bottomAppBarTheme: const BottomAppBarTheme(color: whiteColor),
       appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white, surfaceTintColor: Colors.transparent),
+          backgroundColor: whiteColor, surfaceTintColor: Colors.transparent),
       textTheme: GoogleFonts.interTextTheme(
         Theme.of(context).textTheme,
       ),
       inputDecorationTheme: const InputDecorationTheme(
-        labelStyle: TextStyle(color: Color(0xFF4038FF)),
-        prefixIconColor: Color(0xFF4038FF),
-        iconColor: Color(0xFF4038FF),
-        hintStyle: TextStyle(color: Color(0xff7974FF)),
+        labelStyle: TextStyle(color: primaryColor),
+        prefixIconColor: primaryColor,
+        iconColor: primaryColor,
+        hintStyle: TextStyle(color: paleColor),
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF4038FF)),
+          borderSide: BorderSide(color: primaryColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF4038FF)),
+          borderSide: BorderSide(color: primaryColor),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xFF4038FF),
+            color: primaryColor,
           ),
         ),
       ),

@@ -77,17 +77,17 @@ class ImageContainer extends StatelessWidget {
           margin: margin,
           padding: padding,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: whiteColor,
             borderRadius: BorderRadius.circular(borderRaduis),
             boxShadow: const [
               BoxShadow(
-                color: Color(0x0F000000),
+                color: boxShadowColor,
                 blurRadius: 15,
                 offset: Offset(-1, 10),
                 spreadRadius: 2,
               ),
               BoxShadow(
-                color: Color(0x0F000000),
+                color: boxShadowColor,
                 blurRadius: 15,
                 offset: Offset(1, 1),
                 spreadRadius: 2,
@@ -103,7 +103,7 @@ class ImageContainer extends StatelessWidget {
       ShimmerWidget(
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: whiteColor,
               borderRadius: BorderRadius.circular(borderRaduis)),
           height: height.h,
           width: width.w,

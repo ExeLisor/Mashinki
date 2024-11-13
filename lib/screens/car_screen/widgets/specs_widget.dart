@@ -6,7 +6,7 @@ class CharacteristicsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: whiteColor,
       width: Get.width,
       padding: EdgeInsets.only(left: 25.w, top: 20.h, bottom: 25.h),
       child: Obx(() {
@@ -199,7 +199,7 @@ class ModificationTitleWidget extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          color: Colors.black,
+          color: blackColor,
           fontSize: 18.fs,
           fontWeight: FontWeight.w600,
         ),
@@ -213,7 +213,7 @@ class ModificationTitleWidget extends StatelessWidget {
           height: 20.h,
           width: 180.w,
           decoration: const BoxDecoration(
-              color: Colors.white,
+              color: whiteColor,
               borderRadius: BorderRadius.all(Radius.circular(8))),
         ),
       );
@@ -238,7 +238,7 @@ class CarDemensions extends StatelessWidget {
           height: 120.h,
           width: 258.w,
           decoration: const BoxDecoration(
-              color: Colors.white,
+              color: whiteColor,
               borderRadius: BorderRadius.all(Radius.circular(8))),
         ),
       );
@@ -365,7 +365,7 @@ class DetailsTile extends StatelessWidget {
       height: 67.h,
       width: isSmall ? 80.w : 122.w,
       decoration: BoxDecoration(
-        color: const Color(0xffF3F3F3),
+        color: boneColor,
         borderRadius: BorderRadius.circular(20.h),
       ),
       child: child);
@@ -394,7 +394,7 @@ class DetailsTile extends StatelessWidget {
               value,
               textScaler: const TextScaler.linear(0.85),
               style: TextStyle(
-                color: Colors.black,
+                color: blackColor,
                 fontSize: 14.fs,
                 fontWeight: FontWeight.w400,
               ),

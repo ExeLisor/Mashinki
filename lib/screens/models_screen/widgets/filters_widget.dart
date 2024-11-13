@@ -9,7 +9,7 @@ class ModelsFiltersWidget extends StatelessWidget {
       height: Get.size.height * 0.9, // Покрывает почти весь экран
 
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(24.h)),
+          color: whiteColor, borderRadius: BorderRadius.circular(24.h)),
       child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 25.h, vertical: 25.h),
         physics: const ClampingScrollPhysics(),
@@ -39,8 +39,8 @@ class ModelsFiltersWidget extends StatelessWidget {
               child: const Center(
                 child: Text(
                   "Применить",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
                 ),
               ),
             ),
@@ -67,8 +67,8 @@ class ModelsFiltersWidget extends StatelessWidget {
   //                   style: TextStyle(
   //                       fontWeight: FontWeight.bold,
   //                       color: ModelsFilterController.to.restyling
-  //                           ? Colors.white
-  //                           : Colors.black),
+  //                           ? whiteColor
+  //                           : blackColor),
   //                 ),
   //               ),
   //             ),
@@ -190,7 +190,7 @@ class BodyTypesSelector extends StatelessWidget {
               child: Text(
                 "Очистить",
                 style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
               ),
             ),
           ),
@@ -222,8 +222,8 @@ class BodyTypesSelector extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: ModelsBodySelectorController.to
                                   .isBodyTypeSelected(bodyType)
-                              ? Colors.white
-                              : Colors.black),
+                              ? whiteColor
+                              : blackColor),
                     ),
                   ),
                 ),

@@ -110,7 +110,7 @@ class MarksScreen extends StatelessWidget {
                   ],
                 ),
                 const Divider(
-                  color: Color(0xff7974FF),
+                  color: paleColor,
                 )
               ],
             ),
@@ -133,7 +133,7 @@ class MarksScreen extends StatelessWidget {
             style: TextStyle(
                 fontSize: 16.fs,
                 fontWeight: FontWeight.normal,
-                color: Colors.black),
+                color: blackColor),
           ),
         ],
       );

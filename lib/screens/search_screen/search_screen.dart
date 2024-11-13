@@ -15,9 +15,9 @@ class _SearchScreenState extends State<SearchScreen> {
         children: [
           Container(
             height: 119.h,
-            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+            decoration: BoxDecoration(color: whiteColor, boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: blackColor.withOpacity(0.05),
                 spreadRadius: 1,
                 blurRadius: 2,
                 offset: const Offset(0, 2),

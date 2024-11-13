@@ -118,7 +118,7 @@ class ModificationGroupTile extends StatelessWidget {
   Widget _text() => Text(
         groupName,
         style: TextStyle(
-          color: Colors.white,
+          color: whiteColor,
           fontSize: 18.fs,
           fontWeight: FontWeight.w600,
         ),
@@ -130,7 +130,7 @@ class ModificationGroupTile extends StatelessWidget {
               groupName == ModsGroupContoller.to.openedGroupName ? 1 : 3,
           child: const Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: Colors.white,
+            color: whiteColor,
           ),
         ),
       );
@@ -148,7 +148,7 @@ class ModificationGroupTile extends StatelessWidget {
       constraints: BoxConstraints(minWidth: 215.w),
       width: ModsGroupContoller.to.headerSizes[widgetIndex].width + 25.w,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: whiteColor,
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(27.h),
           bottomLeft: Radius.circular(27.h),
@@ -156,7 +156,7 @@ class ModificationGroupTile extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: blackColor.withOpacity(0.1),
             spreadRadius: 3,
             blurRadius: 5,
             offset: const Offset(0, 3), // changes position of shadow
@@ -209,7 +209,7 @@ class ModificationGroupTile extends StatelessWidget {
                 bottomLeft: Radius.circular(isLast ? 26.h : 0),
                 bottomRight: Radius.circular(isLast ? 26.h : 0),
               ),
-              color: isSelected ? const Color(0xff7974FF) : Colors.transparent,
+              color: isSelected ? paleColor : Colors.transparent,
             ),
             padding: EdgeInsets.fromLTRB(20.w, 14.h, 20.w, 0),
             child: Column(
@@ -221,7 +221,7 @@ class ModificationGroupTile extends StatelessWidget {
                       //volume-litres transmission
                       "${title[0]} ${title[1]}",
                       style: TextStyle(
-                        color: isSelected ? Colors.white : primaryColor,
+                        color: isSelected ? whiteColor : primaryColor,
                         fontSize: 18.fs,
                         fontWeight: FontWeight.w500,
                       ),
@@ -233,8 +233,7 @@ class ModificationGroupTile extends StatelessWidget {
                       // horse power
                       title[2],
                       style: TextStyle(
-                        color:
-                            isSelected ? Colors.white : const Color(0xFF7974FF),
+                        color: isSelected ? whiteColor : paleColor,
                         fontSize: 18.fs,
                         fontWeight: FontWeight.w400,
                       ),
@@ -260,7 +259,7 @@ class ModificationGroupTile extends StatelessWidget {
             side: BorderSide(
               width: 0.1,
               strokeAlign: BorderSide.strokeAlignCenter,
-              color: Color(0xFF7974FF),
+              color: paleColor,
             ),
           ),
         ),

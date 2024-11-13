@@ -31,7 +31,7 @@ class CompareScreen extends StatelessWidget {
             Text(
               'hide-simmilar-specifications'.tr,
               style: TextStyle(
-                color: Colors.black,
+                color: blackColor,
                 fontSize: 12.fs,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w500,
@@ -55,7 +55,7 @@ class CompareScreen extends StatelessWidget {
           // Text(
           //   declineComparison(CompareController.to.comparedCars.length),
           //   style: TextStyle(
-          //     color: const Color(0xFF848484),
+          //     color: const greyColor,
           //     fontSize: 14.fs,
           //     fontFamily: 'Inter',
           //     fontWeight: FontWeight.w400,
@@ -188,7 +188,7 @@ class CompareFloatingBar extends StatelessWidget {
       //max size container + padding between + padding left
       width: cars.length == 1 ? Get.width : (177.w + 8.w + 49.w) * cars.length,
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: whiteColor,
         border: Border(bottom: BorderSide(color: paleColor)),
       ),
       height: 43.h,
@@ -216,7 +216,7 @@ class CompareFloatingBar extends StatelessWidget {
         child: Text(
           title,
           style: const TextStyle(
-            color: Colors.black,
+            color: blackColor,
             fontSize: 16,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w500,

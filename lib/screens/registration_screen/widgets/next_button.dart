@@ -14,7 +14,7 @@ class RegistrationNextPageButton extends StatelessWidget {
         height: 55.h,
         width: 342.w,
         decoration: BoxDecoration(
-          color: const Color(0xff4038FF),
+          color: primaryColor,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
@@ -22,7 +22,7 @@ class RegistrationNextPageButton extends StatelessWidget {
             buttonText,
             style: TextStyle(
                 fontSize: 15.fs,
-                color: Colors.white,
+                color: whiteColor,
                 fontWeight: FontWeight.bold),
           ),
         ),
@@ -46,13 +46,13 @@ class WhiteNextButton extends StatelessWidget {
         width: 342.w,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: const Color(0xff4038FF))),
+            border: Border.all(color: primaryColor)),
         child: Center(
           child: Text(
             buttonText,
             style: TextStyle(
                 fontSize: 15.fs,
-                color: const Color(0xff4038FF),
+                color: primaryColor,
                 fontWeight: FontWeight.bold),
           ),
         ),

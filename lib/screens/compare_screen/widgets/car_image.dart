@@ -50,12 +50,12 @@ class CompareCarImage extends StatelessWidget {
             margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.h),
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.3), shape: BoxShape.circle),
+                color: blackColor.withOpacity(0.3), shape: BoxShape.circle),
             child: ClipRRect(
               child: Center(
                 child: SvgPicture.asset(
                   "assets/svg/close.svg",
-                  color: Colors.white,
+                  color: whiteColor,
                   height: 14.h,
                   width: 14.h,
                 ),
@@ -82,7 +82,7 @@ class CompareCarImage extends StatelessWidget {
       child: Text(
         "$brandName $modelName ${year ?? ""}\n$groupName $power $transmission $volume",
         style: TextStyle(
-          color: Colors.black,
+          color: blackColor,
           fontSize: 16.fs,
           fontFamily: "Inter",
           fontWeight: FontWeight.w500,

@@ -142,7 +142,7 @@ class ModelsScreen extends StatelessWidget {
                 height: 12.h,
                 padding: EdgeInsets.all(3.w),
                 decoration: ShapeDecoration(
-                  color: const Color(0xFFA19EFF),
+                  color: paleColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(23),
                   ),
@@ -151,7 +151,7 @@ class ModelsScreen extends StatelessWidget {
                   controller: pageController,
                   count: generation.configurations.length,
                   effect: WormEffect(
-                      dotColor: Colors.white,
+                      dotColor: whiteColor,
                       activeDotColor: primaryColor,
                       dotHeight: 6.h,
                       dotWidth: 6.h,
@@ -259,7 +259,7 @@ class GenerationWidget extends StatelessWidget {
               margin: EdgeInsets.all(15.h),
               clipBehavior: Clip.antiAlias,
               decoration: ShapeDecoration(
-                color: Colors.black.withOpacity(0.3),
+                color: blackColor.withOpacity(0.3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(26),
                 ),
@@ -267,7 +267,7 @@ class GenerationWidget extends StatelessWidget {
               child: Text(
                 text,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: whiteColor,
                   fontSize: fontSize.fs,
                   fontWeight: fontWeight,
                 ),
@@ -312,7 +312,7 @@ class ConfigurationsWidget extends StatelessWidget {
           height: containerHeight.h,
           width: containerWidth.w,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(15)),
+              color: whiteColor, borderRadius: BorderRadius.circular(15)),
         ),
       );
 

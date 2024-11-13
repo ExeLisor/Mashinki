@@ -45,6 +45,12 @@ const primaryColor = Color(0xFF4038FF);
 const paleColor = Color(0xff7974FF);
 const unactiveColor = Color(0xffA7A7A7);
 const boneColor = Color(0xffF3F3F3);
+const whiteColor = Colors.white;
+const blackColor = Colors.black;
+const greyColor = Color(0xff848484);
+const boxShadowColor = Color(0x0F000000);
+const greySurface = Color(0xffE2E2E2);
+const greyBackground = Color(0xffEEEEEE);
 
 const List<String> alphabet = [
   '#',
