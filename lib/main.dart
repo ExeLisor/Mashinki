@@ -30,3 +30,17 @@ class _MainAppState extends State<MainApp> {
     );
   }
 }
+
+void checkForUpdates() async {
+  try {
+    AppUpdateInfo updateInfo = await InAppUpdate.checkForUpdate();
+    if (updateInfo.immediateUpdateAllowed) {
+      // Немедленное обновление
+      await InAppUpdate.performImmediateUpdate();
+      // Или начать гибкое обновление
+      // await InAppUpdate.startFlexibleUpdate();
+    }
+  } catch (e) {
+    logW('Ошибка при проверке обновлений: $e');
+  }
+}
