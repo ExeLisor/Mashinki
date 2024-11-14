@@ -103,7 +103,7 @@ class ImageContainer extends StatelessWidget {
       ShimmerWidget(
         child: Container(
           decoration: BoxDecoration(
-              color: whiteColor,
+              color: AppThemeController.to.whiteColor,
               borderRadius: BorderRadius.circular(borderRaduis)),
           height: height.h,
           width: width.w,

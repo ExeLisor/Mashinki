@@ -25,8 +25,11 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.w),
-      child: Row(
-        children: [_searchContainer(), _filterButton()],
+      child: GestureDetector(
+        onTap: () => showSnackBar("In development"),
+        child: Row(
+          children: [_searchContainer(), _filterButton()],
+        ),
       ),
     );
   }
@@ -106,46 +109,44 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
   Widget _searchField() => Obx(
         () => TextField(
           enabled: false,
-          textAlignVertical: TextAlignVertical.bottom,
+          textAlignVertical: TextAlignVertical.center,
           decoration: decoration(),
         ),
       );
 
   InputDecoration decoration() => InputDecoration(
-        // suffixIcon: showFilters ? _filtersIcon() : null,
-        filled: true,
-        fillColor: AppThemeController.to.searchContainerColor,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(40),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(40),
-          borderSide: const BorderSide(color: Colors.transparent),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(40),
-          borderSide: const BorderSide(color: Colors.transparent),
-        ),
-        hintText: 'search'.tr,
-        hintStyle: TextStyle(
-            fontSize: 16.fs,
-            fontWeight: FontWeight.w400,
-            fontFamily: "Inter",
-            height: 0,
-            color: unactiveColor),
-        prefixIcon: SvgPicture.asset(
-          'assets/svg/zoom.svg',
-          height: 22.h,
-          width: 20.w,
-          color: AppThemeController.to.isDarkTheme
-              ? const Color(0xffA6A6A6)
-              : Colors.black,
-          fit: BoxFit.scaleDown,
-        ),
-        contentPadding: EdgeInsets.symmetric(
-            vertical: 12.h), // Adjust padding to center hint text
-      );
+      // suffixIcon: showFilters ? _filtersIcon() : null,
+      filled: true,
+      fillColor: AppThemeController.to.searchContainerColor,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(40),
+        borderSide: BorderSide.none,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(40),
+        borderSide: const BorderSide(color: Colors.transparent),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(40),
+        borderSide: const BorderSide(color: Colors.transparent),
+      ),
+      hintText: 'search'.tr,
+      hintMaxLines: 1,
+      hintStyle: TextStyle(
+          fontSize: 16.fs,
+          fontWeight: FontWeight.w400,
+          fontFamily: "Inter",
+          color: unactiveColor),
+      prefixIcon: SvgPicture.asset(
+        'assets/svg/zoom.svg',
+        height: 22.h,
+        width: 20.w,
+        color: AppThemeController.to.isDarkTheme
+            ? const Color(0xffA6A6A6)
+            : Colors.black,
+        fit: BoxFit.scaleDown,
+      ),
+      contentPadding: EdgeInsets.zero);
 
   Widget _filtersIcon() => GestureDetector(
         onTap: filterAction,

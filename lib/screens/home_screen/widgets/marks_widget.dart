@@ -149,11 +149,10 @@ class MarkLoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShimmerWidget(
       child: Container(
-        margin: EdgeInsets.only(bottom: 10.h),
-        width: containerSize.h,
-        height: containerSize.h,
+        width: containerSize.h - 0.5,
+        height: containerSize.h - 0.5,
         decoration: BoxDecoration(
-          color: whiteColor,
+          color: AppThemeController.to.whiteColor,
           borderRadius: BorderRadius.circular(15),
         ),
       ),

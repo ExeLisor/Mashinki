@@ -216,8 +216,9 @@ class CompareFloatingBar extends StatelessWidget {
         width: 177.w,
         child: Text(
           title,
-          style: const TextStyle(
-            color: blackColor,
+          style: TextStyle(
+            color:
+                AppThemeController.to.isDarkTheme ? Colors.white : primaryColor,
             fontSize: 16,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w500,

@@ -85,7 +85,7 @@ class WeeklyCarTile extends StatelessWidget {
         width: 362.w,
         height: 136.h,
         decoration: BoxDecoration(
-          color: Colors.grey,
+          color: blackColor,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Stack(
@@ -98,28 +98,30 @@ class WeeklyCarTile extends StatelessWidget {
     );
   }
 
-//TO-DO Добавить паддинги
   Widget _carNameText() => Align(
         alignment: Alignment.bottomLeft,
-        child: Container(
-          height: 27.h,
-          padding: EdgeInsets.symmetric(horizontal: 11.w),
-          decoration: ShapeDecoration(
-            color: blackColor.withOpacity(0.4),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18),
+        child: IntrinsicWidth(
+          child: Container(
+            height: 27.h,
+            padding: EdgeInsets.symmetric(horizontal: 11.w),
+            margin: EdgeInsets.fromLTRB(10.w, 0, 10.w, 8.h),
+            decoration: ShapeDecoration(
+              color: blackColor.withOpacity(0.4),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18),
+              ),
             ),
-          ),
-          child: IntrinsicWidth(
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 11.w),
-              child: Text(
-                "${car.mark.name} ${car.model.name}",
-                style: TextStyle(
-                    color: whiteColor,
-                    fontSize: 14.fs,
-                    fontFamily: "Inter",
-                    fontWeight: FontWeight.bold),
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 11.w),
+                child: Text(
+                  "${car.mark.name} ${car.model.name}",
+                  style: TextStyle(
+                      color: whiteColor,
+                      fontSize: 14.fs,
+                      fontFamily: "Inter",
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ),
@@ -135,6 +137,7 @@ class WeeklyCarTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
             child: ImageContainer(
               imageData: ImageData.photo(id: car.configuration.id ?? ""),
+              width: 363.w,
             ),
           ),
         ),

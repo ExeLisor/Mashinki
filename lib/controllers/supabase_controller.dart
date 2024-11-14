@@ -300,7 +300,7 @@ class SupabaseController extends GetxController {
 
       return description;
     } catch (e) {
-      return 'Error: ${e.toString()}';
+      return "";
     }
   }
 

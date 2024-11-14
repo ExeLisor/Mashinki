@@ -39,8 +39,6 @@ class CarController extends GetxController {
 
       log("loadCar");
 
-      bool isCarAlreadyLoaded = _checkIfCarAlreadyLoaded(loadingCar);
-
       _car.value = loadingCar;
 
       await _car.value!.loadCar();

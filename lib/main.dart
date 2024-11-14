@@ -142,11 +142,13 @@ class InititalBindingsClass extends Bindings {
   void dependencies() {
     Get.lazyPut(() => FilterController(), fenix: true);
     Get.lazyPut(() => OptionSelectorController(), fenix: true);
+    Get.lazyPut(() => ThemeController());
     Get.lazyPut(() => BarController());
     Get.lazyPut(() => CompareController());
     Get.lazyPut(() => MarksController());
-    Get.lazyPut(() => ModelsController());
+    Get.put(ModelsController(), permanent: true);
     Get.lazyPut(() => FirebaseController());
+    Get.lazyPut(() => MarksSearchController());
     WeeklyCarsBinding().dependencies();
     CarCatalogBinding().dependencies();
     FavoriteBinding().dependencies();
@@ -157,6 +159,22 @@ class InititalBindingsClass extends Bindings {
 }
 
 class AppThemeController extends GetxController {
+  @override
+  void onInit() async {
+    super.onInit();
+
+    String? theme = await loadData("theme");
+    if (theme != null) return toggleTheme(theme: theme == "theme-dark");
+
+    if (theme == null || theme == "theme-system") return useSystemTheme();
+  }
+
+  void useSystemTheme() {
+    var brightness = MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+        .platformBrightness;
+    toggleTheme(theme: brightness != Brightness.light);
+  }
+
   static AppThemeController get to => Get.find();
 
   final RxBool _isDarkTheme = false.obs;

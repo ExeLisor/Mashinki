@@ -11,24 +11,18 @@ class CompareCarImage extends StatelessWidget {
   Widget _carColumn() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          _carImage(),
-          SizedBox(
-            height: 12.h,
-          ),
-          _carTitle()
-        ],
+        children: [_carImage(), SizedBox(height: 12.h), _carTitle()],
       );
 
   Widget _carImage() => GestureDetector(
         onTap: () {
-          log(car.copyWith().selectedModification.toJson());
-
-          // CarController.to.openCarPage(car.copyWith());
+          CarController.to.openCarPage(car.copyWith());
         },
         child: SizedBox(
-          width: 177.w,
+          width: 170.w,
+          height: 129.h,
           child: Stack(
+            fit: StackFit.expand,
             children: [
               ImageContainer(
                 imageData: ImageData.photo(id: car.configuration.id ?? ""),
@@ -47,7 +41,7 @@ class CompareCarImage extends StatelessWidget {
           child: Container(
             width: 28.h,
             height: 28.h,
-            margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.h),
+            margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.h),
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
                 color: blackColor.withOpacity(0.3), shape: BoxShape.circle),
@@ -70,7 +64,7 @@ class CompareCarImage extends StatelessWidget {
     String modelName = car.model.name ?? "";
     int? year = car.generation.yearStart;
     Modification modification = car.selectedModification;
-    String groupName = modification.groupName ?? "Базовая";
+    String groupName = modification.groupName ?? "Базовая".tr;
     CarSpecifications specification = modification.carSpecifications!;
 
     String transmission = getTransmissionAbb(specification.transmission ?? "");

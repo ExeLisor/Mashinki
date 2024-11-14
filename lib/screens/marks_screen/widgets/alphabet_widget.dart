@@ -58,11 +58,10 @@ class AlphabetWidget extends StatelessWidget {
         () => Column(
           children: [
             _header(alphabet[index]),
-            _marks(AlphabetController.to.alphabetList[index]),
-
-            // AlphabetController.to.isLoading
-            //     ? const LoadingMarksGrid()
-            //     :
+            (AlphabetController.to.alphabetList.isNotEmpty &&
+                    index < AlphabetController.to.alphabetList.length)
+                ? _marks(AlphabetController.to.alphabetList[index])
+                : Container(),
           ],
         ),
       );

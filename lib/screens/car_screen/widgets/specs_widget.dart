@@ -199,7 +199,7 @@ class ModificationTitleWidget extends StatelessWidget {
     double? volume = specification.volumeLitres;
     String privod = specification.drive == "полный" ? "4WD" : "";
     String title =
-        "${modification.groupName ?? ""} $volume $transmission $power $privod"
+        "${"Модификация".tr} ${modification.groupName ?? ""}${volume == 0 ? "" : volume} $transmission ${power == 0 ? "" : power} $privod"
             .trim();
 
     if (specification.complectationId == null) title = "Базовая";
@@ -385,24 +385,22 @@ class DetailsTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 11.h,
-            ),
+            SizedBox(height: 11.h),
             Text(
               spec,
               textAlign: TextAlign.center,
               textScaler: const TextScaler.linear(0.9),
               style: TextStyle(
-                color: primaryColor,
+                color: AppThemeController.to.isDarkTheme
+                    ? paleColor
+                    : primaryColor,
                 fontSize: 13.fs,
                 fontWeight: FontWeight.w500,
               ),
             ),
-            SizedBox(
-              height: 5.h,
-            ),
+            SizedBox(height: 5.h),
             Text(
-              value ?? "",
+              value == "0.0" || (value ?? "").isEmpty ? "-" : value ?? "",
               textScaler: const TextScaler.linear(0.85),
               style: TextStyle(
                 color:

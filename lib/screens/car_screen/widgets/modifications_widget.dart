@@ -320,7 +320,7 @@ class ModsGroupContoller extends GetxController {
   @override
   void onInit() {
     _groups.value = groupBy(CarController.to.car.modifications,
-        (mod) => mod.groupName ?? "Базовая");
+        (mod) => mod.groupName ?? "Базовая".tr);
     super.onInit();
   }
 }

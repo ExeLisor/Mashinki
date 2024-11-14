@@ -100,7 +100,7 @@ class CatalogTile extends StatelessWidget {
               ),
               child: Container(
                 height: 225.h,
-                width: 361.w,
+                width: 363.w,
                 color: blackColor,
                 child: ImageContainer(
                   borderRaduis: 0,

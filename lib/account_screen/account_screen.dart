@@ -38,7 +38,7 @@ class AccountScreen extends GetView<SettingsController> {
 
   Widget _appBarText() => Obx(
         () => Text(
-          'Профиль',
+          'Профиль'.tr,
           style: TextStyle(
             color:
                 AppThemeController.to.isDarkTheme ? Colors.white : primaryColor,
@@ -308,7 +308,7 @@ class ThemeController extends GetxController with SettingsMixin {
   ThemeController() {
     title.value = 'theme'.tr;
     selectedSetting.value = "theme-light";
-    settings.addAll(['theme-light', 'theme-dark', 'theme-system']);
+    settings.addAll(['theme-light', 'theme-dark']);
   }
 
   @override
@@ -316,30 +316,17 @@ class ThemeController extends GetxController with SettingsMixin {
     super.onInit();
     String? theme = await loadData("theme");
 
-    if (theme != null) {
-      select(theme);
-      AppThemeController.to.toggleTheme(theme: theme == "theme-dark");
-    }
+    if (theme != null) return select(theme);
 
-    if (theme == null || theme == "theme-system") {
-      var brightness = MediaQueryData.fromWindow(WidgetsBinding.instance.window)
-          .platformBrightness;
-      select(brightness == Brightness.light ? "theme-light" : "theme-dark");
-      AppThemeController.to.toggleTheme(theme: brightness != Brightness.light);
-    }
+    if (theme == null) return select("theme-light");
   }
 
   @override
   void select(String value) {
     super.select(value);
 
-    if (value == "theme-system") {
-      var brightness = MediaQueryData.fromWindow(WidgetsBinding.instance.window)
-          .platformBrightness;
-      AppThemeController.to.toggleTheme(theme: brightness != Brightness.light);
-    } else {
-      changeTheme(value == "theme-dark");
-    }
+    changeTheme(value == "theme-dark");
+    AppThemeController.to.toggleTheme(theme: value == "theme-dark");
 
     saveData("theme", value);
   }

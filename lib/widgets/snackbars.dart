@@ -4,17 +4,6 @@ void showSnackBar(String text) => Get.showSnackbar(commonSnackbar(text));
 
 GetSnackBar commonSnackbar(String text) => GetSnackBar(
       onTap: (_) => Get.closeCurrentSnackbar(),
-      titleText: Center(
-        child: Text(
-          text,
-          style: TextStyle(
-            color: whiteColor,
-            fontSize: 15.fs,
-            fontWeight: FontWeight.w600,
-            height: 0,
-          ),
-        ),
-      ),
       boxShadows: const [
         BoxShadow(
           color: boxShadowColor,
@@ -31,9 +20,12 @@ GetSnackBar commonSnackbar(String text) => GetSnackBar(
       ],
       borderRadius: 15.w,
       backgroundColor: paleColor,
-      messageText: Container(),
+      messageText: Text(text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: whiteColor, fontSize: 15.fs, fontWeight: FontWeight.w600)),
       maxWidth: 250.w,
       duration: const Duration(milliseconds: 1500),
-      padding: EdgeInsets.symmetric(horizontal: 19.h, vertical: 13.w),
+      // padding: EdgeInsets.symmetric(horizontal: 19.h, vertical: 13.w),
       margin: EdgeInsets.fromLTRB(0.w, 0, 0.w, 80.h),
     );
