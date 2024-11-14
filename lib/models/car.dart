@@ -45,7 +45,8 @@ class Car {
   }
 
   Future loadCar() async {
-    if (modifications.isEmpty) await loadCarModification();
+    log("load");
+    await loadCarModification();
     if (description.isEmpty) await loadCarDescription();
 
     return;
@@ -73,7 +74,7 @@ class Car {
 
   Future<List<Modification>> loadCarModification() async {
     try {
-      if (modifications.isNotEmpty) return modifications;
+      // if (modifications.isNotEmpty) return modifications;
 
       modifications =
           await SupabaseController.to.getModifications(configuration.id ?? "");

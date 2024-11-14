@@ -8,12 +8,14 @@ class ModelsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar(),
-      bottomNavigationBar: HomeScreenBottomBarWidget(),
-      body: Obx(() => ModelsController.to.state.value == Status.success
-          ? _modelsScreenBody()
-          : _loadingWidget()),
+    return Obx(
+      () => Scaffold(
+        backgroundColor: AppThemeController.to.whiteColor,
+        bottomNavigationBar: HomeScreenBottomBarWidget(),
+        body: Obx(() => ModelsController.to.state.value == Status.success
+            ? _modelsScreenBody()
+            : _loadingWidget()),
+      ),
     );
   }
 
@@ -24,14 +26,93 @@ class ModelsScreen extends StatelessWidget {
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TopBar(
-              title: "Модельный ряд",
-              subtitle: ModelsController.to.mark.name ?? "",
-            ),
+            _appBar(),
             ModelsSearchController.to.query.isNotEmpty
                 ? _searchingResults()
                 : _modelsListView()
           ],
+        ),
+      );
+
+  Widget _appBar() => Obx(
+        () => AppBar(
+          backgroundColor: AppThemeController.to.whiteColor,
+          title: _appBarText(),
+          leading: _iconBack(),
+          centerTitle: true,
+          actions: [_accountIcon(), SizedBox(width: 25.w)],
+        ),
+      );
+
+  Widget _hideIdentical() => GestureDetector(
+        onTap: CompareController.to.hideIdentical,
+        child: Row(
+          children: [
+            Obx(
+              () => SvgPicture.asset(CompareController.to.isHideIdentical
+                  ? "assets/svg/checkbox_active.svg"
+                  : "assets/svg/checkbox.svg"),
+            ),
+            SizedBox(width: 10.w),
+            Text(
+              'hide-simmilar-specifications'.tr,
+              style: TextStyle(
+                color: blackColor,
+                fontSize: 12.fs,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget _appBarText() => Column(
+        children: [
+          Obx(
+            () => Text(
+              'models'.tr,
+              style: TextStyle(
+                color: AppThemeController.to.isDarkTheme
+                    ? Colors.white
+                    : primaryColor,
+                fontSize: 20.fs,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          Text(
+            ModelsController.to.mark.name ?? "",
+            style: TextStyle(
+              color: greyColor,
+              fontSize: 14.fs,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w400,
+            ),
+          )
+        ],
+      );
+  Widget _accountIcon() => SvgPicture.asset(
+        "assets/svg/account_active.svg",
+        height: 24.h,
+        width: 24.w,
+      );
+  Widget _iconBack() => GestureDetector(
+        onTap: Get.back,
+        child: Container(
+          decoration:
+              BoxDecoration(border: Border.all(color: Colors.transparent)),
+          child: Padding(
+            padding: EdgeInsets.only(left: 4.0.w),
+            child: SizedBox(
+              child: SvgPicture.asset(
+                "assets/svg/back.svg",
+                color: primaryColor,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+          ),
         ),
       );
   void _showModelFilters() => Get.bottomSheet(
@@ -51,14 +132,13 @@ class ModelsScreen extends StatelessWidget {
         () => ListView(
           padding: EdgeInsets.only(bottom: 25.h),
           children: [
-            SizedBox(
-              height: 20.h,
-            ),
+            SizedBox(height: 20.h),
             CarsSearchBar(
               controller: ModelsSearchController.to,
               filterAction: _showModelFilters,
               searchIconColor: primaryColor,
             ),
+            SizedBox(height: 20.h),
             ...List.generate(
               models.length,
               (index) => Column(

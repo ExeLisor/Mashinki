@@ -26,13 +26,9 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 15.h,
-        ),
+        SizedBox(height: 15.h),
         _title(),
-        SizedBox(
-          height: 5.h,
-        ),
+        SizedBox(height: 5.h),
         isOpened ? _specs() : Container(),
       ],
     );
@@ -146,7 +142,8 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
         child: Text(
           value.isEmpty ? "-" : value,
           style: TextStyle(
-            color: isHighlighted ? Colors.green : blackColor,
+            color:
+                isHighlighted ? Colors.green : AppThemeController.to.textColor,
             fontSize: 14.fs,
             fontWeight: FontWeight.w500,
             fontFamily: 'Inter',
@@ -157,7 +154,7 @@ class _CompareSpecsWidgetState extends State<CompareSpecsWidget> {
   Widget _specsTitle(String title) => Text(
         title,
         style: TextStyle(
-          color: blackColor,
+          color: AppThemeController.to.textColor,
           fontSize: 18.fs,
           fontWeight: FontWeight.w600,
           fontFamily: 'Inter',

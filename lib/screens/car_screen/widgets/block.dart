@@ -106,6 +106,9 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
                     specs.tr,
                     maxLines: 2,
                     style: TextStyle(
+                      color: AppThemeController.to.isDarkTheme
+                          ? Colors.white
+                          : blackColor,
                       fontSize: 14.fs,
                       fontWeight: FontWeight.w500,
                       fontFamily: "Inter",
@@ -146,7 +149,8 @@ class _DropSpecsBlockWidgetState extends State<DropSpecsBlockWidget> {
           maxLines: 2,
           softWrap: true,
           style: TextStyle(
-            color: blackColor,
+            color:
+                AppThemeController.to.isDarkTheme ? Colors.white : blackColor,
             fontFamily: "Inter",
             fontSize: 18.fs,
             fontWeight: FontWeight.w600,
@@ -213,7 +217,7 @@ class SpecsBlockWidget extends StatelessWidget {
   Widget _specsTitle(String title) => Text(
         title,
         style: TextStyle(
-          color: blackColor,
+          color: AppThemeController.to.isDarkTheme ? whiteColor : blackColor,
           fontSize: 18.fs,
           fontWeight: FontWeight.w600,
         ),
@@ -233,13 +237,15 @@ class SpecsBlockWidget extends StatelessWidget {
                   '${specs.tr}:',
                   maxLines: 2,
                   style: TextStyle(
-                    color: primaryColor,
+                    color: AppThemeController.to.isDarkTheme
+                        ? unactiveColor
+                        : primaryColor,
                     fontSize: 14.fs,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-              modification.isLoaded
+              modification.isLoaded && value != "null"
                   ? SizedBox(
                       width: 140.w,
                       child: Text(
@@ -247,7 +253,9 @@ class SpecsBlockWidget extends StatelessWidget {
                         textAlign: TextAlign.right,
                         softWrap: true, // разрешаем переносить текст
                         style: TextStyle(
-                          color: blackColor,
+                          color: AppThemeController.to.isDarkTheme
+                              ? whiteColor
+                              : blackColor,
                           fontSize: 14.fs,
                           fontWeight: FontWeight.w400,
                         ),

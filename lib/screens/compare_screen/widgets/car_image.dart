@@ -73,7 +73,7 @@ class CompareCarImage extends StatelessWidget {
     String groupName = modification.groupName ?? "Базовая";
     CarSpecifications specification = modification.carSpecifications!;
 
-    String transmission = getTransmissionAbb(specification.transmission);
+    String transmission = getTransmissionAbb(specification.transmission ?? "");
     String power = specification.horsePower.toString();
     double? volume = specification.volumeLitres;
 
@@ -82,7 +82,7 @@ class CompareCarImage extends StatelessWidget {
       child: Text(
         "$brandName $modelName ${year ?? ""}\n$groupName $power $transmission $volume",
         style: TextStyle(
-          color: blackColor,
+          color: AppThemeController.to.textColor,
           fontSize: 16.fs,
           fontFamily: "Inter",
           fontWeight: FontWeight.w500,

@@ -114,6 +114,7 @@ flutter:
     - assets/configurations/sedan.svg
     - assets/configurations/van.svg
     - assets/configurations/wagon.svg
+    - assets/configurations/suv.svg
     - assets/svg/account_active.svg
     - assets/svg/account.svg
     - assets/svg/add_active.svg

@@ -16,6 +16,12 @@ class CarController extends GetxController {
 
     if (isLoadCar) return await _loadCar(car);
 
+    if (!car.selectedModification.isLoaded) return await _loadCar(car);
+
+    if (car.selectedModification.carSpecifications?.complectationId == null) {
+      return await _loadCar(car);
+    }
+
     _car.value = car;
     _emitSussessState();
     return car;
@@ -31,13 +37,13 @@ class CarController extends GetxController {
     try {
       _emitLoadingState();
 
-      log("load car");
+      log("loadCar");
 
       bool isCarAlreadyLoaded = _checkIfCarAlreadyLoaded(loadingCar);
 
       _car.value = loadingCar;
 
-      if (!isCarAlreadyLoaded) await _car.value!.loadCar();
+      await _car.value!.loadCar();
 
       _car.value!.isDownloaded = true;
 

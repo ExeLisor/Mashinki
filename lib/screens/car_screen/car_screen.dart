@@ -8,14 +8,18 @@ class CarScreen extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: greyBackground,
-      appBar: _appBar(),
-      body: Obx(() => CarController.to.state.value == Status.success
-          ? _carBody()
-          : _loadingWidget()),
-      bottomNavigationBar: HomeScreenBottomBarWidget(),
+    return Obx(
+      () => Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: AppThemeController.to.isDarkTheme
+            ? const Color(0xff292929)
+            : greyBackground,
+        appBar: _appBar(),
+        body: Obx(() => CarController.to.state.value == Status.success
+            ? _carBody()
+            : _loadingWidget()),
+        bottomNavigationBar: HomeScreenBottomBarWidget(),
+      ),
     );
   }
 
@@ -95,71 +99,92 @@ class CarScreen extends StatelessWidget {
           {bool isSelected = true}) =>
       GestureDetector(
         onTap: func,
-        child: Container(
-          height: 46.h,
-          width: Get.width / 2,
-          decoration: BoxDecoration(
-              color: isSelected ? whiteColor : greySurface,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24.h))),
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                  fontSize: 18.fs,
-                  fontFamily: "Inter",
-                  fontWeight: FontWeight.bold,
-                  color: isSelected ? primaryColor : paleColor),
+        child: Obx(() {
+          Color selectedColor = AppThemeController.to.isDarkTheme
+              ? const Color(0xff19191B)
+              : whiteColor;
+
+          Color unselectedColor = AppThemeController.to.isDarkTheme
+              ? const Color(0xff232323)
+              : greySurface;
+          return Container(
+            height: 46.h,
+            width: Get.width / 2,
+            decoration: BoxDecoration(
+                color: isSelected ? selectedColor : unselectedColor,
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(24.h))),
+            child: Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                    fontSize: 18.fs,
+                    fontFamily: "Inter",
+                    fontWeight: FontWeight.bold,
+                    color: isSelected ? primaryColor : paleColor),
+              ),
             ),
-          ),
-        ),
+          );
+        }),
       );
 
-  Widget _carTitleWidget() => Container(
-        width: Get.width,
-        margin: EdgeInsets.only(bottom: 10.h),
-        decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(24.h))),
-        child: Container(
-          margin: EdgeInsets.only(top: 22.h, bottom: 30.h),
-          padding: EdgeInsets.only(left: 25.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _carTitle(),
-              _carSubTitle(),
-              SizedBox(height: 20.h),
-              _carDescription()
-            ],
+  Widget _carTitleWidget() => Obx(
+        () => Container(
+          width: Get.width,
+          margin: EdgeInsets.only(bottom: 10.h),
+          decoration: BoxDecoration(
+              color: AppThemeController.to.isDarkTheme
+                  ? const Color(0xff19191B)
+                  : whiteColor,
+              borderRadius:
+                  BorderRadius.vertical(bottom: Radius.circular(24.h))),
+          child: Container(
+            margin: EdgeInsets.only(top: 22.h, bottom: 30.h),
+            padding: EdgeInsets.only(left: 25.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _carTitle(),
+                _carSubTitle(),
+                SizedBox(height: 20.h),
+                _carDescription()
+              ],
+            ),
           ),
         ),
       );
 
   Widget _carDescription() => Container(
         margin: EdgeInsets.only(right: 25.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "description".tr,
-              style: TextStyle(
-                color: primaryColor,
-                fontSize: 18.fs,
-                fontFamily: "Inter",
-                fontWeight: FontWeight.w600,
+        child: Obx(
+          () => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "description".tr,
+                style: TextStyle(
+                  color: AppThemeController.to.isDarkTheme
+                      ? Colors.white
+                      : primaryColor,
+                  fontSize: 18.fs,
+                  fontFamily: "Inter",
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            SizedBox(height: 8.h),
-            Text(
-              CarController.to.car.description,
-              style: TextStyle(
-                color: blackColor,
-                fontSize: 14.fs,
-                fontFamily: "Inter",
-                fontWeight: FontWeight.w400,
+              SizedBox(height: 8.h),
+              Text(
+                CarController.to.car.description,
+                style: TextStyle(
+                  color: AppThemeController.to.isDarkTheme
+                      ? unactiveColor
+                      : blackColor,
+                  fontSize: 14.fs,
+                  fontFamily: "Inter",
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
 
@@ -221,15 +246,19 @@ class CarScreen extends StatelessWidget {
     String modelName = CarController.to.car.model.name ?? "";
     int? year = CarController.to.car.generation.yearStart;
 
-    return Container(
-      margin: EdgeInsets.only(right: 25.0.w),
-      child: Text(
-        "$brandName $modelName ${year ?? ""}",
-        style: TextStyle(
+    return Obx(
+      () => Container(
+        margin: EdgeInsets.only(right: 25.0.w),
+        child: Text(
+          "$brandName $modelName ${year ?? ""}",
+          style: TextStyle(
             fontSize: 25.fs,
             fontWeight: FontWeight.bold,
             fontFamily: "Inter",
-            color: primaryColor),
+            color:
+                AppThemeController.to.isDarkTheme ? Colors.white : primaryColor,
+          ),
+        ),
       ),
     );
   }
@@ -237,13 +266,15 @@ class CarScreen extends StatelessWidget {
   Widget _carSubTitle() {
     String subtitle = CarController.to.car.generation.name ?? "";
     if (subtitle.isEmpty) return Container();
-    return Text(
-      subtitle,
-      style: TextStyle(
-        fontSize: 20.fs,
-        fontWeight: FontWeight.bold,
-        color: blackColor,
-        fontFamily: "Inter",
+    return Obx(
+      () => Text(
+        subtitle,
+        style: TextStyle(
+          fontSize: 20.fs,
+          fontWeight: FontWeight.bold,
+          color: AppThemeController.to.isDarkTheme ? paleColor : blackColor,
+          fontFamily: "Inter",
+        ),
       ),
     );
   }

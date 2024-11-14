@@ -77,40 +77,44 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
         child: _filterIcon(),
       );
 
-  Widget _searchContainer() => Container(
-        height: 48.h,
-        width: showFilters ? 298.w : 362.w,
-        decoration: BoxDecoration(
-          color: whiteColor,
-          borderRadius: BorderRadius.circular(41),
-          boxShadow: const [
-            BoxShadow(
-              color: boxShadowColor,
-              blurRadius: 15,
-              offset: Offset(-1, 10),
-              spreadRadius: 2,
-            ),
-            BoxShadow(
-              color: boxShadowColor,
-              blurRadius: 15,
-              offset: Offset(1, 1),
-              spreadRadius: 2,
-            )
-          ],
+  Widget _searchContainer() => Obx(
+        () => Container(
+          height: 48.h,
+          width: showFilters ? 298.w : 362.w,
+          decoration: BoxDecoration(
+            color: AppThemeController.to.searchContainerColor,
+            borderRadius: BorderRadius.circular(41),
+            boxShadow: const [
+              BoxShadow(
+                color: boxShadowColor,
+                blurRadius: 15,
+                offset: Offset(-1, 10),
+                spreadRadius: 2,
+              ),
+              BoxShadow(
+                color: boxShadowColor,
+                blurRadius: 15,
+                offset: Offset(1, 1),
+                spreadRadius: 2,
+              )
+            ],
+          ),
+          child: _searchField(),
         ),
-        child: _searchField(),
       );
 
-  Widget _searchField() => TextField(
-        enabled: false,
-        textAlignVertical: TextAlignVertical.bottom,
-        decoration: decoration(),
+  Widget _searchField() => Obx(
+        () => TextField(
+          enabled: false,
+          textAlignVertical: TextAlignVertical.bottom,
+          decoration: decoration(),
+        ),
       );
 
   InputDecoration decoration() => InputDecoration(
         // suffixIcon: showFilters ? _filtersIcon() : null,
         filled: true,
-        fillColor: whiteColor,
+        fillColor: AppThemeController.to.searchContainerColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(40),
           borderSide: BorderSide.none,
@@ -134,6 +138,9 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
           'assets/svg/zoom.svg',
           height: 22.h,
           width: 20.w,
+          color: AppThemeController.to.isDarkTheme
+              ? const Color(0xffA6A6A6)
+              : Colors.black,
           fit: BoxFit.scaleDown,
         ),
         contentPadding: EdgeInsets.symmetric(

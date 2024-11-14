@@ -23,59 +23,43 @@ class CarsCatalogListWidget extends GetView<CarCatalogController> {
     );
   }
 
-  Widget _carsEmpty() => Container(
-        height: 169.h,
-        width: 172.w,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: whiteColor,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.15),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 5.h), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Center(
-          child: Text(
-            "Нет автомобилей",
-            style: TextStyle(
-                fontSize: 16.fs,
-                fontFamily: "Inter",
-                color: primaryColor,
-                fontWeight: FontWeight.w600),
+  Widget _carsEmpty() => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 25.w),
+        child: ShimmerWidget(child: _catalogTileContainer()),
+      );
+
+  Widget _catalogTileContainer() => Obx(
+        () => Container(
+          height: 169.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color:
+                AppThemeController.to.isDarkTheme ? Colors.black : Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: boxShadowColor,
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: Offset(0, 5.h), // changes position of shadow
+              ),
+            ],
           ),
         ),
       );
 
-  Widget _catalogTileContainer() => Container(
-        height: 169.h,
-        width: 172.w,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: whiteColor,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.15),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, 5.h), // changes position of shadow
-            ),
-          ],
-        ),
-      );
-
-  Widget _title() => Padding(
-        padding: EdgeInsets.only(left: 25.0.w),
-        child: Text(
-          "cars".tr,
-          style: TextStyle(
-              fontSize: 16.fs,
-              fontFamily: "Inter",
-              color: primaryColor,
-              fontWeight: FontWeight.w600),
+  Widget _title() => Obx(
+        () => Padding(
+          padding: EdgeInsets.only(left: 25.0.w),
+          child: Text(
+            "cars".tr,
+            style: TextStyle(
+                fontSize: 16.fs,
+                fontFamily: "Inter",
+                color: AppThemeController.to.isDarkTheme
+                    ? Colors.white
+                    : primaryColor,
+                fontWeight: FontWeight.w600),
+          ),
         ),
       );
 
@@ -95,17 +79,13 @@ class CatalogTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 15.h),
-      decoration: _decoration(),
-      child: Column(
-        children: [
-          _carImage(),
-          SizedBox(
-            height: 11.h,
-          ),
-          _carInfo()
-        ],
+    return Obx(
+      () => Container(
+        margin: EdgeInsets.only(bottom: 15.h),
+        decoration: _decoration(),
+        child: Column(
+          children: [_carImage(), SizedBox(height: 11.h), _carInfo()],
+        ),
       ),
     );
   }
@@ -186,26 +166,42 @@ class CatalogTile extends StatelessWidget {
         ),
       );
 
-  Widget _carName() => SizedBox(
-        width: 200.w,
-        child: Text(
-          "${car.mark.name} ${car.model.name}",
-          softWrap: true,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              fontSize: 20.fs, fontWeight: FontWeight.w600, color: blackColor),
+  Widget _carName() => Obx(
+        () => SizedBox(
+          width: 200.w,
+          child: Text(
+            "${car.mark.name} ${car.model.name}",
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                fontSize: 20.fs,
+                fontFamily: "Inter",
+                fontWeight: FontWeight.w600,
+                color: AppThemeController.to.isDarkTheme
+                    ? whiteColor
+                    : blackColor),
+          ),
         ),
       );
 
-  Widget _carYear() => Text(
-        "${car.generation.yearStart}",
-        style: TextStyle(fontSize: 20.fs, fontWeight: FontWeight.w300),
+  Widget _carYear() => Obx(
+        () => Text(
+          "${car.generation.yearStart}",
+          style: TextStyle(
+              fontSize: 20.fs,
+              fontFamily: "Inter",
+              fontWeight: FontWeight.w300,
+              color:
+                  AppThemeController.to.isDarkTheme ? whiteColor : blackColor),
+        ),
       );
 
   ShapeDecoration _decoration() => ShapeDecoration(
-        color: whiteColor,
+        color: AppThemeController.to.isDarkTheme
+            ? const Color(0xFF292929)
+            : whiteColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(25),
         ),
         shadows: const [
           BoxShadow(

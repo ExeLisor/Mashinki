@@ -52,6 +52,18 @@ const boxShadowColor = Color(0x0F000000);
 const greySurface = Color(0xffE2E2E2);
 const greyBackground = Color(0xffEEEEEE);
 
+const primaryDarkColor = Color(0xFF303F9F); // Основной цвет для темной темы
+const paleDarkColor = Color(0xff616161);
+const unactiveDarkColor = Color(0xffBDBDBD);
+const boneDarkColor = Color(0xff212121);
+const whiteDarkColor = Colors.white; // Можно оставить белый для текста и иконок
+const blackDarkColor =
+    Colors.black; // Также оставить черный, если нужен контраст
+const greyDarkColor = Color(0xff757575);
+const boxShadowDarkColor = Color(0x0F000000);
+const greySurfaceDark = Color(0xff424242);
+const greyBackgroundDark = Color(0xff303030);
+
 const List<String> alphabet = [
   '#',
   'A',

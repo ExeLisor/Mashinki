@@ -29,7 +29,8 @@ class AlphabetWidget extends StatelessWidget {
         child: Text(
           symbol == '#' ? 'popular-marks'.tr : symbol,
           style: TextStyle(
-              color: primaryColor,
+              color:
+                  AppThemeController.to.isDarkTheme ? whiteColor : primaryColor,
               fontWeight: FontWeight.w500,
               fontSize: symbol == '#' ? 16.fs : 25.fs),
         ),
@@ -107,7 +108,9 @@ class AlphabetRow extends StatelessWidget {
               style: TextStyle(
                 color: AlphabetController.to.highlightedIndex == index
                     ? whiteColor
-                    : primaryColor,
+                    : AppThemeController.to.isDarkTheme
+                        ? whiteColor
+                        : primaryColor,
                 fontSize: 16.fs,
                 fontWeight: FontWeight.w500,
               ),

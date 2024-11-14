@@ -51,7 +51,9 @@ class MarkGridTile extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: blackColor, fontSize: 14.fs, fontWeight: FontWeight.w400),
+            color: AppThemeController.to.isDarkTheme ? whiteColor : blackColor,
+            fontSize: 14.fs,
+            fontWeight: FontWeight.w400),
       );
 }
 

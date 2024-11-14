@@ -6,20 +6,58 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _topBar(),
+      backgroundColor: AppThemeController.to.whiteColor,
+      appBar: _appBar(),
       bottomNavigationBar: HomeScreenBottomBarWidget(),
       body: _body(),
     );
   }
 
-  PreferredSize _topBar() => PreferredSize(
-        preferredSize: Size.fromHeight(82.h),
-        child: const TopBar(
-          title: "Избранное",
-          isHomeScreen: false,
-          disableVerticalPadding: true,
-          showShadow: false,
+  AppBar _appBar() => AppBar(
+        backgroundColor: AppThemeController.to.whiteColor,
+        title: _appBarText(),
+        leading: _iconBack(),
+        centerTitle: true,
+        actions: [_accountIcon(), SizedBox(width: 25.w)],
+      );
+
+  Widget _appBarText() => Column(
+        children: [
+          Text(
+            'favorite'.tr,
+            style: TextStyle(
+              color: AppThemeController.to.appBarItemsColor,
+              fontSize: 20.fs,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      );
+
+  Widget _iconBack() => GestureDetector(
+        onTap: Get.back,
+        child: Container(
+          decoration:
+              BoxDecoration(border: Border.all(color: Colors.transparent)),
+          child: Padding(
+            padding: EdgeInsets.only(left: 4.0.w),
+            child: SizedBox(
+              child: SvgPicture.asset(
+                "assets/svg/back.svg",
+                color: AppThemeController.to.appBarItemsColor,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+          ),
         ),
+      );
+
+  Widget _accountIcon() => SvgPicture.asset(
+        "assets/svg/account_active.svg",
+        height: 24.h,
+        color: AppThemeController.to.appBarItemsColor,
+        width: 24.w,
       );
 
   Widget _body() => Obx(
@@ -38,10 +76,10 @@ class FavoritesScreen extends StatelessWidget {
   Widget _favoriteCarsView() => Obx(
         () => ListView.builder(
           physics: const ClampingScrollPhysics(),
-          padding: EdgeInsets.only(left: 25.w),
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
           itemCount: FavoriteController.to.favoriteCars.length,
           itemBuilder: (context, index) =>
-              FavoriteTile(car: FavoriteController.to.favoriteCars[index]),
+              CatalogTile(car: FavoriteController.to.favoriteCars[index]),
         ),
       );
 }

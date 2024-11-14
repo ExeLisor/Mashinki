@@ -22,14 +22,21 @@ class MarksWidget extends GetView<MarksController> {
           padding: EdgeInsets.only(left: spacing.w),
           child: Row(
             children: [
-              Text('marks'.tr,
+              Obx(() => Text('marks'.tr,
                   style: TextStyle(
                       fontSize: 16.fs,
                       fontFamily: "Inter",
-                      color: primaryColor,
-                      fontWeight: FontWeight.w600)),
+                      color: AppThemeController.to.isDarkTheme
+                          ? Colors.white
+                          : primaryColor,
+                      fontWeight: FontWeight.w600))),
               SizedBox(width: 13.w),
-              SvgPicture.asset("assets/svg/arrow_right.svg"),
+              Obx(() => SvgPicture.asset(
+                    "assets/svg/arrow_right.svg",
+                    color: AppThemeController.to.isDarkTheme
+                        ? Colors.white
+                        : primaryColor,
+                  )),
             ],
           ),
         ),
@@ -63,28 +70,32 @@ class MarksWidget extends GetView<MarksController> {
     );
   }
 
-  Widget _markContainer({Widget? child}) => Container(
-        width: containerSize.h,
-        height: containerSize.h,
-        decoration: BoxDecoration(
-          color: whiteColor,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: const [
-            BoxShadow(
-              color: boxShadowColor,
-              blurRadius: 15,
-              offset: Offset(-1, 10),
-              spreadRadius: 2,
-            ),
-            BoxShadow(
-              color: boxShadowColor,
-              blurRadius: 15,
-              offset: Offset(1, 1),
-              spreadRadius: 2,
-            )
-          ],
+  Widget _markContainer({Widget? child}) => Obx(
+        () => Container(
+          width: containerSize.h,
+          height: containerSize.h,
+          decoration: BoxDecoration(
+            color: AppThemeController.to.isDarkTheme
+                ? const Color(0xff292929)
+                : primaryColor,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: const [
+              BoxShadow(
+                color: boxShadowColor,
+                blurRadius: 15,
+                offset: Offset(-1, 10),
+                spreadRadius: 2,
+              ),
+              BoxShadow(
+                color: boxShadowColor,
+                blurRadius: 15,
+                offset: Offset(1, 1),
+                spreadRadius: 2,
+              )
+            ],
+          ),
+          child: child,
         ),
-        child: child,
       );
 
   Widget _moreMarks() => GestureDetector(

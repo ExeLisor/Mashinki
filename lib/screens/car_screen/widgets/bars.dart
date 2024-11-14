@@ -18,9 +18,10 @@ class FloatBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Obx(
         () => controller.currentOffset.value > (offsetValue ?? 350.h)
-            ? Align(
+            ? Obx(() => Align(
                 alignment: Alignment.topCenter,
-                child: Container(color: whiteColor, child: child))
+                child: Container(
+                    color: AppThemeController.to.whiteColor, child: child)))
             : Container(),
       );
 }
@@ -43,7 +44,9 @@ class CarsFloatBar extends StatelessWidget {
               "$brandName $modelName $generationName",
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: primaryColor,
+                color: AppThemeController.to.isDarkTheme
+                    ? Colors.white
+                    : primaryColor,
                 fontSize: 18.fs,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w700,
@@ -114,7 +117,7 @@ class CarsFloatBar extends StatelessWidget {
     return SafeArea(
       child: Container(
         decoration: BoxDecoration(
-          color: whiteColor,
+          color: AppThemeController.to.whiteColor,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.2),

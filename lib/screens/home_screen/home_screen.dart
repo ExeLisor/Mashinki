@@ -5,10 +5,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _homeScreen(),
-      floatingActionButton: FloatingActionButton(onPressed: openGooglePlayPage),
-      bottomNavigationBar: HomeScreenBottomBarWidget(),
+    return Obx(
+      () => Scaffold(
+        backgroundColor: AppThemeController.to.whiteColor,
+        body: _homeScreen(),
+        bottomNavigationBar: HomeScreenBottomBarWidget(),
+      ),
     );
   }
 
@@ -26,21 +28,27 @@ class HomeScreen extends StatelessWidget {
     }
   }
 
-  AppBar _appBar() => AppBar(
-        title: _appBarText(),
-        leadingWidth: 30.w,
-        leading: _iconBack(),
-        centerTitle: true,
-        actions: [_accountIcon(), SizedBox(width: 25.w)],
+  Widget _appBar() => Obx(
+        () => AppBar(
+          backgroundColor: AppThemeController.to.whiteColor,
+          title: _appBarText(),
+          leadingWidth: 30.w,
+          leading: Container(),
+          centerTitle: true,
+          actions: [_accountIcon(), SizedBox(width: 25.w)],
+        ),
       );
 
-  Widget _appBarText() => Text(
-        'catalog'.tr,
-        style: TextStyle(
-          color: primaryColor,
-          fontSize: 20.fs,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w700,
+  Widget _appBarText() => Obx(
+        () => Text(
+          'catalog'.tr,
+          style: TextStyle(
+            color:
+                AppThemeController.to.isDarkTheme ? Colors.white : primaryColor,
+            fontSize: 20.fs,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w700,
+          ),
         ),
       );
   Widget _iconBack() => Center(
@@ -51,6 +59,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _accountIcon() => SvgPicture.asset(
         "assets/svg/account_active.svg",
+        color: AppThemeController.to.appBarItemsColor,
         height: 24.h,
         width: 24.w,
       );
@@ -65,7 +74,7 @@ class HomeScreen extends StatelessWidget {
             const WeeklySelectionWidget(),
             SizedBox(height: 20.h),
             const MarksWidget(),
-            // const CarsCatalogListWidget(),
+            const CarsCatalogListWidget(),
           ],
         ),
       );

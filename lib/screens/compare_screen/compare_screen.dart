@@ -4,14 +4,14 @@ class CompareScreen extends StatelessWidget {
   const CompareScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => Obx(
-        () => Scaffold(
-          appBar: _appBar(),
-          body: CompareController.to.comparedCars.isEmpty ? _noCars() : _body(),
-          bottomNavigationBar: HomeScreenBottomBarWidget(),
-        ),
+  Widget build(BuildContext context) => Scaffold(
+        backgroundColor: AppThemeController.to.whiteColor,
+        appBar: _appBar(),
+        body: CompareController.to.comparedCars.isEmpty ? _noCars() : _body(),
+        bottomNavigationBar: HomeScreenBottomBarWidget(),
       );
   AppBar _appBar() => AppBar(
+        backgroundColor: AppThemeController.to.whiteColor,
         title: _appBarText(),
         leading: _iconBack(),
         centerTitle: true,
@@ -31,7 +31,7 @@ class CompareScreen extends StatelessWidget {
             Text(
               'hide-simmilar-specifications'.tr,
               style: TextStyle(
-                color: blackColor,
+                color: AppThemeController.to.textColor,
                 fontSize: 12.fs,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w500,
@@ -46,7 +46,7 @@ class CompareScreen extends StatelessWidget {
           Text(
             'comparison'.tr,
             style: TextStyle(
-              color: primaryColor,
+              color: AppThemeController.to.appBarItemsColor,
               fontSize: 20.fs,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w700,
@@ -73,7 +73,7 @@ class CompareScreen extends StatelessWidget {
             child: SizedBox(
               child: SvgPicture.asset(
                 "assets/svg/back.svg",
-                color: primaryColor,
+                color: AppThemeController.to.appBarItemsColor,
                 fit: BoxFit.scaleDown,
               ),
             ),
@@ -84,6 +84,7 @@ class CompareScreen extends StatelessWidget {
   Widget _accountIcon() => SvgPicture.asset(
         "assets/svg/account_active.svg",
         height: 24.h,
+        color: AppThemeController.to.appBarItemsColor,
         width: 24.w,
       );
 
@@ -136,7 +137,7 @@ class CompareScreen extends StatelessWidget {
   Widget _specsTitle() => Text(
         'specifications'.tr,
         style: TextStyle(
-          color: primaryColor,
+          color: AppThemeController.to.isDarkTheme ? paleColor : primaryColor,
           fontSize: 18.fs,
           fontFamily: 'Inter',
           fontWeight: FontWeight.w700,
@@ -187,9 +188,9 @@ class CompareFloatingBar extends StatelessWidget {
     return Container(
       //max size container + padding between + padding left
       width: cars.length == 1 ? Get.width : (177.w + 8.w + 49.w) * cars.length,
-      decoration: const BoxDecoration(
-        color: whiteColor,
-        border: Border(bottom: BorderSide(color: paleColor)),
+      decoration: BoxDecoration(
+        color: AppThemeController.to.whiteColor,
+        border: const Border(bottom: BorderSide(color: paleColor)),
       ),
       height: 43.h,
       padding: EdgeInsets.only(left: 32.w),

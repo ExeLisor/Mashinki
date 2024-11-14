@@ -17,38 +17,40 @@ class TopBar extends StatelessWidget {
   final bool showAccount;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: whiteColor,
-          boxShadow: showShadow
-              ? [
-                  const BoxShadow(
-                    color: boxShadowColor,
-                    blurRadius: 13,
-                    offset: Offset(0, -1),
-                    spreadRadius: 0,
-                  ),
-                ]
-              : null),
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-            0.w, 15.h, 25.w, disableVerticalPadding ? 0.h : 20.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            isHomeScreen
-                ? Container(
-                    width: 32.h,
-                  )
-                : _topBarIconBack(),
-            _title(),
-            showAccount
-                ? _accountIcon()
-                : SizedBox(
-                    height: 32.h,
-                    width: 32.h,
-                  ),
-          ],
+    return Obx(
+      () => Container(
+        decoration: BoxDecoration(
+            color: AppThemeController.to.whiteColor,
+            boxShadow: showShadow
+                ? [
+                    const BoxShadow(
+                      color: boxShadowColor,
+                      blurRadius: 13,
+                      offset: Offset(0, -1),
+                      spreadRadius: 0,
+                    ),
+                  ]
+                : null),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+              0.w, 15.h, 25.w, disableVerticalPadding ? 0.h : 20.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              isHomeScreen
+                  ? Container(
+                      width: 32.h,
+                    )
+                  : _topBarIconBack(),
+              _title(),
+              showAccount
+                  ? _accountIcon()
+                  : SizedBox(
+                      height: 32.h,
+                      width: 32.h,
+                    ),
+            ],
+          ),
         ),
       ),
     );

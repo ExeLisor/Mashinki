@@ -148,7 +148,9 @@ class ModificationGroupTile extends StatelessWidget {
       constraints: BoxConstraints(minWidth: 215.w),
       width: ModsGroupContoller.to.headerSizes[widgetIndex].width + 25.w,
       decoration: BoxDecoration(
-        color: whiteColor,
+        color: AppThemeController.to.isDarkTheme
+            ? const Color(0xff4d4d4d)
+            : whiteColor,
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(27.h),
           bottomLeft: Radius.circular(27.h),
@@ -217,27 +219,39 @@ class ModificationGroupTile extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      //volume-litres transmission
-                      "${title[0]} ${title[1]}",
-                      style: TextStyle(
-                        color: isSelected ? whiteColor : primaryColor,
-                        fontSize: 18.fs,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    Obx(() {
+                      Color selectedColor = whiteColor;
+                      Color unselectedColor = AppThemeController.to.isDarkTheme
+                          ? whiteColor
+                          : primaryColor;
+                      return Text(
+                        //volume-litres transmission
+                        "${title[0]} ${title[1]}",
+                        style: TextStyle(
+                          color: isSelected ? selectedColor : unselectedColor,
+                          fontSize: 18.fs,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      );
+                    }),
                     SizedBox(
                       width: 23.w,
                     ),
-                    Text(
-                      // horse power
-                      title[2],
-                      style: TextStyle(
-                        color: isSelected ? whiteColor : paleColor,
-                        fontSize: 18.fs,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    )
+                    Obx(() {
+                      Color selectedColor = whiteColor;
+                      Color unselectedColor = AppThemeController.to.isDarkTheme
+                          ? const Color(0xffA6A6A6)
+                          : primaryColor;
+                      return Text(
+                        // horse power
+                        "${title[2]} ${"л.с.".tr}",
+                        style: TextStyle(
+                          color: isSelected ? selectedColor : unselectedColor,
+                          fontSize: 18.fs,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      );
+                    }),
                   ],
                 ),
                 SizedBox(

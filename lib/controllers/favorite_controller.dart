@@ -11,7 +11,10 @@ class FavoriteController extends GetxController {
 
   @override
   void onInit() async {
+    log("ON INIT");
     _favoriteCars.value = await getFavoriteCarsFromPreferences();
+
+    log(_favoriteCars.length);
     super.onInit();
   }
 
@@ -51,36 +54,48 @@ class FavoriteController extends GetxController {
   set isFavorite(bool value) => _isFavorite.value = value;
 
   Future<List<Car>> getFavoriteCarsFromPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Получаем список JSON строк из SharedPreferences
-    List<String>? favoriteCarsJsonList = prefs.getStringList("favorite_cars");
+      // Получаем список JSON строк из SharedPreferences
+      List<String>? favoriteCarsJsonList = prefs.getStringList("favorite_cars");
+      log(favoriteCarsJsonList);
 
-    // Если список пустой или null, возвращаем пустой список
-    if (favoriteCarsJsonList == null) return [];
+      // Если список пустой или null, возвращаем пустой список
+      if (favoriteCarsJsonList == null) return [];
 
-    // Преобразуем JSON строки обратно в объекты Car
-    List<Car> favoriteCarsList = favoriteCarsJsonList
-        .map((carJson) => Car.fromJson(jsonDecode(carJson)))
-        .toList();
+      // Преобразуем JSON строки обратно в объекты Car
+      List<Car> favoriteCarsList = favoriteCarsJsonList
+          .map((carJson) => Car.fromJson(jsonDecode(carJson)))
+          .toList();
 
-    // Обновляем локальное состояние
-    _favoriteCars.assignAll(favoriteCarsList);
+      // Обновляем локальное состояние
+      _favoriteCars.assignAll(favoriteCarsList);
 
-    log(_favoriteCars.first.toJson());
+      log(_favoriteCars.first.toJson());
 
-    return favoriteCarsList;
+      return favoriteCarsList;
+    } catch (e) {
+      logW(e);
+      return [];
+    }
   }
 
   Future<void> saveFavoriteCarsToPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Преобразуем список объектов Car в список JSON строк
-    List<String> favoriteCarsJsonList =
-        _favoriteCars.map((car) => jsonEncode(car.toJson())).toList();
+      // Преобразуем список объектов Car в список JSON строк
+      List<String> favoriteCarsJsonList =
+          _favoriteCars.map((car) => jsonEncode(car.toJson())).toList();
 
-    // Сохраняем список JSON строк в SharedPreferences
-    await prefs.setStringList("favorite_cars", favoriteCarsJsonList);
+      log(favoriteCarsJsonList);
+      // Сохраняем список JSON строк в SharedPreferences
+      await prefs.setStringList("favorite_cars", favoriteCarsJsonList);
+    } catch (e) {
+      logW(e);
+      return;
+    }
   }
 }
 

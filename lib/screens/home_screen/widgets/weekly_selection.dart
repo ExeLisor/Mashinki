@@ -21,15 +21,19 @@ class WeeklySelectionWidget extends GetView<WeeklyCarsController> {
     );
   }
 
-  Widget _weeklyTitle() => Padding(
-        padding: EdgeInsets.only(left: 25.w),
-        child: Text(
-          'weekly-selection'.tr,
-          style: TextStyle(
-              color: primaryColor,
-              fontSize: 16.fs,
-              fontFamily: "Inter",
-              fontWeight: FontWeight.w600),
+  Widget _weeklyTitle() => Obx(
+        () => Padding(
+          padding: EdgeInsets.only(left: 25.w),
+          child: Text(
+            'weekly-selection'.tr,
+            style: TextStyle(
+                color: AppThemeController.to.isDarkTheme
+                    ? Colors.white
+                    : primaryColor,
+                fontSize: 16.fs,
+                fontFamily: "Inter",
+                fontWeight: FontWeight.w600),
+          ),
         ),
       );
 
@@ -94,25 +98,29 @@ class WeeklyCarTile extends StatelessWidget {
     );
   }
 
+//TO-DO Добавить паддинги
   Widget _carNameText() => Align(
         alignment: Alignment.bottomLeft,
-        child: Padding(
-          padding: EdgeInsets.only(left: 18.0.w, bottom: 11.h),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 11.w),
-            decoration: ShapeDecoration(
-              color: blackColor.withOpacity(0.4),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-              ),
+        child: Container(
+          height: 27.h,
+          padding: EdgeInsets.symmetric(horizontal: 11.w),
+          decoration: ShapeDecoration(
+            color: blackColor.withOpacity(0.4),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
             ),
-            child: Text(
-              "${car.mark.name} ${car.model.name}",
-              style: TextStyle(
-                  color: whiteColor,
-                  fontSize: 18.fs,
-                  fontFamily: "Inter",
-                  fontWeight: FontWeight.bold),
+          ),
+          child: IntrinsicWidth(
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 11.w),
+              child: Text(
+                "${car.mark.name} ${car.model.name}",
+                style: TextStyle(
+                    color: whiteColor,
+                    fontSize: 14.fs,
+                    fontFamily: "Inter",
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ),

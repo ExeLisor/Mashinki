@@ -25,11 +25,11 @@ enum CarBodyType {
 
   // Группа: Внедорожник
   allroad3Doors("внедорожник 3 дв.",
-      "assets/configurations/jeep.svg"), // Используем jeep как аналог
+      "assets/configurations/suv.svg"), // Используем jeep как аналог
   allroad5Doors("внедорожник 5 дв.",
-      "assets/configurations/jeep.svg"), // Используем jeep как аналог
+      "assets/configurations/suv.svg"), // Используем jeep как аналог
   allroadOpen("внедорожник открытый",
-      "assets/configurations/jeep.svg"), // Используем jeep как аналог
+      "assets/configurations/suv.svg"), // Используем jeep как аналог
 
   // Группа: Универсал
   wagon("универсал", "assets/configurations/wagon.svg"),

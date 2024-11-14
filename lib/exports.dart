@@ -40,3 +40,5 @@ export 'package:firebase_app_check/firebase_app_check.dart';
 export 'package:supabase_flutter/supabase_flutter.dart'
     hide MultipartFile, Headers;
 export 'package:pixel_perfect/pixel_perfect.dart';
+
+export 'package:autoverse/main.dart';

@@ -10,7 +10,9 @@ class OptionsWidget extends StatelessWidget {
   Widget build(BuildContext context) => _options();
 
   Widget _options() => Container(
-        color: whiteColor,
+        color: AppThemeController.to.isDarkTheme
+            ? const Color(0xff19191b)
+            : whiteColor,
         width: Get.width,
         padding:
             EdgeInsets.only(left: 25.w, top: 30.h, bottom: 25.h, right: 25.h),
@@ -18,6 +20,7 @@ class OptionsWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _modificationTitle(),
+            SizedBox(height: 10.h),
             DropSpecsBlockWidget(title: "Материалы", specs: _materials()),
             DropSpecsBlockWidget(title: "Сиденья", specs: _salon()),
             DropSpecsBlockWidget(
@@ -45,24 +48,40 @@ class OptionsWidget extends StatelessWidget {
 
   Widget _modificationTitle() {
     Modification modification = CarController.to.car.selectedModification;
-    CarSpecifications specification = modification.carSpecifications!;
-    String transmission = getTransmissionAbb(specification.transmission);
+    CarSpecifications specification =
+        modification.carSpecifications ?? CarSpecifications();
+    String transmission = getTransmissionAbb(specification.transmission ?? "");
 
     int? power = specification.horsePower;
     double? volume = specification.volumeLitres;
     String privod = specification.drive == "полный" ? "4WD" : "";
+
+    if (specification.complectationId == null) return _loadingTitleWidget();
+
     return Container(
       margin: EdgeInsets.only(bottom: 20.h),
       child: Text(
         "${CarController.to.car.selectedModification.groupName ?? ""} ${volume == 0 ? "" : volume} $transmission ${power == 0 ? "" : power} $privod",
         style: TextStyle(
-          color: blackColor,
-          fontSize: 18.fs,
-          fontWeight: FontWeight.w600,
+          color: AppThemeController.to.isDarkTheme ? Colors.white : blackColor,
+          fontSize: 20.fs,
+          fontFamily: "Inter",
+          fontWeight: FontWeight.w800,
         ),
       ),
     );
   }
+
+  Widget _loadingTitleWidget() => ShimmerWidget(
+        child: Container(
+          margin: EdgeInsets.only(bottom: 20.h),
+          height: 20.h,
+          width: 180.w,
+          decoration: const BoxDecoration(
+              color: whiteColor,
+              borderRadius: BorderRadius.all(Radius.circular(8))),
+        ),
+      );
 
   List<Map<String, dynamic>> _style() => [
         {"Обвес": getValue(options.bodyKit)},

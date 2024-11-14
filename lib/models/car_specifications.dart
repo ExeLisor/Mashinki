@@ -1,118 +1,119 @@
 class CarSpecifications {
-  final String complectationId;
-  final String backBrake;
-  final String feeding;
-  final int horsePower; // Power is typically an integer
-  final double kvtPower; // Kilowatts are usually represented as a double
-  final int rpmPower; // RPM is an integer value
-  final String engineType;
-  final String transmission;
-  final String drive;
-  final double volume; // Volume is generally a double (e.g., liters)
-  final double timeTo100; // Time to 100km/h is a double
-  final String cylindersOrder;
-  final int maxSpeed; // Speed is typically an integer
-  final double compression; // Compression ratio is a double
-  final int cylindersValue; // Number of cylinders is an integer
-  final double diametr; // Diameter is usually a double
-  final double pistonStroke; // Stroke length is usually a double
-  final String engineFeeding;
-  final String engineOrder;
-  final int gearValue; // Number of gears is an integer
-  final double moment; // Torque (moment) is generally a double
-  final String petrolType;
-  final int valves; // Number of valves is an integer
-  final int weight; // Weight is generally an integer (e.g., kilograms)
-  final String wheelSize;
-  final double wheelBase; // Wheelbase is usually a double (e.g., meters)
-  final double frontWheelBase; // Front wheelbase is typically a double
-  final double backWheelBase; // Back wheelbase is typically a double
-  final String frontBrake;
-  final String frontSuspension;
-  final String backSuspension;
-  final int height; // Height is typically a double (e.g., meters)
-  final int width; // Width is typically a double (e.g., meters)
-  final double
+  final String? complectationId;
+  final String? backBrake;
+  final String? feeding;
+  final int? horsePower; // Power is typically an integer
+  final double? kvtPower; // Kilowatts are usually represented as a double
+  final int? rpmPower; // RPM is an integer value
+  final String? engineType;
+  final String? transmission;
+  final String? drive;
+  final double? volume; // Volume is generally a double (e.g., liters)
+  final double? timeTo100; // Time to 100km/h is a double
+  final String? cylindersOrder;
+  final int? maxSpeed; // Speed is typically an integer
+  final double? compression; // Compression ratio is a double
+  final int? cylindersValue; // Number of cylinders is an integer
+  final double? diametr; // Diameter is usually a double
+  final double? pistonStroke; // Stroke length is usually a double
+  final String? engineFeeding;
+  final String? engineOrder;
+  final int? gearValue; // Number of gears is an integer
+  final double? moment; // Torque (moment) is generally a double
+  final String? petrolType;
+  final int? valves; // Number of valves is an integer
+  final int? weight; // Weight is generally an integer (e.g., kilograms)
+  final String? wheelSize;
+  final double? wheelBase; // Wheelbase is usually a double (e.g., meters)
+  final double? frontWheelBase; // Front wheelbase is typically a double
+  final double? backWheelBase; // Back wheelbase is typically a double
+  final String? frontBrake;
+  final String? frontSuspension;
+  final String? backSuspension;
+  final int? height; // Height is typically a double (e.g., meters)
+  final int? width; // Width is typically a double (e.g., meters)
+  final double?
       fuelTankCapacity; // Fuel tank capacity is usually a double (e.g., liters)
-  final int seats; // Number of seats is an integer
-  final int length; // Length is typically a double (e.g., meters)
-  final String emissionEuroClass;
-  final double volumeLitres; // Volume (liters) is typically a double
-  final double
+  final int? seats; // Number of seats is an integer
+  final int? length; // Length is typically a double (e.g., meters)
+  final String? emissionEuroClass;
+  final double? volumeLitres; // Volume (liters) is typically a double
+  final double?
       consumptionMixed; // Fuel consumption is usually a double (e.g., liters/100km)
-  final double
+  final double?
       clearance; // Ground clearance is typically a double (e.g., meters)
-  final double trunksMinCapacity; // Trunk capacity is usually a double
-  final double trunksMaxCapacity; // Trunk capacity is usually a double
-  final double consumptionHiway; // Highway consumption is typically a double
-  final double consumptionCity; // City consumption is typically a double
-  final int momentRpm; // RPM for torque is generally an integer
-  final int fullWeight; // Full weight is typically an integer (e.g., kilograms)
-  final double
+  final double? trunksMinCapacity; // Trunk capacity is usually a double
+  final double? trunksMaxCapacity; // Trunk capacity is usually a double
+  final double? consumptionHiway; // Highway consumption is typically a double
+  final double? consumptionCity; // City consumption is typically a double
+  final int? momentRpm; // RPM for torque is generally an integer
+  final int?
+      fullWeight; // Full weight is typically an integer (e.g., kilograms)
+  final double?
       rangeDistance; // Range distance is typically a double (e.g., kilometers)
-  final double
+  final double?
       batteryCapacity; // Battery capacity is usually a double (e.g., kWh)
-  final double fuelEmission; // Fuel emissions is usually a double (e.g., g/km)
-  final double
+  final double? fuelEmission; // Fuel emissions is usually a double (e.g., g/km)
+  final double?
       electricRange; // Electric range is typically a double (e.g., kilometers)
-  final double chargeTime; // Charge time is usually a double (e.g., hours)
-  final int safetyRating; // Safety rating is typically an integer
-  final String safetyGrade;
+  final double? chargeTime; // Charge time is usually a double (e.g., hours)
+  final int? safetyRating; // Safety rating is typically an integer
+  final String? safetyGrade;
 
   CarSpecifications({
-    required this.complectationId,
-    required this.backBrake,
-    required this.feeding,
-    required this.horsePower,
-    required this.kvtPower,
-    required this.rpmPower,
-    required this.engineType,
-    required this.transmission,
-    required this.drive,
-    required this.volume,
-    required this.timeTo100,
-    required this.cylindersOrder,
-    required this.maxSpeed,
-    required this.compression,
-    required this.cylindersValue,
-    required this.diametr,
-    required this.pistonStroke,
-    required this.engineFeeding,
-    required this.engineOrder,
-    required this.gearValue,
-    required this.moment,
-    required this.petrolType,
-    required this.valves,
-    required this.weight,
-    required this.wheelSize,
-    required this.wheelBase,
-    required this.frontWheelBase,
-    required this.backWheelBase,
-    required this.frontBrake,
-    required this.frontSuspension,
-    required this.backSuspension,
-    required this.height,
-    required this.width,
-    required this.fuelTankCapacity,
-    required this.seats,
-    required this.length,
-    required this.emissionEuroClass,
-    required this.volumeLitres,
-    required this.consumptionMixed,
-    required this.clearance,
-    required this.trunksMinCapacity,
-    required this.trunksMaxCapacity,
-    required this.consumptionHiway,
-    required this.consumptionCity,
-    required this.momentRpm,
-    required this.fullWeight,
-    required this.rangeDistance,
-    required this.batteryCapacity,
-    required this.fuelEmission,
-    required this.electricRange,
-    required this.chargeTime,
-    required this.safetyRating,
-    required this.safetyGrade,
+    this.complectationId,
+    this.backBrake,
+    this.feeding,
+    this.horsePower,
+    this.kvtPower,
+    this.rpmPower,
+    this.engineType,
+    this.transmission,
+    this.drive,
+    this.volume,
+    this.timeTo100,
+    this.cylindersOrder,
+    this.maxSpeed,
+    this.compression,
+    this.cylindersValue,
+    this.diametr,
+    this.pistonStroke,
+    this.engineFeeding,
+    this.engineOrder,
+    this.gearValue,
+    this.moment,
+    this.petrolType,
+    this.valves,
+    this.weight,
+    this.wheelSize,
+    this.wheelBase,
+    this.frontWheelBase,
+    this.backWheelBase,
+    this.frontBrake,
+    this.frontSuspension,
+    this.backSuspension,
+    this.height,
+    this.width,
+    this.fuelTankCapacity,
+    this.seats,
+    this.length,
+    this.emissionEuroClass,
+    this.volumeLitres,
+    this.consumptionMixed,
+    this.clearance,
+    this.trunksMinCapacity,
+    this.trunksMaxCapacity,
+    this.consumptionHiway,
+    this.consumptionCity,
+    this.momentRpm,
+    this.fullWeight,
+    this.rangeDistance,
+    this.batteryCapacity,
+    this.fuelEmission,
+    this.electricRange,
+    this.chargeTime,
+    this.safetyRating,
+    this.safetyGrade,
   });
 
   List<Map<String, dynamic>> getEngineSpecifications() {
@@ -260,6 +261,54 @@ class CarSpecifications {
       safetyGrade: json['safety-grade'] ?? '',
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'complectation_id': complectationId,
+        'drive': drive,
+        'transmission': transmission,
+        'volume': volume,
+        'horse-power': horsePower,
+        'kvt-power': kvtPower,
+        'moment': moment,
+        'moment-rpm': momentRpm,
+        'rpm-power': rpmPower,
+        'cylinders-order': cylindersOrder,
+        'cylinders-value': cylindersValue,
+        'valves': valves,
+        'engine-feeding': engineFeeding,
+        'compression': compression,
+        'diametr': diametr,
+        'piston-stroke': pistonStroke,
+        'electric-range': electricRange,
+        'battery-capacity': batteryCapacity,
+        'charge-time': chargeTime,
+        'weight': weight,
+        'wheel-size': wheelSize,
+        'wheel-base': wheelBase,
+        'front-wheel-base': frontWheelBase,
+        'back-wheel-base': backWheelBase,
+        'front-brake': frontBrake,
+        'front-suspension': frontSuspension,
+        'back-suspension': backSuspension,
+        'height': height,
+        'width': width,
+        'fuel-tank-capacity': fuelTankCapacity,
+        'seats': seats,
+        'length': length,
+        'emission-euro-class': emissionEuroClass,
+        'volume-litres': volumeLitres,
+        'consumption-mixed': consumptionMixed,
+        'clearance': clearance,
+        'trunks-min-capacity': trunksMinCapacity,
+        'trunks-max-capacity': trunksMaxCapacity,
+        'consumption-hiway': consumptionHiway,
+        'consumption-city': consumptionCity,
+        'full-weight': fullWeight,
+        'range-distance': rangeDistance,
+        'fuel-emission': fuelEmission,
+        'safety-rating': safetyRating,
+        'safety-grade': safetyGrade,
+      };
 }
 
 enum CompareType {

@@ -5,18 +5,21 @@ class MarksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      bottomNavigationBar: _bottomBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _appBar(),
-          SizedBox(height: 5.h),
-          _searchBar(),
-          SizedBox(height: 20.h),
-          _marksScreenBody(),
-        ],
+    return Obx(
+      () => Scaffold(
+        backgroundColor: AppThemeController.to.whiteColor,
+        resizeToAvoidBottomInset: false,
+        bottomNavigationBar: _bottomBar(),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _appBar(),
+            SizedBox(height: 5.h),
+            _searchBar(),
+            SizedBox(height: 20.h),
+            _marksScreenBody(),
+          ],
+        ),
       ),
     );
   }
@@ -27,6 +30,7 @@ class MarksScreen extends StatelessWidget {
   Widget _bottomBar() => HomeScreenBottomBarWidget();
 
   AppBar _appBar() => AppBar(
+        backgroundColor: AppThemeController.to.whiteColor,
         title: _appBarText(),
         leading: _iconBack(),
         actions: [_accountIcon(), SizedBox(width: 25.w)],
@@ -35,7 +39,7 @@ class MarksScreen extends StatelessWidget {
   Widget _appBarText() => Text(
         'marks'.tr,
         style: TextStyle(
-          color: primaryColor,
+          color: AppThemeController.to.appBarItemsColor,
           fontSize: 20.fs,
           fontFamily: 'Inter',
           fontWeight: FontWeight.w700,
@@ -51,7 +55,7 @@ class MarksScreen extends StatelessWidget {
             child: SizedBox(
               child: SvgPicture.asset(
                 "assets/svg/back.svg",
-                color: primaryColor,
+                color: AppThemeController.to.appBarItemsColor,
                 fit: BoxFit.scaleDown,
               ),
             ),
@@ -62,6 +66,7 @@ class MarksScreen extends StatelessWidget {
   Widget _accountIcon() => SvgPicture.asset(
         "assets/svg/account_active.svg",
         height: 24.h,
+        color: AppThemeController.to.appBarItemsColor,
         width: 24.w,
       );
 

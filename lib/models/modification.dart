@@ -39,7 +39,7 @@ class Modification {
         "offers-price-to": offersPriceTo,
         "group-name": groupName,
         "modification_title": title,
-        "car-specifications": carSpecifications,
+        "car-specifications": carSpecifications?.toJson(),
         "isLoaded": isLoaded
       };
 

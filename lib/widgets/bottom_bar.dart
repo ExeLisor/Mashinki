@@ -1,4 +1,5 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/main.dart';
 
 class HomeScreenBottomBarWidget extends StatelessWidget {
   HomeScreenBottomBarWidget({super.key});
@@ -6,24 +7,26 @@ class HomeScreenBottomBarWidget extends StatelessWidget {
   final BarController _barController = Get.put(BarController());
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 70.h,
-      padding: EdgeInsets.symmetric(horizontal: 12.w),
-      clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(
-        color: whiteColor,
-        boxShadow: [
-          BoxShadow(
-            color: boxShadowColor,
-            blurRadius: 13,
-            offset: Offset(0, -1),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: _items(),
+    return Obx(
+      () => Container(
+        height: 70.h,
+        padding: EdgeInsets.symmetric(horizontal: 12.w),
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: AppThemeController.to.whiteColor,
+          boxShadow: const [
+            BoxShadow(
+              color: boxShadowColor,
+              blurRadius: 13,
+              offset: Offset(0, -1),
+              spreadRadius: 0,
+            )
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: _items(),
+        ),
       ),
     );
   }

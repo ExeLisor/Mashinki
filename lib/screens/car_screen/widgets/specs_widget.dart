@@ -5,60 +5,65 @@ class CharacteristicsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: whiteColor,
-      width: Get.width,
-      padding: EdgeInsets.only(left: 25.w, top: 20.h, bottom: 25.h),
-      child: Obx(() {
-        Modification modification = CarController.to.car.selectedModification;
+    return Obx(
+      () => Container(
+        color: AppThemeController.to.isDarkTheme
+            ? const Color(0xff19191b)
+            : whiteColor,
+        width: Get.width,
+        padding: EdgeInsets.only(left: 25.w, top: 20.h, bottom: 25.h),
+        child: Obx(() {
+          Modification modification = CarController.to.car.selectedModification;
 
-        final CarSpecifications specs = modification.carSpecifications!;
+          final CarSpecifications specs =
+              modification.carSpecifications ?? CarSpecifications();
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _title(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CarDemensions(),
-                SizedBox(
-                  width: 23.w,
-                ),
-                _detailsColumnFirst(specs),
-              ],
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            _detailsRowFirst(specs),
-            SizedBox(
-              height: 10.h,
-            ),
-            _detailsRowSecond(specs),
-            SizedBox(
-              height: 30.h,
-            ),
-            SpecsBlockWidget(
-                title: "Основные характеристики".tr, specs: _mainSpecs(specs)),
-            SpecsBlockWidget(
-                title: "Характеристики двигателя".tr,
-                specs: _engineSpecs(specs)),
-            SpecsBlockWidget(
-                title: "Подвеска и тормоза".tr,
-                specs: _transmissionSpecs(specs)),
-            SpecsBlockWidget(
-                title: "Размеры и объёмы".tr, specs: _sizesSpecs(specs)),
-            SpecsBlockWidget(
-                title: "Топливная система и расход".tr,
-                specs: _fuelSpecs(specs)),
-            SpecsBlockWidget(
-                title: "Безопасность".tr, specs: _secutitySpecs(specs)),
-            SpecsBlockWidget(title: "Экология".tr, specs: _ecologySpecs(specs)),
-            const OtherResourcesWiget(),
-          ],
-        );
-      }),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _title(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CarDemensions(),
+                  SizedBox(width: 23.w),
+                  _detailsColumnFirst(specs),
+                ],
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              _detailsRowFirst(specs),
+              SizedBox(
+                height: 10.h,
+              ),
+              _detailsRowSecond(specs),
+              SizedBox(
+                height: 30.h,
+              ),
+              SpecsBlockWidget(
+                  title: "Основные характеристики".tr,
+                  specs: _mainSpecs(specs)),
+              SpecsBlockWidget(
+                  title: "Характеристики двигателя".tr,
+                  specs: _engineSpecs(specs)),
+              SpecsBlockWidget(
+                  title: "Подвеска и тормоза".tr,
+                  specs: _transmissionSpecs(specs)),
+              SpecsBlockWidget(
+                  title: "Размеры и объёмы".tr, specs: _sizesSpecs(specs)),
+              SpecsBlockWidget(
+                  title: "Топливная система и расход".tr,
+                  specs: _fuelSpecs(specs)),
+              SpecsBlockWidget(
+                  title: "Безопасность".tr, specs: _secutitySpecs(specs)),
+              SpecsBlockWidget(
+                  title: "Экология".tr, specs: _ecologySpecs(specs)),
+              const OtherResourcesWiget(),
+            ],
+          );
+        }),
+      ),
     );
   }
 
@@ -83,12 +88,12 @@ class CharacteristicsWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            DetailsTile(spec: "Коробка".tr, value: specs.transmission.tr),
+            DetailsTile(spec: "Коробка".tr, value: specs.transmission?.tr),
             SizedBox(width: 19.w),
-            DetailsTile(spec: "Тип двигателя".tr, value: specs.engineType.tr),
+            DetailsTile(spec: "Тип двигателя".tr, value: specs.engineType?.tr),
             SizedBox(width: 19.w),
             DetailsTile(
-                spec: "Топливо".tr, value: specs.petrolType.tr, isSmall: true),
+                spec: "Топливо".tr, value: specs.petrolType?.tr, isSmall: true),
           ],
         ),
       );
@@ -99,7 +104,7 @@ class CharacteristicsWidget extends StatelessWidget {
           children: [
             DetailsTile(spec: "Мощность", value: "${specs.horsePower}"),
             SizedBox(width: 19.w),
-            DetailsTile(spec: "Привод".tr, value: specs.drive.tr),
+            DetailsTile(spec: "Привод".tr, value: specs.drive?.tr),
             SizedBox(width: 19.w),
           ],
         ),
@@ -177,7 +182,8 @@ class ModificationTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) => Obx(
         () {
           Modification modification = CarController.to.car.selectedModification;
-          return modification.isLoaded
+          return modification.isLoaded &&
+                  modification.carSpecifications?.complectationId != null
               ? _modificationTitle()
               : _loadingTitleWidget();
         },
@@ -185,8 +191,9 @@ class ModificationTitleWidget extends StatelessWidget {
 
   Widget _modificationTitle() {
     Modification modification = CarController.to.car.selectedModification;
-    CarSpecifications specification = modification.carSpecifications!;
-    String transmission = getTransmissionAbb(specification.transmission);
+    CarSpecifications specification =
+        modification.carSpecifications ?? CarSpecifications();
+    String transmission = getTransmissionAbb(specification.transmission ?? "");
 
     int? power = specification.horsePower;
     double? volume = specification.volumeLitres;
@@ -194,14 +201,19 @@ class ModificationTitleWidget extends StatelessWidget {
     String title =
         "${modification.groupName ?? ""} $volume $transmission $power $privod"
             .trim();
+
+    if (specification.complectationId == null) title = "Базовая";
     return Container(
       margin: EdgeInsets.only(bottom: 40.h),
-      child: Text(
-        title,
-        style: TextStyle(
-          color: blackColor,
-          fontSize: 18.fs,
-          fontWeight: FontWeight.w600,
+      child: Obx(
+        () => Text(
+          title,
+          style: TextStyle(
+            color:
+                AppThemeController.to.isDarkTheme ? Colors.white : primaryColor,
+            fontSize: 18.fs,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );
@@ -227,9 +239,9 @@ class CarDemensions extends StatelessWidget {
         () {
           Modification modification = CarController.to.car.selectedModification;
 
-          final CarSpecifications specs = modification.carSpecifications!;
-          return modification.isLoaded
-              ? _carDemensions(specs)
+          final CarSpecifications? specs = modification.carSpecifications;
+          return modification.isLoaded && specs?.complectationId != null
+              ? _carDemensions(specs!)
               : _loadingWidget();
         },
       );
@@ -248,17 +260,9 @@ class CarDemensions extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _carHeight(specs),
-              SizedBox(
-                width: 15.h,
-              ),
-              _carImage()
-            ],
+            children: [_carHeight(specs), SizedBox(width: 15.h), _carImage()],
           ),
-          SizedBox(
-            height: 15.h,
-          ),
+          SizedBox(height: 15.h),
           _carLenght(specs)
         ],
       );
@@ -276,6 +280,7 @@ class CarDemensions extends StatelessWidget {
         width: 223.w,
         child: SvgPicture.asset(
           bodyType.assetPath,
+          color: AppThemeController.to.isDarkTheme ? whiteColor : blackColor,
           clipBehavior: Clip.antiAlias,
           height: 80.h,
           fit: BoxFit.contain,
@@ -321,6 +326,7 @@ class CarDemensions extends StatelessWidget {
         child: SvgPicture.asset(
           isShort ? shortArrow : longArrow,
           width: isShort ? null : 89.w,
+          color: AppThemeController.to.isDarkTheme ? whiteColor : primaryColor,
         ),
       );
 
@@ -329,7 +335,8 @@ class CarDemensions extends StatelessWidget {
         child: Text(
           size,
           style: TextStyle(
-            color: primaryColor,
+            color:
+                AppThemeController.to.isDarkTheme ? whiteColor : primaryColor,
             fontSize: 13.fs,
             fontWeight: FontWeight.w400,
             height: 0.0,
@@ -346,14 +353,16 @@ class DetailsTile extends StatelessWidget {
       this.isSmall = false});
 
   final String spec;
-  final String value;
+  final String? value;
   final bool isSmall;
 
   @override
   Widget build(BuildContext context) => Obx(() {
         Modification modification = CarController.to.car.selectedModification;
 
-        return modification.isLoaded ? _detailsTile() : _loadingWidget();
+        return modification.isLoaded && value != null && value != "null"
+            ? _detailsTile()
+            : _loadingWidget();
       });
 
   Widget _loadingWidget() => ShimmerWidget(
@@ -365,7 +374,9 @@ class DetailsTile extends StatelessWidget {
       height: 67.h,
       width: isSmall ? 80.w : 122.w,
       decoration: BoxDecoration(
-        color: boneColor,
+        color: AppThemeController.to.isDarkTheme
+            ? const Color(0xff292929)
+            : boneColor,
         borderRadius: BorderRadius.circular(20.h),
       ),
       child: child);
@@ -391,10 +402,11 @@ class DetailsTile extends StatelessWidget {
               height: 5.h,
             ),
             Text(
-              value,
+              value ?? "",
               textScaler: const TextScaler.linear(0.85),
               style: TextStyle(
-                color: blackColor,
+                color:
+                    AppThemeController.to.isDarkTheme ? whiteColor : blackColor,
                 fontSize: 14.fs,
                 fontWeight: FontWeight.w400,
               ),

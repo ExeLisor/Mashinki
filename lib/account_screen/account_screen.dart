@@ -1,4 +1,5 @@
 import 'package:autoverse/exports.dart';
+
 import 'package:autoverse/services/lang_service.dart';
 
 class AccountScreen extends GetView<SettingsController> {
@@ -6,12 +7,12 @@ class AccountScreen extends GetView<SettingsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _homeScreen(),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () =>
-              LocalizationService.to.updateLocale(const Locale('en', 'US'))),
-      bottomNavigationBar: HomeScreenBottomBarWidget(),
+    return Obx(
+      () => Scaffold(
+        body: _homeScreen(),
+        backgroundColor: AppThemeController.to.whiteColor,
+        bottomNavigationBar: HomeScreenBottomBarWidget(),
+      ),
     );
   }
 
@@ -28,37 +29,46 @@ class AccountScreen extends GetView<SettingsController> {
         ),
       );
 
-  AppBar _appBar() => AppBar(
+  Widget _appBar() => Obx(() => AppBar(
+        backgroundColor: AppThemeController.to.whiteColor,
         title: _appBarText(),
         leading: _iconBack(),
         centerTitle: true,
-      );
+      ));
 
-  Widget _appBarText() => Text(
-        'Профиль',
-        style: TextStyle(
-          color: primaryColor,
-          fontSize: 20.fs,
-          fontWeight: FontWeight.w700,
+  Widget _appBarText() => Obx(
+        () => Text(
+          'Профиль',
+          style: TextStyle(
+            color:
+                AppThemeController.to.isDarkTheme ? Colors.white : primaryColor,
+            fontSize: 20.fs,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       );
-  Widget _iconBack() => GestureDetector(
-        onTap: Get.back,
-        child: Padding(
-          padding: EdgeInsets.only(left: 4.0.w),
-          child: Container(
-            decoration:
-                BoxDecoration(border: Border.all(color: Colors.transparent)),
-            child: Center(
-              child: SvgPicture.asset(
-                "assets/svg/back.svg",
+  Widget _iconBack() => Obx(
+        () => GestureDetector(
+          onTap: Get.back,
+          child: Padding(
+            padding: EdgeInsets.only(left: 4.0.w),
+            child: Container(
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.transparent)),
+              child: Center(
+                child: SvgPicture.asset(
+                  "assets/svg/back.svg",
+                  color: AppThemeController.to.isDarkTheme
+                      ? Colors.white
+                      : primaryColor,
+                ),
               ),
             ),
           ),
         ),
       );
 
-  Widget _theme() => AccountSettingsSelector(controller: ThemeController());
+  Widget _theme() => const ThemeSelector();
 
   Widget _language() => const LanguageSelector();
 
@@ -80,13 +90,17 @@ class AccountScreen extends GetView<SettingsController> {
                 padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 25.w),
                 child: Row(
                   children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: primaryColor,
-                        fontSize: 16.fs,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
+                    Obx(
+                      () => Text(
+                        title,
+                        style: TextStyle(
+                          color: AppThemeController.to.isDarkTheme
+                              ? paleColor
+                              : primaryColor,
+                          fontSize: 16.fs,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],
@@ -149,7 +163,7 @@ class LanguageSelector extends GetView<LanguageController> {
           controller.title.value, // Слушаем изменения title
           textAlign: TextAlign.start,
           style: TextStyle(
-            color: primaryColor,
+            color: AppThemeController.to.isDarkTheme ? paleColor : primaryColor,
             fontSize: 16.fs,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w600,
@@ -176,15 +190,17 @@ class LanguageSelector extends GetView<LanguageController> {
             () => Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  value.tr,
-                  style: TextStyle(
-                    color: blackColor,
-                    fontSize: 16.fs,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
+                Obx(
+                  () => Text(
+                    value.tr,
+                    style: TextStyle(
+                      color: AppThemeController.to.blackColor,
+                      fontSize: 16.fs,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.start,
                   ),
-                  textAlign: TextAlign.start,
                 ),
                 controller.isSelected(value)
                     ? SvgPicture.asset("assets/svg/check.svg",
@@ -199,13 +215,8 @@ class LanguageSelector extends GetView<LanguageController> {
   }
 }
 
-class AccountSettingsSelector<T extends SettingsMixin> extends StatelessWidget {
-  const AccountSettingsSelector({
-    super.key,
-    required this.controller,
-  });
-
-  final T controller;
+class ThemeSelector extends GetView<ThemeController> {
+  const ThemeSelector({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -231,7 +242,7 @@ class AccountSettingsSelector<T extends SettingsMixin> extends StatelessWidget {
           controller.title.value, // Слушаем изменения title
           textAlign: TextAlign.start,
           style: TextStyle(
-            color: primaryColor,
+            color: AppThemeController.to.isDarkTheme ? paleColor : primaryColor,
             fontSize: 16.fs,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w600,
@@ -258,15 +269,17 @@ class AccountSettingsSelector<T extends SettingsMixin> extends StatelessWidget {
             () => Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  value.tr,
-                  style: TextStyle(
-                    color: blackColor,
-                    fontSize: 16.fs,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
+                Obx(
+                  () => Text(
+                    value.tr,
+                    style: TextStyle(
+                      color: AppThemeController.to.blackColor,
+                      fontSize: 16.fs,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.start,
                   ),
-                  textAlign: TextAlign.start,
                 ),
                 controller.isSelected(value)
                     ? SvgPicture.asset("assets/svg/check.svg",
@@ -297,6 +310,42 @@ class ThemeController extends GetxController with SettingsMixin {
     selectedSetting.value = "theme-light";
     settings.addAll(['theme-light', 'theme-dark', 'theme-system']);
   }
+
+  @override
+  void onInit() async {
+    super.onInit();
+    String? theme = await loadData("theme");
+
+    if (theme != null) {
+      select(theme);
+      AppThemeController.to.toggleTheme(theme: theme == "theme-dark");
+    }
+
+    if (theme == null || theme == "theme-system") {
+      var brightness = MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+          .platformBrightness;
+      select(brightness == Brightness.light ? "theme-light" : "theme-dark");
+      AppThemeController.to.toggleTheme(theme: brightness != Brightness.light);
+    }
+  }
+
+  @override
+  void select(String value) {
+    super.select(value);
+
+    if (value == "theme-system") {
+      var brightness = MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+          .platformBrightness;
+      AppThemeController.to.toggleTheme(theme: brightness != Brightness.light);
+    } else {
+      changeTheme(value == "theme-dark");
+    }
+
+    saveData("theme", value);
+  }
+
+  void changeTheme(bool? theme) =>
+      AppThemeController.to.toggleTheme(theme: theme);
 }
 
 class LanguageController extends GetxController with SettingsMixin {

@@ -8,6 +8,7 @@ void main() async {
 
   final firebaseController = Get.put(FirebaseController(), permanent: true);
   final supabaseController = Get.put(SupabaseController(), permanent: true);
+  Get.put(AppThemeController(), permanent: true);
   final localizationService = Get.put(LocalizationService());
   await localizationService
       .loadLocalizations(); // Гарантируем загрузку локализации
@@ -147,10 +148,82 @@ class InititalBindingsClass extends Bindings {
     Get.lazyPut(() => ModelsController());
     Get.lazyPut(() => FirebaseController());
     WeeklyCarsBinding().dependencies();
-    // CarCatalogBinding().dependencies();
+    CarCatalogBinding().dependencies();
     FavoriteBinding().dependencies();
     FiltersBinding().dependencies();
     CarBinding().dependencies();
     LanguageBinding().dependencies();
+  }
+}
+
+class AppThemeController extends GetxController {
+  static AppThemeController get to => Get.find();
+
+  final RxBool _isDarkTheme = false.obs;
+
+  bool get isDarkTheme => _isDarkTheme.value;
+
+  // Rx-цвета, которые будут автоматически обновляться
+  final Rx<Color> _primaryColor = const Color(0xFF4038FF).obs;
+  final Rx<Color> _paleColor = const Color(0xff7974FF).obs;
+  final Rx<Color> _unactiveColor = const Color(0xffA7A7A7).obs;
+  final Rx<Color> _boneColor = const Color(0xffF3F3F3).obs;
+  final Rx<Color> _whiteColor = Colors.white.obs;
+  final Rx<Color> _blackColor = Colors.black.obs;
+  final Rx<Color> _greyColor = const Color(0xff848484).obs;
+  final Rx<Color> _boxShadowColor = const Color(0x0F000000).obs;
+  final Rx<Color> _greySurface = const Color(0xffE2E2E2).obs;
+  final Rx<Color> _greyBackground = const Color(0xffEEEEEE).obs;
+  final Rx<Color> _searchContainerColor = Colors.white.obs;
+  final Rx<Color> _appBarItemsColor = const Color(0xFF4038FF).obs;
+  final Rx<Color> _textColor = Colors.black.obs;
+  Color get textColor => _textColor.value;
+
+  Color get primaryColor => _primaryColor.value;
+  Color get paleColor => _paleColor.value;
+  Color get unactiveColor => _unactiveColor.value;
+  Color get boneColor => _boneColor.value;
+  Color get whiteColor => _whiteColor.value;
+  Color get blackColor => _blackColor.value;
+  Color get greyColor => _greyColor.value;
+  Color get boxShadowColor => _boxShadowColor.value;
+  Color get greySurface => _greySurface.value;
+  Color get greyBackground => _greyBackground.value;
+  Color get searchContainerColor => _searchContainerColor.value;
+  Color get appBarItemsColor => _appBarItemsColor.value;
+
+  // Метод для переключения темы и обновления значений цветов
+  void toggleTheme({bool? theme}) {
+    _isDarkTheme.value = theme ?? !_isDarkTheme.value;
+
+    if (isDarkTheme) {
+      _primaryColor.value = const Color(0xFF303F9F);
+      _paleColor.value = const Color(0xff616161);
+      _unactiveColor.value = const Color(0xffBDBDBD);
+      _boneColor.value = const Color(0xff212121);
+      _whiteColor.value = const Color(0xff19191B);
+      _blackColor.value = Colors.white;
+      _greyColor.value = const Color(0xff757575);
+      _boxShadowColor.value = const Color(0x0F000000);
+      _greySurface.value = const Color(0xff424242);
+      _greyBackground.value = const Color(0xff292929);
+      _searchContainerColor.value = const Color(0xff292929);
+      _appBarItemsColor.value = Colors.white;
+      _textColor.value = Colors.white;
+    } else {
+      _primaryColor.value = const Color(0xFF4038FF);
+      _paleColor.value = const Color(0xff7974FF);
+      _unactiveColor.value = const Color(0xffA7A7A7);
+      _boneColor.value = const Color(0xffF3F3F3);
+      _whiteColor.value = Colors.white;
+      _blackColor.value = Colors.black;
+      _greyColor.value = const Color(0xff848484);
+      _boxShadowColor.value = const Color(0x0F000000);
+      _greySurface.value = const Color(0xffE2E2E2);
+      _greyBackground.value = const Color(0xffEEEEEE);
+      _searchContainerColor.value = Colors.white;
+      _appBarItemsColor.value = const Color(0xFF4038FF);
+      _textColor.value = Colors.black;
+    }
   }
 }
