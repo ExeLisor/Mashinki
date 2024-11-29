@@ -147,6 +147,8 @@ class InititalBindingsClass extends Bindings {
     Get.lazyPut(() => CompareController());
     Get.lazyPut(() => MarksController());
     Get.put(ModelsController(), permanent: true);
+    Get.put (AdsController(),permanent:true);
+    Get.put(LinkController(), permanent: true);
     Get.lazyPut(() => FirebaseController());
     Get.lazyPut(() => MarksSearchController());
     WeeklyCarsBinding().dependencies();

@@ -9,6 +9,7 @@ export 'body_selector_controller.dart';
 export 'compare_controller.dart';
 export 'favorite_controller.dart';
 export 'supabase_controller.dart';
+export 'deep_links_controller.dart';
 
 export '../screens/log_in_screen/controllers/log_in_text_field_controller.dart';
 export '../screens/home_screen/controllers.dart/home_screen_controller.dart';
