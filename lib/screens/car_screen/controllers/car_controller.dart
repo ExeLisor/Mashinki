@@ -2,6 +2,7 @@ import 'package:autoverse/exports.dart';
 
 class CarController extends GetxController {
   static CarController get to => Get.find();
+  static AdsController get add => Get.find();
 
   Rx<Status> state = Status.loading.obs;
 
@@ -13,6 +14,7 @@ class CarController extends GetxController {
   Future<Car> openCarPage(Car car, {bool isLoadCar = false}) async {
     _emitLoadingState();
     Get.toNamed("/models/${car.configuration.id}");
+    add.showInterstitialAd();
 
     if (isLoadCar) return await _loadCar(car);
 

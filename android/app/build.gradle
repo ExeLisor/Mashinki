@@ -36,6 +36,9 @@ android {
     namespace = "by.company.autoverse"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
+    kotlinOptions { // добавить
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

@@ -18,7 +18,7 @@
                  <action android:name="android.intent.action.VIEW" />
              <category android:name="android.intent.category.DEFAULT" />
              <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="autoverse.by" android:pathPrefix="test/" />
+                <data android:scheme="https" android:host="autoverse.by" android:pathPrefix="/test/" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -39,7 +39,7 @@
               />
             <meta-data
               android:name="com.google.android.gms.ads.APPLICATION_ID"
-              android:value="ca-app-pub-9690417339805409~2292515363"/>
+              android:value="ca-app-pub-5487316505591393~2752860305"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
