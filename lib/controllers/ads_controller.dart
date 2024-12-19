@@ -7,7 +7,7 @@ class AdsController extends GetxController {
   RewardedInterstitialAd? rewardedInterstitialAd;
 
   RxBool isBannerAdLoaded = false.obs;
-  RxBool isAdEnabled = true.obs; // возможность отключить рекламу
+  RxBool isAdEnabled = true.obs; 
 
   DateTime? lastComplexActionAdShown;
   Duration complexActionAdInterval = const Duration(seconds: 30); 
@@ -20,7 +20,7 @@ class AdsController extends GetxController {
     loadRewardedInterstitialAd();
   }
 
-  /// Загрузка баннерной рекламы
+  
   Future<void> loadBannerAd() async {
     if (!isAdEnabled.value) return;
 
@@ -55,7 +55,7 @@ class AdsController extends GetxController {
     anchoredAdaptiveAd!.load();
   }
 
-  /// Загрузка Interstitial (полноэкранной) рекламы
+
   Future<void> loadInterstitialAd() async {
     if (!isAdEnabled.value) return;
     await InterstitialAd.load(
@@ -103,7 +103,6 @@ class AdsController extends GetxController {
       onAdDismissedFullScreenContent: (Ad ad) {
         ad.dispose();
         rewardedInterstitialAd = null;
-        // Загрузим следующий экземпляр для будущего показа
         loadRewardedInterstitialAd();
       },
       onAdFailedToShowFullScreenContent: (Ad ad, AdError error) {
@@ -158,7 +157,6 @@ class AdsController extends GetxController {
       return;
     }
 
-    // Допустим, мы хотим показать рекламу через 5 секунд после действия
     Timer(const Duration(seconds: 5), () {
       showRewardedInterstitialAd();
       lastComplexActionAdShown = DateTime.now();
@@ -171,8 +169,6 @@ class AdsController extends GetxController {
 
     rewardedInterstitialAd!.show(
       onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-        // Здесь вы можете выдать пользователю награду
-        // Например, увеличить количество "монет" или "баллов"
         log('User earned reward: ${reward.type}, amount: ${reward.amount}');
       },
     );
