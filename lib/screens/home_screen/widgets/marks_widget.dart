@@ -5,8 +5,14 @@ const double spacing = 25;
 
 class MarksWidget extends GetView<MarksController> {
   const MarksWidget({super.key});
+  static AdsController get add => Get.find();
+  
 
-  void _navigateToMarksScreen() => Get.toNamed("/marks");
+  void _navigateToMarksScreen() {
+    
+    Get.toNamed("/marks");
+    add.showRewardedInterstitialAd();
+    }
 
   @override
   Widget build(BuildContext context) {

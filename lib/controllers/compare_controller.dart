@@ -2,6 +2,7 @@ import 'package:autoverse/exports.dart';
 
 class CompareController extends GetxController {
   static CompareController get to => Get.find();
+  static AdsController get add => Get.find();
 
   final RxList<Car> _comparedCars = <Car>[].obs;
 
@@ -25,6 +26,7 @@ class CompareController extends GetxController {
       isCarCompared(car) ? deleteFromCompare(car) : addToCompare(car);
 
   void addToCompare(Car car) {
+    add.showRewardedInterstitialAd();
     if (isCarCompared(car)) return;
 
     _comparedCars.add(car);
@@ -35,6 +37,7 @@ class CompareController extends GetxController {
   void hideIdentical() => _isHideIdentical.value = !_isHideIdentical.value;
 
   void deleteFromCompare(Car car) {
+    add.showInterstitialAd();
     comparedCars.removeWhere((element) =>
         element.selectedModification.complectationId ==
         car.selectedModification.complectationId);

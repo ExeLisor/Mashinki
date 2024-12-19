@@ -4,6 +4,7 @@ enum Status { success, loading, error }
 
 class ModelsController extends GetxController {
   static ModelsController get to => Get.find();
+  static AdsController get add => Get.find();
 
   final Rxn<Mark> _mark = Rxn<Mark>();
   final RxList<Model> _models = <Model>[].obs;
@@ -55,6 +56,7 @@ class ModelsController extends GetxController {
   bool isMarkModelsAlreadyLoaded(Mark mark) => _mark.value == mark;
 
   Future<void> openModelsPage(Mark mark) async {
+    add.showInterstitialAd();
     Get.toNamed("/${mark.id}/models");
     await _loadModels(mark);
   }

@@ -2,6 +2,7 @@ import 'package:autoverse/exports.dart';
 
 class FavoriteController extends GetxController {
   static FavoriteController get to => Get.find();
+  static AdsController get add => Get.find();
 
   final RxList<Car> _favoriteCars = <Car>[].obs;
   final RxBool _isFavorite = false.obs;
@@ -20,7 +21,7 @@ class FavoriteController extends GetxController {
 
   void addToFavorite(Car car) {
     if (isCarFavorite(car)) return;
-
+    add.showRewardedInterstitialAd();
     _favoriteCars.add(car);
     _isFavorite.value = true;
 
@@ -31,6 +32,7 @@ class FavoriteController extends GetxController {
 
   void removeFromFavorite(Car car) async {
     if (!isCarFavorite(car)) return;
+    add.showInterstitialAd();
 
     _favoriteCars.removeWhere((element) =>
         element.selectedModification.complectationId ==

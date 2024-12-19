@@ -4,6 +4,7 @@ class FavoriteTile extends StatelessWidget {
   const FavoriteTile({super.key, required this.car});
 
   final Car car;
+  static AdsController get add => Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +62,7 @@ class FavoriteTile extends StatelessWidget {
           CompareController controller = CompareController.to;
 
           bool isCarCompared = controller.isCarCompared(car.copyWith());
+          
 
           return IconWidget(
             "assets/svg/comp.svg",
