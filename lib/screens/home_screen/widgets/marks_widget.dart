@@ -67,6 +67,8 @@ class MarksWidget extends GetView<MarksController> {
 
   Widget _image(Mark mark) {
     return ImageContainer(
+      width: containerSize.h,
+      height: containerSize.h,
       imageData: ImageData.mark(id: mark.id ?? ""),
       function: () => ModelsController.to.openModelsPage(mark),
       loadingWidget: const MarkLoadingWidget(),
@@ -75,12 +77,13 @@ class MarksWidget extends GetView<MarksController> {
 
   Widget _markContainer({Widget? child}) => Obx(
         () => Container(
+          clipBehavior: Clip.antiAlias,
           width: containerSize.h,
           height: containerSize.h,
           decoration: BoxDecoration(
             color: AppThemeController.to.isDarkTheme
                 ? const Color(0xff292929)
-                : primaryColor,
+                : whiteColor,
             borderRadius: BorderRadius.circular(15),
             boxShadow: const [
               BoxShadow(

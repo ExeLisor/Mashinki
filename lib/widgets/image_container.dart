@@ -45,20 +45,23 @@ class ImageContainer extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(boxShadow: shadows),
           child: CachedNetworkImage(
-              imageUrl: url,
-              fit: BoxFit.cover,
-              imageBuilder: (context, imageProvider) =>
-                  _imageBuilder(imageProvider),
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  SizedBox(
-                    width: width.h,
-                    height: height.h,
-                  )),
+            imageUrl: url,
+            imageBuilder: _imageBuilder,
+            progressIndicatorBuilder: _progressWidget,
+            fit: BoxFit.cover,
+          ),
         ),
-        // _loadingWidget()),
       );
 
-  Widget _imageBuilder(ImageProvider<Object> image) => _markContainer(
+  Widget _progressWidget(
+          BuildContext context, String url, DownloadProgress progress) =>
+      SizedBox(
+        width: width.h,
+        height: height.h,
+      );
+
+  Widget _imageBuilder(BuildContext context, ImageProvider<Object> image) =>
+      _markContainer(
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -72,6 +75,7 @@ class ImageContainer extends StatelessWidget {
   Widget _markContainer({Widget? child}) => ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(borderRaduis)),
         child: Container(
+          clipBehavior: Clip.antiAlias,
           width: width.h,
           height: height.h,
           margin: margin,
