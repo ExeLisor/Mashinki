@@ -1,6 +1,6 @@
 import 'package:autoverse/exports.dart';
 
-class SelectMarksScreen extends StatelessWidget {
+class SelectMarksScreen extends GetView<MarkSelectController> {
   const SelectMarksScreen({super.key});
 
   @override
@@ -9,32 +9,44 @@ class SelectMarksScreen extends StatelessWidget {
       () => Scaffold(
         backgroundColor: AppThemeController.to.whiteColor,
         resizeToAvoidBottomInset: false,
-
         bottomNavigationBar: _bottomBar(),
-        // persistentFooterButtons: const [],
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
+        body: Stack(
           children: [
-            _appBar(),
-            SizedBox(height: 5.h),
-            _searchBar(),
-            SizedBox(height: 20.h),
-            _marksScreenBody(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _appBar(),
+                SizedBox(height: 5.h),
+                _searchBar(),
+                SizedBox(height: 20.h),
+                _marksScreenBody(),
+              ],
+            ),
+            _selectButtons()
           ],
         ),
       ),
     );
   }
 
-  Widget _selectButtons() => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [_clearButton(), _applyButton()],
+  Widget _selectButtons() => Obx(
+        () => controller.selectedMarks.isNotEmpty
+            ? Align(
+                alignment: Alignment.bottomCenter,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [_clearButton(), _applyButton()],
+                ),
+              )
+            : Container(),
       );
 
-  Widget _clearButton() => _button('Сбросить', Colors.white, paleColor, () {});
+  Widget _clearButton() =>
+      _button('Сбросить', Colors.white, paleColor, controller.clear);
 
-  Widget _applyButton() => _button('Применить', paleColor, Colors.white, () {});
+  Widget _applyButton() =>
+      _button('Применить', paleColor, Colors.white, controller.addMarks);
 
   Widget _button(String text, Color buttonColor, Color textColor,
           VoidCallback? onTap) =>
@@ -242,11 +254,15 @@ class MarkSelectController extends GetxController {
       _selectedMarks.removeWhere((element) => element.id == mark.id);
 
   void clear() => _selectedMarks.clear();
+
+  void addMarks() {
+    Get.back();
+  }
 }
 
 void navgiteToSelectMarks() {
   Get.put(MarkSelectController());
   MarksSearchController.to.clearSearch();
-  MarkSelectController.to.clear();
+
   Get.toNamed('/selectMarks');
 }

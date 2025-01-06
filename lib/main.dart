@@ -2,7 +2,7 @@ import 'package:autoverse/exports.dart';
 import 'package:autoverse/services/lang_service.dart';
 
 import 'screens/filters_screen/widgets/option_selector.dart';
-import 'screens/marks_screen/select_marks_screen.dart';
+import 'screens/filters_screen/select_marks_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

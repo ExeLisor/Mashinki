@@ -1,5 +1,5 @@
 import 'package:autoverse/exports.dart';
-import 'package:autoverse/screens/marks_screen/select_marks_screen.dart';
+import 'package:autoverse/screens/filters_screen/select_marks_screen.dart';
 
 class MarkGridTile extends StatelessWidget {
   const MarkGridTile({super.key, required this.mark, this.isSelect = false});
