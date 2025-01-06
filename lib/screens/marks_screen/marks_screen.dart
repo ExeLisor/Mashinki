@@ -9,11 +9,12 @@ class MarksScreen extends StatelessWidget {
       () => Scaffold(
         backgroundColor: AppThemeController.to.whiteColor,
         resizeToAvoidBottomInset: false,
+        appBar: _appBar(),
         bottomNavigationBar: _bottomBar(),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            _appBar(),
             SizedBox(height: 5.h),
             _searchBar(),
             SizedBox(height: 20.h),
@@ -24,8 +25,11 @@ class MarksScreen extends StatelessWidget {
     );
   }
 
-  Widget _searchBar() =>
-      CarsSearchBar(showFilters: false, controller: MarksSearchController.to);
+  Widget _searchBar() => CarsSearchBar(
+        showFilters: false,
+        controller: MarksSearchController.to,
+        isDevelop: false,
+      );
 
   Widget _bottomBar() => HomeScreenBottomBarWidget();
 
@@ -36,14 +40,18 @@ class MarksScreen extends StatelessWidget {
         actions: [_accountIcon(), SizedBox(width: 25.w)],
       );
 
-  Widget _appBarText() => Text(
-        'marks'.tr,
-        style: TextStyle(
-          color: AppThemeController.to.appBarItemsColor,
-          fontSize: 20.fs,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w700,
-        ),
+  Widget _appBarText() => Column(
+        children: [
+          Text(
+            'marks'.tr,
+            style: TextStyle(
+              color: AppThemeController.to.appBarItemsColor,
+              fontSize: 20.fs,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
       );
   Widget _iconBack() => GestureDetector(
         onTap: Get.back,
@@ -72,20 +80,18 @@ class MarksScreen extends StatelessWidget {
 
   Widget _marksScreenBody() => GetBuilder<MarksSearchController>(
         builder: (controller) => controller.query.isNotEmpty
-            ? _searchingResults(controller.results)
+            ? controller.isSearching
+                ? _loadingWidget()
+                : _searchingResults(controller.results)
             : const AlphabetWidget(),
-
-        // : _recentSearch(),
       );
+  Widget _loadingWidget() =>
+      const Expanded(child: Center(child: CircularProgressIndicator()));
 
   Widget _searchingResults(List<Mark> result) => Expanded(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
-          child: SingleChildScrollView(
-            child: MarksGrid(marks: result),
-          ),
-        ),
-      );
+      child: result.isEmpty
+          ? Center(child: Text("🚗❓🤷‍♂️", style: TextStyle(fontSize: 40.fs)))
+          : SingleChildScrollView(child: MarksGrid(marks: result)));
 
   Widget _recentSearch() => ListView.builder(
         shrinkWrap: true,

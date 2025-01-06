@@ -13,20 +13,22 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
       this.showFilters = true,
       this.searchIconColor = blackColor,
       this.controller,
-      this.filterAction});
+      this.filterAction,
+      this.isDevelop = true});
 
   final bool isActive;
   final bool showFilters;
   final Color searchIconColor;
   final T? controller;
   final VoidCallback? filterAction;
+  final bool isDevelop;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.w),
       child: GestureDetector(
-        onTap: () => showSnackBar("In development"),
+        onTap: () => isDevelop ? showSnackBar("In development") : null,
         child: Row(
           children: [_searchContainer(), _filterButton()],
         ),
@@ -108,14 +110,18 @@ class CarsSearchBar<T extends SearchFieldController> extends StatelessWidget {
 
   Widget _searchField() => Obx(
         () => TextField(
-          enabled: false,
+          enabled: !isDevelop,
           textAlignVertical: TextAlignVertical.center,
+          style: TextStyle(
+              color: AppThemeController.to.isDarkTheme
+                  ? Colors.white
+                  : Colors.black),
           decoration: decoration(),
+          onChanged: controller?.startSearch,
         ),
       );
 
   InputDecoration decoration() => InputDecoration(
-      // suffixIcon: showFilters ? _filtersIcon() : null,
       filled: true,
       fillColor: AppThemeController.to.searchContainerColor,
       border: OutlineInputBorder(

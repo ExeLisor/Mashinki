@@ -36,13 +36,13 @@ class MarksController extends GetxController {
     try {
       if (popularMarks.isNotEmpty) return popularMarks;
 
-      dynamic cache = await loadData("popularMarks");
-      if (cache != null) return marksFromJson(cache);
+      final cache = await loadData("popularMarks");
+      if (cache != null) return popularMarks = marksFromJson(cache);
 
-      List<Mark> marks = await SupabaseController.to.getPopularMarks();
-      await saveData("popularMarks", marksToJson(marks));
+      List<Mark> popular = await SupabaseController.to.getPopularMarks();
+      await saveData("popularMarks", marksToJson(popular));
 
-      return marks;
+      return popular;
     } catch (e) {
       logW(e);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -55,8 +55,8 @@ class MarksController extends GetxController {
 
   Future<List<Mark>> getAllMarks() async {
     try {
-      dynamic cache = await loadData("marks");
-      if (cache != null) return marksFromJson(cache);
+      final cache = await loadData("marks");
+      if (cache != null) return marks = marksFromJson(cache);
 
       marks = await SupabaseController.to.getMarks();
       await saveData("marks", marksToJson(marks));
@@ -82,9 +82,27 @@ class MarksSearchController extends GetxController
     implements SearchFieldController {
   static MarksSearchController get to => Get.find();
 
+  final RxBool _isSearching = false.obs;
+  bool get isSearching => _isSearching.value;
+  set isSearching(bool value) => _isSearching.value = value;
+
+  final RxString _query = "".obs;
+  String get query => _query.value;
+  set query(String value) => _query.value = value;
+
   List<Mark> results = <Mark>[];
-  String query = "";
+
   List<String> recentSearch = [];
+
+  @override
+  void onInit() {
+    super.onInit();
+    debounce(
+      _query,
+      (value) => search(),
+      time: const Duration(milliseconds: 1500),
+    );
+  }
 
   @override
   TextEditingController controller = TextEditingController();
@@ -94,25 +112,36 @@ class MarksSearchController extends GetxController
     query = "";
     controller.text = "";
     results = <Mark>[];
+    isSearching = false;
+  }
+
+  void search() {
+    final List<Mark> marks = List.from(MarksController.to.marks);
+    isSearching = true;
+    if (query.isEmpty) {
+      results = [];
+      isSearching = false;
+      return;
+    }
+
+    results = marks.where(
+      (Mark mark) {
+        final String name = mark.name!.toLowerCase();
+        final String cirillicName = mark.cyrillicName!.toLowerCase();
+        final String input = query.toLowerCase();
+
+        return name.contains(input) || cirillicName.contains(input);
+      },
+    ).toList();
+    isSearching = false;
+    update();
   }
 
   @override
   void startSearch(String text) {
+    isSearching = true;
+
     query = text;
-
-    if (query.isEmpty) {
-      results = [];
-    } else {
-      results = MarksController.to.marks.where(
-        (Mark mark) {
-          final String name = mark.name!.toLowerCase();
-          final String cirillicName = mark.cyrillicName!.toLowerCase();
-          final String input = query.toLowerCase();
-
-          return name.contains(input) || cirillicName.contains(input);
-        },
-      ).toList();
-    }
 
     update();
   }
@@ -121,4 +150,9 @@ class MarksSearchController extends GetxController
     MarksSearchController.to.controller.text = recentText;
     startSearch(recentText);
   }
+}
+
+class MarksSearchBinding extends Bindings {
+  @override
+  void dependencies() => Get.lazyPut(() => MarksSearchController());
 }

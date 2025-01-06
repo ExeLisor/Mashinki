@@ -111,7 +111,7 @@ class _MainAppState extends State<MainApp> {
         name: '/marks',
         page: () => const MarksScreen(),
         transition: Transition.cupertino,
-        bindings: [AlphabetBinding()]),
+        bindings: [AlphabetBinding(), MarksSearchBinding()]),
     GetPage(
       name: '/compare',
       page: () => const CompareScreen(),
@@ -147,7 +147,7 @@ class InititalBindingsClass extends Bindings {
     Get.lazyPut(() => CompareController());
     Get.lazyPut(() => MarksController());
     Get.put(ModelsController(), permanent: true);
-    Get.put (AdsController(),permanent:true);
+    Get.put(AdsController(), permanent: true);
     Get.put(LinkController(), permanent: true);
     Get.lazyPut(() => FirebaseController());
     Get.lazyPut(() => MarksSearchController());

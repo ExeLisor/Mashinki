@@ -10,6 +10,7 @@ class CompareScreen extends StatelessWidget {
         body: CompareController.to.comparedCars.isEmpty ? _noCars() : _body(),
         bottomNavigationBar: HomeScreenBottomBarWidget(),
       );
+
   AppBar _appBar() => AppBar(
         backgroundColor: AppThemeController.to.whiteColor,
         title: _appBarText(),

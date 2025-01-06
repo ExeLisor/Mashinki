@@ -86,9 +86,9 @@ class AlphabetController extends GetxController {
     return result;
   }
 
-  List<Mark> _getPopularMarks() => MarksController.to.popularMarks;
+  List<Mark> _getPopularMarks() => List.from(MarksController.to.popularMarks);
 
-  List<Mark> _getAllMarks() => MarksController.to.marks;
+  List<Mark> _getAllMarks() => List.from(MarksController.to.marks);
 
   void scrollToIndex(int index) => itemScrollController.scrollTo(
         index: index,

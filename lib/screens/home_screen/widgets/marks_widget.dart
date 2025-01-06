@@ -6,7 +6,10 @@ const double spacing = 25;
 class MarksWidget extends GetView<MarksController> {
   const MarksWidget({super.key});
 
-  void _navigateToMarksScreen() => Get.toNamed("/marks");
+  void _navigateToMarksScreen() {
+    MarksSearchController.to.clearSearch();
+    Get.toNamed("/marks");
+  }
 
   @override
   Widget build(BuildContext context) {
