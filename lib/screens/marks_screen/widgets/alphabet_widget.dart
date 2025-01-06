@@ -77,7 +77,8 @@ class AlphabetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _alphabet();
 
-  Widget _alphabet() => SizedBox(
+  Widget _alphabet() => Container(
+        margin: EdgeInsets.only(bottom: 10.h),
         height: 36.h,
         child: ListView(
           controller: AlphabetController.to.horizontalController,
