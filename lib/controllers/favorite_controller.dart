@@ -11,10 +11,8 @@ class FavoriteController extends GetxController {
 
   @override
   void onInit() async {
-    log("ON INIT");
     _favoriteCars.value = await getFavoriteCarsFromPreferences();
 
-    log(_favoriteCars.length);
     super.onInit();
   }
 

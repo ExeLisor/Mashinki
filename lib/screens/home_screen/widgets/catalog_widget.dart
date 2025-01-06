@@ -90,14 +90,15 @@ class CatalogTile extends StatelessWidget {
     );
   }
 
+  void _openCarPage() => CarController.to.openCarPage(car, isLoadCar: true);
+
   Widget _carImage() => Stack(
         children: [
           GestureDetector(
-            onTap: () => CarController.to.openCarPage(car, isLoadCar: true),
+            onTap: _openCarPage,
             child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(24),
-              ),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(24)),
               child: Container(
                 height: 225.h,
                 width: 363.w,
@@ -109,27 +110,84 @@ class CatalogTile extends StatelessWidget {
               ),
             ),
           ),
-          _iconsRow()
+          Padding(
+            padding: EdgeInsets.only(right: 15.0.w, left: 15.w, top: 13.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _tags(),
+                _iconsRow(),
+              ],
+            ),
+          )
         ],
       );
-  Widget _iconsRow() => Padding(
-        padding: EdgeInsets.only(right: 15.0.w, top: 13.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            _addToCompare(),
-            SizedBox(
-              width: 10.w,
-            ),
-            _addToFavorite()
-          ],
-        ),
+  Widget _iconsRow() => Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [_addToCompare(), SizedBox(width: 10.w), _addToFavorite()],
       );
+
+  Widget _tags() => Row(
+        children: [
+          _tag(shortTransmission(
+              car.selectedModification.carSpecifications?.transmission)),
+          SizedBox(width: 10.w),
+          _tag((car.selectedModification.carSpecifications?.engineType ?? "")
+              .tr),
+          SizedBox(width: 10.w),
+          _tag(horsePower(
+              car.selectedModification.carSpecifications?.horsePower)),
+        ],
+      );
+
+  String? horsePower(int? horsePower) => horsePower.isNullOrEmpty
+      ? null
+      : double.parse((horsePower ?? 0).toString()).toString();
+
+  String? shortTransmission(String? transmission) {
+    if (transmission.isNullOrEmpty) return null;
+
+    String short = (transmission ?? "").tr;
+    switch (short) {
+      case "автоматическая":
+        return "автомат";
+      case "automatic":
+        return "automat";
+      case "механическая":
+        return "механика";
+
+      default:
+        return short;
+    }
+  }
+
+  Widget _tag(String? text) => text.isNullOrEmpty
+      ? Container()
+      : Container(
+          height: 32.h,
+          decoration: BoxDecoration(
+            color: blackColor.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(20.h),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: Center(
+            child: Text(
+              text ?? "",
+              style: TextStyle(
+                  fontFamily: "Inter",
+                  fontSize: 14.fs,
+                  fontWeight: FontWeight.w400,
+                  color: whiteColor),
+            ),
+          ),
+        );
+
   Widget _addToFavorite() => Obx(() => _icon(
       "favorite",
       "favorite_active",
       FavoriteController.to.isCarFavorite(car),
       () => FavoriteController.to.addToFavorite(car)));
+
   Widget _addToCompare() => Obx(() => _icon(
       "comp",
       "comp_active",
@@ -236,6 +294,7 @@ class CarCatalogController extends GetxController {
       _cars.value = await SupabaseController.to.getCatalogCars();
     } catch (e) {
       logW(e);
+      _cars.value = [];
       return;
     }
   }
