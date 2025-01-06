@@ -2,8 +2,9 @@ import 'package:autoverse/exports.dart';
 import 'package:autoverse/screens/marks_screen/widgets/mark_tile.dart';
 
 class MarksGrid extends GetView<MarksController> {
-  const MarksGrid({super.key, required this.marks});
+  const MarksGrid({super.key, required this.marks, this.isSelect = false});
 
+  final bool isSelect;
   final List<Mark> marks;
 
   static const SliverGridDelegate _delegate =
@@ -21,7 +22,8 @@ class MarksGrid extends GetView<MarksController> {
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: _delegate,
         itemCount: marks.length,
-        itemBuilder: (context, index) => MarkGridTile(mark: marks[index]));
+        itemBuilder: (context, index) =>
+            MarkGridTile(mark: marks[index], isSelect: isSelect));
   }
 }
 

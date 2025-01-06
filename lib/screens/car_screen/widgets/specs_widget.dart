@@ -225,7 +225,6 @@ class ModificationTitleWidget extends StatelessWidget {
           height: 20.h,
           width: 180.w,
           decoration: const BoxDecoration(
-              color: whiteColor,
               borderRadius: BorderRadius.all(Radius.circular(8))),
         ),
       );
@@ -250,7 +249,7 @@ class CarDemensions extends StatelessWidget {
           height: 120.h,
           width: 258.w,
           decoration: const BoxDecoration(
-              color: whiteColor,
+              color: primaryColor,
               borderRadius: BorderRadius.all(Radius.circular(8))),
         ),
       );
@@ -272,19 +271,14 @@ class CarDemensions extends StatelessWidget {
     CarBodyType bodyType = CarBodyType.fromCyrillicName(
         carController.car.configuration.bodyType ?? "");
 
-    return GestureDetector(
-      onTap: () {
-        log("assets/images/${bodyType.name}.svg");
-      },
-      child: SizedBox(
-        width: 223.w,
-        child: SvgPicture.asset(
-          bodyType.assetPath,
-          color: AppThemeController.to.isDarkTheme ? whiteColor : blackColor,
-          clipBehavior: Clip.antiAlias,
-          height: 80.h,
-          fit: BoxFit.contain,
-        ),
+    return SizedBox(
+      width: 223.w,
+      child: SvgPicture.asset(
+        bodyType.assetPath,
+        color: AppThemeController.to.isDarkTheme ? whiteColor : blackColor,
+        clipBehavior: Clip.antiAlias,
+        height: 80.h,
+        fit: BoxFit.contain,
       ),
     );
   }
@@ -366,8 +360,15 @@ class DetailsTile extends StatelessWidget {
       });
 
   Widget _loadingWidget() => ShimmerWidget(
-        child: _detailContainer(),
-      );
+          child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 11.h),
+        height: 67.h,
+        width: isSmall ? 80.w : 122.w,
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.circular(20.h),
+        ),
+      ));
 
   Widget _detailContainer({Widget? child}) => Container(
       padding: EdgeInsets.symmetric(horizontal: 11.h),

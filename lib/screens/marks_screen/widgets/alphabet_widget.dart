@@ -1,7 +1,9 @@
 import 'package:autoverse/exports.dart';
 
 class AlphabetWidget extends StatelessWidget {
-  const AlphabetWidget({super.key});
+  const AlphabetWidget({super.key, this.isSelect = false});
+
+  final bool isSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,8 @@ class AlphabetWidget extends StatelessWidget {
         ),
       );
 
-  Widget _marks(List<Mark> marks) => MarksGrid(marks: marks);
+  Widget _marks(List<Mark> marks) =>
+      MarksGrid(marks: marks, isSelect: isSelect);
 }
 
 class AlphabetRow extends StatelessWidget {
@@ -75,19 +78,18 @@ class AlphabetRow extends StatelessWidget {
   final Color paleBlueColor = paleColor;
 
   @override
-  Widget build(BuildContext context) => _alphabet();
-
-  Widget _alphabet() => Container(
+  Widget build(BuildContext context) => Container(
         margin: EdgeInsets.only(bottom: 10.h),
         height: 36.h,
-        child: ListView(
+        child: ListView.builder(
           controller: AlphabetController.to.horizontalController,
           scrollDirection: Axis.horizontal,
-          children: [
-            SizedBox(width: 12.5.w),
-            ...List.generate(alphabet.length,
-                (index) => _alphabetTile(alphabet[index], index))
-          ],
+          itemCount: alphabet.length + 1,
+          itemBuilder: (context, index) {
+            if (index == 0) return SizedBox(width: 12.5.w);
+
+            return _alphabetTile(alphabet[index - 1], index - 1);
+          },
         ),
       );
 

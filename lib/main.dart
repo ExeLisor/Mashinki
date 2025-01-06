@@ -2,6 +2,7 @@ import 'package:autoverse/exports.dart';
 import 'package:autoverse/services/lang_service.dart';
 
 import 'screens/filters_screen/widgets/option_selector.dart';
+import 'screens/marks_screen/select_marks_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -113,6 +114,11 @@ class _MainAppState extends State<MainApp> {
         transition: Transition.cupertino,
         bindings: [AlphabetBinding(), MarksSearchBinding()]),
     GetPage(
+        name: '/selectMarks',
+        page: () => const SelectMarksScreen(),
+        transition: Transition.cupertino,
+        bindings: [AlphabetBinding(), MarksSearchBinding()]),
+    GetPage(
       name: '/compare',
       page: () => const CompareScreen(),
       transition: Transition.cupertino,
@@ -151,6 +157,7 @@ class InititalBindingsClass extends Bindings {
     Get.put(LinkController(), permanent: true);
     Get.lazyPut(() => FirebaseController());
     Get.lazyPut(() => MarksSearchController());
+    Get.put(MarkSelectController());
     WeeklyCarsBinding().dependencies();
     CarCatalogBinding().dependencies();
     FavoriteBinding().dependencies();

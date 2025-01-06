@@ -1,7 +1,7 @@
 import 'package:autoverse/exports.dart';
 
-class MarksScreen extends StatelessWidget {
-  const MarksScreen({super.key});
+class SelectMarksScreen extends StatelessWidget {
+  const SelectMarksScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +9,9 @@ class MarksScreen extends StatelessWidget {
       () => Scaffold(
         backgroundColor: AppThemeController.to.whiteColor,
         resizeToAvoidBottomInset: false,
+
         bottomNavigationBar: _bottomBar(),
+        // persistentFooterButtons: const [],
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -24,6 +26,63 @@ class MarksScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _selectButtons() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [_clearButton(), _applyButton()],
+      );
+
+  Widget _clearButton() => _button('Сбросить', Colors.white, paleColor, () {});
+
+  Widget _applyButton() => _button('Применить', paleColor, Colors.white, () {});
+
+  Widget _button(String text, Color buttonColor, Color textColor,
+          VoidCallback? onTap) =>
+      GestureDetector(
+        onTap: onTap,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 10.h),
+          width: 165.w,
+          height: 44.h,
+          clipBehavior: Clip.antiAlias,
+          decoration: ShapeDecoration(
+            color: buttonColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            shadows: const [
+              BoxShadow(
+                color: boxShadowColor,
+                blurRadius: 15,
+                offset: Offset(-1, 10),
+                spreadRadius: 2,
+              ),
+              BoxShadow(
+                color: boxShadowColor,
+                blurRadius: 15,
+                offset: Offset(1, 1),
+                spreadRadius: 2,
+              )
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 15.fs,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Inter',
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 
   Widget _searchBar() => CarsSearchBar(
         showFilters: false,
@@ -83,15 +142,21 @@ class MarksScreen extends StatelessWidget {
             ? controller.isSearching
                 ? _loadingWidget()
                 : _searchingResults(controller.results)
-            : const AlphabetWidget(),
+            : const AlphabetWidget(isSelect: true),
       );
   Widget _loadingWidget() =>
       const Expanded(child: Center(child: CircularProgressIndicator()));
 
   Widget _searchingResults(List<Mark> result) => Expanded(
-      child: result.isEmpty
-          ? Center(child: Text("🚗❓🤷‍♂️", style: TextStyle(fontSize: 40.fs)))
-          : SingleChildScrollView(child: MarksGrid(marks: result)));
+        child: result.isEmpty
+            ? Center(child: Text("🚗❓🤷‍♂️", style: TextStyle(fontSize: 40.fs)))
+            : SingleChildScrollView(
+                child: MarksGrid(
+                  marks: result,
+                  isSelect: true,
+                ),
+              ),
+      );
 
   Widget _recentSearch() => ListView.builder(
         shrinkWrap: true,
@@ -148,4 +213,40 @@ class MarksScreen extends StatelessWidget {
           ),
         ],
       );
+}
+
+class MarkSelectController extends GetxController {
+  static MarkSelectController get to => Get.find();
+
+  final RxList<Mark> _selectedMarks = <Mark>[].obs;
+  List<Mark> get selectedMarks => _selectedMarks;
+
+  @override
+  void onInit() {
+    ever(_selectedMarks, (_) => update());
+    super.onInit();
+  }
+
+  bool checkMark(Mark mark) =>
+      _selectedMarks.any((element) => element.id == mark.id);
+
+  // void actionWithMark(Mark mark) =>
+  //     checkMark(mark) ? removeMark(mark) : addMark(mark);
+
+  void actionWithMark(Mark mark) =>
+      checkMark(mark) ? removeMark(mark) : addMark(mark);
+
+  void addMark(Mark mark) => _selectedMarks.add(mark);
+
+  void removeMark(Mark mark) =>
+      _selectedMarks.removeWhere((element) => element.id == mark.id);
+
+  void clear() => _selectedMarks.clear();
+}
+
+void navgiteToSelectMarks() {
+  Get.put(MarkSelectController());
+  MarksSearchController.to.clearSearch();
+  MarkSelectController.to.clear();
+  Get.toNamed('/selectMarks');
 }

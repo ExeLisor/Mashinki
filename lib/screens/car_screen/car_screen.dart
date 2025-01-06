@@ -53,9 +53,7 @@ class CarScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
       );
 
-  Widget _loadingWidget() => const Center(
-        child: CircularProgressIndicator(),
-      );
+  Widget _loadingWidget() => const Center(child: CircularProgressIndicator());
 
   Widget _carDetails() => Stack(
         children: [
@@ -283,7 +281,8 @@ class CarScreen extends StatelessWidget {
         children: [
           ImageContainer(
             imageData: ImageData.photo(
-                id: CarController.to.car.configuration.id ?? ""),
+              id: CarController.to.car.configuration.id ?? "",
+            ),
             borderRaduis: 0,
             height: 348.h,
             width: double.infinity,

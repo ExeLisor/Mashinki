@@ -1,8 +1,9 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/screens/marks_screen/select_marks_screen.dart';
 
 class MarkGridTile extends StatelessWidget {
-  const MarkGridTile({super.key, required this.mark});
-
+  const MarkGridTile({super.key, required this.mark, this.isSelect = false});
+  final bool isSelect;
   final Mark mark;
 
   @override
@@ -14,34 +15,42 @@ class MarkGridTile extends StatelessWidget {
         ],
       );
 
-  Widget _markContainer({Widget? child}) => Container(
-        width: 75.h,
-        height: 75.h,
-        decoration: BoxDecoration(
-          color: whiteColor,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: const [
-            BoxShadow(
-              color: boxShadowColor,
-              blurRadius: 15,
-              offset: Offset(-1, 10),
-              spreadRadius: 2,
+  Widget _markContainer({Widget? child}) => GetBuilder<MarkSelectController>(
+      builder: (controller) => Container(
+            width: 75.h,
+            height: 75.h,
+            decoration: BoxDecoration(
+              color: whiteColor,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: const [
+                BoxShadow(
+                  color: boxShadowColor,
+                  blurRadius: 15,
+                  offset: Offset(-1, 10),
+                  spreadRadius: 2,
+                ),
+                BoxShadow(
+                  color: boxShadowColor,
+                  blurRadius: 15,
+                  offset: Offset(1, 1),
+                  spreadRadius: 2,
+                )
+              ],
+              border: isSelect && controller.checkMark(mark)
+                  ? Border.all(color: primaryColor, width: 2)
+                  : null,
             ),
-            BoxShadow(
-              color: boxShadowColor,
-              blurRadius: 15,
-              offset: Offset(1, 1),
-              spreadRadius: 2,
-            )
-          ],
-        ),
-        child: child,
-      );
+            child: child,
+          ));
+
+  void _actionWithMark() => isSelect ? _selectMark() : _openModelsPage();
+  void _selectMark() => MarkSelectController.to.actionWithMark(mark);
+  void _openModelsPage() => ModelsController.to.openModelsPage(mark);
 
   Widget _markLogo() => _markContainer(
           child: ImageContainer(
         imageData: ImageData.mark(id: mark.id ?? ""),
-        function: () => ModelsController.to.openModelsPage(mark),
+        function: _actionWithMark,
         loadingWidget: const MarkLoadingWidget(),
       ));
 
@@ -64,17 +73,12 @@ class LoadingMarkGridTile extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         children: [
           _markLogo(),
-          SizedBox(
-            height: 5.h,
-          ),
+          SizedBox(height: 5.h),
           _markName(),
         ],
       );
 
-  Widget _markLogo() => Container(
-      // margin: EdgeInsets.only(bottom: 5.h),
-      // padding: EdgeInsets.all(5.h),
-      child: const MarkLoadingWidget());
+  Widget _markLogo() => const MarkLoadingWidget();
 
   Widget _markName() => Text(
         "",

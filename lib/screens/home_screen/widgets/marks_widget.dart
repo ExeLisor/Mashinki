@@ -3,13 +3,13 @@ import 'package:autoverse/exports.dart';
 const double containerSize = 58;
 const double spacing = 25;
 
+void _navigateToMarksScreen() {
+  MarksSearchController.to.clearSearch();
+  Get.toNamed("/marks");
+}
+
 class MarksWidget extends GetView<MarksController> {
   const MarksWidget({super.key});
-
-  void _navigateToMarksScreen() {
-    MarksSearchController.to.clearSearch();
-    Get.toNamed("/marks");
-  }
 
   @override
   Widget build(BuildContext context) {
