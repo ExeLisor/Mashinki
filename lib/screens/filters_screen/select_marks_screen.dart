@@ -11,24 +11,23 @@ class SelectMarksScreen extends GetView<MarkSelectController> {
         resizeToAvoidBottomInset: false,
         bottomNavigationBar: _bottomBar(),
         body: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _appBar(),
-                SizedBox(height: 5.h),
-                _searchBar(),
-                SizedBox(height: 20.h),
-                _marksScreenBody(),
-              ],
-            ),
-            _selectButtons()
-          ],
+          children: [_body(), _selectButtons()],
         ),
       ),
     );
   }
+
+  Widget _body() => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _appBar(),
+          SizedBox(height: 5.h),
+          _searchBar(),
+          SizedBox(height: 20.h),
+          _marksScreenBody(),
+        ],
+      );
 
   Widget _selectButtons() => Obx(
         () => controller.selectedMarks.isNotEmpty

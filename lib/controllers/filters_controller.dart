@@ -66,38 +66,69 @@ class ModelsSearchController extends GetxController
     implements SearchFieldController {
   static ModelsSearchController get to => Get.find();
 
-  final RxList<Model> _results = <Model>[].obs;
-  final RxString _query = "".obs;
+  final RxBool _isSearching = false.obs;
+  bool get isSearching => _isSearching.value;
+  set isSearching(bool value) => _isSearching.value = value;
 
-  List<Model> get results => _results;
+  final RxString _query = "".obs;
   String get query => _query.value;
+  set query(String value) => _query.value = value;
+
+  List<Model> results = <Model>[];
+
+  List<String> recentSearch = [];
+
+  @override
+  void onInit() {
+    super.onInit();
+    debounce(
+      _query,
+      (value) => search(),
+      time: const Duration(milliseconds: 1500),
+    );
+  }
 
   @override
   TextEditingController controller = TextEditingController();
 
   @override
   void clearSearch() {
-    _query.value = "";
+    query = "";
     controller.text = "";
-    _results.value = <Model>[];
+    results.clear();
+    isSearching = false;
+  }
+
+  void search() {
+    isSearching = true;
+
+    final List<Model> models = List.from(ModelsController.to.models);
+
+    if (query.isEmpty) {
+      results = [];
+      isSearching = false;
+      return;
+    }
+
+    results = models.where(
+      (Model model) {
+        final String name = model.name!.toLowerCase();
+        final String cirillicName = model.cyrillicName!.toLowerCase();
+        final String input = query.toLowerCase();
+
+        return name.contains(input) || cirillicName.contains(input);
+      },
+    ).toList();
+    isSearching = false;
+    update();
   }
 
   @override
   void startSearch(String text) {
-    _query.value = text;
+    isSearching = true;
 
-    if (query.isEmpty) {
-      _results.value = [];
-    } else {
-      _results.value = ModelsController.to.models.where(
-        (Model model) {
-          final String name = model.name!.toLowerCase();
-          final String cirillicName = model.cyrillicName!.toLowerCase();
-          final String input = query.toLowerCase();
+    query = text;
 
-          return name.contains(input) || cirillicName.contains(input);
-        },
-      ).toList();
-    }
+    update();
   }
 }

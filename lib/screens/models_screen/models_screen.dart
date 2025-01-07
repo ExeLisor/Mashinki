@@ -15,25 +15,37 @@ class ModelsScreen extends StatelessWidget {
         backgroundColor: AppThemeController.to.whiteColor,
         bottomNavigationBar: HomeScreenBottomBarWidget(),
         body: Obx(() => ModelsController.to.state.value == Status.success
-            ? _modelsScreenBody()
+            ? _body()
             : _loadingWidget()),
       ),
     );
   }
 
-  Widget _loadingWidget() => const Center(
-        child: CircularProgressIndicator(),
+  Widget _loadingWidget() => const Center(child: CircularProgressIndicator());
+
+  Widget _body() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _appBar(),
+          SizedBox(height: 20.h),
+          _searchBar(),
+          SizedBox(height: 20.h),
+          _modelsView(),
+        ],
       );
-  Widget _modelsScreenBody() => Obx(
-        () => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _appBar(),
-            ModelsSearchController.to.query.isNotEmpty
-                ? _searchingResults()
-                : _modelsListView()
-          ],
-        ),
+
+  Widget _modelsView() => GetBuilder<ModelsSearchController>(
+      builder: (controller) => controller.query.isEmpty
+          ? _modelsListView()
+          : controller.isSearching
+              ? _loadingWidget()
+              : _searchingResults());
+
+  Widget _searchBar() => CarsSearchBar(
+        controller: ModelsSearchController.to,
+        filterAction: navgiteToSelectModels,
+        searchIconColor: primaryColor,
+        isDevelop: false,
       );
 
   Widget _appBar() => Obx(
@@ -117,6 +129,7 @@ class ModelsScreen extends StatelessWidget {
           ),
         ),
       );
+
   void _showModelFilters() => Get.bottomSheet(
         isScrollControlled: true,
         const ModelsFiltersWidget(),
@@ -130,40 +143,30 @@ class ModelsScreen extends StatelessWidget {
 
   Widget _models(List<Model> models) {
     return Expanded(
-      child: Obx(
-        () => ListView(
-          padding: EdgeInsets.only(bottom: 25.h),
-          children: [
-            SizedBox(height: 20.h),
-            CarsSearchBar(
-              controller: ModelsSearchController.to,
-              filterAction: navgiteToSelectModels,
-              searchIconColor: primaryColor,
-              isDevelop: false,
-            ),
-            SizedBox(height: 20.h),
-            ...List.generate(
-              models.length,
-              (index) => Column(
-                children: [
-                  Text(
-                    "${ModelsController.to.mark.name} ${models[index].name ?? ""}",
-                    style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 20.fs,
-                      fontWeight: FontWeight.w700,
-                      height: 0,
-                    ),
+      child: ListView(
+        padding: EdgeInsets.only(bottom: 25.h),
+        children: [
+          ...List.generate(
+            models.length,
+            (index) => Column(
+              children: [
+                Text(
+                  "${ModelsController.to.mark.name} ${models[index].name ?? ""}",
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 20.fs,
+                    fontWeight: FontWeight.w700,
+                    height: 0,
                   ),
-                  _generations(models[index]),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                ],
-              ),
+                ),
+                _generations(models[index]),
+                SizedBox(
+                  height: 15.h,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
