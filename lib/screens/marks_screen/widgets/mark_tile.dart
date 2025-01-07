@@ -15,44 +15,17 @@ class MarkGridTile extends StatelessWidget {
         ],
       );
 
-  Widget _markContainer({Widget? child}) => GetBuilder<MarkSelectController>(
-      builder: (controller) => Container(
-            width: 75.h,
-            height: 75.h,
-            decoration: BoxDecoration(
-              color: whiteColor,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: const [
-                BoxShadow(
-                  color: boxShadowColor,
-                  blurRadius: 15,
-                  offset: Offset(-1, 10),
-                  spreadRadius: 2,
-                ),
-                BoxShadow(
-                  color: boxShadowColor,
-                  blurRadius: 15,
-                  offset: Offset(1, 1),
-                  spreadRadius: 2,
-                )
-              ],
-              border: isSelect && controller.checkMark(mark)
-                  ? Border.all(color: primaryColor, width: 2)
-                  : null,
-            ),
-            child: child,
-          ));
-
   void _actionWithMark() => isSelect ? _selectMark() : _openModelsPage();
   void _selectMark() => MarkSelectController.to.actionWithMark(mark);
   void _openModelsPage() => ModelsController.to.openModelsPage(mark);
 
-  Widget _markLogo() => _markContainer(
-          child: ImageContainer(
-        imageData: ImageData.mark(id: mark.id ?? ""),
-        function: _actionWithMark,
-        loadingWidget: const MarkLoadingWidget(),
-      ));
+  Widget _markLogo() => GetBuilder<MarkSelectController>(
+        builder: (controller) => MarkLogo(
+          mark: mark,
+          isHighlighted: isSelect && controller.checkMark(mark),
+          actionWithMark: _actionWithMark,
+        ),
+      );
 
   Widget _markName() => Text(
         mark.name ?? "",
@@ -64,6 +37,65 @@ class MarkGridTile extends StatelessWidget {
             fontSize: 14.fs,
             fontWeight: FontWeight.w400),
       );
+}
+
+class MarkLogo extends StatelessWidget {
+  const MarkLogo({
+    super.key,
+    required this.mark,
+    this.actionWithMark,
+    this.height = 75,
+    this.width = 75,
+    this.isHighlighted = false,
+    this.showShadow = true,
+  });
+
+  final Mark mark;
+
+  final double height;
+  final double width;
+  final VoidCallback? actionWithMark;
+  final bool isHighlighted;
+  final bool showShadow;
+
+  @override
+  Widget build(BuildContext context) => _markContainer(
+        child: ImageContainer(
+          height: height,
+          width: width,
+          imageData: ImageData.mark(id: mark.id ?? ""),
+          function: actionWithMark,
+          loadingWidget: const MarkLoadingWidget(),
+        ),
+      );
+
+  Widget _markContainer({Widget? child}) => Container(
+        height: height.h,
+        width: width.h,
+        decoration: BoxDecoration(
+            color: whiteColor,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: showShadow ? _shadows : null,
+            border: isHighlighted
+                ? Border.all(color: primaryColor, width: 2)
+                : null),
+        child: child,
+      );
+
+  final List<BoxShadow> _shadows = const [
+    BoxShadow(
+      color: boxShadowColor,
+      blurRadius: 15,
+      offset: Offset(-1, 10),
+      spreadRadius: 2,
+    ),
+    BoxShadow(
+      color: boxShadowColor,
+      blurRadius: 15,
+      offset: Offset(1, 1),
+      spreadRadius: 2,
+    )
+  ];
 }
 
 class LoadingMarkGridTile extends StatelessWidget {
