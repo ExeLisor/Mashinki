@@ -1,7 +1,5 @@
 import 'package:autoverse/exports.dart';
 
-import '../filters_screen/select_models_screen.dart';
-
 class ModelsScreen extends StatelessWidget {
   ModelsScreen({super.key});
 
@@ -43,7 +41,7 @@ class ModelsScreen extends StatelessWidget {
 
   Widget _searchBar() => CarsSearchBar(
         controller: ModelsSearchController.to,
-        filterAction: navgiteToSelectModels,
+        filterAction: navigateToFiltersScreen,
         searchIconColor: primaryColor,
         isDevelop: false,
       );

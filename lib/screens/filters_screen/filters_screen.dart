@@ -1,42 +1,89 @@
 import 'package:autoverse/exports.dart';
 
+import 'widgets/marks_filter_widget.dart';
+
+void navigateToFiltersScreen() {
+  Get.put(FiltersController());
+
+  Get.toNamed('/filters');
+}
+
 class FiltersScreen extends StatelessWidget {
   const FiltersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _topBar(),
+      backgroundColor: AppThemeController.to.whiteColor,
       bottomNavigationBar: HomeScreenBottomBarWidget(),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: _body(),
+        child: Stack(
+          children: [
+            _body(),
+            _applyWidget(),
+          ],
+        ),
       ),
     );
   }
 
-  PreferredSize _topBar() => PreferredSize(
-        preferredSize: Size.fromHeight(82.h),
-        child: const TopBar(
-          title: "Фильтры",
-          isHomeScreen: false,
-          disableVerticalPadding: true,
-          showShadow: false,
-          showAccount: false,
+  Widget _body() => Column(
+        children: [
+          _appBar(),
+          _filters(),
+        ],
+      );
+
+  Widget _appBar() => Obx(
+        () => AppBar(
+          backgroundColor: AppThemeController.to.whiteColor,
+          title: _appBarText(),
+          leading: _iconBack(),
+          centerTitle: true,
         ),
       );
 
-  Widget _body() => Stack(children: [
-        ListView(
+  Widget _appBarText() => Text(
+        'Фильтры'.tr,
+        style: TextStyle(
+          color:
+              AppThemeController.to.isDarkTheme ? Colors.white : primaryColor,
+          fontSize: 20.fs,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w700,
+        ),
+      );
+
+  Widget _iconBack() => GestureDetector(
+        onTap: Get.back,
+        child: Container(
+          decoration:
+              BoxDecoration(border: Border.all(color: Colors.transparent)),
+          child: Padding(
+            padding: EdgeInsets.only(left: 4.0.w),
+            child: SizedBox(
+              child: SvgPicture.asset(
+                "assets/svg/back.svg",
+                color: primaryColor,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Widget _filters() => Expanded(
+        child: ListView(
           padding: EdgeInsets.only(bottom: 25.h),
           children: const [
+            MarksFilterWidget(),
             ModelSelectorWidget(),
             MainOptionsWidget(),
             AddOptionsWidget()
           ],
         ),
-        _applyWidget(),
-      ]);
+      );
 
   Widget _applyWidget() => false
       // ignore: dead_code

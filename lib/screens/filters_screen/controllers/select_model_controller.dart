@@ -8,6 +8,17 @@ class SelectModelsController extends AlphabetController<Model> {
   SelectModelsState get selectorState => _selectorState.value;
   set selectorState(SelectModelsState value) => _selectorState.value = value;
 
+  final RxMap<String, List<Model>> _grouped = <String, List<Model>>{}.obs;
+  Map<String, List<Model>> get grouped => _grouped;
+  set grouped(Map<String, List<Model>> value) => _grouped.value = value;
+
+  final RxBool _isAllSelected = false.obs;
+  bool get isAllSelected => _isAllSelected.value;
+  set isAllSelected(bool value) => _isAllSelected.value = value;
+
+  final RxList<Model> _selectedModels = <Model>[].obs;
+  List<Model> get selectedModels => _selectedModels;
+
   Future<void> changeStateToAll() async {
     selectorState = SelectModelsState.all;
 
@@ -36,17 +47,6 @@ class SelectModelsController extends AlphabetController<Model> {
     update();
   }
 
-  final RxMap<String, List<Model>> _grouped = <String, List<Model>>{}.obs;
-  Map<String, List<Model>> get grouped => _grouped;
-  set grouped(Map<String, List<Model>> value) => _grouped.value = value;
-
-  final RxBool _isAllSelected = false.obs;
-  bool get isAllSelected => _isAllSelected.value;
-  set isAllSelected(bool value) => _isAllSelected.value = value;
-
-  final RxList<Model> _selectedModels = <Model>[].obs;
-  List<Model> get selectedModels => _selectedModels;
-
   void addModel(Model model) {
     _selectedModels.add(model);
     update();
@@ -58,6 +58,13 @@ class SelectModelsController extends AlphabetController<Model> {
   void removedModel(Model model) {
     _selectedModels.remove(model);
     update();
+  }
+
+  void apply() {
+    Get.put(FilterController());
+
+    FilterController.to.selectedModels = List.from(_selectedModels);
+    Get.back();
   }
 
   void clearSelectedModels() {

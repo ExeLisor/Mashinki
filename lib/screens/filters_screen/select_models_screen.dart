@@ -70,7 +70,7 @@ class SelectModelsScreen extends GetView<SelectModelsController> {
       controller.clearSelectedModels);
 
   Widget _applyButton() =>
-      _button('Применить'.tr, paleColor, Colors.white, () {});
+      _button('Применить'.tr, paleColor, Colors.white, controller.apply);
 
   Widget _button(String text, Color buttonColor, Color textColor,
           VoidCallback? onTap) =>

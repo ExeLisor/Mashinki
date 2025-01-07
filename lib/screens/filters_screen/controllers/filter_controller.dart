@@ -7,6 +7,15 @@ import 'package:autoverse/screens/filters_screen/models/main_options/main_option
 class FilterController extends GetxController {
   static FilterController get to => Get.find();
 
+  Rxn<Mark> mark = Rxn();
+
+  final RxList<Model> _selectedModels = <Model>[].obs;
+  List<Model> get selectedModels => _selectedModels;
+  set selectedModels(List<Model> value) {
+    _selectedModels.value = value;
+    update();
+  }
+
   final Rx<FilterModel> filterModel = FilterModel(
           configurations: [],
           mainOptions: MainOptionsClass(),
@@ -20,6 +29,9 @@ class FilterController extends GetxController {
     if (filter[category]?[field] != null) filter[category]?[field].clear();
     if (filter[category]?[field].isEmpty) filter[category]!.remove(field);
   }
+
+  List<String> getSelectedModelsNames() =>
+      _selectedModels.map((model) => model.name ?? "").toList();
 
   void actionWithValue(
           dynamic value, String category, String type, String field) =>
