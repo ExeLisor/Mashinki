@@ -1,4 +1,6 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/screens/filters_screen/controllers/select_model_controller.dart';
+import 'package:autoverse/screens/filters_screen/select_models_screen.dart';
 import 'package:autoverse/services/lang_service.dart';
 
 import 'screens/filters_screen/widgets/option_selector.dart';
@@ -119,6 +121,11 @@ class _MainAppState extends State<MainApp> {
         transition: Transition.cupertino,
         bindings: [AlphabetBinding(), MarksSearchBinding()]),
     GetPage(
+        name: '/selectModels',
+        page: () => const SelectModelsScreen(),
+        transition: Transition.cupertino,
+        bindings: [AlphabetBinding()]),
+    GetPage(
       name: '/compare',
       page: () => const CompareScreen(),
       transition: Transition.cupertino,
@@ -158,6 +165,7 @@ class InititalBindingsClass extends Bindings {
     Get.lazyPut(() => FirebaseController());
     Get.lazyPut(() => MarksSearchController());
     Get.put(MarkSelectController());
+    Get.put(SelectModelsController());
     WeeklyCarsBinding().dependencies();
     CarCatalogBinding().dependencies();
     FavoriteBinding().dependencies();

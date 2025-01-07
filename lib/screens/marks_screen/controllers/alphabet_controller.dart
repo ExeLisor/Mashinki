@@ -1,66 +1,24 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/models/alphabet.dart';
 
-class AlphabetController extends GetxController {
-  static AlphabetController get to => Get.find();
-
-  final Rx<ScrollController> _horizontalController = ScrollController().obs;
-  final Rx<ItemScrollController> _itemScrollController =
-      ItemScrollController().obs;
-  final Rx<ItemPositionsListener> _itemPositionsListener =
-      ItemPositionsListener.create().obs;
-
-  final RxList<List<Mark>> _alphabetList = <List<Mark>>[].obs;
-  final RxInt _highlightedIndex = 0.obs;
-
-  final RxBool _isLoading = true.obs;
-
-  bool get isLoading => _isLoading.value;
-
-  ScrollController get horizontalController => _horizontalController.value;
-  ItemScrollController get itemScrollController => _itemScrollController.value;
-  ItemPositionsListener get itemPositionsListener =>
-      _itemPositionsListener.value;
-  List<List<Mark>> get alphabetList => _alphabetList;
-  int get highlightedIndex => _highlightedIndex.value;
+class AlphabetMarksController extends AlphabetController<Mark> {
+  static AlphabetMarksController get to => Get.find();
 
   @override
-  Future<void> onInit() async {
-    super.onInit();
-    itemPositionsListener.itemPositions.addListener(_updateHighlightedIndex);
-
-    initAlphabetList();
-  }
-
-  @override
-  void dispose() {
-    horizontalController.dispose();
-    itemPositionsListener.itemPositions.removeListener(_updateHighlightedIndex);
-    super.dispose();
-  }
-
-  void _updateHighlightedIndex() {
-    final visibleItems = itemPositionsListener.itemPositions.value;
-    if (visibleItems.isNotEmpty) {
-      final firstVisibleItem = visibleItems.first;
-      if (firstVisibleItem.index != highlightedIndex) {
-        _highlightedIndex.value = firstVisibleItem.index;
-      }
-    }
-  }
-
-  Future<void> initAlphabetList() async {
-    _isLoading.value = true;
-    _alphabetList.clear();
+  Future<void> initItemsList() async {
+    isLoading = true;
+    itemsList.clear();
 
     List<Mark> popularMarks = _getPopularMarks();
-    _alphabetList.add(popularMarks);
+    itemsList.add(popularMarks);
+
     List<List<Mark>> groupedMarks = await _getGroupedMarks();
-    _alphabetList.addAll(groupedMarks);
+    itemsList.addAll(groupedMarks);
 
-    _isLoading.value = false;
-
-    return;
+    isLoading = false;
   }
+
+  List<Mark> _getPopularMarks() => List.from(MarksController.to.popularMarks);
 
   Future<List<List<Mark>>> _getGroupedMarks() async {
     Map<String, List<Mark>> groupedMarks = {};
@@ -77,7 +35,6 @@ class AlphabetController extends GetxController {
       groupedMarks[key]!.add(brand);
     }
 
-    // Преобразуем Map в List<List<Mark>>
     List<List<Mark>> result = [];
     for (var group in groupedMarks.values) {
       result.add(group);
@@ -86,10 +43,7 @@ class AlphabetController extends GetxController {
     return result;
   }
 
-  List<Mark> _getPopularMarks() => List.from(MarksController.to.popularMarks);
-
-  List<Mark> _getAllMarks() => List.from(MarksController.to.marks);
-
+  @override
   void scrollToIndex(int index) => itemScrollController.scrollTo(
         index: index,
         duration: const Duration(milliseconds: 300),
@@ -99,5 +53,5 @@ class AlphabetController extends GetxController {
 
 class AlphabetBinding extends Bindings {
   @override
-  void dependencies() => Get.lazyPut(() => AlphabetController());
+  void dependencies() => Get.lazyPut(() => AlphabetMarksController());
 }

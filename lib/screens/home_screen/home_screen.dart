@@ -1,5 +1,4 @@
 import 'package:autoverse/exports.dart';
-import 'package:autoverse/screens/filters_screen/select_marks_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,9 +10,6 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: AppThemeController.to.whiteColor,
         body: _homeScreen(),
         bottomNavigationBar: HomeScreenBottomBarWidget(),
-        floatingActionButton: const FloatingActionButton(
-          onPressed: navgiteToSelectMarks,
-        ),
       ),
     );
   }

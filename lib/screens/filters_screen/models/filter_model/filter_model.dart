@@ -1,4 +1,4 @@
-import 'package:autoverse/screens/filters_screen/controllers.dart/filter_controller.dart';
+import 'package:autoverse/screens/filters_screen/controllers/filter_controller.dart';
 import 'package:autoverse/screens/filters_screen/models/exterior_elements/exterior_elements.dart';
 import 'package:autoverse/screens/filters_screen/models/main_options/main_options.dart';
 

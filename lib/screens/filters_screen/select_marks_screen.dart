@@ -35,8 +35,12 @@ class SelectMarksScreen extends GetView<MarkSelectController> {
             ? Align(
                 alignment: Alignment.bottomCenter,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [_clearButton(), _applyButton()],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _clearButton(),
+                    SizedBox(width: 8.w),
+                    _applyButton()
+                  ],
                 ),
               )
             : Container(),
@@ -241,9 +245,6 @@ class MarkSelectController extends GetxController {
 
   bool checkMark(Mark mark) =>
       _selectedMarks.any((element) => element.id == mark.id);
-
-  // void actionWithMark(Mark mark) =>
-  //     checkMark(mark) ? removeMark(mark) : addMark(mark);
 
   void actionWithMark(Mark mark) =>
       checkMark(mark) ? removeMark(mark) : addMark(mark);

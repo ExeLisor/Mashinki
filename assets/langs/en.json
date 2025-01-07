@@ -576,5 +576,10 @@
     "Привод": "Drive",
     "Тип двигателя": "Engine type",
     "Топливо": "Petrol",
-    "Мощность": "Power"
+    "Мощность": "Power",
+    "Выбрать всё": "Select all",
+    "Убрать всё": "Unselect all",
+    "Модели": "Models",
+    "Все модели": "All models",
+    "Выбрано": "Selected"
 }

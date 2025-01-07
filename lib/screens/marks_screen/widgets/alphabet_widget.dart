@@ -1,4 +1,5 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/models/alphabet.dart';
 
 class AlphabetWidget extends StatelessWidget {
   const AlphabetWidget({super.key, this.isSelect = false});
@@ -17,7 +18,10 @@ class AlphabetWidget extends StatelessWidget {
     );
   }
 
-  Widget _alphabet() => const AlphabetRow();
+  Widget _alphabet() => AlphabetRow(
+        controller: AlphabetMarksController.to,
+        alphabet: alphabet,
+      );
 
   Widget _divider() => Expanded(
         child: Divider(
@@ -51,8 +55,9 @@ class AlphabetWidget extends StatelessWidget {
 
   Widget _body() => Obx(() => Expanded(
       child: ScrollablePositionedList.builder(
-          itemScrollController: AlphabetController.to.itemScrollController,
-          itemPositionsListener: AlphabetController.to.itemPositionsListener,
+          itemScrollController: AlphabetMarksController.to.itemScrollController,
+          itemPositionsListener:
+              AlphabetMarksController.to.itemPositionsListener,
           itemCount: alphabet.length,
           itemBuilder: (context, index) => _alphabetGrid(index))));
 
@@ -60,9 +65,9 @@ class AlphabetWidget extends StatelessWidget {
         () => Column(
           children: [
             _header(alphabet[index]),
-            (AlphabetController.to.alphabetList.isNotEmpty &&
-                    index < AlphabetController.to.alphabetList.length)
-                ? _marks(AlphabetController.to.alphabetList[index])
+            (AlphabetMarksController.to.itemsList.isNotEmpty &&
+                    index < AlphabetMarksController.to.itemsList.length)
+                ? _marks(AlphabetMarksController.to.itemsList[index])
                 : Container(),
           ],
         ),
@@ -73,16 +78,19 @@ class AlphabetWidget extends StatelessWidget {
 }
 
 class AlphabetRow extends StatelessWidget {
-  const AlphabetRow({super.key});
+  const AlphabetRow(
+      {super.key, required this.controller, required this.alphabet});
 
   final Color paleBlueColor = paleColor;
+  final AlphabetController controller;
+  final List<String> alphabet;
 
   @override
   Widget build(BuildContext context) => Container(
         margin: EdgeInsets.only(bottom: 10.h),
         height: 36.h,
         child: ListView.builder(
-          controller: AlphabetController.to.horizontalController,
+          controller: controller.scrollController,
           scrollDirection: Axis.horizontal,
           itemCount: alphabet.length + 1,
           itemBuilder: (context, index) {
@@ -94,13 +102,13 @@ class AlphabetRow extends StatelessWidget {
       );
 
   Widget _alphabetTile(String symbol, int index) => GestureDetector(
-        onTap: () => AlphabetController.to.scrollToIndex(index),
+        onTap: () => controller.scrollToIndex(index),
         child: Obx(
           () => Container(
             height: 36.h,
             width: 35.h,
             decoration: BoxDecoration(
-                color: AlphabetController.to.highlightedIndex == index
+                color: controller.highlightedIndex == index
                     ? paleBlueColor
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(7.h)),
@@ -108,7 +116,7 @@ class AlphabetRow extends StatelessWidget {
             child: Text(
               symbol,
               style: TextStyle(
-                color: AlphabetController.to.highlightedIndex == index
+                color: controller.highlightedIndex == index
                     ? whiteColor
                     : AppThemeController.to.isDarkTheme
                         ? whiteColor
