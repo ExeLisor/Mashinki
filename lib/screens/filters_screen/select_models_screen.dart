@@ -6,8 +6,16 @@ import 'package:autoverse/screens/filters_screen/controllers/select_model_contro
 void navgiteToSelectModels() {
   Get.put(SelectModelsController());
   Get.put(ModelSearchController());
+
+  ItemScrollController itemScrollController = ItemScrollController();
+  ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+
+  SelectModelsController.to.itemScrollController = itemScrollController;
+  SelectModelsController.to.itemPositionsListener = itemPositionsListener;
+
   SelectModelsController.to.initItemsList();
   ModelSearchController.to.clearSearch();
+
   Get.toNamed('/selectModels');
 }
 
@@ -56,9 +64,13 @@ class SelectModelsScreen extends GetView<SelectModelsController> {
       );
 
   Widget _clearButton() => _button(
-      'Сбросить', Colors.white, paleColor, controller.clearSelectedModels);
+      'Сбросить'.tr,
+      AppThemeController.to.searchContainerColor,
+      AppThemeController.to.appBarItemsColor,
+      controller.clearSelectedModels);
 
-  Widget _applyButton() => _button('Применить', paleColor, Colors.white, () {});
+  Widget _applyButton() =>
+      _button('Применить'.tr, paleColor, Colors.white, () {});
 
   Widget _button(String text, Color buttonColor, Color textColor,
           VoidCallback? onTap) =>
@@ -196,7 +208,7 @@ class SelectModelsScreen extends GetView<SelectModelsController> {
         height: 40.h,
         width: 362.w,
         decoration: BoxDecoration(
-            color: const Color(0xffF4F4F4),
+            color: AppThemeController.to.greyModelSelectTileBackgroundColor,
             borderRadius: BorderRadius.circular(33.h)),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -222,14 +234,18 @@ class SelectModelsScreen extends GetView<SelectModelsController> {
           child: Container(
             height: 32.h,
             decoration: BoxDecoration(
-                color: isSelected ? paleColor : greyBackground,
+                color: isSelected
+                    ? paleColor
+                    : AppThemeController.to.greyModelSelectTileColor,
                 borderRadius: BorderRadius.circular(100.h)),
             child: Center(
               child: Text(
                 text,
                 style: TextStyle(
                     fontSize: 14.fs,
-                    color: isSelected ? Colors.white : primaryColor,
+                    color: isSelected
+                        ? Colors.white
+                        : AppThemeController.to.appBarItemsColor,
                     fontWeight: FontWeight.w400,
                     fontFamily: 'Inter'),
               ),
@@ -252,7 +268,7 @@ class SelectModelsScreen extends GetView<SelectModelsController> {
                 itemScrollController: controller.itemScrollController,
                 itemPositionsListener: controller.itemPositionsListener,
                 itemCount: controller.grouped.keys.length,
-                padding: EdgeInsets.only(bottom: 20.h),
+                padding: EdgeInsets.only(bottom: 60.h),
                 itemBuilder: (context, index) => _alphabetView(index))));
   }
 
@@ -324,7 +340,10 @@ class SelectModelsScreen extends GetView<SelectModelsController> {
   Widget _modelName(Model model) => Text(
         model.name ?? "",
         style: TextStyle(
-            fontSize: 14.fs, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
+            color: AppThemeController.to.appBarItemsColor,
+            fontSize: 14.fs,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'Inter'),
       );
 
   Widget _header(String symbol) => Padding(

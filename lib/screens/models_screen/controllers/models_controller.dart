@@ -1,4 +1,5 @@
 import 'package:autoverse/exports.dart';
+import 'package:autoverse/screens/filters_screen/controllers/select_model_controller.dart';
 
 enum Status { success, loading, error }
 
@@ -57,6 +58,10 @@ class ModelsController extends GetxController {
   Future<void> openModelsPage(Mark mark) async {
     Get.toNamed("/${mark.id}/models");
     await _loadModels(mark);
+
+    Get.put(SelectModelsController());
+    SelectModelsController.to.clearSelectedModels();
+    SelectModelsController.to.changeStateToAll();
   }
 
   void _emitSussessState() => state.value = Status.success;

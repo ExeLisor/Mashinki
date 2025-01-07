@@ -24,6 +24,11 @@ abstract class AlphabetController<T> extends GetxController {
   set highlightedIndex(int value) => _highlightedIndex.value = value;
   set itemsList(List<List<T>> value) => _itemsList.assignAll(value);
 
+  set itemScrollController(ItemScrollController value) =>
+      _itemScrollController.value = value;
+  set itemPositionsListener(ItemPositionsListener value) =>
+      _itemPositionsListener.value = value;
+
   @override
   Future<void> onInit() async {
     super.onInit();

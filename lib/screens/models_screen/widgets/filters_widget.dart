@@ -36,11 +36,11 @@ class ModelsFiltersWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.h), color: primaryColor),
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  "Применить",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
+                  "Применить".tr,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, color: whiteColor),
                 ),
               ),
             ),

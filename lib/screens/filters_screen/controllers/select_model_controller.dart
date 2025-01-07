@@ -16,6 +16,12 @@ class SelectModelsController extends AlphabetController<Model> {
     update();
   }
 
+  @override
+  void dispose() {
+    _selectorState.close();
+    super.dispose();
+  }
+
   Future<void> changeStateToSelected() async {
     selectorState = SelectModelsState.selected;
 

@@ -156,7 +156,7 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
   Widget _apply() => GestureDetector(
         onTap: _applyAction,
         child: Text(
-          'Применить',
+          'Применить'.tr,
           style: TextStyle(
             color: paleColor,
             fontSize: 16.fs,
@@ -168,7 +168,7 @@ class _SelectorBottomSheetState extends State<SelectorBottomSheet> {
   Widget _reset() => GestureDetector(
         onTap: _resetAction,
         child: Text(
-          'Сбросить',
+          'Сбросить'.tr,
           style: TextStyle(
             color: paleColor,
             fontSize: 16.fs,

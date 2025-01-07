@@ -211,6 +211,9 @@ class AppThemeController extends GetxController {
   final Rx<Color> _greyBackground = const Color(0xffEEEEEE).obs;
   final Rx<Color> _searchContainerColor = Colors.white.obs;
   final Rx<Color> _appBarItemsColor = const Color(0xFF4038FF).obs;
+  final Rx<Color> _greyModelSelectTileBackgroundColor =
+      const Color(0xffF4F4F4).obs;
+  final Rx<Color> _greyModelSelectTileColor = const Color(0xffE8E8E8).obs;
   final Rx<Color> _textColor = Colors.black.obs;
   Color get textColor => _textColor.value;
 
@@ -226,6 +229,9 @@ class AppThemeController extends GetxController {
   Color get greyBackground => _greyBackground.value;
   Color get searchContainerColor => _searchContainerColor.value;
   Color get appBarItemsColor => _appBarItemsColor.value;
+  Color get greyModelSelectTileBackgroundColor =>
+      _greyModelSelectTileBackgroundColor.value;
+  Color get greyModelSelectTileColor => _greyModelSelectTileColor.value;
 
   // Метод для переключения темы и обновления значений цветов
   void toggleTheme({bool? theme}) {
@@ -245,6 +251,8 @@ class AppThemeController extends GetxController {
       _searchContainerColor.value = const Color(0xff292929);
       _appBarItemsColor.value = Colors.white;
       _textColor.value = Colors.white;
+      _greyModelSelectTileBackgroundColor.value = const Color(0xff292929);
+      _greyModelSelectTileColor.value = const Color(0xff292929);
     } else {
       _primaryColor.value = const Color(0xFF4038FF);
       _paleColor.value = const Color(0xff7974FF);
@@ -259,6 +267,8 @@ class AppThemeController extends GetxController {
       _searchContainerColor.value = Colors.white;
       _appBarItemsColor.value = const Color(0xFF4038FF);
       _textColor.value = Colors.black;
+      _greyModelSelectTileBackgroundColor.value = const Color(0xffF4F4F4);
+      _greyModelSelectTileColor.value = const Color(0xffE8E8E8);
     }
   }
 }

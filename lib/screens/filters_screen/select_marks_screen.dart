@@ -46,11 +46,14 @@ class SelectMarksScreen extends GetView<MarkSelectController> {
             : Container(),
       );
 
-  Widget _clearButton() =>
-      _button('Сбросить', Colors.white, paleColor, controller.clear);
+  Widget _clearButton() => _button(
+      'Сбросить'.tr,
+      AppThemeController.to.searchContainerColor,
+      AppThemeController.to.appBarItemsColor,
+      controller.clear);
 
   Widget _applyButton() =>
-      _button('Применить', paleColor, Colors.white, controller.addMarks);
+      _button('Применить'.tr, paleColor, Colors.white, controller.addMarks);
 
   Widget _button(String text, Color buttonColor, Color textColor,
           VoidCallback? onTap) =>

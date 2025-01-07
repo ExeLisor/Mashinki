@@ -67,16 +67,16 @@ class FiltersScreen extends StatelessWidget {
                 )
               ],
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Применить',
+                  'Применить'.tr,
                   style: TextStyle(
-                    color: whiteColor,
-                    fontSize: 15,
+                    color: AppThemeController.to.appBarItemsColor,
+                    fontSize: 15.fs,
                     fontWeight: FontWeight.w600,
                     height: 0,
                   ),
