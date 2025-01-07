@@ -583,5 +583,10 @@
     "Все модели": "All models",
     "Выбрано": "Selected",
     "Сбросить": "Reset",
-    "Применить": "Apply"
+    "Применить": "Apply",
+    "Тема": "Theme",
+    "Добавлено в сравнение": "Added to compare",
+    "Удалено из сравнения": "Removed from compare",
+    "Добавлено в избранное": "Added to favorite",
+    "Удалено из избранного": "Removed from favorite"
 }

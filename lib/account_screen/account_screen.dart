@@ -306,7 +306,7 @@ mixin SettingsMixin on GetxController {
 
 class ThemeController extends GetxController with SettingsMixin {
   ThemeController() {
-    title.value = 'theme'.tr;
+    title.value = "Тема".tr;
     selectedSetting.value = "theme-light";
     settings.addAll(['theme-light', 'theme-dark']);
   }

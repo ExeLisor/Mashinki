@@ -182,17 +182,18 @@ class CatalogTile extends StatelessWidget {
           ),
         );
 
-  Widget _addToFavorite() => Obx(() => _icon(
-      "favorite",
-      "favorite_active",
-      FavoriteController.to.isCarFavorite(car),
-      () => FavoriteController.to.addToFavorite(car)));
+  Widget _addToFavorite() => GetBuilder<FavoriteController>(
+      init: FavoriteController.to,
+      builder: (controller) => _icon(
+          "favorite",
+          "favorite_active",
+          controller.isCarFavorite(car),
+          () => controller.actionWithFavorite(car)));
 
-  Widget _addToCompare() => Obx(() => _icon(
-      "comp",
-      "comp_active",
-      CompareController.to.isCarCompared(car),
-      () => CompareController.to.compareAction(car)));
+  Widget _addToCompare() => GetBuilder<CompareController>(
+      init: CompareController.to,
+      builder: (controller) => _icon("comp", "comp_active",
+          controller.isCarCompared(car), () => controller.compareAction(car)));
 
   Widget _icon(String icon, String activeIcon, bool condition,
           VoidCallback action) =>

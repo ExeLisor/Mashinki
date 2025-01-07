@@ -76,24 +76,28 @@ class CarsFloatBar extends StatelessWidget {
         ),
       );
 
-  Widget _addToCompareIcon() => _iconSvg(
-      icon: "assets/svg/comp.svg",
-      activeIcon: "assets/svg/comp_active.svg",
-      condition: CompareController.to.isCarCompared(CarController.to.car),
-      highlight: true,
-      callBack: _addToCompare);
+  Widget _addToCompareIcon() => GetBuilder<CompareController>(
+      init: CompareController.to,
+      builder: (controller) => _iconSvg(
+          icon: "assets/svg/comp.svg",
+          activeIcon: "assets/svg/comp_active.svg",
+          condition: controller.isCarCompared(CarController.to.car),
+          highlight: true,
+          callBack: _addToCompare));
 
   void _addToCompare() =>
-      CompareController.to.addToCompare(CarController.to.car);
+      CompareController.to.compareAction(CarController.to.car);
 
-  Widget _addToFavIcon() => Obx(() => _iconSvg(
-      icon: "assets/svg/favorite_blue.svg",
-      activeIcon: "assets/svg/favorite_active.svg",
-      condition: FavoriteController.to.isCarFavorite(CarController.to.car),
-      callBack: _addToFavorite));
+  Widget _addToFavIcon() => GetBuilder<FavoriteController>(
+      init: FavoriteController.to,
+      builder: (controller) => _iconSvg(
+          icon: "assets/svg/favorite_blue.svg",
+          activeIcon: "assets/svg/favorite_active.svg",
+          condition: controller.isCarFavorite(CarController.to.car),
+          callBack: _addToFavorite));
 
   void _addToFavorite() =>
-      FavoriteController.to.addToFavorite(CarController.to.car);
+      FavoriteController.to.actionWithFavorite(CarController.to.car);
 
   Widget _iconBack() => GestureDetector(
         onTap: Get.back,

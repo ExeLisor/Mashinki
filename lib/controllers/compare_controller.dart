@@ -28,8 +28,10 @@ class CompareController extends GetxController {
     if (isCarCompared(car)) return;
 
     _comparedCars.add(car);
-    showSnackBar("Добавлено в сравнение");
+
     compare();
+    showSnackBar("Добавлено в сравнение".tr);
+    update();
   }
 
   void hideIdentical() => _isHideIdentical.value = !_isHideIdentical.value;
@@ -40,6 +42,8 @@ class CompareController extends GetxController {
         car.selectedModification.complectationId);
 
     compare();
+    showSnackBar("Удалено из сравнения".tr);
+    update();
   }
 
   bool isCarCompared(Car car) => comparedCars.any((element) =>

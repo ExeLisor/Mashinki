@@ -25,6 +25,7 @@ class FavoriteController extends GetxController {
     saveFavoriteCarsToPreferences();
 
     showSnackBar("Добавлено в избранное");
+    update();
   }
 
   void removeFromFavorite(Car car) async {
@@ -35,6 +36,7 @@ class FavoriteController extends GetxController {
         car.selectedModification.complectationId);
 
     removeFromSharedPreferences();
+    update();
   }
 
   void removeFromSharedPreferences() async {
@@ -43,6 +45,16 @@ class FavoriteController extends GetxController {
         favoriteCars.map((car) => jsonEncode(car.toJson())).toList();
 
     await prefs.setStringList("favorite_cars", updatedFavoriteCarsJsonList);
+  }
+
+  void actionWithFavorite(Car car) {
+    if (isCarFavorite(car)) {
+      removeFromFavorite(car);
+      showSnackBar("Удалено из избранного".tr);
+    } else {
+      addToFavorite(car);
+      showSnackBar("Добавлено в избранное".tr);
+    }
   }
 
   bool isCarFavorite(Car car) => favoriteCars.any((element) =>
