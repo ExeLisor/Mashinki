@@ -1,9 +1,16 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="Autoverse"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
+        <!-- Fix for AD_SERVICES_CONFIG conflict -->
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            android:resource="@xml/gma_ad_services_config"
+            tools:replace="android:resource" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -18,7 +25,7 @@
                  <action android:name="android.intent.action.VIEW" />
              <category android:name="android.intent.category.DEFAULT" />
              <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="autoverse.by" android:pathPrefix="test/" />
+                <data android:scheme="https" android:host="autoverse.by" android:pathPrefix="/test/" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
