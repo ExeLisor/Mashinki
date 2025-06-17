@@ -39,7 +39,7 @@ class MarksController extends GetxController {
       dynamic cache = await loadData("popularMarks");
       if (cache != null) return marksFromJson(cache);
 
-      List<Mark> marks = await SupabaseController.to.getPopularMarks();
+      List<Mark> marks = await ApiService.instance.getPopularMarks();
       await saveData("popularMarks", marksToJson(marks));
 
       return marks;
@@ -58,7 +58,7 @@ class MarksController extends GetxController {
       dynamic cache = await loadData("marks");
       if (cache != null) return marksFromJson(cache);
 
-      marks = await SupabaseController.to.getMarks();
+      marks = await ApiService.instance.getMarks();
       await saveData("marks", marksToJson(marks));
 
       update();
