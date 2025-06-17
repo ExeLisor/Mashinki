@@ -35,7 +35,7 @@ if (flutterVersionName == null) {
 android {
     namespace = "by.company.autoverse"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
     kotlinOptions { // добавить
         jvmTarget = JavaVersion.VERSION_1_8
     }

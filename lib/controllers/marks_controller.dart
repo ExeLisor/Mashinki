@@ -36,7 +36,7 @@ class MarksController extends GetxController {
     try {
       if (popularMarks.isNotEmpty) return popularMarks;
 
-      dynamic cache = await loadData("popularMarks");
+       dynamic cache = await loadData("popularMarks");
       if (cache != null) return marksFromJson(cache);
 
       List<Mark> marks = await ApiService.instance.getPopularMarks();

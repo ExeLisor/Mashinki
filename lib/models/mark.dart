@@ -14,7 +14,7 @@ class Mark {
   final String? name;
   final String? cyrillicName;
   final int? popular;
-  final String? country;
+  final String? country; // Оставляем String? как было изначально в приложении
   final List<Model>? models;
 
   Mark({
@@ -29,9 +29,12 @@ class Mark {
   factory Mark.fromJson(Map<String, dynamic> json) => Mark(
         id: json["id"],
         name: json["name"],
-        cyrillicName: json["cyrillic-name"],
+        cyrillicName: json["cyrillicName"] ??
+            json["cyrillic-name"], // Поддержка обоих форматов
         popular: json["popular"],
-        country: json["country"],
+        // ВАЖНО: API теперь возвращает country как int, но приложение ожидает String
+        // Поэтому преобразуем int в String для совместимости
+        country: json["country"]?.toString(),
         models: json["models"] == null
             ? []
             : List<Model>.from(json["models"]!.map((x) => Model.fromJson(x))),
@@ -40,7 +43,8 @@ class Mark {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "cyrillic-name": cyrillicName,
+        "cyrillicName":
+            cyrillicName, // Изменил на cyrillicName для соответствия вашему API
         "popular": popular,
         "country": country,
         "models": models == null

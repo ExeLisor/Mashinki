@@ -120,26 +120,27 @@ class SupabaseController extends GetxController {
       supabase!.schema("public").from(table.name);
 
   Future<List<Mark>> getPopularMarks() async {
+    log('🚨 USING SupabaseController - Fetching popular marks from Supabase');
     return tryCatch(() async {
       final response = await from(AutoTable.mark).select().eq("popular", 1);
-      log(response);
+      log('🚨 SupabaseController response: $response');
       List<Mark> marks = marksFromJson(response);
-
+      log('🚨 SupabaseController popular marks loaded: ${marks.length}');
       return marks;
     });
   }
 
-  Future<List<Mark>> getMarks() async {
-    try {
-      final response = await from(AutoTable.mark).select();
+  // Future<List<Mark>> getMarks() async {
+  //   try {
+  //     final response = await from(AutoTable.mark).select();
 
-      List<Mark> marks = marksFromJson(response);
-      return marks;
-    } catch (error) {
-      logW(error);
-      rethrow;
-    }
-  }
+  //     List<Mark> marks = marksFromJson(response);
+  //     return marks;
+  //   } catch (error) {
+  //     logW(error);
+  //     rethrow;
+  //   }
+  // }
 
   Future<List<Model>> getModels(String markId) async {
     try {
